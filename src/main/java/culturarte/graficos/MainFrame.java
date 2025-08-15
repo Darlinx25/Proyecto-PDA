@@ -9,6 +9,7 @@ package culturarte.graficos;
  * @author faxcundo
  */
 public class MainFrame extends javax.swing.JFrame {
+    int clicks=0;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
 
@@ -64,7 +65,8 @@ public class MainFrame extends javax.swing.JFrame {
         if(jButton1.getText()== "Boton"){
         jButton1.setText("click");
         }else{
-            jButton1.setText("Boton");
+            clicks += 1;
+            jButton1.setText("click "+ clicks);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
