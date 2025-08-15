@@ -15,6 +15,7 @@ public class Main {
         MainFrame frame = new MainFrame();
         frame.setVisible(true);
         System.out.println("xd");
-        System.out.println("esto kompiala?");
+        System.out.println("no compila");
+        
     }
 }
