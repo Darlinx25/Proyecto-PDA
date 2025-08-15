@@ -62,7 +62,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        if(jButton1.getText()== "Boton"){
+        if("Boton".equals(jButton1.getText())){
         jButton1.setText("click");
         }else{
             clicks += 1;
