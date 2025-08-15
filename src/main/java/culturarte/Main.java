@@ -16,6 +16,7 @@ public class Main {
         frame.setVisible(true);
         System.out.println("xd");
         System.out.println("no compila");
+        System.out.println("llevo como 2-3 horas trabajando en este proyecto y recien escribo algo de codigo lol matenme");
         
     }
 }
