@@ -12,4 +12,14 @@ import java.util.ArrayList;
  */
 public class Colaborador extends Usuario {
     private ArrayList<Colaboracion> colaboraciones;
+
+    public ArrayList<Colaboracion> getColaboraciones() {
+        return colaboraciones;
+    }
+
+    public void setColaboraciones(ArrayList<Colaboracion> colaboraciones) {
+        this.colaboraciones = colaboraciones;
+    }
+    
+    
 }

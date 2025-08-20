@@ -15,4 +15,30 @@ public class Categoria {
     
     private ArrayList<Categoria> subCategorias;
     private ArrayList<Propuesta> propuestas;
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public ArrayList<Categoria> getSubCategorias() {
+        return subCategorias;
+    }
+
+    public void setSubCategorias(ArrayList<Categoria> subCategorias) {
+        this.subCategorias = subCategorias;
+    }
+
+    public ArrayList<Propuesta> getPropuestas() {
+        return propuestas;
+    }
+
+    public void setPropuestas(ArrayList<Propuesta> propuestas) {
+        this.propuestas = propuestas;
+    }
+    
+    
 }

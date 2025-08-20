@@ -16,4 +16,38 @@ public class Proponente extends Usuario {
     private String sitioWeb;
     
     private ArrayList<Propuesta> propuestas;
+
+    public DTDireccion getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(DTDireccion direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getBiografia() {
+        return biografia;
+    }
+
+    public void setBiografia(String biografia) {
+        this.biografia = biografia;
+    }
+
+    public String getSitioWeb() {
+        return sitioWeb;
+    }
+
+    public void setSitioWeb(String sitioWeb) {
+        this.sitioWeb = sitioWeb;
+    }
+
+    public ArrayList<Propuesta> getPropuestas() {
+        return propuestas;
+    }
+
+    public void setPropuestas(ArrayList<Propuesta> propuestas) {
+        this.propuestas = propuestas;
+    }
+    
+    
 }

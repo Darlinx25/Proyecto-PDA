@@ -13,4 +13,22 @@ import java.time.LocalDate;
 public class Estado {
     private EstadoPropuesta estado;
     private LocalDate fechaEstado;
+
+    public EstadoPropuesta getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoPropuesta estado) {
+        this.estado = estado;
+    }
+
+    public LocalDate getFechaEstado() {
+        return fechaEstado;
+    }
+
+    public void setFechaEstado(LocalDate fechaEstado) {
+        this.fechaEstado = fechaEstado;
+    }
+    
+    
 }

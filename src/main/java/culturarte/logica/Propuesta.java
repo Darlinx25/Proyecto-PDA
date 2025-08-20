@@ -27,4 +27,110 @@ public class Propuesta {
     private Estado estadoActual;
     private ArrayList<Estado> historialEstados;
     private ArrayList<Colaboracion> colaboraciones;
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public BufferedImage getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(BufferedImage imagen) {
+        this.imagen = imagen;
+    }
+
+    public String getLugarRealizara() {
+        return lugarRealizara;
+    }
+
+    public void setLugarRealizara(String lugarRealizara) {
+        this.lugarRealizara = lugarRealizara;
+    }
+
+    public LocalDate getFechaRealizara() {
+        return fechaRealizara;
+    }
+
+    public void setFechaRealizara(LocalDate fechaRealizara) {
+        this.fechaRealizara = fechaRealizara;
+    }
+
+    public float getPrecioEntrada() {
+        return precioEntrada;
+    }
+
+    public void setPrecioEntrada(float precioEntrada) {
+        this.precioEntrada = precioEntrada;
+    }
+
+    public float getMontoAReunir() {
+        return montoAReunir;
+    }
+
+    public void setMontoAReunir(float montoAReunir) {
+        this.montoAReunir = montoAReunir;
+    }
+
+    public LocalDate getFechaPublicacion() {
+        return fechaPublicacion;
+    }
+
+    public void setFechaPublicacion(LocalDate fechaPublicacion) {
+        this.fechaPublicacion = fechaPublicacion;
+    }
+
+    public Categoria getTipoPropuesta() {
+        return tipoPropuesta;
+    }
+
+    public void setTipoPropuesta(Categoria tipoPropuesta) {
+        this.tipoPropuesta = tipoPropuesta;
+    }
+
+    public Proponente getProponedor() {
+        return proponedor;
+    }
+
+    public void setProponedor(Proponente proponedor) {
+        this.proponedor = proponedor;
+    }
+
+    public Estado getEstadoActual() {
+        return estadoActual;
+    }
+
+    public void setEstadoActual(Estado estadoActual) {
+        this.estadoActual = estadoActual;
+    }
+
+    public ArrayList<Estado> getHistorialEstados() {
+        return historialEstados;
+    }
+
+    public void setHistorialEstados(ArrayList<Estado> historialEstados) {
+        this.historialEstados = historialEstados;
+    }
+
+    public ArrayList<Colaboracion> getColaboraciones() {
+        return colaboraciones;
+    }
+
+    public void setColaboraciones(ArrayList<Colaboracion> colaboraciones) {
+        this.colaboraciones = colaboraciones;
+    }
+    
+    
 }

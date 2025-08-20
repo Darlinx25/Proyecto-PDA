@@ -3,9 +3,11 @@ C:\Users\chloe\Documents\NetBeansProjects\Proyecto-PDA\src\main\java\culturarte\
 C:\Users\chloe\Documents\NetBeansProjects\Proyecto-PDA\src\main\java\culturarte\logica\Categoria.java
 C:\Users\chloe\Documents\NetBeansProjects\Proyecto-PDA\src\main\java\culturarte\logica\Colaboracion.java
 C:\Users\chloe\Documents\NetBeansProjects\Proyecto-PDA\src\main\java\culturarte\logica\Colaborador.java
+C:\Users\chloe\Documents\NetBeansProjects\Proyecto-PDA\src\main\java\culturarte\logica\Controller.java
 C:\Users\chloe\Documents\NetBeansProjects\Proyecto-PDA\src\main\java\culturarte\logica\DTDireccion.java
-C:\Users\chloe\Documents\NetBeansProjects\Proyecto-PDA\src\main\java\culturarte\logica\DTFecha.java
+C:\Users\chloe\Documents\NetBeansProjects\Proyecto-PDA\src\main\java\culturarte\logica\Estado.java
 C:\Users\chloe\Documents\NetBeansProjects\Proyecto-PDA\src\main\java\culturarte\logica\EstadoPropuesta.java
+C:\Users\chloe\Documents\NetBeansProjects\Proyecto-PDA\src\main\java\culturarte\logica\IController.java
 C:\Users\chloe\Documents\NetBeansProjects\Proyecto-PDA\src\main\java\culturarte\logica\Proponente.java
 C:\Users\chloe\Documents\NetBeansProjects\Proyecto-PDA\src\main\java\culturarte\logica\Propuesta.java
 C:\Users\chloe\Documents\NetBeansProjects\Proyecto-PDA\src\main\java\culturarte\logica\Usuario.java

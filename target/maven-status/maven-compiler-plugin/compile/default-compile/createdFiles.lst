@@ -9,9 +9,11 @@ culturarte\logica\Propuesta.class
 culturarte\graficos\AltaUsr$2.class
 culturarte\graficos\MainFrame.class
 culturarte\graficos\MainFrame$1.class
-culturarte\logica\DTFecha.class
 culturarte\graficos\MainFrame$2.class
 culturarte\graficos\AltaUsr$1.class
 culturarte\logica\Colaborador.class
+culturarte\logica\IController.class
+culturarte\logica\Controller.class
+culturarte\logica\Estado.class
 culturarte\logica\Usuario.class
 culturarte\logica\EstadoPropuesta.class
