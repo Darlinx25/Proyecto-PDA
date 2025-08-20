@@ -5,6 +5,7 @@
 package culturarte.logica;
 
 import java.awt.image.BufferedImage;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -16,7 +17,7 @@ public class Usuario {
     private String nombre;
     private String apellido;
     private String email;
-    private DTFecha fechaNacimiento;
+    private LocalDate fechaNacimiento;
     private BufferedImage imagen;
     
     private ArrayList<Usuario> usuariosSeguidos;

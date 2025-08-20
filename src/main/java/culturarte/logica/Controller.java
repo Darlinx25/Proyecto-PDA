@@ -4,17 +4,14 @@
  */
 package culturarte.logica;
 
-import java.time.LocalDateTime;
+import java.util.Map;
 
 /**
  *
  * @author mark
  */
-public class Colaboracion {
-    private float monto;
-    private LocalDateTime fechaHora;
-    private String tipoRetorno;
-    
-    private Colaborador colaborador;
-    private Propuesta propuestaColaborada;
+public class Controller implements IController {
+    private Map<String, Usuario> usuarios;
+    private Map<String, Propuesta> propuestas;
+    private Map<String, Categoria> categorias;
 }

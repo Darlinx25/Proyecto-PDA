@@ -5,6 +5,8 @@
 package culturarte.logica;
 
 import java.awt.image.BufferedImage;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  *
@@ -15,11 +17,14 @@ public class Propuesta {
     private String descripcion;
     private BufferedImage imagen;
     private String lugarRealizara;
-    private DTFecha fechaRealizara;
+    private LocalDate fechaRealizara;
     private float precioEntrada;
     private float montoAReunir;
-    private DTFecha fechaPublicacion;
-    private EstadoPropuesta estado;
+    private LocalDate fechaPublicacion;
     
     private Categoria tipoPropuesta;
+    private Proponente proponedor;
+    private Estado estadoActual;
+    private ArrayList<Estado> historialEstados;
+    private ArrayList<Colaboracion> colaboraciones;
 }

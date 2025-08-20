@@ -4,12 +4,13 @@
  */
 package culturarte.logica;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author mark
  */
-public class DTFecha {
-    private int dia;
-    private int mes;
-    private int anio;
+public class Estado {
+    private EstadoPropuesta estado;
+    private LocalDate fechaEstado;
 }
