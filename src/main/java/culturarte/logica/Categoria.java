@@ -15,6 +15,10 @@ public class Categoria {
     
     private ArrayList<Categoria> subCategorias;
     private ArrayList<Propuesta> propuestas;
+    
+    public Categoria(String nombre) {
+        this.nombre = nombre;
+    }
 
     public String getNombre() {
         return nombre;
