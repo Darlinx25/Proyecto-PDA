@@ -13,6 +13,7 @@ culturarte\graficos\MainFrame$2.class
 culturarte\graficos\AltaUsr$1.class
 culturarte\logica\Colaborador.class
 culturarte\logica\IController.class
+culturarte\logica\IControllerFactory.class
 culturarte\logica\Controller.class
 culturarte\logica\Estado.class
 culturarte\logica\Usuario.class
