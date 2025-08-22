@@ -18,6 +18,8 @@ public class Categoria {
     
     public Categoria(String nombre) {
         this.nombre = nombre;
+        this.subCategorias = new ArrayList<Categoria>();//si no inicializamos quedan en null, no vacías
+        this.propuestas = new ArrayList<Propuesta>();
     }
 
     public String getNombre() {
@@ -44,5 +46,8 @@ public class Categoria {
         this.propuestas = propuestas;
     }
     
+    public void addSubcategoria(Categoria cat) {
+        this.subCategorias.add(cat);
+    }
     
 }

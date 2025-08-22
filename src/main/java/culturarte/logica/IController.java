@@ -4,10 +4,13 @@
  */
 package culturarte.logica;
 
+import javax.swing.tree.DefaultMutableTreeNode;
+
 /**
  *
  * @author mark
  */
 public interface IController {
-    
+    public DefaultMutableTreeNode listarCategorias();
+    public void addCategoria(String nombre, String nombrePadre);
 }
