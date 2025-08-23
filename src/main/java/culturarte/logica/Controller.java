@@ -4,6 +4,8 @@
  */
 package culturarte.logica;
 
+import java.awt.image.BufferedImage;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -36,6 +38,34 @@ public class Controller implements IController {
         return instancia;
     }
 
+    @Override
+    public void addUsuario(DTUsuario user) {
+        String nick = user.getNickname();
+        
+        if (this.usuarios.containsKey(nick)) {
+            return;//agregar exception luego
+        }
+        //corroborar emails únicos luego
+        String nombre = user.getNombre();
+        String apellido = user.getApellido();
+        String email = user.getEmail();
+        LocalDate fechaNac = user.getFechaNacimiento();
+        BufferedImage imagen = user.getImagen();
+        
+        Usuario usu = null;
+        
+        if (user instanceof DTColaborador) {
+            usu = new Colaborador(nick, nombre, apellido, email, fechaNac, imagen);
+        } else if (user instanceof DTProponente) {
+            DTProponente userProp = (DTProponente) user;//downcast
+            DTDireccion direccion = userProp.getDireccion();
+            String biografia = userProp.getBiografia();
+            String sitioWeb = userProp.getSitioWeb();
+            usu = new Proponente(direccion, biografia, sitioWeb, nick, nombre, apellido, email, fechaNac, imagen);
+        }
+        this.usuarios.put(nick, usu);
+    }
+    
     @Override
     public DefaultMutableTreeNode listarCategorias() {
         //throw new UnsupportedOperationException("Not supported yet.");

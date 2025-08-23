@@ -11,6 +11,7 @@ package culturarte.graficos;
 public class MainFrame extends javax.swing.JFrame {
     int clicks=0;
     
+    private AltaUsr altaUsr;
     private AltaCategoria altaCategoria;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
@@ -46,7 +47,8 @@ public class MainFrame extends javax.swing.JFrame {
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(500, 400));
+        setBounds(new java.awt.Rectangle(200, 200, 0, 0));
+        setPreferredSize(new java.awt.Dimension(800, 600));
         setResizable(false);
 
         jButton1.setText("Boton");
@@ -58,7 +60,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jMenu3.setText("Usuario");
 
-        jMenuItem1.setText("Alta Usuario");
+        jMenuItem1.setText("Alta de Usuario");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -90,13 +92,13 @@ public class MainFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 328, Short.MAX_VALUE)
+                .addGap(0, 388, Short.MAX_VALUE)
                 .addComponent(jButton1))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 231, Short.MAX_VALUE)
+                .addGap(0, 255, Short.MAX_VALUE)
                 .addComponent(jButton1))
         );
 
@@ -114,10 +116,14 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        AltaUsr a = new AltaUsr();
-        add(a);
-        a.setVisible(true);
-        
+        if (this.altaUsr != null) {
+            if (this.altaUsr.isVisible()) {
+                return;
+            }
+        }
+        this.altaUsr = new AltaUsr();
+        add(this.altaUsr);
+        this.altaUsr.setVisible(true);    
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed

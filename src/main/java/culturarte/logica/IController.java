@@ -11,6 +11,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
  * @author mark
  */
 public interface IController {
+    public void addUsuario(DTUsuario user);
+    
     public DefaultMutableTreeNode listarCategorias();
     public void addCategoria(String nombre, String nombrePadre);
 }

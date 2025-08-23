@@ -4,16 +4,27 @@
  */
 package culturarte.graficos;
 
+import culturarte.logica.DTColaborador;
+import culturarte.logica.DTDireccion;
+import culturarte.logica.DTProponente;
+import culturarte.logica.DTUsuario;
+import culturarte.logica.IControllerFactory;
+import culturarte.logica.IController;
+import java.awt.image.BufferedImage;
+import java.time.LocalDate;
 /**
  *
  * @author faxcundo
  */
 public class AltaUsr extends javax.swing.JInternalFrame {
-
+    private IController controller;
     /**
      * Creates new form Alta_Usr
      */
     public AltaUsr() {
+        IControllerFactory fabrica = IControllerFactory.getInstance();
+        this.controller = fabrica.getIController();
+        
         initComponents();
     }
 
@@ -26,47 +37,228 @@ public class AltaUsr extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
+        campoNickname = new javax.swing.JTextField();
+        botonAceptar = new javax.swing.JButton();
+        botonCancelar = new javax.swing.JButton();
+        campoNombre = new javax.swing.JTextField();
+        campoApellido = new javax.swing.JTextField();
+        campoEmail = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        campoFNac = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        botonAddImagen = new javax.swing.JButton();
+        radioProponente = new javax.swing.JRadioButton();
+        radioColaborador = new javax.swing.JRadioButton();
+        panelProponente = new javax.swing.JPanel();
+        labelProponente = new javax.swing.JLabel();
+        labelCiudad = new javax.swing.JLabel();
+        labelCalle = new javax.swing.JLabel();
+        labelNumPuerta = new javax.swing.JLabel();
+        campoCiudad = new javax.swing.JTextField();
+        campoCalle = new javax.swing.JTextField();
+        campoNumPuerta = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        areaBiografia = new javax.swing.JTextArea();
+        labelBiografia = new javax.swing.JLabel();
+        campoSitioWeb = new javax.swing.JTextField();
+        labelSitioWeb = new javax.swing.JLabel();
 
-        setPreferredSize(new java.awt.Dimension(300, 220));
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("Registrar un Usuario");
         setRequestFocusEnabled(false);
-        try {
-            setSelected(true);
-        } catch (java.beans.PropertyVetoException e1) {
-            e1.printStackTrace();
-        }
 
-        jLabel1.setText("Nickname");
+        jLabel1.setText("Nickname:");
 
-        jLabel2.setText("Nombre");
+        jLabel2.setText("Nombre:");
 
-        jTextField2.setColumns(8);
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        campoNickname.setColumns(8);
+        campoNickname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                campoNicknameActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Aceptar");
-
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        botonAceptar.setText("Aceptar");
+        botonAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                botonAceptarActionPerformed(evt);
             }
         });
 
-        jTextField3.setColumns(8);
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        botonCancelar.setText("Cancelar");
+        botonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                botonCancelarActionPerformed(evt);
             }
         });
+
+        campoNombre.setColumns(8);
+        campoNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoNombreActionPerformed(evt);
+            }
+        });
+
+        campoApellido.setColumns(8);
+        campoApellido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoApellidoActionPerformed(evt);
+            }
+        });
+
+        campoEmail.setColumns(8);
+        campoEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoEmailActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Apellido:");
+
+        jLabel4.setText("E-Mail:");
+
+        campoFNac.setColumns(8);
+        campoFNac.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoFNacActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Fecha de Nacimiento:");
+
+        botonAddImagen.setText("Seleccionar Imagen");
+        botonAddImagen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAddImagenActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(radioProponente);
+        radioProponente.setText("Proponente");
+        radioProponente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioProponenteActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(radioColaborador);
+        radioColaborador.setText("Colaborador");
+        radioColaborador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioColaboradorActionPerformed(evt);
+            }
+        });
+
+        labelProponente.setText("Datos Proponente");
+        labelProponente.setEnabled(false);
+
+        labelCiudad.setText("Ciudad:");
+        labelCiudad.setEnabled(false);
+
+        labelCalle.setText("Calle:");
+        labelCalle.setEnabled(false);
+
+        labelNumPuerta.setText("Nº Puerta:");
+        labelNumPuerta.setEnabled(false);
+
+        campoCiudad.setEnabled(false);
+        campoCiudad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoCiudadActionPerformed(evt);
+            }
+        });
+
+        campoCalle.setEnabled(false);
+
+        campoNumPuerta.setEnabled(false);
+
+        areaBiografia.setColumns(18);
+        areaBiografia.setLineWrap(true);
+        areaBiografia.setRows(4);
+        areaBiografia.setEnabled(false);
+        jScrollPane1.setViewportView(areaBiografia);
+
+        labelBiografia.setText("Biografía:");
+        labelBiografia.setEnabled(false);
+
+        campoSitioWeb.setEnabled(false);
+        campoSitioWeb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoSitioWebActionPerformed(evt);
+            }
+        });
+
+        labelSitioWeb.setText("Sitio Web:");
+        labelSitioWeb.setEnabled(false);
+
+        javax.swing.GroupLayout panelProponenteLayout = new javax.swing.GroupLayout(panelProponente);
+        panelProponente.setLayout(panelProponenteLayout);
+        panelProponenteLayout.setHorizontalGroup(
+            panelProponenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelProponenteLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelProponenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelProponenteLayout.createSequentialGroup()
+                        .addGroup(panelProponenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelCiudad)
+                            .addComponent(labelCalle)
+                            .addComponent(labelNumPuerta))
+                        .addGroup(panelProponenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelProponenteLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                                .addComponent(labelProponente)
+                                .addGap(67, 67, 67))
+                            .addGroup(panelProponenteLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(panelProponenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(campoCiudad, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(campoCalle)
+                                    .addComponent(campoNumPuerta))
+                                .addContainerGap())))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelProponenteLayout.createSequentialGroup()
+                        .addGroup(panelProponenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(campoSitioWeb, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addContainerGap())
+                    .addGroup(panelProponenteLayout.createSequentialGroup()
+                        .addGroup(panelProponenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelBiografia)
+                            .addComponent(labelSitioWeb))
+                        .addGap(0, 0, Short.MAX_VALUE))))
+        );
+        panelProponenteLayout.setVerticalGroup(
+            panelProponenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelProponenteLayout.createSequentialGroup()
+                .addComponent(labelProponente)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelProponenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelCiudad)
+                    .addComponent(campoCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelProponenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelCalle)
+                    .addComponent(campoCalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelProponenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelNumPuerta)
+                    .addComponent(campoNumPuerta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
+                .addComponent(labelBiografia)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(labelSitioWeb)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(campoSitioWeb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -75,60 +267,259 @@ public class AltaUsr extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addGap(12, 12, 12)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel1)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel4))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(campoEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+                                .addComponent(campoNickname)
+                                .addComponent(campoNombre)
+                                .addComponent(campoApellido)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel5)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(16, 16, 16)
+                                    .addComponent(radioColaborador)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(12, 12, 12)
+                                    .addComponent(campoFNac, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(radioProponente)
+                                    .addGap(17, 17, 17)))))
+                    .addComponent(botonAddImagen))
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(220, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(botonAceptar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botonCancelar))
+                    .addComponent(panelProponente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 189, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(campoNickname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(campoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(campoApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(campoEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(campoFNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(radioProponente)
+                            .addComponent(radioColaborador))
+                        .addGap(42, 42, 42)
+                        .addComponent(botonAddImagen)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(panelProponente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(81, 81, 81)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(botonAceptar)
+                    .addComponent(botonCancelar))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
         this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_botonCancelarActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void campoNicknameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNicknameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_campoNicknameActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void campoNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNombreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_campoNombreActionPerformed
 
+    private void campoApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoApellidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoApellidoActionPerformed
 
+    private void campoEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoEmailActionPerformed
+
+    private void campoFNacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoFNacActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoFNacActionPerformed
+
+    private void botonAddImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAddImagenActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonAddImagenActionPerformed
+
+    private void radioProponenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioProponenteActionPerformed
+        enableDatosProponente();
+    }//GEN-LAST:event_radioProponenteActionPerformed
+
+    private void enableDatosProponente() {
+        this.labelProponente.setEnabled(true);
+        this.labelCiudad.setEnabled(true);
+        this.campoCiudad.setEnabled(true);
+        this.labelCalle.setEnabled(true);
+        this.campoCalle.setEnabled(true);
+        this.labelNumPuerta.setEnabled(true);
+        this.campoNumPuerta.setEnabled(true);
+        this.labelBiografia.setEnabled(true);
+        this.areaBiografia.setEnabled(true);
+        this.labelSitioWeb.setEnabled(true);
+        this.campoSitioWeb.setEnabled(true);
+    }
+    
+    private void campoCiudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoCiudadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoCiudadActionPerformed
+
+    private void campoSitioWebActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoSitioWebActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoSitioWebActionPerformed
+
+    private void radioColaboradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioColaboradorActionPerformed
+        disableDatosProponente();
+    }//GEN-LAST:event_radioColaboradorActionPerformed
+
+    private void disableDatosProponente() {
+        this.labelProponente.setEnabled(false);
+        this.labelCiudad.setEnabled(false);
+        this.campoCiudad.setEnabled(false);
+        this.labelCalle.setEnabled(false);
+        this.campoCalle.setEnabled(false);
+        this.labelNumPuerta.setEnabled(false);
+        this.campoNumPuerta.setEnabled(false);
+        this.labelBiografia.setEnabled(false);
+        this.areaBiografia.setEnabled(false);
+        this.labelSitioWeb.setEnabled(false);
+        this.campoSitioWeb.setEnabled(false);
+    }
+    
+    private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
+        if (sonValidosLosCampos()) {
+            String nick = this.campoNickname.getText();
+            String nombre = this.campoNombre.getText();
+            String apellido = this.campoApellido.getText();
+            String email = this.campoEmail.getText();
+            LocalDate fechaNac = null;//añadir esto
+            BufferedImage imagen = null;//añadir esto
+            
+            DTUsuario user = null;
+            if (this.radioColaborador.isSelected()) {
+                user = new DTColaborador(nick, nombre, apellido, email, fechaNac, imagen);
+            } else if (this.radioProponente.isSelected()) {
+                String ciudad = this.campoCiudad.getText();
+                String calle = this.campoCiudad.getText();
+                int numPuerta = Integer.parseInt(this.campoNumPuerta.getText());//corroborar luego
+                DTDireccion direccion = new DTDireccion(ciudad, calle, numPuerta);
+                String biografia = this.areaBiografia.getText();
+                String sitioWeb = this.campoSitioWeb.getText();
+                
+                user = new DTProponente(direccion, biografia, sitioWeb, nick, nombre, apellido, email, fechaNac, imagen);
+            }
+            this.controller.addUsuario(user);  
+        } else {
+            return;
+        }
+        dispose();
+    }//GEN-LAST:event_botonAceptarActionPerformed
+
+    private boolean sonValidosLosCampos() {
+        if (!(this.radioColaborador.isSelected() || this.radioProponente.isSelected())) {
+            return false;
+        }
+        if (!sonValidosCamposBase()) {
+            return false;
+        }
+        if (this.radioProponente.isSelected()) {
+            if (!sonValidosCamposProponente()) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private boolean sonValidosCamposBase() {
+        boolean ret = true;
+        if (this.campoNickname.getText().isBlank()) {
+            ret = false;
+        } else if (this.campoNombre.getText().isBlank()) {
+            ret = false;
+        } else if (this.campoApellido.getText().isBlank()) {
+            ret = false;
+        } else if (this.campoEmail.getText().isBlank()) {
+            ret = false;
+        } else if (this.campoFNac.getText().isBlank()) {
+            ret = false;
+        }
+        return ret;
+    }
+    
+    private boolean sonValidosCamposProponente() {
+        boolean ret = true;
+        if (this.campoCiudad.getText().isBlank()) {
+            ret = false;
+        } else if (this.campoCalle.getText().isBlank()) {
+            ret = false;
+        } else if (this.campoNumPuerta.getText().isBlank()) {
+            ret = false;
+        }
+        return ret;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JTextArea areaBiografia;
+    private javax.swing.JButton botonAceptar;
+    private javax.swing.JButton botonAddImagen;
+    private javax.swing.JButton botonCancelar;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JTextField campoApellido;
+    private javax.swing.JTextField campoCalle;
+    private javax.swing.JTextField campoCiudad;
+    private javax.swing.JTextField campoEmail;
+    private javax.swing.JTextField campoFNac;
+    private javax.swing.JTextField campoNickname;
+    private javax.swing.JTextField campoNombre;
+    private javax.swing.JTextField campoNumPuerta;
+    private javax.swing.JTextField campoSitioWeb;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelBiografia;
+    private javax.swing.JLabel labelCalle;
+    private javax.swing.JLabel labelCiudad;
+    private javax.swing.JLabel labelNumPuerta;
+    private javax.swing.JLabel labelProponente;
+    private javax.swing.JLabel labelSitioWeb;
+    private javax.swing.JPanel panelProponente;
+    private javax.swing.JRadioButton radioColaborador;
+    private javax.swing.JRadioButton radioProponente;
     // End of variables declaration//GEN-END:variables
 }
