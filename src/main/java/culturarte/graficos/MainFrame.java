@@ -13,6 +13,7 @@ public class MainFrame extends javax.swing.JFrame {
     
     private AltaUsr altaUsr;
     private AltaCategoria altaCategoria;
+    private AltaPropuesta altaPropuesta;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
 
@@ -42,13 +43,15 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBounds(new java.awt.Rectangle(200, 200, 0, 0));
-        setPreferredSize(new java.awt.Dimension(800, 600));
+        setBounds(new java.awt.Rectangle(400, 400, 500, 500));
+        setLocation(new java.awt.Point(350, 100));
+        setPreferredSize(new java.awt.Dimension(1100, 750));
         setResizable(false);
 
         jButton1.setText("Boton");
@@ -82,6 +85,14 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem3);
+
+        jMenuItem4.setText("Alta de Propuesta");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem4);
 
         jMenuBar1.add(jMenu1);
 
@@ -137,6 +148,18 @@ public class MainFrame extends javax.swing.JFrame {
         this.altaCategoria.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+          if (this.altaPropuesta != null) {
+            if (this.altaPropuesta.isVisible()) {
+                return;
+            }
+        }
+        this.altaPropuesta = new AltaPropuesta();
+        add(this.altaPropuesta);
+        this.altaPropuesta.setVisible(true);    
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -171,5 +194,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     // End of variables declaration//GEN-END:variables
 }

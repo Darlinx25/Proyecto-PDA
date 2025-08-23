@@ -134,6 +134,7 @@ public class AltaCategoria extends javax.swing.JInternalFrame {
         dispose();
     }//GEN-LAST:event_botonAceptarActionPerformed
 
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAceptar;
