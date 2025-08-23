@@ -4,6 +4,7 @@
  */
 package culturarte.logica;
 
+import java.util.ArrayList;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
@@ -15,4 +16,6 @@ public interface IController {
     
     public DefaultMutableTreeNode listarCategorias();
     public void addCategoria(String nombre, String nombrePadre);
+    public ArrayList<String> listarProponentes();
+    public void addPropuesta();
 }

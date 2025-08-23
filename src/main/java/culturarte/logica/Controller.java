@@ -6,6 +6,7 @@ package culturarte.logica;
 
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -107,4 +108,24 @@ public class Controller implements IController {
         }
     }
     
+    @Override
+    public ArrayList<String> listarProponentes() {
+        ArrayList<String> aux = new ArrayList<String>();
+        
+        for (Usuario usu : this.usuarios.values()) {
+            if (usu instanceof Proponente) {
+                aux.add(usu.getNickname());
+            }
+        }
+        
+        return aux;
+    }
+    
+    @Override
+    public void addPropuesta(){
+        
+    }
+    
 }
+
+    

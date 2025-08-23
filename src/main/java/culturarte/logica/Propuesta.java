@@ -28,6 +28,24 @@ public class Propuesta {
     private ArrayList<Estado> historialEstados;
     private ArrayList<Colaboracion> colaboraciones;
 
+    public Propuesta(String titulo, String descripcion, BufferedImage imagen, String lugarRealizara, LocalDate fechaRealizara, float precioEntrada, float montoAReunir, LocalDate fechaPublicacion, Categoria tipoPropuesta, Proponente proponedor, Estado estadoActual) {
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.imagen = imagen;
+        this.lugarRealizara = lugarRealizara;
+        this.fechaRealizara = fechaRealizara;
+        this.precioEntrada = precioEntrada;
+        this.montoAReunir = montoAReunir;
+        this.fechaPublicacion = fechaPublicacion;
+        this.tipoPropuesta = tipoPropuesta;
+        this.proponedor = proponedor;
+        this.estadoActual = new Estado();
+        this.historialEstados = new ArrayList<Estado>();
+        this.colaboraciones = new ArrayList<Colaboracion>();
+    }
+
+    
+    
     public String getTitulo() {
         return titulo;
     }

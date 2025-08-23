@@ -14,26 +14,34 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
 
     private IController controller;
     
-    public AltaPropuesta() {
-        
-        IControllerFactory fabrica = IControllerFactory.getInstance();
-        this.controller = fabrica.getIController();
-        initComponents();
-      java.awt.event.MouseAdapter listener = new java.awt.event.MouseAdapter() {
-        @Override
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-            String select1 = ListaProponentes.getSelectedValue();
-            
-            if (select1 != null ) {
+public AltaPropuesta() {
+    IControllerFactory fabrica = IControllerFactory.getInstance();
+    this.controller = fabrica.getIController();
+    initComponents();
+
+    // Listener para JList
+    listaProponentes.addListSelectionListener(e -> {
+        if (!e.getValueIsAdjusting()) {
+            String select1 = listaProponentes.getSelectedValue();
+            DefaultMutableTreeNode select2 = (DefaultMutableTreeNode) arbolEspectaculo.getLastSelectedPathComponent();
+
+            if (select1 != null && select2 != null) {
                 enableDatosPropuesta();
             }
         }
-    };
+    });
 
-    ListaProponentes.addMouseListener(listener);
-    
-        
-    }
+    // Listener para JTree
+    arbolEspectaculo.getSelectionModel().addTreeSelectionListener(e -> {
+        String select1 = listaProponentes.getSelectedValue();
+        DefaultMutableTreeNode select2 = (DefaultMutableTreeNode) arbolEspectaculo.getLastSelectedPathComponent();
+
+        if (select1 != null && select2 != null) {
+            enableDatosPropuesta();
+        }
+    });
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -45,12 +53,12 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
-        jButton1 = new javax.swing.JButton();
+        botonAceptar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        ListaProponentes = new javax.swing.JList<>();
+        listaProponentes = new javax.swing.JList<>(this.controller.listarProponentes().toArray(new String[0]));
         Proponentes = new javax.swing.JLabel();
         Tipo_de_Espectaculo = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        botonCancelar = new javax.swing.JButton();
         NombreL = new javax.swing.JLabel();
         DescripcionL = new javax.swing.JLabel();
         ImagenL = new javax.swing.JButton();
@@ -67,7 +75,7 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         Descripcion = new javax.swing.JTextArea();
         Nombre = new javax.swing.JTextField();
-        jTree2 = new javax.swing.JTree(this.controller.listarCategorias());
+        arbolEspectaculo = new javax.swing.JTree(this.controller.listarCategorias());
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
@@ -78,28 +86,23 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
         setTitle("Alta de Propuesta");
         setPreferredSize(new java.awt.Dimension(1000, 500));
 
-        jButton1.setText("Aceptar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botonAceptar.setText("Aceptar");
+        botonAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botonAceptarActionPerformed(evt);
             }
         });
 
-        ListaProponentes.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "item 7", "item 8", "item 9", "item 10" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(ListaProponentes);
+        jScrollPane1.setViewportView(listaProponentes);
 
         Proponentes.setText("Proponentes");
 
         Tipo_de_Espectaculo.setText("Tipo de Espectaculo");
 
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        botonCancelar.setText("Cancelar");
+        botonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                botonCancelarActionPerformed(evt);
             }
         });
 
@@ -170,20 +173,20 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Proponentes, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+                            .addComponent(Proponentes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane1))
                         .addGap(48, 48, 48)
                         .addComponent(Tipo_de_Espectaculo))
-                    .addComponent(jTree2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(arbolEspectaculo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(318, 318, 318)
-                        .addComponent(jButton2)
+                        .addComponent(botonCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1)
+                        .addComponent(botonAceptar)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(DescripcionL)
@@ -268,11 +271,11 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
                                     .addComponent(DescripcionL))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(ImagenL))
-                            .addComponent(jTree2, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(arbolEspectaculo, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(botonAceptar)
+                    .addComponent(botonCancelar))
                 .addGap(58, 58, 58))
         );
 
@@ -283,8 +286,8 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
 
     
     
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String user = ListaProponentes.getSelectedValue();
+    private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
+        String user = listaProponentes.getSelectedValue();
         
         
         if(user==null){
@@ -293,13 +296,15 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
       
         if(user != null  ){
             setTitle("lol");
-            
+         
+           
+            this.controller.addPropuesta();
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_botonAceptarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
         this.dispose();       
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_botonCancelarActionPerformed
 
     private void ImagenLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImagenLActionPerformed
         // TODO add your handling code here:
@@ -360,7 +365,6 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
     private javax.swing.JTextField Fecha_realizar;
     private javax.swing.JLabel Fecha_realizarL;
     private javax.swing.JButton ImagenL;
-    private javax.swing.JList<String> ListaProponentes;
     private javax.swing.JTextField Lugar;
     private javax.swing.JLabel LugarL;
     private javax.swing.JLabel MontoReunirL;
@@ -371,11 +375,12 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
     private javax.swing.JTextField Precio_entrada;
     private javax.swing.JLabel Proponentes;
     private javax.swing.JLabel Tipo_de_Espectaculo;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JTree arbolEspectaculo;
+    private javax.swing.JButton botonAceptar;
+    private javax.swing.JButton botonCancelar;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTree jTree2;
+    private javax.swing.JList<String> listaProponentes;
     // End of variables declaration//GEN-END:variables
 }
