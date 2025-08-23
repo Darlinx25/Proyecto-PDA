@@ -39,6 +39,9 @@ public class AltaCategoria extends javax.swing.JInternalFrame {
         botonAceptar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
         setResizable(true);
         setTitle("Alta de Categoría");
 
@@ -119,7 +122,7 @@ public class AltaCategoria extends javax.swing.JInternalFrame {
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
         String nombreCat = jTextField1.getText();
-        if (nombreCat.isEmpty()) {//no funciona comparando == null o == "", qué raro
+        if (nombreCat.isBlank()) {
             return;
         }
         String nombrePadre = null;
