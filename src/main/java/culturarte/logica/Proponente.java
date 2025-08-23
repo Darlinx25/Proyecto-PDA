@@ -4,6 +4,8 @@
  */
 package culturarte.logica;
 
+import java.awt.image.BufferedImage;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -16,6 +18,14 @@ public class Proponente extends Usuario {
     private String sitioWeb;
     
     private ArrayList<Propuesta> propuestas;
+
+    public Proponente(DTDireccion direccion, String biografia, String sitioWeb, String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, BufferedImage imagen) {
+        super(nickname, nombre, apellido, email, fechaNacimiento, imagen);
+        this.direccion = direccion;
+        this.biografia = biografia;
+        this.sitioWeb = sitioWeb;
+        this.propuestas = new ArrayList<Propuesta>();
+    }
 
     public DTDireccion getDireccion() {
         return direccion;

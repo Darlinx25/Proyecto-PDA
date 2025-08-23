@@ -23,6 +23,17 @@ public abstract class Usuario {
     private ArrayList<Usuario> usuariosSeguidos;
     private ArrayList<Propuesta> propuestasFavoritas;
 
+    protected Usuario(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, BufferedImage imagen) {
+        this.nickname = nickname;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+        this.fechaNacimiento = fechaNacimiento;
+        this.imagen = imagen;
+        this.usuariosSeguidos = new ArrayList<Usuario>();
+        this.propuestasFavoritas = new ArrayList<Propuesta>();
+    }
+    
     public String getNickname() {
         return nickname;
     }

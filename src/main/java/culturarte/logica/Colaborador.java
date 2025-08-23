@@ -4,6 +4,8 @@
  */
 package culturarte.logica;
 
+import java.awt.image.BufferedImage;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -13,6 +15,11 @@ import java.util.ArrayList;
 public class Colaborador extends Usuario {
     private ArrayList<Colaboracion> colaboraciones;
 
+    public Colaborador(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, BufferedImage imagen) {
+        super(nickname, nombre, apellido, email, fechaNacimiento, imagen);
+        this.colaboraciones = new ArrayList<Colaboracion>();
+    }
+    
     public ArrayList<Colaboracion> getColaboraciones() {
         return colaboraciones;
     }
