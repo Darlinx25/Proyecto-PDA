@@ -12,7 +12,12 @@ public class DTDireccion {
     private String ciudad;
     private String calle;
     private int numeroPuerta;
-    
+
+    public DTDireccion(String ciudad, String calle, int numeroPuerta) {
+        this.ciudad = ciudad;
+        this.calle = calle;
+        this.numeroPuerta = numeroPuerta;
+    }
     
 
     public String getCiudad() {
