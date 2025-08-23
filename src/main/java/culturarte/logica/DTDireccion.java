@@ -9,9 +9,11 @@ package culturarte.logica;
  * @author mark
  */
 public class DTDireccion {
-    String ciudad;
-    String calle;
-    int numeroPuerta;
+    private String ciudad;
+    private String calle;
+    private int numeroPuerta;
+    
+    
 
     public String getCiudad() {
         return ciudad;
