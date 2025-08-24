@@ -7,9 +7,16 @@ import culturarte.logica.DTPropuesta;
 import culturarte.logica.IControllerFactory;
 import culturarte.logica.IController;
 import culturarte.logica.TipoRetorno;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 /**
  *
@@ -18,10 +25,13 @@ import javax.swing.tree.DefaultMutableTreeNode;
 public class AltaPropuesta extends javax.swing.JInternalFrame {
 
     private IController controller;
+    private BufferedImage imagenPropuesta;
     
 public AltaPropuesta() {
     IControllerFactory fabrica = IControllerFactory.getInstance();
     this.controller = fabrica.getIController();
+    this.imagenPropuesta = null;
+    
     initComponents();
 
     // Listener para JList
@@ -66,7 +76,7 @@ public AltaPropuesta() {
         botonCancelar = new javax.swing.JButton();
         NombreL = new javax.swing.JLabel();
         DescripcionL = new javax.swing.JLabel();
-        ImagenL = new javax.swing.JButton();
+        botonAddImagen = new javax.swing.JButton();
         LugarL = new javax.swing.JLabel();
         Lugar = new javax.swing.JTextField();
         Fecha_realizarL = new javax.swing.JLabel();
@@ -82,6 +92,7 @@ public AltaPropuesta() {
         labelRetorno = new javax.swing.JLabel();
         checkEntradaGratis = new javax.swing.JCheckBox();
         checkGanancias = new javax.swing.JCheckBox();
+        labelImagen = new javax.swing.JLabel();
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
@@ -118,11 +129,11 @@ public AltaPropuesta() {
         DescripcionL.setText("Descripcion:");
         DescripcionL.setEnabled(false);
 
-        ImagenL.setText("Seleccionar Imagen");
-        ImagenL.setEnabled(false);
-        ImagenL.addActionListener(new java.awt.event.ActionListener() {
+        botonAddImagen.setText("Seleccionar Imagen");
+        botonAddImagen.setEnabled(false);
+        botonAddImagen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ImagenLActionPerformed(evt);
+                botonAddImagenActionPerformed(evt);
             }
         });
 
@@ -174,6 +185,8 @@ public AltaPropuesta() {
         checkGanancias.setText("Porcentaje de Ganancias");
         checkGanancias.setEnabled(false);
 
+        labelImagen.setPreferredSize(new java.awt.Dimension(64, 64));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -188,59 +201,59 @@ public AltaPropuesta() {
                         .addGap(48, 48, 48)
                         .addComponent(Tipo_de_Espectaculo))
                     .addComponent(arbolEspectaculo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(labelRetorno)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botonCancelar)
+                        .addGap(18, 18, 18)
+                        .addComponent(botonAceptar)
+                        .addGap(174, 174, 174))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(botonAddImagen))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGap(36, 36, 36)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(NombreL)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(campoTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(PrecioEntradaL)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(Precio_entrada, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(32, 32, 32)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addComponent(NombreL)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(campoTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addComponent(PrecioEntradaL)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(Precio_entrada, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(32, 32, 32)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(Fecha_realizarL)
-                                                    .addComponent(LugarL, javax.swing.GroupLayout.Alignment.TRAILING)))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(MontoReunirL)))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(Lugar, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
-                                                .addComponent(Fecha_realizar))
-                                            .addComponent(Monto_reunir, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(checkEntradaGratis, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(checkGanancias, javax.swing.GroupLayout.Alignment.LEADING))
+                                            .addComponent(Fecha_realizarL)
+                                            .addComponent(LugarL, javax.swing.GroupLayout.Alignment.TRAILING)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(MontoReunirL)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(Lugar, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                                        .addComponent(Fecha_realizar))
+                                    .addComponent(Monto_reunir, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(DescripcionL)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(ImagenL)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(botonCancelar)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(botonAceptar)))
-                                        .addGap(44, 44, 44)))))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(checkEntradaGratis, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(checkGanancias, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(labelRetorno)
+                                            .addGap(65, 65, 65)))
+                                    .addComponent(DescripcionL))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(labelImagen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(179, 179, 179))))
         );
         layout.setVerticalGroup(
@@ -284,19 +297,22 @@ public AltaPropuesta() {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(DescripcionL))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(ImagenL)))))
-                .addGap(9, 9, 9)
-                .addComponent(labelRetorno)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(checkEntradaGratis)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(checkGanancias)
-                .addGap(18, 18, 18)
+                                .addGap(26, 26, 26)
+                                .addComponent(botonAddImagen)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(labelRetorno)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(checkEntradaGratis)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(checkGanancias)))))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonAceptar)
                     .addComponent(botonCancelar))
-                .addGap(55, 55, 55))
+                .addGap(107, 107, 107))
         );
 
         pack();
@@ -307,16 +323,10 @@ public AltaPropuesta() {
     
     
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
-        String user = listaProponentes.getSelectedValue();
-        
-        
-
-      
         if(sonValidosLosCampos()){
             
             String titulo = this.campoTitulo.getText();
             String descripcion = this.Descripcion.getText();
-            BufferedImage imagen = null;
             String lugarRealizara = this.Lugar.getText();
             LocalDate fechaRealizara = null;//checkear fecha luego
             float precioEntrada = Float.parseFloat(this.Precio_entrada.getText());
@@ -331,9 +341,7 @@ public AltaPropuesta() {
             if (this.checkGanancias.isSelected()) {
                 tiposRetorno.add(TipoRetorno.PORCENTAJE_GANANCIAS);
             }
-            DTPropuesta propuesta = new DTPropuesta(titulo, descripcion, imagen, lugarRealizara, fechaRealizara, precioEntrada, montoAReunir, tipoPropuesta, nickProponedor, tiposRetorno);
-            
-            
+            DTPropuesta propuesta = new DTPropuesta(titulo, descripcion, this.imagenPropuesta, lugarRealizara, fechaRealizara, precioEntrada, montoAReunir, tipoPropuesta, nickProponedor, tiposRetorno);
             
             this.controller.addPropuesta(propuesta);
             this.dispose();
@@ -366,9 +374,26 @@ public AltaPropuesta() {
         this.dispose();       
     }//GEN-LAST:event_botonCancelarActionPerformed
 
-    private void ImagenLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImagenLActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ImagenLActionPerformed
+    private void botonAddImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAddImagenActionPerformed
+        JFileChooser selectorImagen = new JFileChooser();
+        String[] tiposImagen = {"jpg", "png"};
+        FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("Archivos .jpg o .png", tiposImagen);
+        selectorImagen.setFileFilter(filtroImagen);
+        selectorImagen.setAcceptAllFileFilterUsed(false);
+        
+        int resultado = selectorImagen.showOpenDialog(this);
+        
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            File archivoElegido = selectorImagen.getSelectedFile();
+            try {
+                this.imagenPropuesta = ImageIO.read(archivoElegido);
+                Image imagenEscalada = this.imagenPropuesta.getScaledInstance(133, 133, Image.SCALE_SMOOTH);
+                this.labelImagen.setIcon(new ImageIcon(imagenEscalada));
+            } catch (IOException ex) {
+                System.getLogger(AltaUsr.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+        }
+    }//GEN-LAST:event_botonAddImagenActionPerformed
 
     private void LugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LugarActionPerformed
         // TODO add your handling code here:
@@ -380,7 +405,7 @@ public AltaPropuesta() {
         this.DescripcionL.setEnabled(true);
         this.Fecha_realizar.setEnabled(true);
         this.Fecha_realizarL.setEnabled(true);
-        this.ImagenL.setEnabled(true);
+        this.botonAddImagen.setEnabled(true);
         this.Lugar.setEnabled(true);
         this.LugarL.setEnabled(true);
         this.MontoReunirL.setEnabled(true);
@@ -400,7 +425,7 @@ public AltaPropuesta() {
         this.DescripcionL.setEnabled(false);
         this.Fecha_realizar.setEnabled(false);
         this.Fecha_realizarL.setEnabled(false);
-        this.ImagenL.setEnabled(false);
+        this.botonAddImagen.setEnabled(false);
         this.Lugar.setEnabled(false);
         this.LugarL.setEnabled(false);
         this.MontoReunirL.setEnabled(false);
@@ -424,7 +449,6 @@ public AltaPropuesta() {
     private javax.swing.JLabel DescripcionL;
     private javax.swing.JTextField Fecha_realizar;
     private javax.swing.JLabel Fecha_realizarL;
-    private javax.swing.JButton ImagenL;
     private javax.swing.JTextField Lugar;
     private javax.swing.JLabel LugarL;
     private javax.swing.JLabel MontoReunirL;
@@ -436,6 +460,7 @@ public AltaPropuesta() {
     private javax.swing.JLabel Tipo_de_Espectaculo;
     private javax.swing.JTree arbolEspectaculo;
     private javax.swing.JButton botonAceptar;
+    private javax.swing.JButton botonAddImagen;
     private javax.swing.JButton botonCancelar;
     private javax.swing.JTextField campoTitulo;
     private javax.swing.JCheckBox checkEntradaGratis;
@@ -443,6 +468,7 @@ public AltaPropuesta() {
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel labelImagen;
     private javax.swing.JLabel labelRetorno;
     private javax.swing.JList<String> listaProponentes;
     // End of variables declaration//GEN-END:variables
