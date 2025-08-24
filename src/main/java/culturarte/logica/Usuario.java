@@ -29,7 +29,7 @@ public abstract class Usuario {
     
     private LocalDate fechaNacimiento;
     @Transient//pa ignorar la imagen de momento q da lio en la db
-    private BufferedImage imagen;
+    private BufferedImage imagen; 
     
     @ManyToMany
     @JoinTable(
