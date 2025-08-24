@@ -10,20 +10,29 @@ import culturarte.logica.DTProponente;
 import culturarte.logica.DTUsuario;
 import culturarte.logica.IControllerFactory;
 import culturarte.logica.IController;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 /**
  *
  * @author faxcundo
  */
 public class AltaUsr extends javax.swing.JInternalFrame {
     private IController controller;
+    private BufferedImage imagenUsuario;
     /**
      * Creates new form Alta_Usr
      */
     public AltaUsr() {
         IControllerFactory fabrica = IControllerFactory.getInstance();
         this.controller = fabrica.getIController();
+        this.imagenUsuario = null;
         
         initComponents();
     }
@@ -66,6 +75,7 @@ public class AltaUsr extends javax.swing.JInternalFrame {
         labelBiografia = new javax.swing.JLabel();
         campoSitioWeb = new javax.swing.JTextField();
         labelSitioWeb = new javax.swing.JLabel();
+        labelImagen = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -260,12 +270,20 @@ public class AltaUsr extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
+        labelImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelImagen.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(85, 85, 85)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(botonAddImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(labelImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -294,11 +312,8 @@ public class AltaUsr extends javax.swing.JInternalFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(radioProponente)
-                                        .addGap(17, 17, 17))))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(85, 85, 85)
-                        .addComponent(botonAddImagen)))
-                .addGap(30, 30, 30)
+                                        .addGap(17, 17, 17)))))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelProponente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -311,9 +326,16 @@ public class AltaUsr extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(panelProponente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(70, 70, 70)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(botonCancelar)
+                            .addComponent(botonAceptar))
+                        .addGap(17, 17, 17))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
@@ -340,13 +362,9 @@ public class AltaUsr extends javax.swing.JInternalFrame {
                             .addComponent(radioColaborador))
                         .addGap(39, 39, 39)
                         .addComponent(botonAddImagen)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(panelProponente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(70, 70, 70)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botonCancelar)
-                    .addComponent(botonAceptar))
-                .addGap(17, 17, 17))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -377,7 +395,25 @@ public class AltaUsr extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_campoFNacActionPerformed
 
     private void botonAddImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAddImagenActionPerformed
-        // TODO add your handling code here:
+        JFileChooser selectorImagen = new JFileChooser();
+        String[] tiposImagen = {"jpg", "png"};
+        FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("Archivos .jpg o .png", tiposImagen);
+        selectorImagen.setFileFilter(filtroImagen);
+        selectorImagen.setAcceptAllFileFilterUsed(false);
+        
+        int resultado = selectorImagen.showOpenDialog(this);
+        
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            File archivoElegido = selectorImagen.getSelectedFile();
+            try {
+                this.imagenUsuario = ImageIO.read(archivoElegido);
+                Image imagenEscalada = this.imagenUsuario.getScaledInstance(133, 133, Image.SCALE_SMOOTH);
+                this.labelImagen.setIcon(new ImageIcon(imagenEscalada));
+            } catch (IOException ex) {
+                System.getLogger(AltaUsr.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+        }
+        
     }//GEN-LAST:event_botonAddImagenActionPerformed
 
     private void radioProponenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioProponenteActionPerformed
@@ -431,11 +467,10 @@ public class AltaUsr extends javax.swing.JInternalFrame {
             String apellido = this.campoApellido.getText();
             String email = this.campoEmail.getText();
             LocalDate fechaNac = null;//añadir esto
-            BufferedImage imagen = null;//añadir esto
             
             DTUsuario user = null;
             if (this.radioColaborador.isSelected()) {
-                user = new DTColaborador(nick, nombre, apellido, email, fechaNac, imagen);
+                user = new DTColaborador(nick, nombre, apellido, email, fechaNac, this.imagenUsuario);
             } else if (this.radioProponente.isSelected()) {
                 String ciudad = this.campoCiudad.getText();
                 String calle = this.campoCiudad.getText();
@@ -444,7 +479,7 @@ public class AltaUsr extends javax.swing.JInternalFrame {
                 String biografia = this.areaBiografia.getText();
                 String sitioWeb = this.campoSitioWeb.getText();
                 
-                user = new DTProponente(direccion, biografia, sitioWeb, nick, nombre, apellido, email, fechaNac, imagen);
+                user = new DTProponente(direccion, biografia, sitioWeb, nick, nombre, apellido, email, fechaNac, this.imagenUsuario);
             }
             this.controller.addUsuario(user);  
         } else {
@@ -520,6 +555,7 @@ public class AltaUsr extends javax.swing.JInternalFrame {
     private javax.swing.JLabel labelBiografia;
     private javax.swing.JLabel labelCalle;
     private javax.swing.JLabel labelCiudad;
+    private javax.swing.JLabel labelImagen;
     private javax.swing.JLabel labelNumPuerta;
     private javax.swing.JLabel labelProponente;
     private javax.swing.JLabel labelSitioWeb;
