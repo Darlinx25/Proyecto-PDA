@@ -15,6 +15,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -57,7 +59,6 @@ public class AltaUsr extends javax.swing.JInternalFrame {
         campoEmail = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        campoFNac = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         botonAddImagen = new javax.swing.JButton();
         radioProponente = new javax.swing.JRadioButton();
@@ -76,6 +77,7 @@ public class AltaUsr extends javax.swing.JInternalFrame {
         campoSitioWeb = new javax.swing.JTextField();
         labelSitioWeb = new javax.swing.JLabel();
         labelImagen = new javax.swing.JLabel();
+        campoFNac = new javax.swing.JFormattedTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -133,13 +135,6 @@ public class AltaUsr extends javax.swing.JInternalFrame {
         jLabel3.setText("Apellido:");
 
         jLabel4.setText("E-Mail:");
-
-        campoFNac.setColumns(8);
-        campoFNac.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoFNacActionPerformed(evt);
-            }
-        });
 
         jLabel5.setText("Fecha de Nacimiento:");
 
@@ -273,6 +268,8 @@ public class AltaUsr extends javax.swing.JInternalFrame {
         labelImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelImagen.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
+        campoFNac.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/y"))));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -294,25 +291,23 @@ public class AltaUsr extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel4))
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(campoEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
-                                    .addComponent(campoNickname)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(campoNickname, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
                                     .addComponent(campoNombre)
-                                    .addComponent(campoApellido)))
+                                    .addComponent(campoApellido)
+                                    .addComponent(campoEmail)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(16, 16, 16)
                                         .addComponent(radioColaborador)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(12, 12, 12)
-                                        .addComponent(campoFNac, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(radioProponente)
-                                        .addGap(17, 17, 17)))))))
+                                        .addGap(17, 17, 17))
+                                    .addComponent(campoFNac, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelProponente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -354,8 +349,8 @@ public class AltaUsr extends javax.swing.JInternalFrame {
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(campoFNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
+                            .addComponent(jLabel5)
+                            .addComponent(campoFNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(radioProponente)
@@ -389,10 +384,6 @@ public class AltaUsr extends javax.swing.JInternalFrame {
     private void campoEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoEmailActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoEmailActionPerformed
-
-    private void campoFNacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoFNacActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoFNacActionPerformed
 
     private void botonAddImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAddImagenActionPerformed
         JFileChooser selectorImagen = new JFileChooser();
@@ -466,7 +457,8 @@ public class AltaUsr extends javax.swing.JInternalFrame {
             String nombre = this.campoNombre.getText();
             String apellido = this.campoApellido.getText();
             String email = this.campoEmail.getText();
-            LocalDate fechaNac = null;//añadir esto
+            Date fecha = (Date) this.campoFNac.getValue();
+            LocalDate fechaNac = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             
             DTUsuario user = null;
             if (this.radioColaborador.isSelected()) {
@@ -541,7 +533,7 @@ public class AltaUsr extends javax.swing.JInternalFrame {
     private javax.swing.JTextField campoCalle;
     private javax.swing.JTextField campoCiudad;
     private javax.swing.JTextField campoEmail;
-    private javax.swing.JTextField campoFNac;
+    private javax.swing.JFormattedTextField campoFNac;
     private javax.swing.JTextField campoNickname;
     private javax.swing.JTextField campoNombre;
     private javax.swing.JTextField campoNumPuerta;
