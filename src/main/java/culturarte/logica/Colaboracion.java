@@ -28,6 +28,7 @@ public class Colaboracion {
     
     
     @ManyToOne
+    @JoinColumn(name = "colaborador_nick")
     private Colaborador colaborador;
     
     @ManyToOne

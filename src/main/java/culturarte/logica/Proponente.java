@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
+import java.util.List;
 /**
  *
  * @author mark
@@ -21,9 +21,8 @@ public class Proponente extends Usuario {
     private String biografia;
     private String sitioWeb;
     
-    @OneToMany(mappedBy = "proponente", cascade = CascadeType.ALL)
-    @Transient
-    private ArrayList<Propuesta> propuestas;
+    @OneToMany(mappedBy = "proponente", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Propuesta> propuestas = new ArrayList<>();
 
     public Proponente(){}
     
@@ -59,7 +58,7 @@ public class Proponente extends Usuario {
         this.sitioWeb = sitioWeb;
     }
 
-    public ArrayList<Propuesta> getPropuestas() {
+    public List<Propuesta> getPropuestas() {
         return propuestas;
     }
 

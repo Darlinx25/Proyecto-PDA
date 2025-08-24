@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -15,9 +16,9 @@ import java.util.ArrayList;
 @Entity
 @Table(name = "colaboradores")
 public class Colaborador extends Usuario {
-    @OneToMany(mappedBy = "colaborador", cascade = CascadeType.ALL)
-    @Transient
-    private ArrayList<Colaboracion> colaboraciones;
+    
+    @OneToMany(mappedBy = "colaborador", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Colaboracion> colaboraciones = new ArrayList<>();
     
     public Colaborador(){
         
@@ -28,7 +29,7 @@ public class Colaborador extends Usuario {
         this.colaboraciones = new ArrayList<Colaboracion>();
     }
     
-    public ArrayList<Colaboracion> getColaboraciones() {
+    public List<Colaboracion> getColaboraciones() {
         return colaboraciones;
     }
 

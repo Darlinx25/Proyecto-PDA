@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
+import java.util.List;
 /**
  *
  * @author faxcundo
@@ -31,10 +31,20 @@ public abstract class Usuario {
     @Transient//pa ignorar la imagen de momento q da lio en la db
     private BufferedImage imagen;
     
-    @Transient
-    private ArrayList<Usuario> usuariosSeguidos;
-    @Transient
-    private ArrayList<Propuesta> propuestasFavoritas;
+    @ManyToMany
+    @JoinTable(
+    name = "usuario_seguidos",
+    joinColumns = @JoinColumn(name = "seguidor_id"),
+    inverseJoinColumns = @JoinColumn(name = "seguido_id"))
+    private List<Usuario> usuariosSeguidos = new ArrayList<>();
+    
+    
+    @ManyToMany
+    @JoinTable(
+    name = "usuario_favoritas",
+    joinColumns = @JoinColumn(name = "usuario_nick"),
+    inverseJoinColumns = @JoinColumn(name = "propuesta_id"))
+    private List<Propuesta> propuestasFavoritas = new ArrayList<>();
     
     protected Usuario(){
         
@@ -98,7 +108,7 @@ public abstract class Usuario {
         this.imagen = imagen;
     }
 
-    public ArrayList<Usuario> getUsuariosSeguidos() {
+    public List<Usuario> getUsuariosSeguidos() {
         return usuariosSeguidos;
     }
 
@@ -106,7 +116,7 @@ public abstract class Usuario {
         this.usuariosSeguidos = usuariosSeguidos;
     }
 
-    public ArrayList<Propuesta> getPropuestasFavoritas() {
+    public List<Propuesta> getPropuestasFavoritas() {
         return propuestasFavoritas;
     }
 

@@ -40,7 +40,7 @@ public class Propuesta {
     private Categoria tipoPropuesta;
     
     @ManyToOne
-    @JoinColumn(name = "proponente_id")
+    @JoinColumn(name = "proponente_nick")
     private Proponente proponente;
     
     @Embedded
