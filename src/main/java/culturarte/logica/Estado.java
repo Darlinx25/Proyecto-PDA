@@ -14,8 +14,8 @@ public class Estado {
     private EstadoPropuesta estado;
     private LocalDate fechaEstado;
 
-    public Estado() {
-        this.estado = EstadoPropuesta.INGRESADA;
+    public Estado(EstadoPropuesta estado) {
+        this.estado = estado;
         this.fechaEstado = LocalDate.now();
     }
 

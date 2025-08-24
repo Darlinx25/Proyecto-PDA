@@ -38,11 +38,11 @@ public class Propuesta {
         this.fechaRealizara = fechaRealizara;
         this.precioEntrada = precioEntrada;
         this.montoAReunir = montoAReunir;
-        this.fechaPublicacion = LocalDate.now();
+        this.fechaPublicacion = null;//se cambia cuando el estado pasa a publicada
         this.tiposRetorno = tiposRetorno;
         this.tipoPropuesta = tipoPropuesta;
         this.proponedor = proponedor;
-        this.estadoActual = new Estado();//cambiar esto
+        this.estadoActual = new Estado(EstadoPropuesta.INGRESADA);
         this.historialEstados = new ArrayList<Estado>();
         this.colaboraciones = new ArrayList<Colaboracion>();
     }
@@ -113,6 +113,14 @@ public class Propuesta {
         this.fechaPublicacion = fechaPublicacion;
     }
 
+    public ArrayList<TipoRetorno> getTiposRetorno() {
+        return tiposRetorno;
+    }
+
+    public void setTiposRetorno(ArrayList<TipoRetorno> tiposRetorno) {
+        this.tiposRetorno = tiposRetorno;
+    }
+    
     public Categoria getTipoPropuesta() {
         return tipoPropuesta;
     }
