@@ -122,8 +122,26 @@ public class Controller implements IController {
     }
     
     @Override
-    public void addPropuesta(){
+    public void addPropuesta(DTPropuesta prop) {
+        String titulo = prop.getTitulo();
         
+        if (this.propuestas.containsKey(titulo)) {
+            return;//agregar exception luego
+        }
+        
+        String descripcion = prop.getDescripcion();
+        BufferedImage imagen = prop.getImagen();
+        String lugarRealizara = prop.getLugarRealizara();
+        LocalDate fechaRealizara = prop.getFechaRealizara();
+        float precioEntrada = prop.getPrecioEntrada();
+        float montoAReunir = prop.getMontoAReunir();
+        Categoria tipoPropuesta = this.categorias.get(prop.getTipoPropuesta());
+        Proponente proponedor = (Proponente) this.usuarios.get(prop.getNickProponedor());
+        ArrayList<TipoRetorno> tiposRetorno = prop.getTiposRetorno();
+        
+        Propuesta propuesta = new Propuesta(titulo, descripcion, imagen, lugarRealizara, fechaRealizara, precioEntrada, montoAReunir, tiposRetorno, tipoPropuesta, proponedor);
+        
+        this.propuestas.put(titulo, propuesta);
     }
     
 }

@@ -1,7 +1,6 @@
 culturarte\graficos\AltaPropuesta$1.class
 culturarte\graficos\AltaUsr.class
 culturarte\logica\Categoria.class
-culturarte\graficos\AltaPropuesta$6.class
 culturarte\graficos\AltaUsr$8.class
 culturarte\logica\Colaboracion.class
 culturarte\graficos\AltaUsr$3.class
@@ -28,6 +27,7 @@ culturarte\logica\DTPropuesta.class
 culturarte\logica\Propuesta.class
 culturarte\graficos\AltaPropuesta$2.class
 culturarte\graficos\AltaUsr$7.class
+culturarte\logica\TipoRetorno.class
 culturarte\graficos\AltaPropuesta.class
 culturarte\graficos\AltaUsr$2.class
 culturarte\graficos\MainFrame.class

@@ -3,10 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package culturarte.graficos;
+import culturarte.logica.DTPropuesta;
 import culturarte.logica.IControllerFactory;
 import culturarte.logica.IController;
+import culturarte.logica.TipoRetorno;
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import javax.swing.tree.DefaultMutableTreeNode;
 /**
  *
@@ -72,14 +75,13 @@ public AltaPropuesta() {
         Precio_entrada = new javax.swing.JTextField();
         MontoReunirL = new javax.swing.JLabel();
         Monto_reunir = new javax.swing.JTextField();
-        FechaPubliL = new javax.swing.JLabel();
-        FechaPubli = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         Descripcion = new javax.swing.JTextArea();
         campoTitulo = new javax.swing.JTextField();
         arbolEspectaculo = new javax.swing.JTree(this.controller.listarCategorias());
-        comboRetorno = new javax.swing.JComboBox<>();
         labelRetorno = new javax.swing.JLabel();
+        checkEntradaGratis = new javax.swing.JCheckBox();
+        checkGanancias = new javax.swing.JCheckBox();
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
@@ -149,11 +151,6 @@ public AltaPropuesta() {
 
         Monto_reunir.setEnabled(false);
 
-        FechaPubliL.setText("Fecha de Publicacion:");
-        FechaPubliL.setEnabled(false);
-
-        FechaPubli.setEnabled(false);
-
         jScrollPane3.setEnabled(false);
 
         Descripcion.setColumns(20);
@@ -168,16 +165,14 @@ public AltaPropuesta() {
             }
         });
 
-        comboRetorno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Entrada Gratis", "Porcentaje de Ganancias" }));
-        comboRetorno.setEnabled(false);
-        comboRetorno.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboRetornoActionPerformed(evt);
-            }
-        });
-
         labelRetorno.setText("Tipo de Retorno:");
         labelRetorno.setEnabled(false);
+
+        checkEntradaGratis.setText("Entrada Gratis");
+        checkEntradaGratis.setEnabled(false);
+
+        checkGanancias.setText("Porcentaje de Ganancias");
+        checkGanancias.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -193,57 +188,60 @@ public AltaPropuesta() {
                         .addGap(48, 48, 48)
                         .addComponent(Tipo_de_Espectaculo))
                     .addComponent(arbolEspectaculo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(DescripcionL)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(labelRetorno)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addComponent(FechaPubliL)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(FechaPubli, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addComponent(NombreL)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(campoTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(comboRetorno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(PrecioEntradaL))
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(Precio_entrada, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(32, 32, 32)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(Fecha_realizarL)
-                                                .addComponent(LugarL, javax.swing.GroupLayout.Alignment.TRAILING)))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(MontoReunirL)))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(Lugar, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
-                                            .addComponent(Fecha_realizar))
-                                        .addComponent(Monto_reunir, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(179, 179, 179))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(labelRetorno)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(ImagenL)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGap(36, 36, 36)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addComponent(NombreL)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(campoTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addComponent(PrecioEntradaL)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(Precio_entrada, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(32, 32, 32)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(Fecha_realizarL)
+                                                    .addComponent(LugarL, javax.swing.GroupLayout.Alignment.TRAILING)))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(MontoReunirL)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(Lugar, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                                                .addComponent(Fecha_realizar))
+                                            .addComponent(Monto_reunir, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(checkEntradaGratis, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(checkGanancias, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(botonCancelar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(botonAceptar)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(DescripcionL)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(ImagenL)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(botonCancelar)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(botonAceptar)))
+                                        .addGap(44, 44, 44)))))
+                        .addGap(179, 179, 179))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -258,18 +256,15 @@ public AltaPropuesta() {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(arbolEspectaculo, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(NombreL)
                                             .addComponent(campoTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(FechaPubli, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(FechaPubliL))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGap(34, 34, 34)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(PrecioEntradaL)
                                             .addComponent(Precio_entrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -289,21 +284,19 @@ public AltaPropuesta() {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(DescripcionL))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(20, 20, 20)
-                                        .addComponent(labelRetorno)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(comboRetorno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(ImagenL))))
-                            .addComponent(arbolEspectaculo, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(ImagenL)))))
+                .addGap(9, 9, 9)
+                .addComponent(labelRetorno)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(checkEntradaGratis)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(checkGanancias)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonAceptar)
                     .addComponent(botonCancelar))
-                .addGap(58, 58, 58))
+                .addGap(55, 55, 55))
         );
 
         pack();
@@ -317,25 +310,58 @@ public AltaPropuesta() {
         String user = listaProponentes.getSelectedValue();
         
         
-        if(user==null){
-            setTitle("Proponente no selecionado");
-        }
+
       
-        if(user != null  ){
+        if(sonValidosLosCampos()){
             
             String titulo = this.campoTitulo.getText();
             String descripcion = this.Descripcion.getText();
             BufferedImage imagen = null;
             String lugarRealizara = this.Lugar.getText();
-            LocalDate fechaRealizara = null;
+            LocalDate fechaRealizara = null;//checkear fecha luego
             float precioEntrada = Float.parseFloat(this.Precio_entrada.getText());
             float montoAReunir = Float.parseFloat(this.Monto_reunir.getText());
-            LocalDate fechaPublicacion = LocalDate.now();
+            DefaultMutableTreeNode cat = (DefaultMutableTreeNode) arbolEspectaculo.getLastSelectedPathComponent();
+            String tipoPropuesta = cat.toString();
+            String nickProponedor = listaProponentes.getSelectedValue();
+            ArrayList<TipoRetorno> tiposRetorno = new ArrayList<TipoRetorno>();
+            if (this.checkEntradaGratis.isSelected()) {
+                tiposRetorno.add(TipoRetorno.ENTRADA_GRATIS);
+            }
+            if (this.checkGanancias.isSelected()) {
+                tiposRetorno.add(TipoRetorno.PORCENTAJE_GANANCIAS);
+            }
+            DTPropuesta propuesta = new DTPropuesta(titulo, descripcion, imagen, lugarRealizara, fechaRealizara, precioEntrada, montoAReunir, tipoPropuesta, nickProponedor, tiposRetorno);
             
-            this.controller.addPropuesta();
+            
+            
+            this.controller.addPropuesta(propuesta);
+            this.dispose();
         }
     }//GEN-LAST:event_botonAceptarActionPerformed
 
+    private boolean sonValidosLosCampos() {
+        if (this.campoTitulo.getText().isBlank()) {
+            return false;
+        }
+        if (this.Descripcion.getText().isBlank()) {
+            return false;
+        }
+        if (this.Lugar.getText().isBlank()) {
+            return false;
+        }
+        if (this.Precio_entrada.getText().isBlank()) {
+            return false;
+        }
+        if (this.Monto_reunir.getText().isBlank()) {
+            return false;
+        }
+        if (!(this.checkEntradaGratis.isSelected() || this.checkGanancias.isSelected())) {
+            return false;
+        }
+        return true;
+    }
+    
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
         this.dispose();       
     }//GEN-LAST:event_botonCancelarActionPerformed
@@ -352,8 +378,6 @@ public AltaPropuesta() {
     private void enableDatosPropuesta(){
         this.Descripcion.setEnabled(true);
         this.DescripcionL.setEnabled(true);
-        this.FechaPubli.setEnabled(true);
-        this.FechaPubliL.setEnabled(true);
         this.Fecha_realizar.setEnabled(true);
         this.Fecha_realizarL.setEnabled(true);
         this.ImagenL.setEnabled(true);
@@ -366,14 +390,14 @@ public AltaPropuesta() {
         this.Precio_entrada.setEnabled(true);
         this.Monto_reunir.setEnabled(true);
         this.labelRetorno.setEnabled(true);
-        this.comboRetorno.setEnabled(true);   
+        this.checkEntradaGratis.setEnabled(true);   
+        this.checkGanancias.setEnabled(true);   
+
     }
     
      private void disableDatosPropuesta(){
         this.Descripcion.setEnabled(false);
         this.DescripcionL.setEnabled(false);
-        this.FechaPubli.setEnabled(false);
-        this.FechaPubliL.setEnabled(false);
         this.Fecha_realizar.setEnabled(false);
         this.Fecha_realizarL.setEnabled(false);
         this.ImagenL.setEnabled(false);
@@ -386,23 +410,18 @@ public AltaPropuesta() {
         this.Precio_entrada.setEnabled(false);
         this.Descripcion.setEnabled(false);
         this.labelRetorno.setEnabled(false);
-        this.comboRetorno.setEnabled(false); 
+        this.checkEntradaGratis.setEnabled(false);   
+        this.checkGanancias.setEnabled(false); 
     }
     
     private void campoTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTituloActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoTituloActionPerformed
 
-    private void comboRetornoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboRetornoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comboRetornoActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea Descripcion;
     private javax.swing.JLabel DescripcionL;
-    private javax.swing.JTextField FechaPubli;
-    private javax.swing.JLabel FechaPubliL;
     private javax.swing.JTextField Fecha_realizar;
     private javax.swing.JLabel Fecha_realizarL;
     private javax.swing.JButton ImagenL;
@@ -419,7 +438,8 @@ public AltaPropuesta() {
     private javax.swing.JButton botonAceptar;
     private javax.swing.JButton botonCancelar;
     private javax.swing.JTextField campoTitulo;
-    private javax.swing.JComboBox<String> comboRetorno;
+    private javax.swing.JCheckBox checkEntradaGratis;
+    private javax.swing.JCheckBox checkGanancias;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;

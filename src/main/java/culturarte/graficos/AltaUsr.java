@@ -450,7 +450,7 @@ public class AltaUsr extends javax.swing.JInternalFrame {
         } else {
             return;
         }
-        dispose();
+        this.dispose();
     }//GEN-LAST:event_botonAceptarActionPerformed
 
     private boolean sonValidosLosCampos() {
