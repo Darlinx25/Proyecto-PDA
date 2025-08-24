@@ -139,7 +139,8 @@ public class Controller implements IController {
         Proponente proponedor = (Proponente) this.usuarios.get(prop.getNickProponedor());
         ArrayList<TipoRetorno> tiposRetorno = prop.getTiposRetorno();
         
-        Propuesta propuesta = new Propuesta(titulo, descripcion, imagen, lugarRealizara, fechaRealizara, precioEntrada, montoAReunir, tiposRetorno, tipoPropuesta, proponedor);
+        Propuesta propuesta = new Propuesta(titulo, descripcion, imagen, lugarRealizara, fechaRealizara, precioEntrada, montoAReunir, tiposRetorno, 
+                tipoPropuesta, proponedor);
         
         this.propuestas.put(titulo, propuesta);
     }

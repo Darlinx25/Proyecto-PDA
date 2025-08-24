@@ -185,6 +185,11 @@ public AltaPropuesta() {
 
         campoFechaRealizar.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/y"))));
         campoFechaRealizar.setEnabled(false);
+        campoFechaRealizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoFechaRealizarActionPerformed(evt);
+            }
+        });
 
         campoMontoReunir.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         campoMontoReunir.setEnabled(false);
@@ -211,14 +216,12 @@ public AltaPropuesta() {
                         .addGap(48, 48, 48)
                         .addComponent(Tipo_de_Espectaculo))
                     .addComponent(arbolEspectaculo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(botonAddImagen)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(botonAddImagen))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(checkEntradaGratis, javax.swing.GroupLayout.Alignment.LEADING)
@@ -233,39 +236,36 @@ public AltaPropuesta() {
                                     .addComponent(labelImagen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(179, 179, 179))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botonCancelar)
+                        .addGap(18, 18, 18)
+                        .addComponent(botonAceptar)
+                        .addGap(174, 174, 174))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(botonCancelar)
-                                .addGap(18, 18, 18)
-                                .addComponent(botonAceptar)
-                                .addGap(174, 174, 174))
+                                .addComponent(NombreL)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(PrecioEntradaL)
+                                .addGap(15, 15, 15)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(campoTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                            .addComponent(campoPrecioEntrada))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(32, 32, 32)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Fecha_realizarL)
+                                    .addComponent(LugarL, javax.swing.GroupLayout.Alignment.TRAILING)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(NombreL)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(PrecioEntradaL)
-                                        .addGap(15, 15, 15)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(campoTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-                                    .addComponent(campoPrecioEntrada))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(32, 32, 32)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(Fecha_realizarL)
-                                            .addComponent(LugarL, javax.swing.GroupLayout.Alignment.TRAILING)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(MontoReunirL)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(Lugar)
-                                    .addComponent(campoFechaRealizar, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
-                                    .addComponent(campoMontoReunir))
-                                .addGap(112, 112, 112))))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(MontoReunirL)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(Lugar)
+                            .addComponent(campoFechaRealizar, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                            .addComponent(campoMontoReunir))
+                        .addGap(112, 112, 112))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -318,7 +318,7 @@ public AltaPropuesta() {
                                         .addComponent(checkEntradaGratis)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(checkGanancias)))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonAceptar)
                     .addComponent(botonCancelar))
@@ -340,8 +340,11 @@ public AltaPropuesta() {
             String lugarRealizara = this.Lugar.getText();
             Date fecha = (Date) this.campoFechaRealizar.getValue();
             LocalDate fechaRealizara = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            float precioEntrada = Float.parseFloat(this.campoPrecioEntrada.getText());
-            float montoAReunir = Float.parseFloat(this.campoMontoReunir.getText());
+            Number precioEntrada1 = (Number) this.campoPrecioEntrada.getValue();
+            float precioEntrada = precioEntrada1 != null ? precioEntrada1.floatValue() : 0f;//Estas dos lineas son para obtener e lvalor numerio y pasarlo a float, lo que habia antes lo pasaba con coma y no andaba en tiempo de eejecucion
+            
+            Number montoAReunir1 = (Number) this.campoMontoReunir.getValue();
+            float montoAReunir = montoAReunir1 != null ? montoAReunir1.floatValue() : 0f;
             DefaultMutableTreeNode cat = (DefaultMutableTreeNode) arbolEspectaculo.getLastSelectedPathComponent();
             String tipoPropuesta = cat.toString();
             String nickProponedor = listaProponentes.getSelectedValue();
@@ -352,7 +355,8 @@ public AltaPropuesta() {
             if (this.checkGanancias.isSelected()) {
                 tiposRetorno.add(TipoRetorno.PORCENTAJE_GANANCIAS);
             }
-            DTPropuesta propuesta = new DTPropuesta(titulo, descripcion, this.imagenPropuesta, lugarRealizara, fechaRealizara, precioEntrada, montoAReunir, tipoPropuesta, nickProponedor, tiposRetorno);
+            DTPropuesta propuesta = new DTPropuesta(titulo, descripcion, this.imagenPropuesta, lugarRealizara, fechaRealizara, 
+                    precioEntrada, montoAReunir, tipoPropuesta, nickProponedor, tiposRetorno);
             
             this.controller.addPropuesta(propuesta);
             this.dispose();
@@ -460,6 +464,10 @@ public AltaPropuesta() {
     private void campoPrecioEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoPrecioEntradaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoPrecioEntradaActionPerformed
+
+    private void campoFechaRealizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoFechaRealizarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoFechaRealizarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -430,6 +430,9 @@
           <Format format="dd/MM/y" subtype="-1" type="1"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campoFNacActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

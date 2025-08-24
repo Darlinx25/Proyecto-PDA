@@ -15,6 +15,7 @@ culturarte\graficos\AltaCategoria.class
 culturarte\graficos\MainFrame$1.class
 culturarte\logica\DTColaborador.class
 culturarte\graficos\AltaCategoria$3.class
+culturarte\graficos\AltaUsr$12.class
 culturarte\graficos\AltaUsr$5.class
 culturarte\graficos\AltaPropuesta$5.class
 culturarte\logica\Controller.class
@@ -28,6 +29,7 @@ culturarte\logica\Propuesta.class
 culturarte\graficos\AltaPropuesta$2.class
 culturarte\graficos\AltaUsr$7.class
 culturarte\logica\TipoRetorno.class
+culturarte\graficos\AltaPropuesta$7.class
 culturarte\graficos\AltaPropuesta.class
 culturarte\graficos\AltaUsr$2.class
 culturarte\graficos\MainFrame.class

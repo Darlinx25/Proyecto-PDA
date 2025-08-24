@@ -270,6 +270,11 @@ public class AltaUsr extends javax.swing.JInternalFrame {
         labelImagen.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         campoFNac.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/y"))));
+        campoFNac.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoFNacActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -480,6 +485,10 @@ public class AltaUsr extends javax.swing.JInternalFrame {
         }
         this.dispose();
     }//GEN-LAST:event_botonAceptarActionPerformed
+
+    private void campoFNacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoFNacActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoFNacActionPerformed
 
     private boolean sonValidosLosCampos() {
         if (!(this.radioColaborador.isSelected() || this.radioProponente.isSelected())) {
