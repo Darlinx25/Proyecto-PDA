@@ -92,13 +92,15 @@
                                   <Group type="102" alignment="1" attributes="0">
                                       <Component id="NombreL" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="campoTitulo" min="-2" pref="88" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="1" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
                                       <Component id="PrecioEntradaL" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="Precio_entrada" min="-2" pref="88" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                                   </Group>
+                              </Group>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="campoTitulo" pref="88" max="32767" attributes="0"/>
+                                  <Component id="campoPrecioEntrada" max="32767" attributes="0"/>
                               </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
@@ -116,8 +118,8 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="Lugar" max="32767" attributes="0"/>
-                                  <Component id="Monto_reunir" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="campoFechaRealizar" alignment="0" min="-2" pref="94" max="-2" attributes="0"/>
+                                  <Component id="campoFechaRealizar" alignment="0" pref="94" max="32767" attributes="0"/>
+                                  <Component id="campoMontoReunir" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="112" max="-2" attributes="0"/>
                           </Group>
@@ -151,11 +153,7 @@
                                           <Component id="NombreL" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="campoTitulo" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="PrecioEntradaL" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="Precio_entrada" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
+                                      <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
                                       <Group type="103" groupAlignment="3" attributes="0">
@@ -170,11 +168,13 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="MontoReunirL" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="Monto_reunir" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="campoMontoReunir" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="campoPrecioEntrada" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="PrecioEntradaL" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
-                              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jScrollPane3" min="-2" max="-2" attributes="0"/>
                                   <Component id="DescripcionL" min="-2" max="-2" attributes="0"/>
@@ -196,7 +196,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="12" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="botonAceptar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="botonCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -300,19 +300,9 @@
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="Precio_entrada">
-      <Properties>
-        <Property name="enabled" type="boolean" value="false"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="MontoReunirL">
       <Properties>
         <Property name="text" type="java.lang.String" value="Monto a Reunir:"/>
-        <Property name="enabled" type="boolean" value="false"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="Monto_reunir">
-      <Properties>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
@@ -380,6 +370,25 @@
         </Property>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="campoMontoReunir">
+      <Properties>
+        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+          <Format format="#0.00" subtype="-1" type="0"/>
+        </Property>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="campoPrecioEntrada">
+      <Properties>
+        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+          <Format format="#0.00" subtype="-1" type="0"/>
+        </Property>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campoPrecioEntradaActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

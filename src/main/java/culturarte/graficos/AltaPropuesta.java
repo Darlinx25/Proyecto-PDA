@@ -83,9 +83,7 @@ public AltaPropuesta() {
         Lugar = new javax.swing.JTextField();
         Fecha_realizarL = new javax.swing.JLabel();
         PrecioEntradaL = new javax.swing.JLabel();
-        Precio_entrada = new javax.swing.JTextField();
         MontoReunirL = new javax.swing.JLabel();
-        Monto_reunir = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         Descripcion = new javax.swing.JTextArea();
         campoTitulo = new javax.swing.JTextField();
@@ -95,6 +93,8 @@ public AltaPropuesta() {
         checkGanancias = new javax.swing.JCheckBox();
         labelImagen = new javax.swing.JLabel();
         campoFechaRealizar = new javax.swing.JFormattedTextField();
+        campoMontoReunir = new javax.swing.JFormattedTextField();
+        campoPrecioEntrada = new javax.swing.JFormattedTextField();
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
@@ -155,12 +155,8 @@ public AltaPropuesta() {
         PrecioEntradaL.setText("Precio entrada:");
         PrecioEntradaL.setEnabled(false);
 
-        Precio_entrada.setEnabled(false);
-
         MontoReunirL.setText("Monto a Reunir:");
         MontoReunirL.setEnabled(false);
-
-        Monto_reunir.setEnabled(false);
 
         jScrollPane3.setEnabled(false);
 
@@ -189,6 +185,17 @@ public AltaPropuesta() {
 
         campoFechaRealizar.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/y"))));
         campoFechaRealizar.setEnabled(false);
+
+        campoMontoReunir.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        campoMontoReunir.setEnabled(false);
+
+        campoPrecioEntrada.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        campoPrecioEntrada.setEnabled(false);
+        campoPrecioEntrada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoPrecioEntradaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -237,12 +244,13 @@ public AltaPropuesta() {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addComponent(NombreL)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(campoTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                    .addGroup(layout.createSequentialGroup()
                                         .addComponent(PrecioEntradaL)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(Precio_entrada, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(15, 15, 15)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(campoTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                                    .addComponent(campoPrecioEntrada))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(32, 32, 32)
@@ -255,8 +263,8 @@ public AltaPropuesta() {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(Lugar)
-                                    .addComponent(Monto_reunir)
-                                    .addComponent(campoFechaRealizar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(campoFechaRealizar, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                                    .addComponent(campoMontoReunir))
                                 .addGap(112, 112, 112))))))
         );
         layout.setVerticalGroup(
@@ -280,10 +288,7 @@ public AltaPropuesta() {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(NombreL)
                                             .addComponent(campoTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(34, 34, 34)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(PrecioEntradaL)
-                                            .addComponent(Precio_entrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(53, 53, 53))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(LugarL)
@@ -295,8 +300,10 @@ public AltaPropuesta() {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(MontoReunirL)
-                                            .addComponent(Monto_reunir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(27, 27, 27)
+                                            .addComponent(campoMontoReunir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(campoPrecioEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(PrecioEntradaL))))
+                                .addGap(21, 21, 21)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(DescripcionL))
@@ -311,7 +318,7 @@ public AltaPropuesta() {
                                         .addComponent(checkEntradaGratis)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(checkGanancias)))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonAceptar)
                     .addComponent(botonCancelar))
@@ -333,8 +340,8 @@ public AltaPropuesta() {
             String lugarRealizara = this.Lugar.getText();
             Date fecha = (Date) this.campoFechaRealizar.getValue();
             LocalDate fechaRealizara = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            float precioEntrada = Float.parseFloat(this.Precio_entrada.getText());
-            float montoAReunir = Float.parseFloat(this.Monto_reunir.getText());
+            float precioEntrada = Float.parseFloat(this.campoPrecioEntrada.getText());
+            float montoAReunir = Float.parseFloat(this.campoMontoReunir.getText());
             DefaultMutableTreeNode cat = (DefaultMutableTreeNode) arbolEspectaculo.getLastSelectedPathComponent();
             String tipoPropuesta = cat.toString();
             String nickProponedor = listaProponentes.getSelectedValue();
@@ -365,10 +372,10 @@ public AltaPropuesta() {
         if (this.campoFechaRealizar.getText().isBlank()) {
             return false;
         }
-        if (this.Precio_entrada.getText().isBlank()) {
+        if (this.campoPrecioEntrada.getText().isBlank()) {
             return false;
         }
-        if (this.Monto_reunir.getText().isBlank()) {
+        if (this.campoMontoReunir.getText().isBlank()) {
             return false;
         }
         if (!(this.checkEntradaGratis.isSelected() || this.checkGanancias.isSelected())) {
@@ -419,8 +426,8 @@ public AltaPropuesta() {
         this.campoTitulo.setEnabled(true);
         this.NombreL.setEnabled(true);
         this.PrecioEntradaL.setEnabled(true);
-        this.Precio_entrada.setEnabled(true);
-        this.Monto_reunir.setEnabled(true);
+        this.campoPrecioEntrada.setEnabled(true);
+        this.campoMontoReunir.setEnabled(true);
         this.labelRetorno.setEnabled(true);
         this.checkEntradaGratis.setEnabled(true);   
         this.checkGanancias.setEnabled(true);   
@@ -439,7 +446,7 @@ public AltaPropuesta() {
         this.campoTitulo.setEnabled(false);
         this.NombreL.setEnabled(false);
         this.PrecioEntradaL.setEnabled(false);
-        this.Precio_entrada.setEnabled(false);
+        this.campoPrecioEntrada.setEnabled(false);
         this.Descripcion.setEnabled(false);
         this.labelRetorno.setEnabled(false);
         this.checkEntradaGratis.setEnabled(false);   
@@ -450,6 +457,10 @@ public AltaPropuesta() {
         // TODO add your handling code here:
     }//GEN-LAST:event_campoTituloActionPerformed
 
+    private void campoPrecioEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoPrecioEntradaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoPrecioEntradaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea Descripcion;
@@ -458,10 +469,8 @@ public AltaPropuesta() {
     private javax.swing.JTextField Lugar;
     private javax.swing.JLabel LugarL;
     private javax.swing.JLabel MontoReunirL;
-    private javax.swing.JTextField Monto_reunir;
     private javax.swing.JLabel NombreL;
     private javax.swing.JLabel PrecioEntradaL;
-    private javax.swing.JTextField Precio_entrada;
     private javax.swing.JLabel Proponentes;
     private javax.swing.JLabel Tipo_de_Espectaculo;
     private javax.swing.JTree arbolEspectaculo;
@@ -469,6 +478,8 @@ public AltaPropuesta() {
     private javax.swing.JButton botonAddImagen;
     private javax.swing.JButton botonCancelar;
     private javax.swing.JFormattedTextField campoFechaRealizar;
+    private javax.swing.JFormattedTextField campoMontoReunir;
+    private javax.swing.JFormattedTextField campoPrecioEntrada;
     private javax.swing.JTextField campoTitulo;
     private javax.swing.JCheckBox checkEntradaGratis;
     private javax.swing.JCheckBox checkGanancias;
