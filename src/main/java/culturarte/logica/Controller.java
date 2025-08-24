@@ -3,11 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package culturarte.logica;
-
+import jakarta.persistence.*;
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -24,14 +25,26 @@ public class Controller implements IController {
 
     private static Controller instancia;
     
+    private EntityManagerFactory emf; // se declara estos objetos como atributos, para que todos los métodos puedan usarlos
+    private EntityManager em;
+    
+    
+    
+    
     private Controller() {
         usuarios = new HashMap<>();
         propuestas = new HashMap<>();
         categorias = new HashMap<>();
         
         categorias.put("Categorías", new Categoria("Categorías"));
+        
+        emf = Persistence.createEntityManagerFactory("Proyecto_PDA");
+        em = emf.createEntityManager();
+        
+        
     }
     
+  
     public static Controller getInstance() {
         if (instancia == null) {
             instancia = new Controller();
@@ -65,6 +78,17 @@ public class Controller implements IController {
             usu = new Proponente(direccion, biografia, sitioWeb, nick, nombre, apellido, email, fechaNac, imagen);
         }
         this.usuarios.put(nick, usu);
+        EntityTransaction t = em.getTransaction();
+        try{
+           t.begin();
+           em.persist(usu);
+           t.commit();
+        }catch(Exception  e){
+            t.rollback();
+            e.printStackTrace();
+        }
+        
+        
     }
     
     @Override
@@ -112,10 +136,14 @@ public class Controller implements IController {
     public ArrayList<String> listarProponentes() {
         ArrayList<String> aux = new ArrayList<String>();
         
-        for (Usuario usu : this.usuarios.values()) {
-            if (usu instanceof Proponente) {
-                aux.add(usu.getNickname());
-            }
+         try {
+        List<Proponente> result = em.createQuery("SELECT p FROM Proponente p", Proponente.class)
+                                    .getResultList();
+        for (Proponente p : result) {
+            aux.add(p.getNickname());
+        }
+        } catch (Exception e) {
+        e.printStackTrace();
         }
         
         return aux;
@@ -144,6 +172,13 @@ public class Controller implements IController {
         
         this.propuestas.put(titulo, propuesta);
     }
+
+  
+
+
+   
+
+ 
     
 }
 

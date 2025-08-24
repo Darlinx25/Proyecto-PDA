@@ -3,17 +3,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package culturarte.logica;
-
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
 /**
  *
  * @author mark
  */
-public class Estado {
-    private EstadoPropuesta estado;
-    private LocalDate fechaEstado;
 
+@Embeddable
+public class Estado {
+    
+    
+   
+    private EstadoPropuesta estado;
+    
+    
+    private LocalDate fechaEstado;
+    
+    public Estado(){
+        
+    }
+    
     public Estado(EstadoPropuesta estado) {
         this.estado = estado;
         this.fechaEstado = LocalDate.now();

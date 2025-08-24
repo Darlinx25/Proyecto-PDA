@@ -15,7 +15,11 @@ public class DTProponente extends DTUsuario {
     private DTDireccion direccion;
     private String biografia;
     private String sitioWeb;
-
+    
+    public DTProponente(){
+        
+    }
+    
     public DTProponente(DTDireccion direccion, String biografia, String sitioWeb, String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, BufferedImage imagen) {
         super(nickname, nombre, apellido, email, fechaNacimiento, imagen);
         this.direccion = direccion;

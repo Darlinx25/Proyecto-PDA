@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package culturarte.logica;
-
+import jakarta.persistence.*;
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,17 +12,33 @@ import java.util.ArrayList;
  *
  * @author faxcundo
  */
+
+@Entity 
+@Table(name = "usuario")
+@Inheritance(strategy = InheritanceType.JOINED)//ver si joinded o ver si typeperclas
 public abstract class Usuario {
+    
+    @Id
     private String nickname;
+    
     private String nombre;
     private String apellido;
+    
+    @Column(nullable  = false, unique = true)
     private String email;
+    
     private LocalDate fechaNacimiento;
+    @Transient//pa ignorar la imagen de momento q da lio en la db
     private BufferedImage imagen;
     
+    @Transient
     private ArrayList<Usuario> usuariosSeguidos;
+    @Transient
     private ArrayList<Propuesta> propuestasFavoritas;
-
+    
+    protected Usuario(){
+        
+    }
     protected Usuario(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, BufferedImage imagen) {
         this.nickname = nickname;
         this.nombre = nombre;

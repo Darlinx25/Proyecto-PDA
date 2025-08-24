@@ -13,6 +13,9 @@ import java.time.LocalDate;
  */
 public class DTColaborador extends DTUsuario {
     
+    public DTColaborador(){
+        
+    }
     public DTColaborador(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, BufferedImage imagen) {
         super(nickname, nombre, apellido, email, fechaNacimiento, imagen);
     }

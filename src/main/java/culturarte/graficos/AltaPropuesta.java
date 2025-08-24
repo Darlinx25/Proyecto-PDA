@@ -16,6 +16,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.imageio.ImageIO;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -35,6 +36,16 @@ public AltaPropuesta() {
     this.imagenPropuesta = null;
     
     initComponents();
+    
+    
+    DefaultListModel<String> modelo = (DefaultListModel<String>) listaProponentes.getModel();
+    modelo.clear();
+    for (String nick : controller.listarProponentes()) {
+    modelo.addElement(nick);
+    }
+
+    
+
 
     // Listener para JList
     listaProponentes.addListSelectionListener(e -> {
@@ -72,7 +83,7 @@ public AltaPropuesta() {
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
         botonAceptar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        listaProponentes = new javax.swing.JList<>(this.controller.listarProponentes().toArray(new String[0]));
+        listaProponentes = listaProponentes = new javax.swing.JList<>(new javax.swing.DefaultListModel<>());
         Proponentes = new javax.swing.JLabel();
         Tipo_de_Espectaculo = new javax.swing.JLabel();
         botonCancelar = new javax.swing.JButton();

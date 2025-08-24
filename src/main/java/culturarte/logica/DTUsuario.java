@@ -18,7 +18,10 @@ public abstract class DTUsuario {
     private String email;
     private LocalDate fechaNacimiento;
     private BufferedImage imagen;
-
+    
+    protected DTUsuario(){
+        
+    }
     protected DTUsuario(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, BufferedImage imagen) {
         this.nickname = nickname;
         this.nombre = nombre;

@@ -3,18 +3,31 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package culturarte.logica;
-
+import jakarta.persistence.*;
 import java.util.ArrayList;
 
 /**
  *
  * @author mark
  */
+
+@Entity
+@Table(name = "categorias")
 public class Categoria {
+    
+    @Id
     private String nombre;
     
+    
+    @OneToMany(cascade = CascadeType.ALL)
     private ArrayList<Categoria> subCategorias;
+    
+    @OneToMany(mappedBy = "tipoPropuesta", cascade = CascadeType.ALL)
     private ArrayList<Propuesta> propuestas;
+    
+    public Categoria(){
+        
+    }
     
     public Categoria(String nombre) {
         this.nombre = nombre;

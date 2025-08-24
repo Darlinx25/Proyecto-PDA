@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package culturarte.logica;
-
+import jakarta.persistence.*;
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,13 +12,21 @@ import java.util.ArrayList;
  *
  * @author mark
  */
+@Entity
+@Table(name = "proponentes")
 public class Proponente extends Usuario {
+    @Embedded
     private DTDireccion direccion;
+    
     private String biografia;
     private String sitioWeb;
     
+    @OneToMany(mappedBy = "proponente", cascade = CascadeType.ALL)
+    @Transient
     private ArrayList<Propuesta> propuestas;
 
+    public Proponente(){}
+    
     public Proponente(DTDireccion direccion, String biografia, String sitioWeb, String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, BufferedImage imagen) {
         super(nickname, nombre, apellido, email, fechaNacimiento, imagen);
         this.direccion = direccion;

@@ -3,19 +3,34 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package culturarte.logica;
-
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 /**
  *
  * @author mark
  */
+
+@Entity
+@Table(name = "colaboraciones")
 public class Colaboracion {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    private Long id;
+    
+    public Colaboracion(){
+        
+    }
     private float monto;
     private LocalDateTime fechaHora;
     private String tipoRetorno;
     
+    
+    @ManyToOne
     private Colaborador colaborador;
+    
+    @ManyToOne
     private Propuesta propuestaColaborada;
 
     public float getMonto() {

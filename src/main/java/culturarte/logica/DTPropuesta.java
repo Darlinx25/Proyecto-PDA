@@ -23,7 +23,11 @@ public class DTPropuesta {
     private String tipoPropuesta;
     private String nickProponedor;
     private ArrayList<TipoRetorno> tiposRetorno;
-
+    
+    public DTPropuesta(){
+        
+    }
+    
     public DTPropuesta(String titulo, String descripcion, BufferedImage imagen, String lugarRealizara, LocalDate fechaRealizara, 
             float precioEntrada, float montoAReunir, String tipoPropuesta, String nickProponedor, ArrayList<TipoRetorno> tiposRetorno) {
         

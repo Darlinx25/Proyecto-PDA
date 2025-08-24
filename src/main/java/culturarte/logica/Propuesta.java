@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package culturarte.logica;
-
+import jakarta.persistence.*;
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,25 +12,52 @@ import java.util.ArrayList;
  *
  * @author mark
  */
+
+@Entity
+@Table(name = "propuestas")
 public class Propuesta {
+    
+    @Id
+    @Column(name = "titulo", unique = true, nullable = false)
     private String titulo;
+    
     private String descripcion;
+    
+    @Transient
     private BufferedImage imagen;
+    
     private String lugarRealizara;
     private LocalDate fechaRealizara;
     private float precioEntrada;
     private float montoAReunir;
     private LocalDate fechaPublicacion;
+    
+    @ElementCollection
     private ArrayList<TipoRetorno> tiposRetorno;
     
+    
+    @ManyToOne
     private Categoria tipoPropuesta;
-    private Proponente proponedor;
+    
+    @ManyToOne
+    @JoinColumn(name = "proponente_id")
+    private Proponente proponente;
+    
+    @Embedded
     private Estado estadoActual;
+    
+    @ElementCollection
     private ArrayList<Estado> historialEstados;
+    
+    @OneToMany(cascade = CascadeType.ALL)
     private ArrayList<Colaboracion> colaboraciones;
-
+    
+    public Propuesta(){
+        
+    }
+    
     public Propuesta(String titulo, String descripcion, BufferedImage imagen, String lugarRealizara, LocalDate fechaRealizara, float precioEntrada, 
-            float montoAReunir, ArrayList<TipoRetorno> tiposRetorno, Categoria tipoPropuesta, Proponente proponedor) {
+            float montoAReunir, ArrayList<TipoRetorno> tiposRetorno, Categoria tipoPropuesta, Proponente proponente) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.imagen = imagen;
@@ -41,7 +68,7 @@ public class Propuesta {
         this.fechaPublicacion = null;//se cambia cuando el estado pasa a publicada
         this.tiposRetorno = tiposRetorno;
         this.tipoPropuesta = tipoPropuesta;
-        this.proponedor = proponedor;
+        this.proponente = proponente;
         this.estadoActual = new Estado(EstadoPropuesta.INGRESADA);
         this.historialEstados = new ArrayList<Estado>();
         this.colaboraciones = new ArrayList<Colaboracion>();
@@ -130,11 +157,11 @@ public class Propuesta {
     }
 
     public Proponente getProponedor() {
-        return proponedor;
+        return proponente;
     }
 
-    public void setProponedor(Proponente proponedor) {
-        this.proponedor = proponedor;
+    public void setProponedor(Proponente proponente) {
+        this.proponente = proponente;
     }
 
     public Estado getEstadoActual() {

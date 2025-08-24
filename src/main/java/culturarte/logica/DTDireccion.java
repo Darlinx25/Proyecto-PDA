@@ -3,16 +3,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package culturarte.logica;
-
+import jakarta.persistence.*;
 /**
  *
  * @author mark
  */
+@Embeddable
 public class DTDireccion {
     private String ciudad;
     private String calle;
     private int numeroPuerta;
-
+    
+    
+    public DTDireccion(){
+        
+    }
     public DTDireccion(String ciudad, String calle, int numeroPuerta) {
         this.ciudad = ciudad;
         this.calle = calle;
