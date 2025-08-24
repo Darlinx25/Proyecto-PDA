@@ -18,4 +18,5 @@ public interface IController {
     public void addCategoria(String nombre, String nombrePadre);
     public ArrayList<String> listarProponentes();
     public void addPropuesta(DTPropuesta prop);
+    DTProponente obtenerDTProponente(String nick);
 }

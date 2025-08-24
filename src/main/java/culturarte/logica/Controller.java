@@ -174,6 +174,28 @@ public class Controller implements IController {
     }
 
   
+    @Override
+    public DTProponente obtenerDTProponente(String nick) {
+    try {
+        Proponente p = em.find(Proponente.class, nick); // Buscar proponente por PK
+        if (p != null) {
+            return new DTProponente(
+                p.getDireccion(),
+                p.getBiografia(),
+                p.getSitioWeb(),
+                p.getNickname(),
+                p.getNombre(),
+                p.getApellido(),
+                p.getEmail(),
+                p.getFechaNacimiento(),
+                p.getImagen()
+            );
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return null;
+}
 
 
    

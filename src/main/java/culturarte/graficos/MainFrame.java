@@ -14,6 +14,7 @@ public class MainFrame extends javax.swing.JFrame {
     private AltaUsr altaUsr;
     private AltaCategoria altaCategoria;
     private AltaPropuesta altaPropuesta;
+    private ConsultarProp consultarProp;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
 
@@ -71,7 +72,12 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem1);
 
-        jMenuItem2.setText("Consultar Usuarios");
+        jMenuItem2.setText("Consultar Proponente");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem2);
 
         jMenuBar1.add(jMenu3);
@@ -159,6 +165,17 @@ public class MainFrame extends javax.swing.JFrame {
         add(this.altaPropuesta);
         this.altaPropuesta.setVisible(true);    
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+                  if (this.consultarProp != null) {
+            if (this.consultarProp.isVisible()) {
+                return;
+            }
+        }
+        this.consultarProp = new ConsultarProp();
+        add(this.consultarProp);
+        this.consultarProp.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
