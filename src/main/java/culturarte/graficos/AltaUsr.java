@@ -70,12 +70,12 @@ public class AltaUsr extends javax.swing.JInternalFrame {
         labelNumPuerta = new javax.swing.JLabel();
         campoCiudad = new javax.swing.JTextField();
         campoCalle = new javax.swing.JTextField();
-        campoNumPuerta = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         areaBiografia = new javax.swing.JTextArea();
         labelBiografia = new javax.swing.JLabel();
         campoSitioWeb = new javax.swing.JTextField();
         labelSitioWeb = new javax.swing.JLabel();
+        campoNumPuerta = new javax.swing.JFormattedTextField();
         labelImagen = new javax.swing.JLabel();
         campoFNac = new javax.swing.JFormattedTextField();
 
@@ -182,8 +182,6 @@ public class AltaUsr extends javax.swing.JInternalFrame {
 
         campoCalle.setEnabled(false);
 
-        campoNumPuerta.setEnabled(false);
-
         areaBiografia.setColumns(18);
         areaBiografia.setLineWrap(true);
         areaBiografia.setRows(4);
@@ -202,6 +200,9 @@ public class AltaUsr extends javax.swing.JInternalFrame {
 
         labelSitioWeb.setText("Sitio Web:");
         labelSitioWeb.setEnabled(false);
+
+        campoNumPuerta.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        campoNumPuerta.setEnabled(false);
 
         javax.swing.GroupLayout panelProponenteLayout = new javax.swing.GroupLayout(panelProponente);
         panelProponente.setLayout(panelProponenteLayout);
@@ -251,14 +252,14 @@ public class AltaUsr extends javax.swing.JInternalFrame {
                     .addComponent(labelCalle)
                     .addComponent(campoCalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelProponenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelProponenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelNumPuerta)
                     .addComponent(campoNumPuerta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
+                .addGap(22, 22, 22)
                 .addComponent(labelBiografia)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addComponent(labelSitioWeb)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(campoSitioWeb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -466,7 +467,7 @@ public class AltaUsr extends javax.swing.JInternalFrame {
             } else if (this.radioProponente.isSelected()) {
                 String ciudad = this.campoCiudad.getText();
                 String calle = this.campoCiudad.getText();
-                int numPuerta = Integer.parseInt(this.campoNumPuerta.getText());//corroborar luego
+                int numPuerta = Integer.parseInt(this.campoNumPuerta.getText());
                 DTDireccion direccion = new DTDireccion(ciudad, calle, numPuerta);
                 String biografia = this.areaBiografia.getText();
                 String sitioWeb = this.campoSitioWeb.getText();
@@ -536,7 +537,7 @@ public class AltaUsr extends javax.swing.JInternalFrame {
     private javax.swing.JFormattedTextField campoFNac;
     private javax.swing.JTextField campoNickname;
     private javax.swing.JTextField campoNombre;
-    private javax.swing.JTextField campoNumPuerta;
+    private javax.swing.JFormattedTextField campoNumPuerta;
     private javax.swing.JTextField campoSitioWeb;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
