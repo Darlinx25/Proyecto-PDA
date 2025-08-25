@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -150,6 +151,19 @@ public class Controller implements IController {
         }
     }
 
+    
+    @Override
+    public ArrayList<String> listarColaboradores() {
+        List<String> aux;
+        
+        String query = "SELECT c.nickname FROM Colaborador c";
+        try {
+            aux = em.createQuery(query, String.class).getResultList();
+        } catch (Exception e) {
+            aux = Collections.emptyList();
+        }
+        return (ArrayList<String>) aux;
+    }
     
     @Override
     public ArrayList<String> listarProponentes() {

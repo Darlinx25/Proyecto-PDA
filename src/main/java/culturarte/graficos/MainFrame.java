@@ -14,6 +14,7 @@ public class MainFrame extends javax.swing.JFrame {
     private AltaUsr altaUsr;
     private AltaCategoria altaCategoria;
     private AltaPropuesta altaPropuesta;
+    private ConsultarColaborador consultarColaborador;
     private ConsultarProp consultarProp;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
@@ -41,6 +42,7 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -71,6 +73,14 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jMenuItem1);
+
+        jMenuItem5.setText("Consultar Colaborador");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem5);
 
         jMenuItem2.setText("Consultar Proponente");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -177,6 +187,17 @@ public class MainFrame extends javax.swing.JFrame {
         this.consultarProp.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        if (this.consultarColaborador != null) {
+            if (this.consultarColaborador.isVisible()) {
+                return;
+            }
+        }
+        this.consultarColaborador = new ConsultarColaborador();
+        add(this.consultarColaborador);
+        this.consultarColaborador.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -212,5 +233,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     // End of variables declaration//GEN-END:variables
 }
