@@ -4,7 +4,6 @@
  */
 package culturarte.logica;
 import jakarta.persistence.*;
-import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +27,9 @@ public abstract class Usuario {
     private String email;
     
     private LocalDate fechaNacimiento;
-    @Transient//pa ignorar la imagen de momento q da lio en la db
-    private BufferedImage imagen; 
+    @Lob @Basic(fetch = FetchType.LAZY)
+    @Column(length = 40000000)//40 MB
+    private byte[] imagen;
     
     @ManyToMany
     @JoinTable(
@@ -49,7 +49,7 @@ public abstract class Usuario {
     protected Usuario(){
         
     }
-    protected Usuario(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, BufferedImage imagen) {
+    protected Usuario(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, byte[] imagen) {
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -100,11 +100,11 @@ public abstract class Usuario {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public BufferedImage getImagen() {
+    public byte[] getImagen() {
         return imagen;
     }
 
-    public void setImagen(BufferedImage imagen) {
+    public void setImagen(byte[] imagen) {
         this.imagen = imagen;
     }
 

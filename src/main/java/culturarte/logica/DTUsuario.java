@@ -4,7 +4,6 @@
  */
 package culturarte.logica;
 
-import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 
 /**
@@ -17,12 +16,12 @@ public abstract class DTUsuario {
     private String apellido;
     private String email;
     private LocalDate fechaNacimiento;
-    private BufferedImage imagen;
+    private byte[] imagen;
     
     protected DTUsuario(){
         
     }
-    protected DTUsuario(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, BufferedImage imagen) {
+    protected DTUsuario(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, byte[] imagen) {
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -51,7 +50,7 @@ public abstract class DTUsuario {
         return fechaNacimiento;
     }
 
-    public BufferedImage getImagen() {
+    public byte[] getImagen() {
         return imagen;
     }
 }

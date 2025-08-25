@@ -12,6 +12,7 @@ import culturarte.logica.IControllerFactory;
 import culturarte.logica.IController;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -27,7 +28,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class AltaUsr extends javax.swing.JInternalFrame {
     private IController controller;
-    private BufferedImage imagenUsuario;
+    private byte[] imagenUsuario;
     /**
      * Creates new form Alta_Usr
      */
@@ -403,9 +404,15 @@ public class AltaUsr extends javax.swing.JInternalFrame {
         if (resultado == JFileChooser.APPROVE_OPTION) {
             File archivoElegido = selectorImagen.getSelectedFile();
             try {
-                this.imagenUsuario = ImageIO.read(archivoElegido);
-                Image imagenEscalada = this.imagenUsuario.getScaledInstance(133, 133, Image.SCALE_SMOOTH);
+                BufferedImage temp = ImageIO.read(archivoElegido);
+                
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ImageIO.write(temp, "jpg", baos);
+                this.imagenUsuario = baos.toByteArray();
+                
+                Image imagenEscalada = temp.getScaledInstance(133, 133, Image.SCALE_SMOOTH);
                 this.labelImagen.setIcon(new ImageIcon(imagenEscalada));
+                
             } catch (IOException ex) {
                 System.getLogger(AltaUsr.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             }

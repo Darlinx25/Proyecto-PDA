@@ -4,7 +4,6 @@
  */
 package culturarte.logica;
 
-import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 
 /**
@@ -20,7 +19,7 @@ public class DTProponente extends DTUsuario {
         
     }
     
-    public DTProponente(DTDireccion direccion, String biografia, String sitioWeb, String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, BufferedImage imagen) {
+    public DTProponente(DTDireccion direccion, String biografia, String sitioWeb, String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, byte[] imagen) {
         super(nickname, nombre, apellido, email, fechaNacimiento, imagen);
         this.direccion = direccion;
         this.biografia = biografia;
