@@ -6,11 +6,11 @@ package culturarte.logica;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
- * @author kevin
- */
+ * @author kevin*/
 public class DTPropuesta {
     private String titulo;
     private String descripcion;
@@ -21,14 +21,15 @@ public class DTPropuesta {
     private float montoAReunir;
     private String tipoPropuesta;
     private String nickProponedor;
-    private ArrayList<TipoRetorno> tiposRetorno;
+    private List<TipoRetorno> tiposRetorno;
+    private Estado estadoActual;
     
     public DTPropuesta(){
         
     }
     
     public DTPropuesta(String titulo, String descripcion, byte[] imagen, String lugarRealizara, LocalDate fechaRealizara, 
-            float precioEntrada, float montoAReunir, String tipoPropuesta, String nickProponedor, ArrayList<TipoRetorno> tiposRetorno) {
+            float precioEntrada, float montoAReunir, String tipoPropuesta, String nickProponedor, List<TipoRetorno> tiposRetorno, Estado estadoActual) {
         
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -40,6 +41,7 @@ public class DTPropuesta {
         this.tipoPropuesta = tipoPropuesta;
         this.nickProponedor = nickProponedor;
         this.tiposRetorno = tiposRetorno;
+        this.estadoActual = estadoActual;
     }
 
     public String getTitulo() {
@@ -78,9 +80,11 @@ public class DTPropuesta {
         return nickProponedor;
     }
 
-    public ArrayList<TipoRetorno> getTiposRetorno() {
+    public List<TipoRetorno> getTiposRetorno() {
         return tiposRetorno;
     }
 
-    
+    public Estado getEstadoActual(){
+        return estadoActual;
+    }
 }

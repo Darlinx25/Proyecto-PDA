@@ -20,5 +20,8 @@ public interface IController {
     public DTColaborador obtenerDTColaborador(String nick);
     public ArrayList<String> listarProponentes();
     public void addPropuesta(DTPropuesta prop);
-    DTProponente obtenerDTProponente(String nick);
+    public DTProponente obtenerDTProponente(String nick);
+    public DTPropuesta obtenerDTPropuesta(String titulo);
+
+    public ArrayList<String> listaPropuestasUsu(String nickname);
 }

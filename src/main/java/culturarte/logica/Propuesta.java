@@ -57,7 +57,7 @@ public class Propuesta {
     }
     
     public Propuesta(String titulo, String descripcion, byte[] imagen, String lugarRealizara, LocalDate fechaRealizara, float precioEntrada, 
-            float montoAReunir, List<TipoRetorno> tiposRetorno, Categoria tipoPropuesta, Proponente proponente) {
+            float montoAReunir, List<TipoRetorno> tiposRetorno, Categoria tipoPropuesta, Proponente proponente,Estado estadoActual ) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.imagen = imagen;
@@ -69,7 +69,7 @@ public class Propuesta {
         this.tiposRetorno = tiposRetorno;
         this.tipoPropuesta = tipoPropuesta;
         this.proponente = proponente;
-        this.estadoActual = new Estado(EstadoPropuesta.INGRESADA);
+        this.estadoActual = estadoActual;
         this.historialEstados = new ArrayList<Estado>();
         this.colaboraciones = new ArrayList<Colaboracion>();
     }

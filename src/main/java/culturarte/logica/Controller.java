@@ -162,7 +162,7 @@ public class Controller implements IController {
         } catch (Exception e) {
             aux = Collections.emptyList();
         }
-        return (ArrayList<String>) aux;
+        return new ArrayList<>(aux);
     }
     
     @Override
@@ -212,6 +212,7 @@ public class Controller implements IController {
         float precioEntrada = prop.getPrecioEntrada();
         float montoAReunir = prop.getMontoAReunir();
         
+        Estado est = prop.getEstadoActual();
         // Buscar en la base de datos la categoría y el proponente
         Categoria tipoPropuesta = em.find(Categoria.class, prop.getTipoPropuesta());
         Proponente proponedor = em.find(Proponente.class, prop.getNickProponedor());
@@ -219,7 +220,7 @@ public class Controller implements IController {
         List<TipoRetorno> tiposRetorno = prop.getTiposRetorno();
         
         Propuesta propuesta = new Propuesta(titulo, descripcion, imagen, lugarRealizara, fechaRealizara, precioEntrada, montoAReunir, tiposRetorno, 
-                tipoPropuesta, proponedor);
+                tipoPropuesta, proponedor,est);
         
         this.propuestas.put(titulo, propuesta);
         EntityTransaction t = em.getTransaction();
@@ -257,7 +258,37 @@ public class Controller implements IController {
     return null;
 }
 
-
+    public ArrayList<String> listaPropuestasUsu(String nick) {
+    List<String> aux;
+        
+    String query = "SELECT p.titulo FROM Propuesta p WHERE p.proponente.nickname = :nick";            
+    try {
+         aux = em.createQuery(query, String.class).setParameter("nick", nick).getResultList();
+    } catch (Exception e) {
+         aux = Collections.emptyList();
+         e.printStackTrace();
+    }
+    return new ArrayList<>(aux);
+    }
+    
+    
+    @Override
+    public DTPropuesta obtenerDTPropuesta(String titulo) {
+    try {
+        Propuesta p = em.find(Propuesta.class, titulo);
+        if (p != null) {
+            return new DTPropuesta(
+                p.getTitulo(), p.getDescripcion(), p.getImagen(), p.getLugarRealizara(), p.getFechaRealizara(), 
+            p.getPrecioEntrada(), p.getMontoAReunir(),
+                    p.getTipoPropuesta().toString(),
+                    p.getProponedor().getNickname(),
+                    p.getTiposRetorno(), p.getEstadoActual());
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return null;
+}
    
 
  

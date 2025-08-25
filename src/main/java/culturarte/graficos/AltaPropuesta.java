@@ -4,6 +4,8 @@
  */
 package culturarte.graficos;
 import culturarte.logica.DTPropuesta;
+import culturarte.logica.Estado;
+import culturarte.logica.EstadoPropuesta;
 import culturarte.logica.IControllerFactory;
 import culturarte.logica.IController;
 import culturarte.logica.TipoRetorno;
@@ -361,6 +363,8 @@ public AltaPropuesta() {
             String tipoPropuesta = cat.toString();
             String nickProponedor = listaProponentes.getSelectedValue();
             ArrayList<TipoRetorno> tiposRetorno = new ArrayList<TipoRetorno>();
+            EstadoPropuesta estp = EstadoPropuesta.INGRESADA;
+            Estado est = new Estado(estp);
             if (this.checkEntradaGratis.isSelected()) {
                 tiposRetorno.add(TipoRetorno.ENTRADA_GRATIS);
             }
@@ -368,7 +372,7 @@ public AltaPropuesta() {
                 tiposRetorno.add(TipoRetorno.PORCENTAJE_GANANCIAS);
             }
             DTPropuesta propuesta = new DTPropuesta(titulo, descripcion, this.imagenPropuesta, lugarRealizara, fechaRealizara, 
-                    precioEntrada, montoAReunir, tipoPropuesta, nickProponedor, tiposRetorno);
+                    precioEntrada, montoAReunir, tipoPropuesta, nickProponedor, tiposRetorno, est);
             
             this.controller.addPropuesta(propuesta);
             this.dispose();
