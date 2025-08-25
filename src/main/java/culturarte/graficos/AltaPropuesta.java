@@ -9,6 +9,7 @@ import culturarte.logica.IController;
 import culturarte.logica.TipoRetorno;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -28,7 +29,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 public class AltaPropuesta extends javax.swing.JInternalFrame {
 
     private IController controller;
-    private BufferedImage imagenPropuesta;
+    private byte[] imagenPropuesta;
     
 public AltaPropuesta() {
     IControllerFactory fabrica = IControllerFactory.getInstance();
@@ -415,13 +416,20 @@ public AltaPropuesta() {
         if (resultado == JFileChooser.APPROVE_OPTION) {
             File archivoElegido = selectorImagen.getSelectedFile();
             try {
-                this.imagenPropuesta = ImageIO.read(archivoElegido);
-                Image imagenEscalada = this.imagenPropuesta.getScaledInstance(133, 133, Image.SCALE_SMOOTH);
+                BufferedImage temp = ImageIO.read(archivoElegido);
+                
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ImageIO.write(temp, "jpg", baos);
+                this.imagenPropuesta = baos.toByteArray();
+                
+                Image imagenEscalada = temp.getScaledInstance(133, 133, Image.SCALE_SMOOTH);
                 this.labelImagen.setIcon(new ImageIcon(imagenEscalada));
+                
             } catch (IOException ex) {
-                System.getLogger(AltaUsr.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                System.getLogger(AltaPropuesta.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             }
         }
+        
     }//GEN-LAST:event_botonAddImagenActionPerformed
 
     private void LugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LugarActionPerformed

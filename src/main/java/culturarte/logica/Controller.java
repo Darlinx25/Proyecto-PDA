@@ -206,7 +206,7 @@ public class Controller implements IController {
         }
         
         String descripcion = prop.getDescripcion();
-        BufferedImage imagen = prop.getImagen();
+        byte[] imagen = prop.getImagen();
         String lugarRealizara = prop.getLugarRealizara();
         LocalDate fechaRealizara = prop.getFechaRealizara();
         float precioEntrada = prop.getPrecioEntrada();

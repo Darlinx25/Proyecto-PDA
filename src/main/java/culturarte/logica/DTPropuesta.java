@@ -4,7 +4,6 @@
  */
 package culturarte.logica;
 
-import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 public class DTPropuesta {
     private String titulo;
     private String descripcion;
-    private BufferedImage imagen;
+    private byte[] imagen;
     private String lugarRealizara;
     private LocalDate fechaRealizara;
     private float precioEntrada;
@@ -28,7 +27,7 @@ public class DTPropuesta {
         
     }
     
-    public DTPropuesta(String titulo, String descripcion, BufferedImage imagen, String lugarRealizara, LocalDate fechaRealizara, 
+    public DTPropuesta(String titulo, String descripcion, byte[] imagen, String lugarRealizara, LocalDate fechaRealizara, 
             float precioEntrada, float montoAReunir, String tipoPropuesta, String nickProponedor, ArrayList<TipoRetorno> tiposRetorno) {
         
         this.titulo = titulo;
@@ -51,7 +50,7 @@ public class DTPropuesta {
         return descripcion;
     }
 
-    public BufferedImage getImagen() {
+    public byte[] getImagen() {
         return imagen;
     }
 

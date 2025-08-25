@@ -22,8 +22,9 @@ public class Propuesta {
     
     private String descripcion;
     
-    @Transient
-    private BufferedImage imagen;
+    @Lob @Basic(fetch = FetchType.LAZY)
+    @Column(length = 40000000)//40 MB
+    private byte[] imagen;
     
     private String lugarRealizara;
     private LocalDate fechaRealizara;
@@ -55,7 +56,7 @@ public class Propuesta {
         
     }
     
-    public Propuesta(String titulo, String descripcion, BufferedImage imagen, String lugarRealizara, LocalDate fechaRealizara, float precioEntrada, 
+    public Propuesta(String titulo, String descripcion, byte[] imagen, String lugarRealizara, LocalDate fechaRealizara, float precioEntrada, 
             float montoAReunir, List<TipoRetorno> tiposRetorno, Categoria tipoPropuesta, Proponente proponente) {
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -91,11 +92,11 @@ public class Propuesta {
         this.descripcion = descripcion;
     }
 
-    public BufferedImage getImagen() {
+    public byte[] getImagen() {
         return imagen;
     }
 
-    public void setImagen(BufferedImage imagen) {
+    public void setImagen(byte[] imagen) {
         this.imagen = imagen;
     }
 
