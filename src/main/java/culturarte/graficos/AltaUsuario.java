@@ -26,13 +26,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  *
  * @author faxcundo
  */
-public class AltaUsr extends javax.swing.JInternalFrame {
+public class AltaUsuario extends javax.swing.JInternalFrame {
     private IController controller;
     private byte[] imagenUsuario;
     /**
      * Creates new form Alta_Usr
      */
-    public AltaUsr() {
+    public AltaUsuario() {
         IControllerFactory fabrica = IControllerFactory.getInstance();
         this.controller = fabrica.getIController();
         this.imagenUsuario = null;
@@ -414,7 +414,7 @@ public class AltaUsr extends javax.swing.JInternalFrame {
                 this.labelImagen.setIcon(new ImageIcon(imagenEscalada));
                 
             } catch (IOException ex) {
-                System.getLogger(AltaUsr.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                System.getLogger(AltaUsuario.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             }
         }
         

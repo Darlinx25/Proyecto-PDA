@@ -15,13 +15,13 @@ import javax.swing.tree.DefaultMutableTreeNode;
  *
  * @author kevin
  */
-public class ConsultarProp extends javax.swing.JInternalFrame {
+public class ConsultarProponente extends javax.swing.JInternalFrame {
     private IController controller;
     private BufferedImage imagenProponente;
     /**
      * Creates new form ConsultarProp
      */
-    public ConsultarProp() {
+    public ConsultarProponente() {
         IControllerFactory fabrica = IControllerFactory.getInstance();
         this.controller = fabrica.getIController();
         this.imagenProponente = null;

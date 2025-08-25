@@ -11,11 +11,11 @@ package culturarte.graficos;
 public class MainFrame extends javax.swing.JFrame {
     int clicks=0;
     
-    private AltaUsr altaUsr;
+    private AltaUsuario altaUsr;
     private AltaCategoria altaCategoria;
     private AltaPropuesta altaPropuesta;
     private ConsultarColaborador consultarColaborador;
-    private ConsultarProp consultarProp;
+    private ConsultarProponente consultarProp;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
 
@@ -148,7 +148,7 @@ public class MainFrame extends javax.swing.JFrame {
                 return;
             }
         }
-        this.altaUsr = new AltaUsr();
+        this.altaUsr = new AltaUsuario();
         add(this.altaUsr);
         this.altaUsr.setVisible(true);    
     }//GEN-LAST:event_jMenuItem1ActionPerformed
@@ -182,7 +182,7 @@ public class MainFrame extends javax.swing.JFrame {
                 return;
             }
         }
-        this.consultarProp = new ConsultarProp();
+        this.consultarProp = new ConsultarProponente();
         add(this.consultarProp);
         this.consultarProp.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
