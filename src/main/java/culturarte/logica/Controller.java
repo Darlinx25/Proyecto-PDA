@@ -48,7 +48,6 @@ public class Controller implements IController {
         em.persist(raiz);
         t.commit();
     }
-    categorias.put("Categorías", raiz);
 }
 
     
@@ -102,7 +101,7 @@ public class Controller implements IController {
     @Override
     public DefaultMutableTreeNode listarCategorias() {
         //throw new UnsupportedOperationException("Not supported yet.");
-        Categoria catRaiz = this.categorias.get("Categorías");
+        Categoria catRaiz = em.find(Categoria.class, "Categorías");
         DefaultMutableTreeNode raiz = nodosArbolCategorias(catRaiz);
         return raiz;
     }
@@ -112,7 +111,7 @@ public class Controller implements IController {
             return null;
         }
         DefaultMutableTreeNode nodito = new DefaultMutableTreeNode(cat.getNombre());
-        if (cat.getSubCategorias() == null) {
+        if (cat.getSubCategorias().isEmpty()) {
             return nodito;
         }
         for (Categoria c : cat.getSubCategorias()) {
@@ -126,16 +125,18 @@ public class Controller implements IController {
         if (this.categorias.containsKey(nombre)) {
             return; // exception después
         }
-
         Categoria cat = new Categoria(nombre);
 
         if (nombrePadre != null) {
-            Categoria padre = this.categorias.get(nombrePadre);
+            Categoria padre = em.find(Categoria.class, nombrePadre);
             if (padre != null) {
                 padre.addSubcategoria(cat);
+                cat.setPadre(padre);
             }
         } else {
-            this.categorias.get("Categorías").addSubcategoria(cat);
+            Categoria raiz = em.find(Categoria.class, "Categorías");
+            raiz.addSubcategoria(cat);
+            cat.setPadre(raiz);
         }
 
         EntityTransaction t = em.getTransaction();
@@ -147,8 +148,6 @@ public class Controller implements IController {
             if (t.isActive()) t.rollback();
             e.printStackTrace();
         }
-
-        this.categorias.put(nombre, cat);
     }
 
     

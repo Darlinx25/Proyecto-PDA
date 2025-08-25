@@ -24,15 +24,17 @@ public class Categoria {
     private Categoria padre;
 
     @OneToMany(mappedBy = "padre", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Categoria> subCategorias = new ArrayList<>();
+    private List<Categoria> subCategorias;
 
     @OneToMany(mappedBy = "tipoPropuesta", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Propuesta> propuestas = new ArrayList<>();
+    private List<Propuesta> propuestas;
 
     public Categoria() {}
 
     public Categoria(String nombre) {
         this.nombre = nombre;
+        this.subCategorias = new ArrayList<>();
+        this.propuestas = new ArrayList<>();
     }
 
     // getters y setters...
