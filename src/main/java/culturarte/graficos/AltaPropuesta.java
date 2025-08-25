@@ -14,6 +14,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -420,22 +422,36 @@ public AltaPropuesta() {
         if (resultado == JFileChooser.APPROVE_OPTION) {
             File archivoElegido = selectorImagen.getSelectedFile();
             try {
-                BufferedImage temp = ImageIO.read(archivoElegido);
+                String extensionImagen = tipoImagen(archivoElegido);
                 
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                ImageIO.write(temp, "jpg", baos);
-                this.imagenPropuesta = baos.toByteArray();
+                if (extensionImagen.equals("jpg")  || extensionImagen.equals("png")) {
+                    BufferedImage temp = ImageIO.read(archivoElegido);
                 
-                Image imagenEscalada = temp.getScaledInstance(133, 133, Image.SCALE_SMOOTH);
-                this.labelImagen.setIcon(new ImageIcon(imagenEscalada));
-                
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    ImageIO.write(temp, extensionImagen, baos);
+                    this.imagenPropuesta = baos.toByteArray();
+
+                    Image imagenEscalada = temp.getScaledInstance(133, 133, Image.SCALE_SMOOTH);
+                    this.labelImagen.setIcon(new ImageIcon(imagenEscalada));
+                }
             } catch (IOException ex) {
                 System.getLogger(AltaPropuesta.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             }
         }
         
     }//GEN-LAST:event_botonAddImagenActionPerformed
-
+    private String tipoImagen(File archivo) throws IOException {
+        Path path = archivo.toPath();
+        String mimeType = Files.probeContentType(path);
+        if (mimeType != null) {
+            if (mimeType.equals("image/png")) {
+                return "png";
+            } else if (mimeType.equals("image/jpeg")) {
+                return "jpg";
+            }
+        }
+        return "desconocido";
+    }
     private void LugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LugarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_LugarActionPerformed

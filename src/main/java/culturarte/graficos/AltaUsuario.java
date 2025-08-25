@@ -15,6 +15,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -404,22 +406,36 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         if (resultado == JFileChooser.APPROVE_OPTION) {
             File archivoElegido = selectorImagen.getSelectedFile();
             try {
-                BufferedImage temp = ImageIO.read(archivoElegido);
+                String extensionImagen = tipoImagen(archivoElegido);
                 
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                ImageIO.write(temp, "jpg", baos);
-                this.imagenUsuario = baos.toByteArray();
+                if (extensionImagen.equals("jpg")  || extensionImagen.equals("png")) {
+                    BufferedImage temp = ImageIO.read(archivoElegido);
                 
-                Image imagenEscalada = temp.getScaledInstance(133, 133, Image.SCALE_SMOOTH);
-                this.labelImagen.setIcon(new ImageIcon(imagenEscalada));
-                
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    ImageIO.write(temp, extensionImagen, baos);
+                    this.imagenUsuario = baos.toByteArray();
+
+                    Image imagenEscalada = temp.getScaledInstance(133, 133, Image.SCALE_SMOOTH);
+                    this.labelImagen.setIcon(new ImageIcon(imagenEscalada));
+                }
             } catch (IOException ex) {
                 System.getLogger(AltaUsuario.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             }
         }
-        
     }//GEN-LAST:event_botonAddImagenActionPerformed
-
+    private String tipoImagen(File archivo) throws IOException {
+        Path path = archivo.toPath();
+        String mimeType = Files.probeContentType(path);
+        if (mimeType != null) {
+            if (mimeType.equals("image/png")) {
+                return "png";
+            } else if (mimeType.equals("image/jpeg")) {
+                return "jpg";
+            }
+        }
+        return "desconocido";
+    }
+        
     private void radioProponenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioProponenteActionPerformed
         enableDatosProponente();
     }//GEN-LAST:event_radioProponenteActionPerformed
