@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
+import java.util.List;
 /**
  *
  * @author mark
@@ -32,7 +32,7 @@ public class Propuesta {
     private LocalDate fechaPublicacion;
     
     @ElementCollection
-    private ArrayList<TipoRetorno> tiposRetorno;
+    private List<TipoRetorno> tiposRetorno;
     
     
     @ManyToOne
@@ -46,17 +46,17 @@ public class Propuesta {
     private Estado estadoActual;
     
     @ElementCollection
-    private ArrayList<Estado> historialEstados;
+    private List<Estado> historialEstados;
     
     @OneToMany(cascade = CascadeType.ALL)
-    private ArrayList<Colaboracion> colaboraciones;
+    private List<Colaboracion> colaboraciones;
     
     public Propuesta(){
         
     }
     
     public Propuesta(String titulo, String descripcion, BufferedImage imagen, String lugarRealizara, LocalDate fechaRealizara, float precioEntrada, 
-            float montoAReunir, ArrayList<TipoRetorno> tiposRetorno, Categoria tipoPropuesta, Proponente proponente) {
+            float montoAReunir, List<TipoRetorno> tiposRetorno, Categoria tipoPropuesta, Proponente proponente) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.imagen = imagen;
@@ -139,11 +139,11 @@ public class Propuesta {
         this.fechaPublicacion = fechaPublicacion;
     }
 
-    public ArrayList<TipoRetorno> getTiposRetorno() {
+    public List<TipoRetorno> getTiposRetorno() {
         return tiposRetorno;
     }
 
-    public void setTiposRetorno(ArrayList<TipoRetorno> tiposRetorno) {
+    public void setTiposRetorno(List<TipoRetorno> tiposRetorno) {
         this.tiposRetorno = tiposRetorno;
     }
     
@@ -171,19 +171,19 @@ public class Propuesta {
         this.estadoActual = estadoActual;
     }
 
-    public ArrayList<Estado> getHistorialEstados() {
+    public List<Estado> getHistorialEstados() {
         return historialEstados;
     }
 
-    public void setHistorialEstados(ArrayList<Estado> historialEstados) {
+    public void setHistorialEstados(List<Estado> historialEstados) {
         this.historialEstados = historialEstados;
     }
 
-    public ArrayList<Colaboracion> getColaboraciones() {
+    public List<Colaboracion> getColaboraciones() {
         return colaboraciones;
     }
 
-    public void setColaboraciones(ArrayList<Colaboracion> colaboraciones) {
+    public void setColaboraciones(List<Colaboracion> colaboraciones) {
         this.colaboraciones = colaboraciones;
     }
     

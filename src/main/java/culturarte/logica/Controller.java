@@ -182,13 +182,12 @@ public class Controller implements IController {
         LocalDate fechaRealizara = prop.getFechaRealizara();
         float precioEntrada = prop.getPrecioEntrada();
         float montoAReunir = prop.getMontoAReunir();
-        Categoria tipoPropuesta = this.categorias.get(prop.getTipoPropuesta());
-        Proponente proponedor = (Proponente) this.usuarios.get(prop.getNickProponedor());
+        
         // Buscar en la base de datos la categoría y el proponente
-        tipoPropuesta = em.find(Categoria.class, tipoPropuesta.getNombre());
-        proponedor = em.find(Proponente.class, proponedor.getNickname());
+        Categoria tipoPropuesta = em.find(Categoria.class, prop.getTipoPropuesta());
+        Proponente proponedor = em.find(Proponente.class, prop.getNickProponedor());
 
-        ArrayList<TipoRetorno> tiposRetorno = prop.getTiposRetorno();
+        List<TipoRetorno> tiposRetorno = prop.getTiposRetorno();
         
         Propuesta propuesta = new Propuesta(titulo, descripcion, imagen, lugarRealizara, fechaRealizara, precioEntrada, montoAReunir, tiposRetorno, 
                 tipoPropuesta, proponedor);
