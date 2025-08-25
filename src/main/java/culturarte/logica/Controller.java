@@ -35,14 +35,22 @@ public class Controller implements IController {
         usuarios = new HashMap<>();
         propuestas = new HashMap<>();
         categorias = new HashMap<>();
-        
-        categorias.put("Categorías", new Categoria("Categorías"));
-        
+
         emf = Persistence.createEntityManagerFactory("Proyecto_PDA");
         em = emf.createEntityManager();
-        
-        
+
+    // Verificar si la raíz ya existe en la DB
+    Categoria raiz = em.find(Categoria.class, "Categorías");
+    if (raiz == null) {
+        raiz = new Categoria("Categorías");
+        EntityTransaction t = em.getTransaction();
+        t.begin();
+        em.persist(raiz);
+        t.commit();
     }
+    categorias.put("Categorías", raiz);
+}
+
     
   
     public static Controller getInstance() {
@@ -115,13 +123,12 @@ public class Controller implements IController {
 
     @Override
     public void addCategoria(String nombre, String nombrePadre) {
-        
         if (this.categorias.containsKey(nombre)) {
-            return;//agregar exception luego
+            return; // exception después
         }
+
         Categoria cat = new Categoria(nombre);
-        this.categorias.put(nombre, cat);
-        
+
         if (nombrePadre != null) {
             Categoria padre = this.categorias.get(nombrePadre);
             if (padre != null) {
@@ -130,7 +137,20 @@ public class Controller implements IController {
         } else {
             this.categorias.get("Categorías").addSubcategoria(cat);
         }
+
+        EntityTransaction t = em.getTransaction();
+        try {
+            t.begin();
+            em.persist(cat);   // gracias a la relación, JPA guarda con la FK al padre
+            t.commit();
+        } catch (Exception e) {
+            if (t.isActive()) t.rollback();
+            e.printStackTrace();
+        }
+
+        this.categorias.put(nombre, cat);
     }
+
     
     @Override
     public ArrayList<String> listarProponentes() {
@@ -165,13 +185,26 @@ public class Controller implements IController {
         float montoAReunir = prop.getMontoAReunir();
         Categoria tipoPropuesta = this.categorias.get(prop.getTipoPropuesta());
         Proponente proponedor = (Proponente) this.usuarios.get(prop.getNickProponedor());
+        // Buscar en la base de datos la categoría y el proponente
+        tipoPropuesta = em.find(Categoria.class, tipoPropuesta.getNombre());
+        proponedor = em.find(Proponente.class, proponedor.getNickname());
+
         ArrayList<TipoRetorno> tiposRetorno = prop.getTiposRetorno();
         
         Propuesta propuesta = new Propuesta(titulo, descripcion, imagen, lugarRealizara, fechaRealizara, precioEntrada, montoAReunir, tiposRetorno, 
                 tipoPropuesta, proponedor);
         
         this.propuestas.put(titulo, propuesta);
-    }
+        EntityTransaction t = em.getTransaction();
+        try{
+           t.begin();
+           em.persist(propuesta);
+           t.commit();
+        }catch(Exception  e){
+            t.rollback();
+            e.printStackTrace();
+        }
+        }
 
   
     @Override

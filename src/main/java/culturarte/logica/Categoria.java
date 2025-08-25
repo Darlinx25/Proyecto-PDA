@@ -5,6 +5,7 @@
 package culturarte.logica;
 import jakarta.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -14,53 +15,38 @@ import java.util.ArrayList;
 @Entity
 @Table(name = "categorias")
 public class Categoria {
-    
+
     @Id
     private String nombre;
-    
-    
-    @OneToMany(cascade = CascadeType.ALL)
-    private ArrayList<Categoria> subCategorias;
-    
-    @OneToMany(mappedBy = "tipoPropuesta", cascade = CascadeType.ALL)
-    private ArrayList<Propuesta> propuestas;
-    
-    public Categoria(){
-        
-    }
-    
+
+    @ManyToOne
+    @JoinColumn(name = "padre_nombre")
+    private Categoria padre;
+
+    @OneToMany(mappedBy = "padre", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Categoria> subCategorias = new ArrayList<>();
+
+    @OneToMany(mappedBy = "tipoPropuesta", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Propuesta> propuestas = new ArrayList<>();
+
+    public Categoria() {}
+
     public Categoria(String nombre) {
         this.nombre = nombre;
-        this.subCategorias = new ArrayList<Categoria>();//si no inicializamos quedan en null, no vacías
-        this.propuestas = new ArrayList<Propuesta>();
     }
 
-    public String getNombre() {
-        return nombre;
-    }
+    // getters y setters...
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    public Categoria getPadre() { return padre; }
+    public void setPadre(Categoria padre) { this.padre = padre; }
 
-    public ArrayList<Categoria> getSubCategorias() {
-        return subCategorias;
-    }
+    public List<Categoria> getSubCategorias() { return subCategorias; }
+    public void setSubCategorias(List<Categoria> subCategorias) { this.subCategorias = subCategorias; }
 
-    public void setSubCategorias(ArrayList<Categoria> subCategorias) {
-        this.subCategorias = subCategorias;
-    }
-
-    public ArrayList<Propuesta> getPropuestas() {
-        return propuestas;
-    }
-
-    public void setPropuestas(ArrayList<Propuesta> propuestas) {
-        this.propuestas = propuestas;
-    }
-    
     public void addSubcategoria(Categoria cat) {
+        cat.setPadre(this);  // 💡 importante: setear la FK
         this.subCategorias.add(cat);
     }
-    
 }

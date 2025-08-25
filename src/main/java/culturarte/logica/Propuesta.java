@@ -18,7 +18,6 @@ import java.util.ArrayList;
 public class Propuesta {
     
     @Id
-    @Column(name = "titulo", unique = true, nullable = false)
     private String titulo;
     
     private String descripcion;
