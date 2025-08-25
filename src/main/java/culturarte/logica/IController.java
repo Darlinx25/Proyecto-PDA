@@ -17,6 +17,7 @@ public interface IController {
     public DefaultMutableTreeNode listarCategorias();
     public void addCategoria(String nombre, String nombrePadre);
     public ArrayList<String> listarColaboradores();
+    public DTColaborador obtenerDTColaborador(String nick);
     public ArrayList<String> listarProponentes();
     public void addPropuesta(DTPropuesta prop);
     DTProponente obtenerDTProponente(String nick);

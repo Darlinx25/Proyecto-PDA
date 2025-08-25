@@ -4,8 +4,11 @@
  */
 package culturarte.graficos;
 
+import culturarte.logica.DTColaborador;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -35,6 +38,18 @@ public class ConsultarColaborador extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         listaColaboradores = new javax.swing.JList<>(this.controller.listarColaboradores().toArray(new String[0]));
+        datosColaborador = new javax.swing.JPanel();
+        campoNickname = new javax.swing.JTextField();
+        campoNombre = new javax.swing.JTextField();
+        campoApellido = new javax.swing.JTextField();
+        campoEmail = new javax.swing.JTextField();
+        campoFNac = new javax.swing.JTextField();
+        labelNickname = new javax.swing.JLabel();
+        labelNombre = new javax.swing.JLabel();
+        labelApellido = new javax.swing.JLabel();
+        labelEmail = new javax.swing.JLabel();
+        labelFNac = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -42,7 +57,96 @@ public class ConsultarColaborador extends javax.swing.JInternalFrame {
         setTitle("Consultar Colaborador");
         getContentPane().setLayout(new java.awt.CardLayout());
 
+        listaColaboradores.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listaColaboradoresValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(listaColaboradores);
+
+        campoNickname.setEditable(false);
+        campoNickname.setCaretColor(new java.awt.Color(255, 255, 255));
+
+        campoNombre.setEditable(false);
+        campoNombre.setCaretColor(new java.awt.Color(255, 255, 255));
+
+        campoApellido.setEditable(false);
+        campoApellido.setCaretColor(new java.awt.Color(255, 255, 255));
+
+        campoEmail.setEditable(false);
+        campoEmail.setCaretColor(new java.awt.Color(255, 255, 255));
+
+        campoFNac.setEditable(false);
+        campoFNac.setCaretColor(new java.awt.Color(255, 255, 255));
+        campoFNac.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        labelNickname.setText("Nickname:");
+
+        labelNombre.setText("Nombre:");
+
+        labelApellido.setText("Apellido:");
+
+        labelEmail.setText("E-Mail:");
+
+        labelFNac.setText("Fecha de Nacimiento:");
+
+        javax.swing.GroupLayout datosColaboradorLayout = new javax.swing.GroupLayout(datosColaborador);
+        datosColaborador.setLayout(datosColaboradorLayout);
+        datosColaboradorLayout.setHorizontalGroup(
+            datosColaboradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(datosColaboradorLayout.createSequentialGroup()
+                .addContainerGap(119, Short.MAX_VALUE)
+                .addGroup(datosColaboradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, datosColaboradorLayout.createSequentialGroup()
+                        .addComponent(labelFNac)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(campoFNac, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, datosColaboradorLayout.createSequentialGroup()
+                        .addComponent(labelEmail)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(campoEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, datosColaboradorLayout.createSequentialGroup()
+                        .addComponent(labelApellido)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(campoApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, datosColaboradorLayout.createSequentialGroup()
+                        .addComponent(labelNombre)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(campoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, datosColaboradorLayout.createSequentialGroup()
+                        .addComponent(labelNickname)
+                        .addGap(98, 98, 98)
+                        .addComponent(campoNickname, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        datosColaboradorLayout.setVerticalGroup(
+            datosColaboradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(datosColaboradorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(datosColaboradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(campoNickname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelNickname))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(datosColaboradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(campoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelNombre))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(datosColaboradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(campoApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelApellido))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(datosColaboradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(campoEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelEmail))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(datosColaboradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(campoFNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelFNac))
+                .addContainerGap(172, Short.MAX_VALUE))
+        );
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Colaboradores");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -50,15 +154,23 @@ public class ConsultarColaborador extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(509, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(84, 84, 84)
+                .addComponent(datosColaborador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addComponent(jLabel1)
+                .addGap(2, 2, 2)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(datosColaborador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, "card2");
@@ -66,10 +178,36 @@ public class ConsultarColaborador extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void listaColaboradoresValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaColaboradoresValueChanged
+        String nickColab = this.listaColaboradores.getSelectedValue();
+        DTColaborador colab = this.controller.obtenerDTColaborador(nickColab);
+        
+        this.campoNickname.setText(colab.getNickname());
+        this.campoNombre.setText(colab.getNombre());
+        this.campoApellido.setText(colab.getApellido());
+        this.campoEmail.setText(colab.getEmail());
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate fechaNacimiento = colab.getFechaNacimiento();
+        this.campoFNac.setText(fechaNacimiento.format(formatter));
+    }//GEN-LAST:event_listaColaboradoresValueChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField campoApellido;
+    private javax.swing.JTextField campoEmail;
+    private javax.swing.JTextField campoFNac;
+    private javax.swing.JTextField campoNickname;
+    private javax.swing.JTextField campoNombre;
+    private javax.swing.JPanel datosColaborador;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelApellido;
+    private javax.swing.JLabel labelEmail;
+    private javax.swing.JLabel labelFNac;
+    private javax.swing.JLabel labelNickname;
+    private javax.swing.JLabel labelNombre;
     private javax.swing.JList<String> listaColaboradores;
     // End of variables declaration//GEN-END:variables
 }

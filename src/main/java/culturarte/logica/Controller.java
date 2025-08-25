@@ -166,6 +166,21 @@ public class Controller implements IController {
     }
     
     @Override
+    public DTColaborador obtenerDTColaborador(String nick) {
+        try {
+            Colaborador c = em.find(Colaborador.class, nick);
+            if (c != null) {
+                return new DTColaborador(
+                c.getNickname(), c.getNombre(), c.getApellido(),
+                c.getEmail(), c.getFechaNacimiento(), c.getImagen());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    @Override
     public ArrayList<String> listarProponentes() {
         ArrayList<String> aux = new ArrayList<String>();
         
