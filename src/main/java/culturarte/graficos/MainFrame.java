@@ -16,6 +16,7 @@ public class MainFrame extends javax.swing.JFrame {
     private AltaPropuesta altaPropuesta;
     private ConsultarColaborador consultarColaborador;
     private ConsultarProponente consultarProp;
+    private SeguirUsuario seguirUsuario;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
 
@@ -92,6 +93,11 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu3.add(jMenuItem2);
 
         jMenuItem6.setText("Seguir Usuario");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem6);
 
         jMenuBar1.add(jMenu3);
@@ -201,6 +207,17 @@ public class MainFrame extends javax.swing.JFrame {
         add(this.consultarColaborador);
         this.consultarColaborador.setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        if(this.seguirUsuario !=null){
+            if (this.seguirUsuario.isVisible()){
+                return;
+            }
+        }
+        this.seguirUsuario = new SeguirUsuario();
+        add(this.seguirUsuario);
+        this.seguirUsuario.setVisible(true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
