@@ -112,7 +112,7 @@ public abstract class Usuario {
         return usuariosSeguidos;
     }
 
-    public void setUsuariosSeguidos(ArrayList<Usuario> usuariosSeguidos) {
+    public void setUsuariosSeguidos(List<Usuario> usuariosSeguidos) {
         this.usuariosSeguidos = usuariosSeguidos;
     }
 

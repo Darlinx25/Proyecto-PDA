@@ -288,9 +288,27 @@ public class Controller implements IController {
         e.printStackTrace();
     }
     return null;
-}
+}  
+    @Override
+    public ArrayList<String> listarUsuarios(){
+        ArrayList<String> aux = new ArrayList<String>();
+        try{
+            List<Usuario> result = em.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
+            for(Usuario u : result){
+                aux.add(u.getNickname());
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return aux;
+    }
    
-
+    @Override
+    public void seguirUsuario(Usuario seguidor, Usuario  usuASeguir){
+        List<Usuario> aux = seguidor.getUsuariosSeguidos();
+        aux.add(usuASeguir);
+        seguidor.setUsuariosSeguidos(aux);
+    }
  
     
 }
