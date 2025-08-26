@@ -319,6 +319,22 @@ public class Controller implements IController {
                 .setParameter("nickUsu", nickUsu).getResultList();
         agregarUsuarioSeg(usu1.get(0),usu2.get(0));
     }
-}
-
+        
     
+    @Override
+    public ArrayList<String>listarUsuariosSeguir(String nickname){
+        
+         List<String> aux;
+        String query = "SELECT u.nickname FROM Usuario u WHERE u.nickname != :nick";            
+        try {
+         aux = em.createQuery(query, String.class).setParameter("nick", nickname).getResultList();
+        } catch (Exception e) {
+         aux = Collections.emptyList();
+         e.printStackTrace();
+        }
+    return new ArrayList<>(aux);
+    }
+ }
+
+
+

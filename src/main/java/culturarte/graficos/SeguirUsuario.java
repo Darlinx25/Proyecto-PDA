@@ -24,7 +24,7 @@ public class SeguirUsuario extends javax.swing.JInternalFrame {
         for(String nick : controller.listarUsuarios()){
             modelo.addElement(nick);
         }
-        
+      
     }
 
     /**
@@ -41,7 +41,7 @@ public class SeguirUsuario extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         seguidores = seguidores = new javax.swing.JList<>(new javax.swing.DefaultListModel<>());
         jScrollPane2 = new javax.swing.JScrollPane();
-        usuariosASeguir = new javax.swing.JList<>();
+        usuariosASeguir = usuariosASeguir = new javax.swing.JList<>(new javax.swing.DefaultListModel<>());
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -66,11 +66,6 @@ public class SeguirUsuario extends javax.swing.JInternalFrame {
 
         jScrollPane1.setViewportView(seguidores);
 
-        usuariosASeguir.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane2.setViewportView(usuariosASeguir);
 
         jLabel1.setText("Seguidor:");
