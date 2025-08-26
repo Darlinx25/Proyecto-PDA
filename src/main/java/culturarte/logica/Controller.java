@@ -304,13 +304,21 @@ public class Controller implements IController {
     }
    
     @Override
-    public void seguirUsuario(Usuario seguidor, Usuario  usuASeguir){
+    public void agregarUsuarioSeg(Usuario seguidor, Usuario  usuASeguir){
         List<Usuario> aux = seguidor.getUsuariosSeguidos();
         aux.add(usuASeguir);
         seguidor.setUsuariosSeguidos(aux);
     }
  
-    
+    @Override
+    public void seguirUsuario(String nickUsu, String nickSegui){
+        List<Usuario> usu1 = em.createQuery("SELECT u FROM Usuario u WHERE u.nickname = :nickSegui", Usuario.class)
+                .setParameter("nickSegui", nickSegui).getResultList();
+        
+        List<Usuario> usu2 = em.createQuery("SELECT u FROM Usuario u WHERE u.nickname = :nickUsu", Usuario.class)
+                .setParameter("nickUsu", nickUsu).getResultList();
+        agregarUsuarioSeg(usu1.get(0),usu2.get(0));
+    }
 }
 
     
