@@ -24,8 +24,19 @@ public class SeguirUsuario extends javax.swing.JInternalFrame {
         for(String nick : controller.listarUsuarios()){
             modelo.addElement(nick);
         }
-      
-    }
+      seguidores.addListSelectionListener(e ->{
+          if (!e.getValueIsAdjusting()) {
+            String seleccionado = seguidores.getSelectedValue();
+              if(seleccionado!= null){
+              DefaultListModel<String> modelo1 = (DefaultListModel<String>) usuariosASeguir.getModel();
+                modelo1.clear();
+                for (String nick1 : controller.listarUsuariosSeguir(seleccionado)) {
+                    modelo1.addElement(nick1);
+                }
+              }
+      }
+    });
+ }
 
     /**
      * This method is called from within the constructor to initialize the form.
