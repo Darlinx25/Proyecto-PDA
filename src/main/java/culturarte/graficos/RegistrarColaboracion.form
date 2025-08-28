@@ -422,6 +422,9 @@
                   <Format format="0.00" subtype="-1" type="0"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campoMontoColabActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="labelRetorno">
               <Properties>

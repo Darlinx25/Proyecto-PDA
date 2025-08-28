@@ -236,6 +236,11 @@ public class RegistrarColaboracion extends javax.swing.JInternalFrame {
         });
 
         campoMontoColab.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("0.00"))));
+        campoMontoColab.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoMontoColabActionPerformed(evt);
+            }
+        });
 
         labelRetorno.setText("Tipo de retorno:");
 
@@ -365,6 +370,10 @@ public class RegistrarColaboracion extends javax.swing.JInternalFrame {
             this.dispose();
         }
     }//GEN-LAST:event_botonAceptarActionPerformed
+
+    private void campoMontoColabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoMontoColabActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoMontoColabActionPerformed
 
     private String cortarTituloProp(String tituloProp) {
         int primerEspacio = tituloProp.indexOf(' ');
