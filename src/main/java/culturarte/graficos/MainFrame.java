@@ -18,6 +18,7 @@ public class MainFrame extends javax.swing.JFrame {
     private ConsultarProponente consultarProp;
     private SeguirUsuario seguirUsuario;
     private RegistrarColaboracion registrarColaboracion;
+    private ConsultarPropuestaEstado consultaEstado;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
 
@@ -51,6 +52,7 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
+        JMenuItem8 = new javax.swing.JMenuItem();
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
@@ -130,6 +132,15 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem7);
 
+        JMenuItem8.setText("Consulta Propuesta por Estado");
+        JMenuItem8.setActionCommand("jMenu8");
+        JMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JMenuItem8ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(JMenuItem8);
+
         jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
@@ -139,13 +150,13 @@ public class MainFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 388, Short.MAX_VALUE)
+                .addGap(0, 1028, Short.MAX_VALUE)
                 .addComponent(jButton1))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 255, Short.MAX_VALUE)
+                .addGap(0, 704, Short.MAX_VALUE)
                 .addComponent(jButton1))
         );
 
@@ -240,6 +251,17 @@ public class MainFrame extends javax.swing.JFrame {
         this.registrarColaboracion.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
+    private void JMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuItem8ActionPerformed
+          if(this.consultaEstado !=null){
+            if (this.consultaEstado.isVisible()){
+                return;
+            }
+        }
+        this.consultaEstado = new ConsultarPropuestaEstado();
+        add(this.consultaEstado);
+        this.consultaEstado.setVisible(true);
+    }//GEN-LAST:event_JMenuItem8ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -266,6 +288,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem JMenuItem8;
     private javax.swing.JButton jButton1;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JMenu jMenu1;

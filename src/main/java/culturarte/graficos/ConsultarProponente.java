@@ -85,7 +85,7 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
                 String seleccionado2 = listPropuestas.getSelectedValue();
                 if (seleccionado2 != null) {
                 if (dtprop != null) {
-                dineroRecaudado.setText("lol");
+                
                 
             }
         }
