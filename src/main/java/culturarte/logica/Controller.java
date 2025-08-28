@@ -272,6 +272,20 @@ public class Controller implements IController {
     }
     
     
+    public ArrayList<String> listarPropuestasEstado(int estado){
+    List<String> aux;
+    EstadoPropuesta est = EstadoPropuesta.values()[estado];    
+    String query = "SELECT p.titulo FROM Propuesta p WHERE p.estadoActual.estado = :est";            
+    try {
+         aux = em.createQuery(query, String.class).setParameter("est", est).getResultList();
+    } catch (Exception e) {
+         aux = Collections.emptyList();
+         e.printStackTrace();
+    }
+    return new ArrayList<>(aux);
+    }
+    
+    
     @Override
     public DTPropuesta obtenerDTPropuesta(String titulo) {
     try {

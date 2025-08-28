@@ -23,11 +23,28 @@ public class ConsultarPropuestaEstado extends javax.swing.JInternalFrame {
         initComponents();
         
         
-        DefaultListModel<String> modelo = (DefaultListModel<String>) listPropEstado.getModel();
-        modelo.clear();
-        for (String nick : controller.listarProponentes()) {
-        modelo.addElement(nick);
-        }
+     
+        
+        ListaEstados.addListSelectionListener(e->{
+        if (!e.getValueIsAdjusting()) {
+            String selec = ListaEstados.getSelectedValue();    
+        
+            if(selec != null){
+                int estado = ListaEstados.getSelectedIndex();
+                controller.listarPropuestasEstado(estado);
+                DefaultListModel<String> modelo = (DefaultListModel<String>) listPropEstado.getModel();
+                modelo.clear();
+                for (String prop : controller.listarPropuestasEstado(estado)) {
+                modelo.addElement(prop);
+                }
+                
+            }
+        
+            
+        }   
+            
+            
+        });
         
         
         
