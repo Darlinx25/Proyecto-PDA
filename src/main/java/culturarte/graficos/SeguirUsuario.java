@@ -34,8 +34,25 @@ public class SeguirUsuario extends javax.swing.JInternalFrame {
                     modelo1.addElement(nick1);
                 }
               }
+              String selected2 = usuariosASeguir.getSelectedValue();
+              if(seleccionado != null && selected2 != null){
+                  enableAceptar();
+              }
+              else{
+                  disableAceptar();
+              }
       }
     });
+      usuariosASeguir.addListSelectionListener(e ->{
+          String seleccionado = seguidores.getSelectedValue();
+          String selected2 = usuariosASeguir.getSelectedValue();
+          if(seleccionado!= null && selected2 != null){
+              enableAceptar();
+          }
+          else{
+                  disableAceptar();
+              }
+      });
  }
 
     /**
@@ -69,6 +86,7 @@ public class SeguirUsuario extends javax.swing.JInternalFrame {
         });
 
         aceptar.setText("Aceptar");
+        aceptar.setEnabled(false);
         aceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 aceptarActionPerformed(evt);
@@ -103,7 +121,7 @@ public class SeguirUsuario extends javax.swing.JInternalFrame {
                             .addComponent(jScrollPane2)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 141, Short.MAX_VALUE)))))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(42, 42, 42))
         );
         layout.setVerticalGroup(
@@ -129,12 +147,21 @@ public class SeguirUsuario extends javax.swing.JInternalFrame {
 
     private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
         // TODO add your handling code here:
+        String seguidor = this.seguidores.getSelectedValue();
+        String usuarioSeguir = this.usuariosASeguir.getSelectedValue();
+        this.controller.seguirUsuario(seguidor,usuarioSeguir);
+        this.dispose();
     }//GEN-LAST:event_aceptarActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
         this.dispose();
     }//GEN-LAST:event_cancelarActionPerformed
-
+    private void enableAceptar(){
+        this.aceptar.setEnabled(true);
+    }
+    private void disableAceptar(){
+        this.aceptar.setEnabled(false);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aceptar;

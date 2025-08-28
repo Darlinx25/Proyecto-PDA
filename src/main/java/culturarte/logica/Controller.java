@@ -308,10 +308,14 @@ public class Controller implements IController {
         List<Usuario> aux = seguidor.getUsuariosSeguidos();
         aux.add(usuASeguir);
         seguidor.setUsuariosSeguidos(aux);
+        aux= seguidor.getUsuariosSeguidos();
+        String aux1 = aux.get(0).getNickname();
+        System.out.println(aux1);
+        
     }
  
     @Override
-    public void seguirUsuario(String nickUsu, String nickSegui){
+    public void seguirUsuario(String nickSegui, String nickUsu){
         List<Usuario> usu1 = em.createQuery("SELECT u FROM Usuario u WHERE u.nickname = :nickSegui", Usuario.class)
                 .setParameter("nickSegui", nickSegui).getResultList();
         
