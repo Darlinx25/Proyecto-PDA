@@ -280,7 +280,7 @@ public class Controller implements IController {
             return new DTPropuesta(
                 p.getTitulo(), p.getDescripcion(), p.getImagen(), p.getLugarRealizara(), p.getFechaRealizara(), 
             p.getPrecioEntrada(), p.getMontoAReunir(),
-                    p.getTipoPropuesta().toString(),
+                    p.getTipoPropuesta().getNombre(),
                     p.getProponedor().getNickname(),
                     p.getTiposRetorno(), p.getEstadoActual());
         }
