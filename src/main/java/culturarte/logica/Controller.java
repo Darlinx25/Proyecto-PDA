@@ -346,7 +346,54 @@ public class Controller implements IController {
     return new ArrayList<>(aux);
     }
     
+    @Override
+    public ArrayList<String> listarPropuestasProponentes() {
+        List<Object[]> aux;
+        List<String> aux2 = new ArrayList<String>();
+        
+        String query = "SELECT p.titulo, p.proponente.nickname FROM Propuesta p";
+        try {
+            aux = em.createQuery(query, Object[].class).getResultList();
+            for (Object[] fila : aux) {
+                aux2.add(fila[0] + " - " + fila[1]);
+            }
+        } catch (Exception e) {
+            aux2 = Collections.emptyList();
+        }
+        return (ArrayList<String>) aux2;
+    }
+    
+    @Override
+    public void realizarColaboracion(String nickColab, String tituloProp, float montoColab, String tipoRetorno) {
+        Colaborador colab = em.find(Colaborador.class, nickColab);
+        Propuesta prop = em.find(Propuesta.class, tituloProp);
+        List<String> aux = new ArrayList<String>();
+        
+        String query = "SELECT c.propuestaColaborada.titulo FROM Colaboracion c WHERE c.colaborador.nickname = :nickColab"
+                + " AND c.propuestaColaborada.titulo = :tituloProp";
+        
+        try {
+            aux = em.createQuery(query, String.class)
+                    .setParameter("nickColab", nickColab)
+                    .setParameter("tituloProp", tituloProp)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+        
+        if (colab != null && prop != null && aux.isEmpty()) {
+            Colaboracion colaboracion = new Colaboracion(montoColab, tipoRetorno, colab, prop);
+            
+            EntityTransaction t = em.getTransaction();
+            try {
+                t.begin();
+                em.persist(colaboracion);
+                t.commit();
+            } catch(Exception  e) {
+                t.rollback();
+                e.printStackTrace();
+            }
+        }//hacer un else y tirar una excepción
+    }
  }
-
-
-

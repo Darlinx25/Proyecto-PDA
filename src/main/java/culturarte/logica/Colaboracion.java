@@ -4,6 +4,7 @@
  */
 package culturarte.logica;
 import jakarta.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -22,6 +23,18 @@ public class Colaboracion {
     public Colaboracion(){
         
     }
+
+    public Colaboracion(float monto, String tipoRetorno, Colaborador colaborador, Propuesta propuestaColaborada) {
+        this.monto = monto;
+        this.tipoRetorno = tipoRetorno;
+        this.colaborador = colaborador;
+        this.propuestaColaborada = propuestaColaborada;
+        
+        this.fechaHora = LocalDateTime.now();
+    }
+    
+    
+    
     private float monto;
     private LocalDateTime fechaHora;
     private String tipoRetorno;

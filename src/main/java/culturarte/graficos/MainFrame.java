@@ -17,6 +17,7 @@ public class MainFrame extends javax.swing.JFrame {
     private ConsultarColaborador consultarColaborador;
     private ConsultarProponente consultarProp;
     private SeguirUsuario seguirUsuario;
+    private RegistrarColaboracion registrarColaboracion;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
 
@@ -229,7 +230,14 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        // TODO add your handling code here:
+        if (this.registrarColaboracion != null) {
+            if (this.registrarColaboracion.isVisible()) {
+                return;
+            }
+        }
+        this.registrarColaboracion = new RegistrarColaboracion();
+        add(this.registrarColaboracion);
+        this.registrarColaboracion.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
