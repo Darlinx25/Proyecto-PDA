@@ -308,11 +308,18 @@ public class Controller implements IController {
         List<Usuario> aux = seguidor.getUsuariosSeguidos();
         aux.add(usuASeguir);
         seguidor.setUsuariosSeguidos(aux);
-        aux= seguidor.getUsuariosSeguidos();
-        String aux1 = aux.get(0).getNickname();
-        System.out.println(aux1);
-        
+       EntityTransaction t = em.getTransaction();
+        try{
+           t.begin();
+           em.persist(seguidor);
+           t.commit();
+        }catch(Exception  e){
+            t.rollback();
+            e.printStackTrace();
+        }
     }
+        
+    
  
     @Override
     public void seguirUsuario(String nickSegui, String nickUsu){
