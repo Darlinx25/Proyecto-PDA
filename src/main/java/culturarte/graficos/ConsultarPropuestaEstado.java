@@ -4,9 +4,14 @@
  */
 package culturarte.graficos;
 
+import culturarte.logica.DTPropuesta;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.DefaultListModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -37,6 +42,29 @@ public class ConsultarPropuestaEstado extends javax.swing.JInternalFrame {
                 for (String prop : controller.listarPropuestasEstado(estado)) {
                 modelo.addElement(prop);
                 }
+                
+                listPropEstado.addListSelectionListener(new ListSelectionListener() {
+                    @Override
+                    public void valueChanged(ListSelectionEvent i) {
+                        if (!i.getValueIsAdjusting()) {
+                            String propuesta = listPropEstado.getSelectedValue();
+                            if (propuesta !=null) {
+                                DTPropuesta datosProp = controller.obtenerDTPropuesta(propuesta);
+                                ConsultarPropuestaEstado.this.areaDescripcion.setText(datosProp.getDescripcion());
+                                ConsultarPropuestaEstado.this.campoLugar.setText(datosProp.getLugarRealizara());
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                                LocalDate fechaRealizar = datosProp.getFechaRealizara();
+                                ConsultarPropuestaEstado.this.campoFechaRealizar.setText(fechaRealizar.format(formatter));
+                                ConsultarPropuestaEstado.this.campoPrecio.setText(Float.toString(datosProp.getPrecioEntrada()));
+                                ConsultarPropuestaEstado.this.campoMontoReunir.setText(Float.toString(datosProp.getMontoAReunir()));
+                                /*AGREGAR AL DTPROPUESTA LA FECHA DE PUBLICACIÓN*/
+                                //LocalDate fechaPublicacion = null;
+                                //this.campoFechaPublicacion.setText(fechaPublicacion.format(formatter));
+                                ConsultarPropuestaEstado.this.campoCategoria.setText(datosProp.getTipoPropuesta()); //obtenerDTPropuesta tiene un bug, no usa getNombre() de Categoria
+                            }
+                        }
+                    }
+                });
                 
             }
         
@@ -75,11 +103,27 @@ public class ConsultarPropuestaEstado extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         listPropEstado = new javax.swing.JList<>(new javax.swing.DefaultListModel<>());
         jLabel2 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        areaDescripcion = new javax.swing.JTextArea();
+        campoFechaPublicacion = new javax.swing.JTextField();
+        labelFechaPublicacion = new javax.swing.JLabel();
+        labelDescripcion = new javax.swing.JLabel();
+        campoCategoria = new javax.swing.JTextField();
+        campoLugar = new javax.swing.JTextField();
+        labelCategoria = new javax.swing.JLabel();
+        labelLugar = new javax.swing.JLabel();
+        campoFechaRealizar = new javax.swing.JTextField();
+        labelFechaRealizar = new javax.swing.JLabel();
+        campoPrecio = new javax.swing.JTextField();
+        labelPrecio = new javax.swing.JLabel();
+        campoMontoReunir = new javax.swing.JTextField();
+        labelImagen = new javax.swing.JLabel();
+        labelMontoReunir = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setPreferredSize(new java.awt.Dimension(600, 450));
+        setPreferredSize(new java.awt.Dimension(720, 450));
 
         ListaEstados.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Ingresada", "Publicada", "En Financiacion", "Financiada", "No Financida", "Cancelada" };
@@ -99,6 +143,45 @@ public class ConsultarPropuestaEstado extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Propuestas");
 
+        areaDescripcion.setEditable(false);
+        areaDescripcion.setColumns(20);
+        areaDescripcion.setLineWrap(true);
+        areaDescripcion.setRows(5);
+        areaDescripcion.setCaretColor(new java.awt.Color(255, 255, 255));
+        jScrollPane3.setViewportView(areaDescripcion);
+
+        campoFechaPublicacion.setEditable(false);
+        campoFechaPublicacion.setCaretColor(new java.awt.Color(255, 255, 255));
+
+        labelFechaPublicacion.setText("Fecha de publicación:");
+
+        labelDescripcion.setText("Descripción:");
+
+        campoCategoria.setEditable(false);
+        campoCategoria.setCaretColor(new java.awt.Color(255, 255, 255));
+
+        campoLugar.setEditable(false);
+        campoLugar.setCaretColor(new java.awt.Color(255, 255, 255));
+
+        labelCategoria.setText("Categoría:");
+
+        labelLugar.setText("Lugar a realizar:");
+
+        campoFechaRealizar.setEditable(false);
+        campoFechaRealizar.setCaretColor(new java.awt.Color(255, 255, 255));
+
+        labelFechaRealizar.setText("Fecha a realizar:");
+
+        campoPrecio.setEditable(false);
+        campoPrecio.setCaretColor(new java.awt.Color(255, 255, 255));
+
+        labelPrecio.setText("Precio de entrada:");
+
+        campoMontoReunir.setEditable(false);
+        campoMontoReunir.setCaretColor(new java.awt.Color(255, 255, 255));
+
+        labelMontoReunir.setText("Monto a reunir:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -112,20 +195,90 @@ public class ConsultarPropuestaEstado extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(139, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(labelDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(labelFechaPublicacion)
+                            .addComponent(labelMontoReunir, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelFechaRealizar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelLugar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(18, 18, 18)
+                                                .addComponent(campoLugar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGap(18, 18, 18)
+                                                .addComponent(campoFechaRealizar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addGap(18, 18, 18)
+                                            .addComponent(campoPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(campoMontoReunir, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addGap(18, 18, 18)
+                                    .addComponent(campoFechaPublicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(campoCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(76, 76, 76))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addGap(3, 3, 3)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE))
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labelDescripcion)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(campoLugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(labelLugar))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(campoFechaRealizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(labelFechaRealizar))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(campoPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(labelPrecio))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(campoMontoReunir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(labelMontoReunir))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(campoFechaPublicacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(labelFechaPublicacion))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(campoCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelCategoria)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(3, 3, 3)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE))))
+                .addContainerGap(132, Short.MAX_VALUE))
         );
 
         pack();
@@ -138,10 +291,26 @@ public class ConsultarPropuestaEstado extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> ListaEstados;
+    private javax.swing.JTextArea areaDescripcion;
+    private javax.swing.JTextField campoCategoria;
+    private javax.swing.JTextField campoFechaPublicacion;
+    private javax.swing.JTextField campoFechaRealizar;
+    private javax.swing.JTextField campoLugar;
+    private javax.swing.JTextField campoMontoReunir;
+    private javax.swing.JTextField campoPrecio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel labelCategoria;
+    private javax.swing.JLabel labelDescripcion;
+    private javax.swing.JLabel labelFechaPublicacion;
+    private javax.swing.JLabel labelFechaRealizar;
+    private javax.swing.JLabel labelImagen;
+    private javax.swing.JLabel labelLugar;
+    private javax.swing.JLabel labelMontoReunir;
+    private javax.swing.JLabel labelPrecio;
     private javax.swing.JList<String> listPropEstado;
     // End of variables declaration//GEN-END:variables
 }
