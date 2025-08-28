@@ -351,7 +351,34 @@ public class Controller implements IController {
         }
         return (ArrayList<String>) aux2;
     }
+    
+    @Override
+    public void realizarColaboracion(String nickColab, String tituloProp, float montoColab, String tipoRetorno) {
+        Colaborador colab = em.find(Colaborador.class, nickColab);
+        Propuesta prop = em.find(Propuesta.class, tituloProp);
+        List<String> aux = new ArrayList<String>();
+        
+        String query = "SELECT c.propuestaColaborada.titulo FROM Colaboracion c WHERE c.colaborador.nickname = :nickColab"
+                + "AND c.propuestaColaborada.titulo = :tituloProp";
+        
+        try {
+            aux = em.createQuery(query, String.class).getResultList();
+        } catch (Exception e) {
+            aux = Collections.emptyList();
+        }
+        
+        if (colab != null && prop != null && !aux.isEmpty()) {
+            Colaboracion colaboracion = new Colaboracion(montoColab, tipoRetorno, colab, prop);
+            
+            EntityTransaction t = em.getTransaction();
+            try {
+                t.begin();
+                em.persist(colaboracion);
+                t.commit();
+            } catch(Exception  e) {
+                t.rollback();
+                e.printStackTrace();
+            }
+        }//hacer un else y tirar una excepción
+    }
  }
-
-
-

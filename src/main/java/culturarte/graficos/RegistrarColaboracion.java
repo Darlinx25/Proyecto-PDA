@@ -4,8 +4,19 @@
  */
 package culturarte.graficos;
 
+import culturarte.logica.DTPropuesta;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
+import culturarte.logica.TipoRetorno;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -67,9 +78,15 @@ public class RegistrarColaboracion extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        setResizable(true);
         setTitle("Registrar colaboración");
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
+        listaPropuestaProponente.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listaPropuestaProponenteValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(listaPropuestaProponente);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -80,22 +97,42 @@ public class RegistrarColaboracion extends javax.swing.JInternalFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Colaborador");
 
+        areaDescripcion.setEditable(false);
         areaDescripcion.setColumns(20);
         areaDescripcion.setLineWrap(true);
         areaDescripcion.setRows(5);
+        areaDescripcion.setCaretColor(new java.awt.Color(255, 255, 255));
         jScrollPane3.setViewportView(areaDescripcion);
 
         labelDescripcion.setText("Descripción:");
 
+        campoLugar.setEditable(false);
+        campoLugar.setCaretColor(new java.awt.Color(255, 255, 255));
+
         labelLugar.setText("Lugar a realizar:");
+
+        campoFechaRealizar.setEditable(false);
+        campoFechaRealizar.setCaretColor(new java.awt.Color(255, 255, 255));
 
         labelFechaRealizar.setText("Fecha a realizar:");
 
+        campoPrecio.setEditable(false);
+        campoPrecio.setCaretColor(new java.awt.Color(255, 255, 255));
+
         labelPrecio.setText("Precio de entrada:");
+
+        campoMontoReunir.setEditable(false);
+        campoMontoReunir.setCaretColor(new java.awt.Color(255, 255, 255));
 
         labelMontoReunir.setText("Monto a reunir:");
 
+        campoFechaPublicacion.setEditable(false);
+        campoFechaPublicacion.setCaretColor(new java.awt.Color(255, 255, 255));
+
         labelFechaPublicacion.setText("Fecha de publicación:");
+
+        campoCategoria.setEditable(false);
+        campoCategoria.setCaretColor(new java.awt.Color(255, 255, 255));
 
         labelCategoria.setText("Categoría:");
 
@@ -179,6 +216,11 @@ public class RegistrarColaboracion extends javax.swing.JInternalFrame {
         );
 
         botonAceptar.setText("Aceptar");
+        botonAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAceptarActionPerformed(evt);
+            }
+        });
 
         botonCancelar.setText("Cancelar");
         botonCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -187,7 +229,6 @@ public class RegistrarColaboracion extends javax.swing.JInternalFrame {
             }
         });
 
-        comboRetorno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         comboRetorno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboRetornoActionPerformed(evt);
@@ -257,19 +298,15 @@ public class RegistrarColaboracion extends javax.swing.JInternalFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(datosPropuesta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(datosPropuesta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
@@ -289,9 +326,95 @@ public class RegistrarColaboracion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_comboRetornoActionPerformed
 
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_botonCancelarActionPerformed
 
+    private void listaPropuestaProponenteValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaPropuestaProponenteValueChanged
+        String tituloProp = this.listaPropuestaProponente.getSelectedValue();
+        int primerEspacio = tituloProp.indexOf(' ');
+        if (primerEspacio != -1) {
+            tituloProp = tituloProp.substring(0, primerEspacio);
+        }
+        DTPropuesta datosProp = this.controller.obtenerDTPropuesta(tituloProp);
+        
+        this.areaDescripcion.setText(datosProp.getDescripcion());
+        this.campoLugar.setText(datosProp.getLugarRealizara());
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate fechaRealizar = datosProp.getFechaRealizara();
+        this.campoFechaRealizar.setText(fechaRealizar.format(formatter));
+        this.campoPrecio.setText(Float.toString(datosProp.getPrecioEntrada()));
+        this.campoMontoReunir.setText(Float.toString(datosProp.getMontoAReunir()));
+        /*AGREGAR AL DTPROPUESTA LA FECHA DE PUBLICACIÓN*/
+        //LocalDate fechaPublicacion = null;
+        //this.campoFechaPublicacion.setText(fechaPublicacion.format(formatter));
+        this.campoCategoria.setText(datosProp.getTipoPropuesta());//obtenerDTPropuesta tiene un bug, no usa getNombre() de Categoria
+        cargarRetornosCombo(datosProp.getTiposRetorno());
+        cargarImagenLabel(datosProp.getImagen());
+        
+    }//GEN-LAST:event_listaPropuestaProponenteValueChanged
+
+    private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
+        if (sonValidosLosCampos()) {
+            String nickColab = this.listaColaboradores.getSelectedValue();
+            String tituloProp = cortarTituloProp(this.listaPropuestaProponente.getSelectedValue());
+            float montoColab = Float.parseFloat(this.campoMontoColab.getText());
+            String tipoRetorno = this.comboRetorno.getSelectedItem().toString();
+            this.controller.realizarColaboracion(nickColab, tituloProp, montoColab, tipoRetorno);
+            
+            this.dispose();
+        }
+    }//GEN-LAST:event_botonAceptarActionPerformed
+
+    private String cortarTituloProp(String tituloProp) {
+        int primerEspacio = tituloProp.indexOf(' ');
+        if (primerEspacio != -1) {
+            tituloProp = tituloProp.substring(0, primerEspacio);
+        }
+        return tituloProp;
+    }
+    
+    private boolean sonValidosLosCampos() {
+        if (this.listaColaboradores.isSelectionEmpty()) {
+            return false;
+        }
+        if (this.listaPropuestaProponente.isSelectionEmpty()) {
+            return false;
+        }
+        if (this.campoMontoColab.getText().isBlank()) {
+            return false;
+        }
+        if (Float.parseFloat(this.campoMontoColab.getText()) <= 0) {
+            return false;
+        }
+        return true;
+    }
+    
+    private void cargarRetornosCombo(List<TipoRetorno> retornos) {
+        this.comboRetorno.removeAllItems();
+        for (TipoRetorno r : retornos) {
+            if (r == TipoRetorno.ENTRADA_GRATIS) {
+                this.comboRetorno.addItem("Entradas gratis");
+            }
+            if (r == TipoRetorno.PORCENTAJE_GANANCIAS) {
+                this.comboRetorno.addItem("Porcentaje de ganancias");
+            }
+        }
+    }
+    private void cargarImagenLabel(byte[] imagen) {
+        if (imagen != null) {
+            ByteArrayInputStream bais = new ByteArrayInputStream(imagen);
+            try {
+                BufferedImage temp = ImageIO.read(bais);
+                Image imagenEscalada = temp.getScaledInstance(133, 133, Image.SCALE_SMOOTH);
+                this.labelImagen.setIcon(new ImageIcon(imagenEscalada));
+            } catch (IOException ex) {
+                System.getLogger(RegistrarColaboracion.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+        } else {
+            this.labelImagen.setIcon(null);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaDescripcion;
