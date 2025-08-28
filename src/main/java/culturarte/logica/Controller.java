@@ -335,6 +335,22 @@ public class Controller implements IController {
     return new ArrayList<>(aux);
     }
     
+    @Override
+    public ArrayList<String> listarPropuestasProponentes() {
+        List<Object[]> aux;
+        List<String> aux2 = new ArrayList<String>();
+        
+        String query = "SELECT p.titulo, p.proponente.nickname FROM Propuesta p";
+        try {
+            aux = em.createQuery(query, Object[].class).getResultList();
+            for (Object[] fila : aux) {
+                aux2.add(fila[0] + " - " + fila[1]);
+            }
+        } catch (Exception e) {
+            aux2 = Collections.emptyList();
+        }
+        return (ArrayList<String>) aux2;
+    }
  }
 
 
