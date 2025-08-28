@@ -359,15 +359,19 @@ public class Controller implements IController {
         List<String> aux = new ArrayList<String>();
         
         String query = "SELECT c.propuestaColaborada.titulo FROM Colaboracion c WHERE c.colaborador.nickname = :nickColab"
-                + "AND c.propuestaColaborada.titulo = :tituloProp";
+                + " AND c.propuestaColaborada.titulo = :tituloProp";
         
         try {
-            aux = em.createQuery(query, String.class).getResultList();
+            aux = em.createQuery(query, String.class)
+                    .setParameter("nickColab", nickColab)
+                    .setParameter("tituloProp", tituloProp)
+                    .getResultList();
         } catch (Exception e) {
-            aux = Collections.emptyList();
+            e.printStackTrace();
+            return;
         }
         
-        if (colab != null && prop != null && !aux.isEmpty()) {
+        if (colab != null && prop != null && aux.isEmpty()) {
             Colaboracion colaboracion = new Colaboracion(montoColab, tipoRetorno, colab, prop);
             
             EntityTransaction t = em.getTransaction();
