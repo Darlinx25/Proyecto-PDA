@@ -3,7 +3,6 @@
  */
 
 package culturarte;
-import javax.swing.*;
 import culturarte.graficos.MainFrame;
 /**
  *
