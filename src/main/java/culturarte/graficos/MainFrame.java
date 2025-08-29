@@ -19,6 +19,7 @@ public class MainFrame extends javax.swing.JFrame {
     private SeguirUsuario seguirUsuario;
     private RegistrarColaboracion registrarColaboracion;
     private ConsultarPropuestaEstado consultaEstado;
+    private DejarDeSeguirUsuario dejarDeSeguirUsuario;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
 
@@ -48,6 +49,7 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -60,7 +62,6 @@ public class MainFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBounds(new java.awt.Rectangle(400, 400, 500, 500));
         setLocation(new java.awt.Point(350, 100));
-        setPreferredSize(new java.awt.Dimension(1100, 750));
         setResizable(false);
 
         jButton1.setText("Boton");
@@ -103,6 +104,14 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jMenuItem6);
+
+        jMenuItem8.setText("Dejar de Seguir Usuario");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem8);
 
         jMenuBar1.add(jMenu3);
 
@@ -262,6 +271,18 @@ public class MainFrame extends javax.swing.JFrame {
         this.consultaEstado.setVisible(true);
     }//GEN-LAST:event_JMenuItem8ActionPerformed
 
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // TODO add your handling code here:
+          if (this.dejarDeSeguirUsuario != null) {
+            if (this.dejarDeSeguirUsuario.isVisible()) {
+                return;
+            }
+        }
+        this.dejarDeSeguirUsuario = new DejarDeSeguirUsuario();
+        add(this.dejarDeSeguirUsuario);
+        this.dejarDeSeguirUsuario.setVisible(true);
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -301,5 +322,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     // End of variables declaration//GEN-END:variables
 }
