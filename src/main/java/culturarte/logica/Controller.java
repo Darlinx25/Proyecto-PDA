@@ -410,4 +410,24 @@ public class Controller implements IController {
             }
         }//hacer un else y tirar una excepción
     }
+    
+    @Override
+    public String obtenerDineroRecaudado(String tituloProp){
+    List<Float> aux;
+    Float resultado = 0f;
+    String query = "SELECT c.monto FROM Colaboracion c WHERE c.propuestaColaborada_titulo = :tituloProp";           
+    try {
+         aux = em.createQuery(query, Float.class).setParameter("tituloProp", tituloProp).getResultList();
+    } catch (Exception e) {
+         aux = Collections.emptyList();
+         e.printStackTrace();
+         return "0"; 
+    }
+    for (Float actual : aux) {
+            resultado += actual;
+        }
+    return resultado.toString();
+        
+        
+    }
  }
