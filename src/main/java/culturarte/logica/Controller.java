@@ -413,10 +413,21 @@ public class Controller implements IController {
     
     @Override
     public String obtenerDineroRecaudado(String tituloProp){
-        Propuesta prop = em.find(Propuesta.class, tituloProp);
-        String query = "SELECT c.propuestaColaborada.titulo FROM Colaboracion c WHERE c.colaborador.nickname = :nickColab"
-                + " AND c.propuestaColaborada.titulo = :tituloProp";
+    List<Float> aux;
+    Float resultado = 0f;
+    String query = "SELECT c.monto FROM Colaboracion c WHERE c.propuestaColaborada_titulo = :tituloProp";           
+    try {
+         aux = em.createQuery(query, Float.class).setParameter("tituloProp", tituloProp).getResultList();
+    } catch (Exception e) {
+         aux = Collections.emptyList();
+         e.printStackTrace();
+         return "0"; 
+    }
+    for (Float actual : aux) {
+            resultado += actual;
+        }
+    return resultado.toString();
         
-       return "0"; 
+        
     }
  }
