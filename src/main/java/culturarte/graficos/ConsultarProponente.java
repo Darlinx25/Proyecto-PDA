@@ -24,8 +24,10 @@ import javax.swing.tree.DefaultMutableTreeNode;
  * @author kevin
  */
 public class ConsultarProponente extends javax.swing.JInternalFrame {
+
     private IController controller;
     private BufferedImage imagenProponente;
+
     /**
      * Creates new form ConsultarProp
      */
@@ -34,68 +36,69 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
         this.controller = fabrica.getIController();
         this.imagenProponente = null;
         initComponents();
-        
+
         DefaultListModel<String> modelo = (DefaultListModel<String>) listaProponentes.getModel();
         modelo.clear();
         for (String nick : controller.listarProponentes()) {
-        modelo.addElement(nick);
+            modelo.addElement(nick);
         }
 
-        
         listaProponentes.addListSelectionListener(e -> {
-        if (!e.getValueIsAdjusting()) {
-            String seleccionado = listaProponentes.getSelectedValue();
-        if (seleccionado != null) {
-            DTProponente dt = controller.obtenerDTProponente(seleccionado);
-            if (dt != null) {
-                nick.setText(dt.getNickname());
-                nombre.setText(dt.getNombre());
-                apellido.setText(dt.getApellido());
-                fechaNac.setText(dt.getFechaNacimiento().toString());
-                correo.setText(dt.getEmail());
-                biografia.setText(dt.getBiografia());
-                web.setText(dt.getSitioWeb());
+            if (!e.getValueIsAdjusting()) {
+                String seleccionado = listaProponentes.getSelectedValue();
+                if (seleccionado != null) {
+                    DTProponente dt = controller.obtenerDTProponente(seleccionado);
+                    if (dt != null) {
+                        nick.setText(dt.getNickname());
+                        nombre.setText(dt.getNombre());
+                        apellido.setText(dt.getApellido());
+                        fechaNac.setText(dt.getFechaNacimiento().toString());
+                        correo.setText(dt.getEmail());
+                        biografia.setText(dt.getBiografia());
+                        web.setText(dt.getSitioWeb());
 
-                byte[] imagen = dt.getImagen();
-        
-                if (imagen != null) {
-                ByteArrayInputStream bais = new ByteArrayInputStream(imagen);
-                try {
-                BufferedImage temp = ImageIO.read(bais);
-                Image imagenEscalada = temp.getScaledInstance(133, 133, Image.SCALE_SMOOTH);
-                this.labelImagen.setIcon(new ImageIcon(imagenEscalada));
-                } catch (IOException ex) {
-                System.getLogger(ConsultarColaborador.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                        byte[] imagen = dt.getImagen();
+
+                        if (imagen != null) {
+                            ByteArrayInputStream bais = new ByteArrayInputStream(imagen);
+                            try {
+                                BufferedImage temp = ImageIO.read(bais);
+                                Image imagenEscalada = temp.getScaledInstance(133, 133, Image.SCALE_SMOOTH);
+                                this.labelImagen.setIcon(new ImageIcon(imagenEscalada));
+                            } catch (IOException ex) {
+                                System.getLogger(ConsultarColaborador.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                            }
+                        } else {
+                            labelImagen.setIcon(null);
+                        }
+                        //sigue aca!!!
+                        String nickdelp = dt.getNickname();
+                        DefaultListModel<String> modelo1 = (DefaultListModel<String>) listPropuestas.getModel();
+                        modelo1.clear();
+                        for (String nick1 : controller.listaPropuestasUsu(nickdelp)) {
+                            DTPropuesta dtprop = controller.obtenerDTPropuesta(nick1);
+                            EstadoPropuesta ese = dtprop.getEstadoActual().getEstado();
+                            String estado = ese.toString();
+                            nick1 += " - " + estado;
+                            modelo1.addElement(nick1);
+                            
+                            listPropuestas.addListSelectionListener(i -> {
+                            if (!i.getValueIsAdjusting()) {
+                                String seleccionado2 = listPropuestas.getSelectedValue();
+                                if (seleccionado2 != null) {
+                                    String selec = seleccionado2.replace(" - " + estado, "");
+                                    System.out.println(selec);
+                                    dineroRecaudado.setText(controller.obtenerDineroRecaudado(selec));
+                                }
+                            }
+                        });
+                            
+                        }
+                        
+
+                    }
                 }
-                } else {
-                labelImagen.setIcon(null);
-                }
-                //sigue aca!!!
-                String nickdelp = dt.getNickname();
-                DefaultListModel<String> modelo1 = (DefaultListModel<String>) listPropuestas.getModel();
-                modelo1.clear();
-                for (String nick1 : controller.listaPropuestasUsu(nickdelp)) {
-                DTPropuesta dtprop =  controller.obtenerDTPropuesta(nick1);
-                EstadoPropuesta ese = dtprop.getEstadoActual().getEstado();
-                String estado = ese.toString();
-                nick1 += " - " + estado;
-                modelo1.addElement(nick1);
-                listPropuestas.addListSelectionListener(i -> {
-                if (!i.getValueIsAdjusting()) {
-                String seleccionado2 = listPropuestas.getSelectedValue();
-                if (seleccionado2 != null) {
-                if (dtprop != null) {
-                
-                
             }
-        }
-        }
-        });
-        }
-                
-            }
-        }
-        }
         });
 
     }
