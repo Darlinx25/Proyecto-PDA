@@ -410,4 +410,13 @@ public class Controller implements IController {
             }
         }//hacer un else y tirar una excepción
     }
+    
+    @Override
+    public String obtenerDineroRecaudado(String tituloProp){
+        Propuesta prop = em.find(Propuesta.class, tituloProp);
+        String query = "SELECT c.propuestaColaborada.titulo FROM Colaboracion c WHERE c.colaborador.nickname = :nickColab"
+                + " AND c.propuestaColaborada.titulo = :tituloProp";
+        
+       return "0"; 
+    }
  }
