@@ -468,4 +468,27 @@ public class Controller implements IController {
         }
         return new ArrayList<>(aux);
     }
+
+    @Override
+    public ArrayList<DTPropuesta> obtenerPropuestasColaboradas(String nick) {
+        ArrayList<DTPropuesta> listaPropuestas = new ArrayList<DTPropuesta>();
+        
+        List<String> aux;
+        
+        String query = "SELECT c.propuestaColaborada.titulo FROM Colaboracion c"
+                + " WHERE c.colaborador.nickname = :nick";
+        try {
+            aux = em.createQuery(query, String.class)
+                    .setParameter("nick", nick)
+                    .getResultList();
+            
+            for (String titulo : aux) {
+                listaPropuestas.add(this.obtenerDTPropuesta(titulo));
+            }
+        } catch (Exception e) {
+            listaPropuestas = new ArrayList<DTPropuesta>();
+        }
+        
+        return listaPropuestas;
+    }
 }

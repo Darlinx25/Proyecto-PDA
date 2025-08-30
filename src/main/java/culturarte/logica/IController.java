@@ -14,10 +14,13 @@ import javax.swing.tree.DefaultMutableTreeNode;
 public interface IController {
     public void addUsuario(DTUsuario user);
     
+    /*Alta de Categoría*/
     public DefaultMutableTreeNode listarCategorias();
     public void addCategoria(String nombre, String nombrePadre);
+    /*Consulta de Perfil de colaborador*/
     public ArrayList<String> listarColaboradores();
     public DTColaborador obtenerDTColaborador(String nick);
+    public ArrayList<DTPropuesta> obtenerPropuestasColaboradas(String nick);
     public ArrayList<String> listarProponentes();
     public void addPropuesta(DTPropuesta prop);
     public DTProponente obtenerDTProponente(String nick);
