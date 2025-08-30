@@ -29,6 +29,7 @@ public interface IController {
     public ArrayList<String> listarUsuariosSeguir(String nickname);
     public ArrayList<String> listarPropuestasProponentes();
     public ArrayList<String> listarPropuestasEstado(int estado);
+    public ArrayList<String> listarUsuariosSiguiendo(String nickname);
     //usar TipoRetorno luego en vez de String
     public void realizarColaboracion(String nickColab, String tituloProp, float montoColab, String tipoRetorno);
     public String obtenerDineroRecaudado(String nombre);

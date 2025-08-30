@@ -378,6 +378,26 @@ public class Controller implements IController {
     }
     
     @Override
+    public ArrayList<String> listarUsuariosSiguiendo(String nickname){
+        List<Usuario> aux;
+        List<Usuario> aux2;
+        List<String> aux3 = new ArrayList<String>();
+        try{
+            aux = em.createQuery("SELECT u FROM Usuario u WHERE u.nickname = :nickname", Usuario.class)
+                .setParameter("nickname", nickname).getResultList();
+            aux2 = aux.get(0).getUsuariosSeguidos();
+             for(Usuario u : aux2){
+                aux3.add(u.getNickname());
+            }
+        }catch(Exception e){
+            aux3 = Collections.emptyList();
+            e.printStackTrace();
+        }
+        return (ArrayList<String>)aux3;
+         
+    }
+    
+    @Override
     public void realizarColaboracion(String nickColab, String tituloProp, float montoColab, String tipoRetorno) {
         Colaborador colab = em.find(Colaborador.class, nickColab);
         Propuesta prop = em.find(Propuesta.class, tituloProp);

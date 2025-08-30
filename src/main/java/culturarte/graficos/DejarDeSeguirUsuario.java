@@ -27,6 +27,41 @@ public class DejarDeSeguirUsuario extends javax.swing.JInternalFrame {
         for(String nick : controller.listarUsuarios()){
             modelo.addElement(nick);
         }
+         seguidores.addListSelectionListener(e ->{
+          if (!e.getValueIsAdjusting()) {
+            String seleccionado = seguidores.getSelectedValue();
+              if(seleccionado!= null){
+              DefaultListModel<String> modelo1 = (DefaultListModel<String>) usuariosSiguiendo.getModel();
+                modelo1.clear();
+                for (String nick1 : controller.listarUsuariosSiguiendo(seleccionado)) {
+                    modelo1.addElement(nick1);
+                }
+              }
+              String selected2 = usuariosSiguiendo.getSelectedValue();
+              if(seleccionado != null && selected2 != null){
+                  enableAceptar();
+              }
+              else{
+                  disableAceptar();
+              }
+      }
+    });
+      usuariosSiguiendo.addListSelectionListener(e ->{
+          String seleccionado = seguidores.getSelectedValue();
+          String selected2 = usuariosSiguiendo.getSelectedValue();
+          if(seleccionado!= null && selected2 != null){
+              enableAceptar();
+          }
+          else{
+                  disableAceptar();
+              }
+      });
+    }
+       private void enableAceptar(){
+        this.aceptar.setEnabled(true);
+    }
+    private void disableAceptar(){
+        this.aceptar.setEnabled(false);
     }
 
     /**
