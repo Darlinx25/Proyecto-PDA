@@ -391,7 +391,13 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
         if (this.campoPrecioEntrada.getText().isBlank()) {
             return false;
         }
+        if (Float.parseFloat(this.campoPrecioEntrada.getText()) <= 0) {
+            return false;
+        }
         if (this.campoMontoReunir.getText().isBlank()) {
+            return false;
+        }
+        if (Float.parseFloat(this.campoMontoReunir.getText()) <= 0) {
             return false;
         }
         if (!(this.checkEntradaGratis.isSelected() || this.checkGanancias.isSelected())) {
