@@ -44,8 +44,3 @@ target/
 docker/mysql/data/
 
 docker/
-
-
-
-/nbactions.xml
-nbactions.xml
