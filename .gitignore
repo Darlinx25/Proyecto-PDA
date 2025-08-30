@@ -19,6 +19,9 @@ docker/mysql/data/
 # Ignorar data de MySQL
 docker/mysql/data/
 
+#Ignorar carpeta de imagenes
+imagenesUsuarios/
+
 
 # --- Build ---
 target/

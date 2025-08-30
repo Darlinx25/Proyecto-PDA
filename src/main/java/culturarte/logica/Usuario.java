@@ -27,9 +27,8 @@ public abstract class Usuario {
     private String email;
     
     private LocalDate fechaNacimiento;
-    @Lob @Basic(fetch = FetchType.LAZY)
-    @Column(length = 40000000)//40 MB
-    private byte[] imagen;
+    
+    String imagen;
     
     @ManyToMany
     @JoinTable(
@@ -49,7 +48,7 @@ public abstract class Usuario {
     protected Usuario(){
         
     }
-    protected Usuario(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, byte[] imagen) {
+    protected Usuario(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, String imagen) {
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -100,11 +99,11 @@ public abstract class Usuario {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public byte[] getImagen() {
+    public String getImagen() {
         return imagen;
     }
 
-    public void setImagen(byte[] imagen) {
+    public void setImagen(String imagen) {
         this.imagen = imagen;
     }
 

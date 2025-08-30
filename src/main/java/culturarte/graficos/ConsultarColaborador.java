@@ -10,6 +10,7 @@ import culturarte.logica.IControllerFactory;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -218,20 +219,26 @@ public class ConsultarColaborador extends javax.swing.JInternalFrame {
         LocalDate fechaNacimiento = colab.getFechaNacimiento();
         this.campoFNac.setText(fechaNacimiento.format(formatter));
         
-        byte[] imagen = colab.getImagen();
-        
-        if (imagen != null) {
-            ByteArrayInputStream bais = new ByteArrayInputStream(imagen);
-            try {
-                BufferedImage temp = ImageIO.read(bais);
-                Image imagenEscalada = temp.getScaledInstance(133, 133, Image.SCALE_SMOOTH);
-                this.labelImagen.setIcon(new ImageIcon(imagenEscalada));
-            } catch (IOException ex) {
-                System.getLogger(ConsultarColaborador.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        String basePath = System.getProperty("user.dir") + "/imagenesUsuarios/";
+        String imagen = colab.getImagen();
+
+        if (imagen != null && !imagen.isEmpty()) {
+            File archivoImagen = new File(basePath + imagen);
+            if (archivoImagen.exists()) {
+                try {
+                    BufferedImage temp = ImageIO.read(archivoImagen);
+                    Image imagenEscalada = temp.getScaledInstance(133, 133, Image.SCALE_SMOOTH);
+                    this.labelImagen.setIcon(new ImageIcon(imagenEscalada));
+                } catch (IOException ex) {
+                    System.getLogger(ConsultarColaborador.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                }
+            } else {
+                this.labelImagen.setIcon(null);
             }
         } else {
             this.labelImagen.setIcon(null);
         }
+
     }//GEN-LAST:event_listaColaboradoresValueChanged
 
 

@@ -24,24 +24,35 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
-/**
- *
- * @author faxcundo
- */
+import java.io.*;
+import java.nio.file.*;
+import javax.swing.JOptionPane;
+
+ 
 public class AltaUsuario extends javax.swing.JInternalFrame {
     private IController controller;
-    private byte[] imagenUsuario;
+    private static final String CARPETA_IMAGENES = System.getProperty("user.dir") + File.separator + "imagenesUsuarios" + File.separator;
+    private String rutaImagenUsuario;
     /**
-     * Creates new form Alta_Usr
+     * Creates new form Alta
      */
     public AltaUsuario() {
         IControllerFactory fabrica = IControllerFactory.getInstance();
         this.controller = fabrica.getIController();
-        this.imagenUsuario = null;
+        
         
         initComponents();
     }
 
+    
+    
+    private String obtenerExtension(String nombreArchivo) {
+        int i = nombreArchivo.lastIndexOf('.');
+        if (i > 0) {
+            return nombreArchivo.substring(i + 1);
+        }
+        return "png";
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -400,20 +411,27 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("Archivos .jpg o .png", tiposImagen);
         selectorImagen.setFileFilter(filtroImagen);
         selectorImagen.setAcceptAllFileFilterUsed(false);
-        
+
         int resultado = selectorImagen.showOpenDialog(this);
-        
+
         if (resultado == JFileChooser.APPROVE_OPTION) {
             File archivoElegido = selectorImagen.getSelectedFile();
             try {
                 String extensionImagen = tipoImagen(archivoElegido);
-                
-                if (extensionImagen.equals("jpg")  || extensionImagen.equals("png")) {
+
+                if (extensionImagen.equals("jpg") || extensionImagen.equals("png")) {
                     BufferedImage temp = ImageIO.read(archivoElegido);
-                
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    ImageIO.write(temp, extensionImagen, baos);
-                    this.imagenUsuario = baos.toByteArray();
+
+                    File carpetaImagenes = new File("imagenesUsuarios");
+                    if (!carpetaImagenes.exists()) {
+                        carpetaImagenes.mkdirs();
+                    }
+
+                    String nombreArchivo = System.currentTimeMillis() + "." + extensionImagen;
+                    File archivoDestino = new File(carpetaImagenes, nombreArchivo);
+                    ImageIO.write(temp, extensionImagen, archivoDestino);
+
+                    this.rutaImagenUsuario = nombreArchivo;
 
                     Image imagenEscalada = temp.getScaledInstance(133, 133, Image.SCALE_SMOOTH);
                     this.labelImagen.setIcon(new ImageIcon(imagenEscalada));
@@ -491,7 +509,7 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
             
             DTUsuario user = null;
             if (this.radioColaborador.isSelected()) {
-                user = new DTColaborador(nick, nombre, apellido, email, fechaNac, this.imagenUsuario);
+                user = new DTColaborador(nick, nombre, apellido, email, fechaNac, this.rutaImagenUsuario);
             } else if (this.radioProponente.isSelected()) {
                 String ciudad = this.campoCiudad.getText();
                 String calle = this.campoCiudad.getText();
@@ -500,7 +518,7 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
                 String biografia = this.areaBiografia.getText();
                 String sitioWeb = this.campoSitioWeb.getText();
                 
-                user = new DTProponente(direccion, biografia, sitioWeb, nick, nombre, apellido, email, fechaNac, this.imagenUsuario);
+                user = new DTProponente(direccion, biografia, sitioWeb, nick, nombre, apellido, email, fechaNac, this.rutaImagenUsuario);
             }
             this.controller.addUsuario(user);  
         } else {

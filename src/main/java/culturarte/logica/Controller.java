@@ -72,7 +72,7 @@ public class Controller implements IController {
         String apellido = user.getApellido();
         String email = user.getEmail();
         LocalDate fechaNac = user.getFechaNacimiento();
-        byte[] imagen = user.getImagen();
+        String imagen = user.getImagen();
         
         Usuario usu = null;
         

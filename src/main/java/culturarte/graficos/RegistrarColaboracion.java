@@ -25,14 +25,16 @@ import javax.swing.ImageIcon;
  * @author mark
  */
 public class RegistrarColaboracion extends javax.swing.JInternalFrame {
+
     private IController controller;
+
     /**
      * Creates new form RegistrarColaboracion
      */
     public RegistrarColaboracion() {
         IControllerFactory fabrica = IControllerFactory.getInstance();
         this.controller = fabrica.getIController();
-        
+
         initComponents();
     }
 
@@ -343,10 +345,10 @@ public class RegistrarColaboracion extends javax.swing.JInternalFrame {
             tituloProp = tituloProp.substring(0, primerEspacio);
         }
         DTPropuesta datosProp = this.controller.obtenerDTPropuesta(tituloProp);
-        
+
         this.areaDescripcion.setText(datosProp.getDescripcion());
         this.campoLugar.setText(datosProp.getLugarRealizara());
-        
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate fechaRealizar = datosProp.getFechaRealizara();
         this.campoFechaRealizar.setText(fechaRealizar.format(formatter));
@@ -357,7 +359,7 @@ public class RegistrarColaboracion extends javax.swing.JInternalFrame {
         this.campoCategoria.setText(datosProp.getTipoPropuesta());
         cargarRetornosCombo(datosProp.getTiposRetorno());
         cargarImagenLabel(datosProp.getImagen());
-        
+
     }//GEN-LAST:event_listaPropuestaProponenteValueChanged
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
@@ -367,7 +369,7 @@ public class RegistrarColaboracion extends javax.swing.JInternalFrame {
             float montoColab = Float.parseFloat(this.campoMontoColab.getText());
             String tipoRetorno = this.comboRetorno.getSelectedItem().toString();
             this.controller.realizarColaboracion(nickColab, tituloProp, montoColab, tipoRetorno);
-            
+
             this.dispose();
         }
     }//GEN-LAST:event_botonAceptarActionPerformed
@@ -383,7 +385,7 @@ public class RegistrarColaboracion extends javax.swing.JInternalFrame {
         }
         return tituloProp;
     }
-    
+
     private boolean sonValidosLosCampos() {
         if (this.listaColaboradores.isSelectionEmpty()) {
             return false;
@@ -399,7 +401,7 @@ public class RegistrarColaboracion extends javax.swing.JInternalFrame {
         }
         return true;
     }
-    
+
     private void cargarRetornosCombo(List<TipoRetorno> retornos) {
         this.comboRetorno.removeAllItems();
         for (TipoRetorno r : retornos) {
@@ -411,6 +413,7 @@ public class RegistrarColaboracion extends javax.swing.JInternalFrame {
             }
         }
     }
+
     private void cargarImagenLabel(byte[] imagen) {
         if (imagen != null) {
             ByteArrayInputStream bais = new ByteArrayInputStream(imagen);

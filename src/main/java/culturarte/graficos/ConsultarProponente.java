@@ -13,6 +13,7 @@ import culturarte.logica.IControllerFactory;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
@@ -57,19 +58,24 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
                         biografia.setText(dt.getBiografia());
                         web.setText(dt.getSitioWeb());
 
-                        byte[] imagen = dt.getImagen();
+                        String basePath = System.getProperty("user.dir") + "/imagenesUsuarios/";
+                        String imagen = dt.getImagen();
 
-                        if (imagen != null) {
-                            ByteArrayInputStream bais = new ByteArrayInputStream(imagen);
-                            try {
-                                BufferedImage temp = ImageIO.read(bais);
-                                Image imagenEscalada = temp.getScaledInstance(133, 133, Image.SCALE_SMOOTH);
-                                this.labelImagen.setIcon(new ImageIcon(imagenEscalada));
-                            } catch (IOException ex) {
-                                System.getLogger(ConsultarColaborador.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                        if (imagen != null && !imagen.isEmpty()) {
+                            File archivoImagen = new File(basePath + imagen);
+                            if (archivoImagen.exists()) {
+                                try {
+                                    BufferedImage temp = ImageIO.read(archivoImagen);
+                                    Image imagenEscalada = temp.getScaledInstance(133, 133, Image.SCALE_SMOOTH);
+                                    this.labelImagen.setIcon(new ImageIcon(imagenEscalada));
+                                } catch (IOException ex) {
+                                    System.getLogger(ConsultarColaborador.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                                }
+                            } else {
+                                this.labelImagen.setIcon(null);
                             }
                         } else {
-                            labelImagen.setIcon(null);
+                            this.labelImagen.setIcon(null);
                         }
                         //sigue aca!!!
                         String nickdelp = dt.getNickname();

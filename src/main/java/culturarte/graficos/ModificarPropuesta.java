@@ -32,32 +32,33 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
             modelo.addElement(prop);
         }
 
-        ListaPropuestas.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    String selec = ListaPropuestas.getSelectedValue();
-                    if (selec != null) {
-                        enableCampos();
-                        DTPropuesta dtprop = controller.obtenerDTPropuesta(selec);
-                        ModificarPropuesta.this.descripcion.setText(dtprop.getDescripcion());
-                        ModificarPropuesta.this.categoria.setText(dtprop.getTipoPropuesta());
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                        LocalDate fechaRealizar = dtprop.getFechaRealizara();
-                        ModificarPropuesta.this.fecharealizar.setText(fechaRealizar.format(formatter));
-                        LocalDate fechaPubli = dtprop.getFechaPublicacion();
-                        if (fechaPubli == null) {
-                            ModificarPropuesta.this.fechapublicacion.setText("");
-                        } else {
-                            ModificarPropuesta.this.fechapublicacion.setText(fechaPubli.format(formatter));
-                        }
-                        ModificarPropuesta.this.lugar.setText(dtprop.getLugarRealizara());
-                        ModificarPropuesta.this.montoreunir.setText(Float.toString(dtprop.getMontoAReunir()));
-                        ModificarPropuesta.this.precioentrada.setText(Float.toString(dtprop.getPrecioEntrada()));
+        ListaPropuestas.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                String selec = ListaPropuestas.getSelectedValue();
+                if (selec != null) {
+                    enableCampos();
+                    DTPropuesta dtprop = controller.obtenerDTPropuesta(selec);
+                    this.descripcion.setText(dtprop.getDescripcion());
+                    this.categoria.setText(dtprop.getTipoPropuesta());
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    LocalDate fechaRealizar = dtprop.getFechaRealizara();
+                    this.fecharealizar.setText(fechaRealizar.format(formatter));
+                    LocalDate fechaPubli = dtprop.getFechaPublicacion();
+                    if (fechaPubli == null) {
+                        this.fechapublicacion.setText("");
+                    } else {
+                        this.fechapublicacion.setText(fechaPubli.format(formatter));
                     }
+                    this.lugar.setText(dtprop.getLugarRealizara());
+                    this.montoreunir.setText(Float.toString(dtprop.getMontoAReunir()));
+                    ModificarPropuesta.this.precioentrada.setText(Float.toString(dtprop.getPrecioEntrada()));
+                    //AGREGAR IMAGEN CUANDO SE CAMBIE
+                    
+
                 }
             }
         });
+
     }
 
     /**
@@ -73,7 +74,34 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
         this.lugar.setEnabled(true);
         this.montoreunir.setEnabled(true);
         this.precioentrada.setEnabled(true);
+        this.Aceptar.setEnabled(true);
 
+    }
+    
+   private boolean sonValidosLosCampos(){
+        
+        if(this.descripcion.getText().isBlank()){
+            return false;
+        }
+        if(this.categoria.getText().isBlank()){
+            return false;
+        }
+        if(this.fecharealizar.getText().isBlank()){
+            return false;
+        }
+        if(this.fechapublicacion.getText().isBlank()){
+            return false;
+        }
+        if(this.lugar.getText().isBlank()){
+            return false;
+        }
+        if(this.montoreunir.getText().isBlank()){
+            return false;
+        }
+        if(this.precioentrada.getText().isBlank()){
+            return false;
+        }   
+        return true;
     }
 
     @SuppressWarnings("unchecked")
@@ -81,7 +109,7 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        Aceptar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         ListaPropuestas = new javax.swing.JList<>(new javax.swing.DefaultListModel<>());
         labelFechaPublicacion = new javax.swing.JLabel();
@@ -101,11 +129,12 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         descripcion = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
+        labelImagen1 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setPreferredSize(new java.awt.Dimension(560, 370));
+        setPreferredSize(new java.awt.Dimension(650, 370));
 
         jButton1.setText("Cancelar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -114,10 +143,11 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton2.setText("Aceptar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        Aceptar.setText("Aceptar");
+        Aceptar.setEnabled(false);
+        Aceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                AceptarActionPerformed(evt);
             }
         });
 
@@ -168,13 +198,15 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
-                .addComponent(labelImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(labelImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addComponent(labelImagen1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(Aceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(labelDescripcion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createSequentialGroup()
@@ -211,15 +243,18 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(labelDescripcion)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(labelLugar))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(fecharealizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(labelFechaRealizar))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(lugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(labelLugar))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(fecharealizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(labelFechaRealizar)))
+                                    .addComponent(labelImagen1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(precioentrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -239,7 +274,7 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(Aceptar))
                 .addContainerGap())
         );
 
@@ -250,19 +285,24 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarActionPerformed
+        if(sonValidosLosCampos()){
+            String x = this.ListaPropuestas.getSelectedValue();
+            //DTPropuesta dtp = new DTPropuesta(this.ListaPropuestas.getSelectedValue(),this.descripcion.getText(),this.);
+            
+            
+        }
+    }//GEN-LAST:event_AceptarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Aceptar;
     private javax.swing.JList<String> ListaPropuestas;
     private javax.swing.JTextField categoria;
     private javax.swing.JTextArea descripcion;
     private javax.swing.JTextField fechapublicacion;
     private javax.swing.JTextField fecharealizar;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -271,6 +311,7 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
     private javax.swing.JLabel labelFechaPublicacion;
     private javax.swing.JLabel labelFechaRealizar;
     private javax.swing.JLabel labelImagen;
+    private javax.swing.JLabel labelImagen1;
     private javax.swing.JLabel labelLugar;
     private javax.swing.JLabel labelMontoReunir;
     private javax.swing.JLabel labelPrecio;

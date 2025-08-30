@@ -16,12 +16,12 @@ public abstract class DTUsuario {
     private String apellido;
     private String email;
     private LocalDate fechaNacimiento;
-    private byte[] imagen;
+    private String imagen;
     
     protected DTUsuario(){
         
     }
-    protected DTUsuario(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, byte[] imagen) {
+    protected DTUsuario(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, String imagen) {
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -50,7 +50,7 @@ public abstract class DTUsuario {
         return fechaNacimiento;
     }
 
-    public byte[] getImagen() {
+    public String getImagen() {
         return imagen;
     }
 }
