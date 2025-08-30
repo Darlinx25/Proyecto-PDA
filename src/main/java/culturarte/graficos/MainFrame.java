@@ -20,6 +20,7 @@ public class MainFrame extends javax.swing.JFrame {
     private RegistrarColaboracion registrarColaboracion;
     private ConsultarPropuestaEstado consultaEstado;
     private DejarDeSeguirUsuario dejarDeSeguirUsuario;
+    private ModificarPropuesta modificarPropuesta;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
 
@@ -54,6 +55,7 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
         JMenuItem8 = new javax.swing.JMenuItem();
 
         jCheckBoxMenuItem1.setSelected(true);
@@ -140,6 +142,14 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem7);
+
+        jMenuItem9.setText("Modificar Propuesta");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem9);
 
         JMenuItem8.setText("Consulta Propuesta por Estado");
         JMenuItem8.setActionCommand("jMenu8");
@@ -283,6 +293,17 @@ public class MainFrame extends javax.swing.JFrame {
         this.dejarDeSeguirUsuario.setVisible(true);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+          if(this.modificarPropuesta !=null){
+            if (this.modificarPropuesta.isVisible()){
+                return;
+            }
+        }
+        this.modificarPropuesta = new ModificarPropuesta();
+        add(this.modificarPropuesta);
+        this.modificarPropuesta.setVisible(true);
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -323,5 +344,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     // End of variables declaration//GEN-END:variables
 }

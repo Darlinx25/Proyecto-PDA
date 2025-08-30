@@ -39,4 +39,5 @@ public interface IController {
     public void realizarColaboracion(String nickColab, String tituloProp, float montoColab, String tipoRetorno);
     public String obtenerDineroRecaudado(String nombre);
     public ArrayList<String> obtenerColaboradoresColaboracion(String tituloProp);
+    public ArrayList<String> listarPropuestas();
 }

@@ -286,6 +286,20 @@ public class Controller implements IController {
     }
     
     
+    public ArrayList<String> listarPropuestas(){
+    List<String> aux;
+       
+    String query = "SELECT p.titulo FROM Propuesta p";            
+    try {
+         aux = em.createQuery(query, String.class).getResultList();
+    } catch (Exception e) {
+         aux = Collections.emptyList();
+         e.printStackTrace();
+    }
+    return new ArrayList<>(aux);
+    }
+    
+    
     @Override
     public DTPropuesta obtenerDTPropuesta(String titulo) {
     try {

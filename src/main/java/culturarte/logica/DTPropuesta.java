@@ -25,6 +25,7 @@ public class DTPropuesta {
     private List<TipoRetorno> tiposRetorno;
     private Estado estadoActual;
     
+    
     public DTPropuesta(){
         
     }
