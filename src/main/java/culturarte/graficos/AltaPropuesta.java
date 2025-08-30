@@ -59,7 +59,13 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
                 DefaultMutableTreeNode select2 = (DefaultMutableTreeNode) arbolEspectaculo.getLastSelectedPathComponent();
 
                 if (select1 != null && select2 != null) {
-                    enableDatosPropuesta();
+                    String cat = select2.toString();
+                    if (!cat.equals("Categorías")) {
+                        enableDatosPropuesta();
+                    } else {
+                        disableDatosPropuesta();
+                    }
+                    
                 }
             }
         });
@@ -70,7 +76,12 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
             DefaultMutableTreeNode select2 = (DefaultMutableTreeNode) arbolEspectaculo.getLastSelectedPathComponent();
 
             if (select1 != null && select2 != null) {
-                enableDatosPropuesta();
+                String cat = select2.toString();
+                    if (!cat.equals("Categorías")) {
+                        enableDatosPropuesta();
+                    } else {
+                        disableDatosPropuesta();
+                    }
             }
         });
     }
@@ -403,6 +414,9 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
             return false;
         }
         if (!(this.checkEntradaGratis.isSelected() || this.checkGanancias.isSelected())) {
+            return false;
+        }
+        if (!this.campoTitulo.isEnabled()) {
             return false;
         }
         return true;
