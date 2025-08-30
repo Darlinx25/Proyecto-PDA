@@ -36,6 +36,8 @@ public class RegistrarColaboracion extends javax.swing.JInternalFrame {
         this.controller = fabrica.getIController();
 
         initComponents();
+        
+        
     }
 
     /**
@@ -355,13 +357,19 @@ public class RegistrarColaboracion extends javax.swing.JInternalFrame {
         this.campoPrecio.setText(Float.toString(datosProp.getPrecioEntrada()));
         this.campoMontoReunir.setText(Float.toString(datosProp.getMontoAReunir()));
         LocalDate fechaPublicacion = datosProp.getFechaPublicacion();
-        this.campoFechaPublicacion.setText(fechaPublicacion.format(formatter));
-        this.campoCategoria.setText(datosProp.getTipoPropuesta());
+        if(fechaPublicacion == null){
+           this.campoFechaPublicacion.setText(""); 
+        }else{
+           this.campoFechaPublicacion.setText(fechaPublicacion.format(formatter)); 
+        }
+        campoCategoria.setText(datosProp.getTipoPropuesta());
         cargarRetornosCombo(datosProp.getTiposRetorno());
         cargarImagenLabel(datosProp.getImagen());
 
     }//GEN-LAST:event_listaPropuestaProponenteValueChanged
-
+    
+    
+    
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
         if (sonValidosLosCampos()) {
             String nickColab = this.listaColaboradores.getSelectedValue();
@@ -414,20 +422,19 @@ public class RegistrarColaboracion extends javax.swing.JInternalFrame {
         }
     }
 
-    private void cargarImagenLabel(byte[] imagen) {
-        if (imagen != null) {
-            ByteArrayInputStream bais = new ByteArrayInputStream(imagen);
-            try {
-                BufferedImage temp = ImageIO.read(bais);
-                Image imagenEscalada = temp.getScaledInstance(133, 133, Image.SCALE_SMOOTH);
-                this.labelImagen.setIcon(new ImageIcon(imagenEscalada));
-            } catch (IOException ex) {
-                System.getLogger(RegistrarColaboracion.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            }
-        } else {
-            this.labelImagen.setIcon(null);
+    private void cargarImagenLabel(String rutaArchivo) {
+    if (rutaArchivo != null && !rutaArchivo.isBlank()) {
+        try {
+            BufferedImage temp = ImageIO.read(new java.io.File("imagenesUsuarios/" + rutaArchivo));
+            Image imagenEscalada = temp.getScaledInstance(133, 133, Image.SCALE_SMOOTH);
+            this.labelImagen.setIcon(new ImageIcon(imagenEscalada));
+        } catch (IOException ex) {
+            System.getLogger(RegistrarColaboracion.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
+    } else {
+        this.labelImagen.setIcon(null);
     }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaDescripcion;

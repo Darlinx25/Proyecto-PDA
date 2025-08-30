@@ -14,7 +14,7 @@ import java.util.List;
 public class DTPropuesta {
     private String titulo;
     private String descripcion;
-    private byte[] imagen;
+    private String imagen;
     private String lugarRealizara;
     private LocalDate fechaRealizara;
     private float precioEntrada;
@@ -31,7 +31,7 @@ public class DTPropuesta {
     }
     
     //este para obtener los datos de una propuesta
-    public DTPropuesta(String titulo, String descripcion, byte[] imagen, String lugarRealizara, LocalDate fechaRealizara, 
+    public DTPropuesta(String titulo, String descripcion, String imagen, String lugarRealizara, LocalDate fechaRealizara, 
             float precioEntrada, float montoAReunir, LocalDate fechaPublicacion, String tipoPropuesta, String nickProponedor, List<TipoRetorno> tiposRetorno, Estado estadoActual) {
         
         this.titulo = titulo;
@@ -49,7 +49,7 @@ public class DTPropuesta {
     }
     
     //este para crear la propuesta
-    public DTPropuesta(String titulo, String descripcion, byte[] imagen, String lugarRealizara, LocalDate fechaRealizara, 
+    public DTPropuesta(String titulo, String descripcion, String imagen, String lugarRealizara, LocalDate fechaRealizara, 
             float precioEntrada, float montoAReunir, String tipoPropuesta, String nickProponedor, List<TipoRetorno> tiposRetorno, Estado estadoActual) {
         
         this.titulo = titulo;
@@ -74,7 +74,7 @@ public class DTPropuesta {
         return descripcion;
     }
 
-    public byte[] getImagen() {
+    public String getImagen() {
         return imagen;
     }
 

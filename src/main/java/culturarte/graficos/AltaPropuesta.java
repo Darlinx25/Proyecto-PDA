@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package culturarte.graficos;
+
 import culturarte.logica.DTPropuesta;
 import culturarte.logica.Estado;
 import culturarte.logica.EstadoPropuesta;
@@ -26,6 +27,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
+
 /**
  *
  * @author kevin
@@ -33,48 +35,43 @@ import javax.swing.tree.DefaultMutableTreeNode;
 public class AltaPropuesta extends javax.swing.JInternalFrame {
 
     private IController controller;
-    private byte[] imagenPropuesta;
-    
-public AltaPropuesta() {
-    IControllerFactory fabrica = IControllerFactory.getInstance();
-    this.controller = fabrica.getIController();
-    this.imagenPropuesta = null;
-    
-    initComponents();
-    
-    
-    DefaultListModel<String> modelo = (DefaultListModel<String>) listaProponentes.getModel();
-    modelo.clear();
-    for (String nick : controller.listarProponentes()) {
-    modelo.addElement(nick);
-    }
+    private String imagenPropuesta;
 
-    
+    public AltaPropuesta() {
+        IControllerFactory fabrica = IControllerFactory.getInstance();
+        this.controller = fabrica.getIController();
+        this.imagenPropuesta = null;
 
+        initComponents();
 
-    // Listener para JList
-    listaProponentes.addListSelectionListener(e -> {
-        if (!e.getValueIsAdjusting()) {
+        DefaultListModel<String> modelo = (DefaultListModel<String>) listaProponentes.getModel();
+        modelo.clear();
+        for (String nick : controller.listarProponentes()) {
+            modelo.addElement(nick);
+        }
+
+        // Listener para JList
+        listaProponentes.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                String select1 = listaProponentes.getSelectedValue();
+                DefaultMutableTreeNode select2 = (DefaultMutableTreeNode) arbolEspectaculo.getLastSelectedPathComponent();
+
+                if (select1 != null && select2 != null) {
+                    enableDatosPropuesta();
+                }
+            }
+        });
+
+        // Listener para JTree
+        arbolEspectaculo.getSelectionModel().addTreeSelectionListener(e -> {
             String select1 = listaProponentes.getSelectedValue();
             DefaultMutableTreeNode select2 = (DefaultMutableTreeNode) arbolEspectaculo.getLastSelectedPathComponent();
 
             if (select1 != null && select2 != null) {
                 enableDatosPropuesta();
             }
-        }
-    });
-
-    // Listener para JTree
-    arbolEspectaculo.getSelectionModel().addTreeSelectionListener(e -> {
-        String select1 = listaProponentes.getSelectedValue();
-        DefaultMutableTreeNode select2 = (DefaultMutableTreeNode) arbolEspectaculo.getLastSelectedPathComponent();
-
-        if (select1 != null && select2 != null) {
-            enableDatosPropuesta();
-        }
-    });
-}
-
+        });
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -343,14 +340,11 @@ public AltaPropuesta() {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
- 
 
-    
-    
+
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
-        if(sonValidosLosCampos()){
-            
+        if (sonValidosLosCampos()) {
+
             String titulo = this.campoTitulo.getText();
             String descripcion = this.Descripcion.getText();
             String lugarRealizara = this.Lugar.getText();
@@ -358,7 +352,7 @@ public AltaPropuesta() {
             LocalDate fechaRealizara = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             Number precioEntrada1 = (Number) this.campoPrecioEntrada.getValue();
             float precioEntrada = precioEntrada1 != null ? precioEntrada1.floatValue() : 0f;//Estas dos lineas son para obtener e lvalor numerio y pasarlo a float, lo que habia antes lo pasaba con coma y no andaba en tiempo de eejecucion
-            
+
             Number montoAReunir1 = (Number) this.campoMontoReunir.getValue();
             float montoAReunir = montoAReunir1 != null ? montoAReunir1.floatValue() : 0f;
             DefaultMutableTreeNode cat = (DefaultMutableTreeNode) arbolEspectaculo.getLastSelectedPathComponent();
@@ -373,9 +367,9 @@ public AltaPropuesta() {
             if (this.checkGanancias.isSelected()) {
                 tiposRetorno.add(TipoRetorno.PORCENTAJE_GANANCIAS);
             }
-            DTPropuesta propuesta = new DTPropuesta(titulo, descripcion, this.imagenPropuesta, lugarRealizara, fechaRealizara, 
+            DTPropuesta propuesta = new DTPropuesta(titulo, descripcion, this.imagenPropuesta, lugarRealizara, fechaRealizara,
                     precioEntrada, montoAReunir, tipoPropuesta, nickProponedor, tiposRetorno, est);
-            
+
             this.controller.addPropuesta(propuesta);
             this.dispose();
         }
@@ -405,41 +399,49 @@ public AltaPropuesta() {
         }
         return true;
     }
-    
+
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
-        this.dispose();       
+        this.dispose();
     }//GEN-LAST:event_botonCancelarActionPerformed
 
     private void botonAddImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAddImagenActionPerformed
-        JFileChooser selectorImagen = new JFileChooser();
+
+       JFileChooser selectorImagen = new JFileChooser();
         String[] tiposImagen = {"jpg", "png"};
         FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("Archivos .jpg o .png", tiposImagen);
         selectorImagen.setFileFilter(filtroImagen);
         selectorImagen.setAcceptAllFileFilterUsed(false);
-        
+
         int resultado = selectorImagen.showOpenDialog(this);
-        
+
         if (resultado == JFileChooser.APPROVE_OPTION) {
             File archivoElegido = selectorImagen.getSelectedFile();
             try {
                 String extensionImagen = tipoImagen(archivoElegido);
-                
-                if (extensionImagen.equals("jpg")  || extensionImagen.equals("png")) {
+
+                if (extensionImagen.equals("jpg") || extensionImagen.equals("png")) {
                     BufferedImage temp = ImageIO.read(archivoElegido);
-                
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    ImageIO.write(temp, extensionImagen, baos);
-                    this.imagenPropuesta = baos.toByteArray();
+
+                    File carpetaImagenes = new File("imagenesUsuarios");
+                    if (!carpetaImagenes.exists()) {
+                        carpetaImagenes.mkdirs();
+                    }
+
+                    String nombreArchivo = System.currentTimeMillis() + "." + extensionImagen;
+                    File archivoDestino = new File(carpetaImagenes, nombreArchivo);
+                    ImageIO.write(temp, extensionImagen, archivoDestino);
+
+                    this.imagenPropuesta = nombreArchivo;
 
                     Image imagenEscalada = temp.getScaledInstance(133, 133, Image.SCALE_SMOOTH);
                     this.labelImagen.setIcon(new ImageIcon(imagenEscalada));
                 }
             } catch (IOException ex) {
-                System.getLogger(AltaPropuesta.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                System.getLogger(AltaUsuario.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             }
         }
-        
-    }//GEN-LAST:event_botonAddImagenActionPerformed
+    }
+
     private String tipoImagen(File archivo) throws IOException {
         Path path = archivo.toPath();
         String mimeType = Files.probeContentType(path);
@@ -451,7 +453,8 @@ public AltaPropuesta() {
             }
         }
         return "desconocido";
-    }
+    }//GEN-LAST:event_botonAddImagenActionPerformed
+
     private void LugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LugarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_LugarActionPerformed

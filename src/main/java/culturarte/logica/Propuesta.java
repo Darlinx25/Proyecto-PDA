@@ -22,9 +22,7 @@ public class Propuesta {
     
     private String descripcion;
     
-    @Lob @Basic(fetch = FetchType.LAZY)
-    @Column(length = 40000000)//40 MB
-    private byte[] imagen;
+    private String imagen;
     
     private String lugarRealizara;
     private LocalDate fechaRealizara;
@@ -56,7 +54,7 @@ public class Propuesta {
         
     }
     
-    public Propuesta(String titulo, String descripcion, byte[] imagen, String lugarRealizara, LocalDate fechaRealizara, float precioEntrada, 
+    public Propuesta(String titulo, String descripcion, String imagen, String lugarRealizara, LocalDate fechaRealizara, float precioEntrada, 
             float montoAReunir, List<TipoRetorno> tiposRetorno, Categoria tipoPropuesta, Proponente proponente,Estado estadoActual ) {
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -92,11 +90,11 @@ public class Propuesta {
         this.descripcion = descripcion;
     }
 
-    public byte[] getImagen() {
+    public String getImagen() {
         return imagen;
     }
 
-    public void setImagen(byte[] imagen) {
+    public void setImagen(String imagen) {
         this.imagen = imagen;
     }
 
