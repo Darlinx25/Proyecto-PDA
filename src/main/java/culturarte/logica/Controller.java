@@ -430,4 +430,18 @@ public class Controller implements IController {
         
         
     }
- }
+    
+    @Override
+    public ArrayList<String> obtenerColaboradoresColaboracion(String tituloProp) {
+        List<String> aux = null;
+        String query = "SELECT c.colaborador.nickname FROM Colaboracion c WHERE c.propuestaColaborada.titulo = :tituloProp";
+        try {
+            aux = em.createQuery(query, String.class).setParameter("tituloProp", tituloProp).getResultList();
+        } catch (Exception e) {
+            aux = Collections.emptyList();
+            e.printStackTrace();
+            
+        }
+        return new ArrayList<>(aux);
+    }
+}

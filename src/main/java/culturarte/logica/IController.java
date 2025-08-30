@@ -32,4 +32,5 @@ public interface IController {
     //usar TipoRetorno luego en vez de String
     public void realizarColaboracion(String nickColab, String tituloProp, float montoColab, String tipoRetorno);
     public String obtenerDineroRecaudado(String nombre);
+    public ArrayList<String> obtenerColaboradoresColaboracion(String tituloProp);
 }

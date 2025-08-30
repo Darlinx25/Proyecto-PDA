@@ -89,6 +89,11 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
                                     String[] partes = seleccionado2.split(" - ");
                                     String nombrePropuesta = partes[0];
                                     dineroRecaudado.setText(controller.obtenerDineroRecaudado(nombrePropuesta));
+                                    DefaultListModel<String> modeloC = new DefaultListModel<>();
+                                    for (String nickColaborador : controller.obtenerColaboradoresColaboracion(nombrePropuesta)) {
+                                        modeloC.addElement(nickColaborador);
+                                    }
+                                    Colaboradores.setModel(modeloC);
                                 }
                             }
                         });
@@ -218,6 +223,7 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
 
         jLabel9.setText("Colaboradores: ");
 
+        Colaboradores.setEnabled(false);
         jScrollPane2.setViewportView(Colaboradores);
 
         jLabel8.setText("Dinero Recaudado :");
