@@ -352,10 +352,9 @@ public class RegistrarColaboracion extends javax.swing.JInternalFrame {
         this.campoFechaRealizar.setText(fechaRealizar.format(formatter));
         this.campoPrecio.setText(Float.toString(datosProp.getPrecioEntrada()));
         this.campoMontoReunir.setText(Float.toString(datosProp.getMontoAReunir()));
-        /*AGREGAR AL DTPROPUESTA LA FECHA DE PUBLICACIÓN*/
-        //LocalDate fechaPublicacion = null;
-        //this.campoFechaPublicacion.setText(fechaPublicacion.format(formatter));
-        this.campoCategoria.setText(datosProp.getTipoPropuesta());//obtenerDTPropuesta tiene un bug, no usa getNombre() de Categoria
+        LocalDate fechaPublicacion = datosProp.getFechaPublicacion();
+        this.campoFechaPublicacion.setText(fechaPublicacion.format(formatter));
+        this.campoCategoria.setText(datosProp.getTipoPropuesta());
         cargarRetornosCombo(datosProp.getTiposRetorno());
         cargarImagenLabel(datosProp.getImagen());
         

@@ -19,6 +19,7 @@ public class DTPropuesta {
     private LocalDate fechaRealizara;
     private float precioEntrada;
     private float montoAReunir;
+    private LocalDate fechaPublicacion;
     private String tipoPropuesta;
     private String nickProponedor;
     private List<TipoRetorno> tiposRetorno;
@@ -28,6 +29,25 @@ public class DTPropuesta {
         
     }
     
+    //este para obtener los datos de una propuesta
+    public DTPropuesta(String titulo, String descripcion, byte[] imagen, String lugarRealizara, LocalDate fechaRealizara, 
+            float precioEntrada, float montoAReunir, LocalDate fechaPublicacion, String tipoPropuesta, String nickProponedor, List<TipoRetorno> tiposRetorno, Estado estadoActual) {
+        
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.imagen = imagen;
+        this.lugarRealizara = lugarRealizara;
+        this.fechaRealizara = fechaRealizara;
+        this.precioEntrada = precioEntrada;
+        this.montoAReunir = montoAReunir;
+        this.fechaPublicacion = fechaPublicacion;
+        this.tipoPropuesta = tipoPropuesta;
+        this.nickProponedor = nickProponedor;
+        this.tiposRetorno = tiposRetorno;
+        this.estadoActual = estadoActual;
+    }
+    
+    //este para crear la propuesta
     public DTPropuesta(String titulo, String descripcion, byte[] imagen, String lugarRealizara, LocalDate fechaRealizara, 
             float precioEntrada, float montoAReunir, String tipoPropuesta, String nickProponedor, List<TipoRetorno> tiposRetorno, Estado estadoActual) {
         
@@ -38,6 +58,7 @@ public class DTPropuesta {
         this.fechaRealizara = fechaRealizara;
         this.precioEntrada = precioEntrada;
         this.montoAReunir = montoAReunir;
+        this.fechaPublicacion = null;
         this.tipoPropuesta = tipoPropuesta;
         this.nickProponedor = nickProponedor;
         this.tiposRetorno = tiposRetorno;
@@ -70,6 +91,10 @@ public class DTPropuesta {
 
     public float getMontoAReunir() {
         return montoAReunir;
+    }
+    
+    public LocalDate getFechaPublicacion() {
+        return fechaPublicacion;
     }
 
     public String getTipoPropuesta() {

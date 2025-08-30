@@ -293,7 +293,7 @@ public class Controller implements IController {
         if (p != null) {
             return new DTPropuesta(
                 p.getTitulo(), p.getDescripcion(), p.getImagen(), p.getLugarRealizara(), p.getFechaRealizara(), 
-            p.getPrecioEntrada(), p.getMontoAReunir(),
+            p.getPrecioEntrada(), p.getMontoAReunir(), p.getFechaPublicacion(),
                     p.getTipoPropuesta().getNombre(),
                     p.getProponedor().getNickname(),
                     p.getTiposRetorno(), p.getEstadoActual());
@@ -365,9 +365,10 @@ public class Controller implements IController {
         List<Object[]> aux;
         List<String> aux2 = new ArrayList<String>();
         
-        String query = "SELECT p.titulo, p.proponente.nickname FROM Propuesta p";
+        String query = "SELECT p.titulo, p.proponente.nickname FROM Propuesta p"
+                + " WHERE p.estadoActual.estado = :estado";
         try {
-            aux = em.createQuery(query, Object[].class).getResultList();
+            aux = em.createQuery(query, Object[].class).setParameter("estado", EstadoPropuesta.PUBLICADA).getResultList();
             for (Object[] fila : aux) {
                 aux2.add(fila[0] + " - " + fila[1]);
             }
