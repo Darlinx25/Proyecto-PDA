@@ -53,6 +53,13 @@
                     <mainClass>${exec.mainClass}</mainClass>
                     <classpathScope>runtime</classpathScope>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

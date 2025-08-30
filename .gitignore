@@ -1,8 +1,6 @@
 # Maven
 /target/
 
-# Archivos de NetBeans
-nbactions.xml
 
 # Docker
 docker/mysql/data/
@@ -35,7 +33,6 @@ target/
 *.ipr
 *.iws
 *.nb-gradle/
-nbactions.xml
 
 # --- Logs ---
 *.log
