@@ -331,23 +331,7 @@ public class Controller implements IController {
         return aux;
     }
    
-    @Override
-    public void agregarUsuarioSeg(Usuario seguidor, Usuario  usuASeguir){
-        List<Usuario> aux = seguidor.getUsuariosSeguidos();
-        aux.add(usuASeguir);
-        seguidor.setUsuariosSeguidos(aux);
-       EntityTransaction t = em.getTransaction();
-        try{
-           t.begin();
-           em.persist(seguidor);
-           t.commit();
-        }catch(Exception  e){
-            t.rollback();
-            e.printStackTrace();
-        }
-    }
         
-    
  
     @Override
     public void seguirUsuario(String nickSegui, String nickUsu){
@@ -356,7 +340,24 @@ public class Controller implements IController {
         
         List<Usuario> usu2 = em.createQuery("SELECT u FROM Usuario u WHERE u.nickname = :nickUsu", Usuario.class)
                 .setParameter("nickUsu", nickUsu).getResultList();
-        agregarUsuarioSeg(usu1.get(0),usu2.get(0));
+        
+       
+        
+        List<Usuario> aux = usu1.get(0).getUsuariosSeguidos();
+        aux.add(usu2.get(0));
+        usu1.get(0).setUsuariosSeguidos(aux);
+        
+         EntityTransaction t = em.getTransaction();
+        try{
+           t.begin();
+           em.persist(usu1.get(0));
+           t.commit();
+        }catch(Exception  e){
+            t.rollback();
+            e.printStackTrace();
+        
+        }
+        
     }
         
     
@@ -364,7 +365,18 @@ public class Controller implements IController {
     public ArrayList<String>listarUsuariosSeguir(String nickname){
         
          List<String> aux;
-        String query = "SELECT u.nickname FROM Usuario u WHERE u.nickname != :nick";            
+        String query = """
+                SELECT u.nickname 
+                FROM Usuario u 
+                WHERE u.nickname != :nick 
+                AND u.nickname NOT IN (
+                    SELECT us.nickname 
+                    FROM Usuario user 
+                    JOIN user.usuariosSeguidos us 
+                    WHERE user.nickname = :nick
+                )
+        """;
+                           
         try {
          aux = em.createQuery(query, String.class).setParameter("nick", nickname).getResultList();
         } catch (Exception e) {
@@ -500,4 +512,28 @@ public class Controller implements IController {
         
         return new ArrayList<String>(aux);
     }
+    
+    @Override
+    public void dejarDeSeguirUsuario(String nickSegui, String nickSiguiendo){
+        List<Usuario> usu1 = em.createQuery("SELECT u FROM Usuario u WHERE u.nickname = :nickSegui", Usuario.class)
+                .setParameter("nickSegui", nickSegui).getResultList();
+        
+        List<Usuario> usu2 = em.createQuery("SELECT u FROM Usuario u WHERE u.nickname = :nickUsu", Usuario.class)
+                .setParameter("nickUsu", nickSiguiendo).getResultList();
+        List<Usuario> aux = usu1.get(0).getUsuariosSeguidos();
+        aux.remove(usu2.get(0));
+        usu1.get(0).setUsuariosSeguidos(aux);
+        
+         EntityTransaction t = em.getTransaction();
+        try{
+           t.begin();
+           em.persist(usu1.get(0));
+           t.commit();
+        }catch(Exception  e){
+            t.rollback();
+            e.printStackTrace();
+        }
+    }
 }
+
+    

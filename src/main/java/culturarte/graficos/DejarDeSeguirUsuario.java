@@ -57,11 +57,11 @@ public class DejarDeSeguirUsuario extends javax.swing.JInternalFrame {
               }
       });
     }
-       private void enableAceptar(){
-        this.aceptar.setEnabled(true);
+    private void enableAceptar(){
+      this.aceptar.setEnabled(true);
     }
     private void disableAceptar(){
-        this.aceptar.setEnabled(false);
+      this.aceptar.setEnabled(false);
     }
 
     /**
@@ -160,7 +160,9 @@ public class DejarDeSeguirUsuario extends javax.swing.JInternalFrame {
 
     private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
         // TODO add your handling code here:
-      
+        String seguidor = this.seguidores.getSelectedValue();
+        String usuarioSiguiendo = this.usuariosSiguiendo.getSelectedValue();
+        this.controller.dejarDeSeguirUsuario(seguidor,usuarioSiguiendo);
         this.dispose();
     }//GEN-LAST:event_aceptarActionPerformed
 

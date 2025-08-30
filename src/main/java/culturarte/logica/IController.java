@@ -26,8 +26,8 @@ public interface IController {
     public DTProponente obtenerDTProponente(String nick);
     public DTPropuesta obtenerDTPropuesta(String titulo);
     public ArrayList<String> listarUsuarios();
-    public void agregarUsuarioSeg(Usuario seguidor, Usuario  usuASeguir);
     public void seguirUsuario(String nickSegui, String nickUsu);
+    public void dejarDeSeguirUsuario(String nickSegui, String nickSiguiendo);
     public ArrayList<String> listaPropuestasUsu(String nickname);
     public ArrayList<String> listarUsuariosSeguir(String nickname);
     
