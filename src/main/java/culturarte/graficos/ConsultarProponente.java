@@ -79,22 +79,19 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
                             DTPropuesta dtprop = controller.obtenerDTPropuesta(nick1);
                             EstadoPropuesta ese = dtprop.getEstadoActual().getEstado();
                             String estado = ese.toString();
-                            nick1 += " - " + estado;
-                            modelo1.addElement(nick1);
-                            
-                            listPropuestas.addListSelectionListener(i -> {
+                            modelo1.addElement(nick1 + " - " + estado);
+
+                        }
+                        listPropuestas.addListSelectionListener(i -> {
                             if (!i.getValueIsAdjusting()) {
                                 String seleccionado2 = listPropuestas.getSelectedValue();
                                 if (seleccionado2 != null) {
-                                    String selec = seleccionado2.replace(" - " + estado, "");
-                                    System.out.println(selec);
-                                    dineroRecaudado.setText(controller.obtenerDineroRecaudado(selec));
+                                    String[] partes = seleccionado2.split(" - ");
+                                    String nombrePropuesta = partes[0];
+                                    dineroRecaudado.setText(controller.obtenerDineroRecaudado(nombrePropuesta));
                                 }
                             }
                         });
-                            
-                        }
-                        
 
                     }
                 }
