@@ -470,8 +470,7 @@ public class Controller implements IController {
     }
 
     @Override
-    public ArrayList<DTPropuesta> obtenerPropuestasColaboradas(String nick) {
-        ArrayList<DTPropuesta> listaPropuestas = new ArrayList<DTPropuesta>();
+    public ArrayList<String> obtenerPropuestasColaboradas(String nick) {
         
         List<String> aux;
         
@@ -481,14 +480,10 @@ public class Controller implements IController {
             aux = em.createQuery(query, String.class)
                     .setParameter("nick", nick)
                     .getResultList();
-            
-            for (String titulo : aux) {
-                listaPropuestas.add(this.obtenerDTPropuesta(titulo));
-            }
         } catch (Exception e) {
-            listaPropuestas = new ArrayList<DTPropuesta>();
+            aux = Collections.emptyList();
         }
         
-        return listaPropuestas;
+        return new ArrayList<String>(aux);
     }
 }

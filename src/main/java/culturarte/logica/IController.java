@@ -20,7 +20,7 @@ public interface IController {
     /*Consulta de Perfil de colaborador*/
     public ArrayList<String> listarColaboradores();
     public DTColaborador obtenerDTColaborador(String nick);
-    public ArrayList<DTPropuesta> obtenerPropuestasColaboradas(String nick);
+    public ArrayList<String> obtenerPropuestasColaboradas(String nick);
     public ArrayList<String> listarProponentes();
     public void addPropuesta(DTPropuesta prop);
     public DTProponente obtenerDTProponente(String nick);
