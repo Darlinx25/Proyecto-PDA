@@ -366,9 +366,12 @@ public class Controller implements IController {
         List<String> aux2 = new ArrayList<String>();
         
         String query = "SELECT p.titulo, p.proponente.nickname FROM Propuesta p"
-                + " WHERE p.estadoActual.estado = :estado";
+                + " WHERE p.estadoActual.estado = :estado1 OR p.estadoActual.estado = :estado2";
         try {
-            aux = em.createQuery(query, Object[].class).setParameter("estado", EstadoPropuesta.PUBLICADA).getResultList();
+            aux = em.createQuery(query, Object[].class)
+                    .setParameter("estado1", EstadoPropuesta.PUBLICADA)
+                    .setParameter("estado2", EstadoPropuesta.EN_FINANCIACION)
+                    .getResultList();
             for (Object[] fila : aux) {
                 aux2.add(fila[0] + " - " + fila[1]);
             }
