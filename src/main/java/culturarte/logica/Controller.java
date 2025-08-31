@@ -101,7 +101,7 @@ public class Controller implements IController {
             e.printStackTrace();
             return salida.ERROR;
         }
-        return salida.EXITO; // Error Inesperado
+        return salida.EXITO; 
 
     }
 
@@ -113,7 +113,7 @@ public class Controller implements IController {
         return raiz;
     }
 
-    //helper para listarCategorias() recursivo
+    
     private DefaultMutableTreeNode nodosArbolCategorias(Categoria cat) {
         if (cat == null) {
             return null;
