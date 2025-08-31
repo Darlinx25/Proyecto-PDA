@@ -341,12 +341,7 @@ public class RegistrarColaboracion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_botonCancelarActionPerformed
 
     private void listaPropuestaProponenteValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaPropuestaProponenteValueChanged
-        String tituloProp = this.listaPropuestaProponente.getSelectedValue();
-        int primerEspacio = tituloProp.indexOf(" - ");
-        if (primerEspacio != -1) {
-            tituloProp = tituloProp.substring(0, primerEspacio);
-        }
-        System.out.println(tituloProp);
+        String tituloProp = cortarTituloProp(this.listaPropuestaProponente.getSelectedValue());
         DTPropuesta datosProp = this.controller.obtenerDTPropuesta(tituloProp);
 
         this.areaDescripcion.setText(datosProp.getDescripcion());
@@ -388,7 +383,7 @@ public class RegistrarColaboracion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_campoMontoColabActionPerformed
 
     private String cortarTituloProp(String tituloProp) {
-        int primerEspacio = tituloProp.indexOf(" - ");
+        int primerEspacio = tituloProp.lastIndexOf(" - ");
         if (primerEspacio != -1) {
             tituloProp = tituloProp.substring(0, primerEspacio);
         }
