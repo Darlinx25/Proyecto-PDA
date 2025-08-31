@@ -40,4 +40,5 @@ public interface IController {
     public String obtenerDineroRecaudado(String nombre);
     public ArrayList<String> obtenerColaboradoresColaboracion(String tituloProp);
     public ArrayList<String> listarPropuestas();
+    public void modPropuesta(DTPropuesta prop);
 }
