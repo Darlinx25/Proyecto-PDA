@@ -25,8 +25,10 @@ public interface IController {
     public void addPropuesta(DTPropuesta prop);
     public DTProponente obtenerDTProponente(String nick);
     public DTPropuesta obtenerDTPropuesta(String titulo);
-    public ArrayList<String> listarPropuestasColaboraciones(String nickColab);
+    public ArrayList<String> listarColaboracionesColaborador(String nickColab);
     public DTColaboracion obtenerDTColaboracion(Long id);
+    public ArrayList<String> listarColaboraciones();
+    public void eliminarColaboracion(Long id);
     public ArrayList<String> listarUsuarios();
     public void seguirUsuario(String nickSegui, String nickUsu);
     public void dejarDeSeguirUsuario(String nickSegui, String nickSiguiendo);

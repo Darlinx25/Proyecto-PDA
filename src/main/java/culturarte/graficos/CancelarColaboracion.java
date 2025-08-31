@@ -8,19 +8,17 @@ import culturarte.logica.DTColaboracion;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import javax.swing.DefaultListModel;
 
 /**
  *
  * @author mark
  */
-public class ConsultarColaboracion extends javax.swing.JInternalFrame {
+public class CancelarColaboracion extends javax.swing.JInternalFrame {
     private IController controller;
     /**
-     * Creates new form ConsultarColaboracion
+     * Creates new form CancelarColaboracion
      */
-    public ConsultarColaboracion() {
+    public CancelarColaboracion() {
         IControllerFactory fabrica = IControllerFactory.getInstance();
         this.controller = fabrica.getIController();
         
@@ -37,38 +35,32 @@ public class ConsultarColaboracion extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        listaColaboradores = new javax.swing.JList<>(this.controller.listarColaboradores().toArray(new String[0]));
-        jLabel1 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        listaColaboraciones = new javax.swing.JList<>();
         jLabel2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        listaColaboraciones = new javax.swing.JList<>(this.controller.listarColaboraciones().toArray(new String[0]));
         jPanel2 = new javax.swing.JPanel();
+        campoNickColab = new javax.swing.JTextField();
+        labelNickColab = new javax.swing.JLabel();
         campoFechaHora = new javax.swing.JTextField();
         labelFechaHora = new javax.swing.JLabel();
         campoMonto = new javax.swing.JTextField();
         labelMonto = new javax.swing.JLabel();
         campoRetorno = new javax.swing.JTextField();
         labelRetorno = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         botonSalir = new javax.swing.JButton();
+        botonCancelarColab = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Consultar colaboración");
+        setTitle("Cancelar colaboración");
         getContentPane().setLayout(new java.awt.CardLayout());
 
-        listaColaboradores.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                listaColaboradoresValueChanged(evt);
-            }
-        });
-        jScrollPane1.setViewportView(listaColaboradores);
-
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Colaboradores");
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Título propuesta - ID Colaboración");
 
         listaColaboraciones.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -77,26 +69,32 @@ public class ConsultarColaboracion extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(listaColaboraciones);
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Título propuesta - ID Colaboración");
+        campoNickColab.setEditable(false);
+
+        labelNickColab.setText("Colaborador:");
 
         campoFechaHora.setEditable(false);
         campoFechaHora.setCaretColor(new java.awt.Color(255, 255, 255));
+        campoFechaHora.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoFechaHoraActionPerformed(evt);
+            }
+        });
 
         labelFechaHora.setText("Fecha y hora realizada:");
 
         campoMonto.setEditable(false);
         campoMonto.setCaretColor(new java.awt.Color(255, 255, 255));
+        campoMonto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoMontoActionPerformed(evt);
+            }
+        });
 
         labelMonto.setText("Monto:");
 
         campoRetorno.setEditable(false);
         campoRetorno.setCaretColor(new java.awt.Color(255, 255, 255));
-        campoRetorno.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoRetornoActionPerformed(evt);
-            }
-        });
 
         labelRetorno.setText("Tipo de retorno elegido:");
 
@@ -107,19 +105,25 @@ public class ConsultarColaboracion extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelNickColab, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(labelFechaHora, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(labelMonto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(labelRetorno, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))
+                    .addComponent(labelRetorno, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(campoRetorno, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                    .addComponent(campoRetorno, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
                     .addComponent(campoMonto)
-                    .addComponent(campoFechaHora))
+                    .addComponent(campoFechaHora)
+                    .addComponent(campoNickColab))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(campoNickColab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelNickColab))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campoFechaHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelFechaHora))
@@ -131,16 +135,24 @@ public class ConsultarColaboracion extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campoRetorno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelRetorno))
-                .addGap(0, 228, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Datos de la colaboración");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Datos de la colaboración");
 
         botonSalir.setText("Salir");
         botonSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonSalirActionPerformed(evt);
+            }
+        });
+
+        botonCancelarColab.setText("Cancelar colaboración");
+        botonCancelarColab.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCancelarColabActionPerformed(evt);
             }
         });
 
@@ -151,55 +163,42 @@ public class ConsultarColaboracion extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(botonSalir)
-                .addGap(199, 199, 199))
+                .addGap(143, 143, 143)
+                .addComponent(botonCancelarColab)
+                .addGap(73, 73, 73))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
-                .addGap(57, 57, 57)
-                .addComponent(botonSalir)
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(81, 81, 81)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botonSalir)
+                    .addComponent(botonCancelarColab))
+                .addGap(46, 46, 46))
         );
 
         getContentPane().add(jPanel1, "card2");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void listaColaboradoresValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaColaboradoresValueChanged
-        String nickColab = this.listaColaboradores.getSelectedValue();
-        
-        ArrayList<String> propColaboraciones = this.controller.listarColaboracionesColaborador(nickColab);
-        DefaultListModel<String> listModel = new DefaultListModel<>();
-        for (String s : propColaboraciones) {
-            listModel.addElement(s);
-        }
-        this.listaColaboraciones.setModel(listModel);
-    }//GEN-LAST:event_listaColaboradoresValueChanged
 
     private void listaColaboracionesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaColaboracionesValueChanged
         String idString = this.listaColaboraciones.getSelectedValue();
@@ -212,37 +211,59 @@ public class ConsultarColaboracion extends javax.swing.JInternalFrame {
             return;
         }
         DTColaboracion colaboracion = this.controller.obtenerDTColaboracion(id);
+        this.campoNickColab.setText(colaboracion.getColaborador());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         this.campoFechaHora.setText(colaboracion.getFechaHora().format(formatter));
         this.campoMonto.setText(Float.toString(colaboracion.getMonto()));
         this.campoRetorno.setText(colaboracion.getTipoRetorno());
     }//GEN-LAST:event_listaColaboracionesValueChanged
 
-    private void campoRetornoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoRetornoActionPerformed
+    private void campoFechaHoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoFechaHoraActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_campoRetornoActionPerformed
+    }//GEN-LAST:event_campoFechaHoraActionPerformed
+
+    private void campoMontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoMontoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoMontoActionPerformed
 
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
         this.dispose();
     }//GEN-LAST:event_botonSalirActionPerformed
 
+    private void botonCancelarColabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarColabActionPerformed
+        if (!this.listaColaboraciones.isSelectionEmpty()) {
+            String idString = this.listaColaboraciones.getSelectedValue();
+            Long id;
+            int primerEspacio = idString.lastIndexOf(' ');
+            if (primerEspacio != -1) {
+                idString = idString.substring(primerEspacio + 1);
+                id = Long.valueOf(idString);
+            } else {
+                return;
+            }
+            this.controller.eliminarColaboracion(id);
+            
+            this.dispose();
+        }
+    }//GEN-LAST:event_botonCancelarColabActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonCancelarColab;
     private javax.swing.JButton botonSalir;
     private javax.swing.JTextField campoFechaHora;
     private javax.swing.JTextField campoMonto;
+    private javax.swing.JTextField campoNickColab;
     private javax.swing.JTextField campoRetorno;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel labelFechaHora;
     private javax.swing.JLabel labelMonto;
+    private javax.swing.JLabel labelNickColab;
     private javax.swing.JLabel labelRetorno;
     private javax.swing.JList<String> listaColaboraciones;
-    private javax.swing.JList<String> listaColaboradores;
     // End of variables declaration//GEN-END:variables
 }

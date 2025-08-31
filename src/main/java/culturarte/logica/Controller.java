@@ -5,7 +5,6 @@
 package culturarte.logica;
 
 import jakarta.persistence.*;
-import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -576,7 +575,7 @@ public class Controller implements IController {
     }
 
     @Override
-    public ArrayList<String> listarPropuestasColaboraciones(String nickColab) {
+    public ArrayList<String> listarColaboracionesColaborador(String nickColab) {
         List<Object[]> aux;
         List<String> aux2 = new ArrayList<String>();
 
@@ -593,5 +592,47 @@ public class Controller implements IController {
             aux2 = Collections.emptyList();
         }
         return (ArrayList<String>) aux2;
+    }
+
+    @Override
+    public ArrayList<String> listarColaboraciones() {
+        List<Object[]> aux;
+        List<String> aux2 = new ArrayList<String>();
+
+        String query = "SELECT c.propuestaColaborada.titulo, c.id FROM Colaboracion c";
+        try {
+            aux = em.createQuery(query, Object[].class).getResultList();
+            for (Object[] fila : aux) {
+                aux2.add(fila[0] + " - " + fila[1].toString());
+            }
+        } catch (Exception e) {
+            aux2 = Collections.emptyList();
+        }
+        return (ArrayList<String>) aux2;
+    }
+    
+    @Override
+    public void eliminarColaboracion(Long id) {
+        EntityTransaction t = em.getTransaction();
+        try {
+            t.begin();
+            Colaboracion c = em.find(Colaboracion.class, id);
+            if (c != null) {
+                if (c.getColaborador() != null) {
+                    c.getColaborador().getColaboraciones().remove(c);
+                    c.setColaborador(null);
+                }
+                if (c.getPropuestaColaborada() != null) {
+                    c.getPropuestaColaborada().getColaboraciones().remove(c);
+                    c.setPropuestaColaborada(null);
+                }
+                em.remove(c);
+                em.flush();
+            }
+            t.commit();
+        } catch (Exception e) {
+            t.rollback();
+            e.printStackTrace();
+        }
     }
 }

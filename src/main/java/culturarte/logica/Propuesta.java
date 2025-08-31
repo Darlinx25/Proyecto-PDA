@@ -47,7 +47,7 @@ public class Propuesta {
     @ElementCollection
     private List<Estado> historialEstados;
     
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "propuestaColaborada", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Colaboracion> colaboraciones;
     
     public Propuesta(){
