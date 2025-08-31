@@ -537,6 +537,7 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
             
             
         } else {
+            System.out.println("Faltan rellenar campos");
             return;
         }
         this.dispose();
@@ -545,7 +546,10 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
     private void campoFNacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoFNacActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoFNacActionPerformed
-
+    
+    
+    
+    
     private boolean sonValidosLosCampos() {
         if (!(this.radioColaborador.isSelected() || this.radioProponente.isSelected())) {
             return false;
