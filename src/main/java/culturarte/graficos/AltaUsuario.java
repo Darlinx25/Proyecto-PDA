@@ -29,24 +29,22 @@ import java.io.*;
 import java.nio.file.*;
 import javax.swing.JOptionPane;
 
- 
 public class AltaUsuario extends javax.swing.JInternalFrame {
+
     private IController controller;
     private static final String CARPETA_IMAGENES = System.getProperty("user.dir") + File.separator + "imagenesUsuarios" + File.separator;
     private String rutaImagenUsuario;
+
     /**
      * Creates new form Alta
      */
     public AltaUsuario() {
         IControllerFactory fabrica = IControllerFactory.getInstance();
         this.controller = fabrica.getIController();
-        
-        
+
         initComponents();
     }
 
-    
-    
     private String obtenerExtension(String nombreArchivo) {
         int i = nombreArchivo.lastIndexOf('.');
         if (i > 0) {
@@ -54,6 +52,7 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         }
         return "png";
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -454,7 +453,7 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         }
         return "desconocido";
     }
-        
+
     private void radioProponenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioProponenteActionPerformed
         enableDatosProponente();
     }//GEN-LAST:event_radioProponenteActionPerformed
@@ -472,7 +471,7 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         this.labelSitioWeb.setEnabled(true);
         this.campoSitioWeb.setEnabled(true);
     }
-    
+
     private void campoCiudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoCiudadActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoCiudadActionPerformed
@@ -498,7 +497,7 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         this.labelSitioWeb.setEnabled(false);
         this.campoSitioWeb.setEnabled(false);
     }
-    
+
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
         if (sonValidosLosCampos()) {
             String nick = this.campoNickname.getText();
@@ -507,7 +506,7 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
             String email = this.campoEmail.getText();
             Date fecha = (Date) this.campoFNac.getValue();
             LocalDate fechaNac = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            
+
             DTUsuario user = null;
             if (this.radioColaborador.isSelected()) {
                 user = new DTColaborador(nick, nombre, apellido, email, fechaNac, this.rutaImagenUsuario);
@@ -518,26 +517,29 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
                 DTDireccion direccion = new DTDireccion(ciudad, calle, numPuerta);
                 String biografia = this.areaBiografia.getText();
                 String sitioWeb = this.campoSitioWeb.getText();
-                
+
                 user = new DTProponente(direccion, biografia, sitioWeb, nick, nombre, apellido, email, fechaNac, this.rutaImagenUsuario);
             }
-            
+
             ResultadoRegistroUsr check = null;
-            if (this.controller.addUsuario(user) == check.EXITO){
-                System.out.println("Usuario Registrado con exito");
-            }else if(this.controller.addUsuario(user) == check.NICK_REPETIDO) {
-                System.out.println("Error al registrar usuario, Nick ya existente");
+            if (this.controller.addUsuario(user) == check.EXITO) {
+                JOptionPane.showMessageDialog(this, "Usuario registrado con éxito.",
+                        "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } else if (this.controller.addUsuario(user) == check.NICK_REPETIDO) {
+                JOptionPane.showMessageDialog(this, "Error al registrar usuario, Nick ya existente.",
+                        "Error", JOptionPane.INFORMATION_MESSAGE);
+            } else if (this.controller.addUsuario(user) == check.EMAIL_REPETIDO) {
+                JOptionPane.showMessageDialog(this, "Error al registrar usuario, Email ya existente.",
+                        "Error", JOptionPane.INFORMATION_MESSAGE);
+
+            } else if (this.controller.addUsuario(user) == check.ERROR) {
+                JOptionPane.showMessageDialog(this, "Error Inesperado.",
+                        "Error", JOptionPane.INFORMATION_MESSAGE);
             }
-            else if(this.controller.addUsuario(user) == check.EMAIL_REPETIDO) {
-                System.out.println("Error al registrar usuario, Email ya existente");
-            }
-            else if(this.controller.addUsuario(user) == check.ERROR) {
-                System.out.println("Error Inesperado");
-            }
-            
-            
+
         } else {
-            System.out.println("Faltan rellenar campos");
+            JOptionPane.showMessageDialog(this, "Faltan rellenar campos.",
+                    "Error", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         this.dispose();
@@ -546,10 +548,7 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
     private void campoFNacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoFNacActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoFNacActionPerformed
-    
-    
-    
-    
+
     private boolean sonValidosLosCampos() {
         if (!(this.radioColaborador.isSelected() || this.radioProponente.isSelected())) {
             return false;
@@ -564,7 +563,7 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         }
         return true;
     }
-    
+
     private boolean sonValidosCamposBase() {
         boolean ret = true;
         if (this.campoNickname.getText().isBlank()) {
@@ -580,7 +579,7 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         }
         return ret;
     }
-    
+
     private boolean sonValidosCamposProponente() {
         boolean ret = true;
         if (this.campoCiudad.getText().isBlank()) {
@@ -592,7 +591,7 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         }
         return ret;
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaBiografia;
     private javax.swing.JButton botonAceptar;
