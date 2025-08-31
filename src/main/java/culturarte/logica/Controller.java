@@ -559,4 +559,39 @@ public class Controller implements IController {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public DTColaboracion obtenerDTColaboracion(Long id) {
+        try {
+            Colaboracion c = em.find(Colaboracion.class, id);
+            if (c != null) {
+                return new DTColaboracion(
+                        c.getId(), c.getMonto(), c.getFechaHora(),
+                        c.getTipoRetorno(), c.getColaborador().getNickname(), c.getPropuestaColaborada().getTitulo());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public ArrayList<String> listarPropuestasColaboraciones(String nickColab) {
+        List<Object[]> aux;
+        List<String> aux2 = new ArrayList<String>();
+
+        String query = "SELECT c.propuestaColaborada.titulo, c.id FROM Colaboracion c"
+                + " WHERE c.colaborador.nickname = :nick";
+        try {
+            aux = em.createQuery(query, Object[].class)
+                    .setParameter("nick", nickColab)
+                    .getResultList();
+            for (Object[] fila : aux) {
+                aux2.add(fila[0] + " - " + fila[1].toString());
+            }
+        } catch (Exception e) {
+            aux2 = Collections.emptyList();
+        }
+        return (ArrayList<String>) aux2;
+    }
 }

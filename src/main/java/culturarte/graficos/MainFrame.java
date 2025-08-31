@@ -22,6 +22,7 @@ public class MainFrame extends javax.swing.JFrame {
     private DejarDeSeguirUsuario dejarDeSeguirUsuario;
     private ModificarPropuesta modificarPropuesta;
     private ConsultarPropuesta consultarPropuesta;
+    private ConsultarColaboracion consultarColaboracion;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
     
@@ -57,6 +58,7 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
+        menuConsultarColaboracion = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         JMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
@@ -145,6 +147,14 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem7);
+
+        menuConsultarColaboracion.setText("Consultar Colaboración");
+        menuConsultarColaboracion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuConsultarColaboracionActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuConsultarColaboracion);
 
         jMenuItem9.setText("Modificar Propuesta");
         jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
@@ -326,6 +336,17 @@ public class MainFrame extends javax.swing.JFrame {
         this.consultarPropuesta.setVisible(true);
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
+    private void menuConsultarColaboracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConsultarColaboracionActionPerformed
+        if (this.consultarColaboracion != null) {
+            if (this.consultarColaboracion.isVisible()) {
+                return;
+            }
+        }
+        this.consultarColaboracion = new ConsultarColaboracion();
+        add(this.consultarColaboracion);
+        this.consultarColaboracion.setVisible(true);
+    }//GEN-LAST:event_menuConsultarColaboracionActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -368,5 +389,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JMenuItem menuConsultarColaboracion;
     // End of variables declaration//GEN-END:variables
 }

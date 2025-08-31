@@ -51,6 +51,10 @@ public class Colaboracion {
         return monto;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public void setMonto(float monto) {
         this.monto = monto;
     }
