@@ -261,7 +261,10 @@ public class Controller implements IController {
             aux.setFechaPublicacion(LocalDate.now());
         }
         aux.setDescripcion(prop.getDescripcion());
-        aux.setImagen(prop.getImagen());
+        if(prop.getImagen() != null){
+            aux.setImagen(prop.getImagen());
+        }
+        
         aux.setLugarRealizara(prop.getLugarRealizara());
         aux.setFechaRealizara(prop.getFechaRealizara());
         aux.setPrecioEntrada(prop.getPrecioEntrada());
