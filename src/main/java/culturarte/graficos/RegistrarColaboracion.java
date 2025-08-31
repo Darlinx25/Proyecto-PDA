@@ -388,7 +388,7 @@ public class RegistrarColaboracion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_campoMontoColabActionPerformed
 
     private String cortarTituloProp(String tituloProp) {
-        int primerEspacio = tituloProp.indexOf(' ');
+        int primerEspacio = tituloProp.indexOf(" - ");
         if (primerEspacio != -1) {
             tituloProp = tituloProp.substring(0, primerEspacio);
         }
