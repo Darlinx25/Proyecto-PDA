@@ -15,4 +15,7 @@ public enum EstadoPropuesta {
     FINANCIADA,
     NO_FINANCIADA,
     CANCELADA
+    
+    
+    
 }

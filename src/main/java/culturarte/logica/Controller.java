@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package culturarte.logica;
+
 import jakarta.persistence.*;
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;
@@ -17,21 +18,18 @@ import javax.swing.tree.DefaultMutableTreeNode;
  *
  * @author mark
  */
-
 //SINGLETON
 public class Controller implements IController {
+
     private Map<String, Usuario> usuarios;
     private Map<String, Propuesta> propuestas;
     private Map<String, Categoria> categorias;
 
     private static Controller instancia;
-    
+
     private EntityManagerFactory emf; // se declara estos objetos como atributos, para que todos los métodos puedan usarlos
     private EntityManager em;
-    
-    
-    
-    
+
     private Controller() {
         usuarios = new HashMap<>();
         propuestas = new HashMap<>();
@@ -40,19 +38,17 @@ public class Controller implements IController {
         emf = Persistence.createEntityManagerFactory("Proyecto_PDA");
         em = emf.createEntityManager();
 
-    // Verificar si la raíz ya existe en la DB
-    Categoria raiz = em.find(Categoria.class, "Categorías");
-    if (raiz == null) {
-        raiz = new Categoria("Categorías");
-        EntityTransaction t = em.getTransaction();
-        t.begin();
-        em.persist(raiz);
-        t.commit();
+        // Verificar si la raíz ya existe en la DB
+        Categoria raiz = em.find(Categoria.class, "Categorías");
+        if (raiz == null) {
+            raiz = new Categoria("Categorías");
+            EntityTransaction t = em.getTransaction();
+            t.begin();
+            em.persist(raiz);
+            t.commit();
+        }
     }
-}
 
-    
-  
     public static Controller getInstance() {
         if (instancia == null) {
             instancia = new Controller();
@@ -63,7 +59,7 @@ public class Controller implements IController {
     @Override
     public void addUsuario(DTUsuario user) {
         String nick = user.getNickname();
-        
+
         if (this.usuarios.containsKey(nick)) {
             return;//agregar exception luego
         }
@@ -73,9 +69,9 @@ public class Controller implements IController {
         String email = user.getEmail();
         LocalDate fechaNac = user.getFechaNacimiento();
         String imagen = user.getImagen();
-        
+
         Usuario usu = null;
-        
+
         if (user instanceof DTColaborador) {
             usu = new Colaborador(nick, nombre, apellido, email, fechaNac, imagen);
         } else if (user instanceof DTProponente) {
@@ -87,18 +83,17 @@ public class Controller implements IController {
         }
         this.usuarios.put(nick, usu);
         EntityTransaction t = em.getTransaction();
-        try{
-           t.begin();
-           em.persist(usu);
-           t.commit();
-        }catch(Exception  e){
+        try {
+            t.begin();
+            em.persist(usu);
+            t.commit();
+        } catch (Exception e) {
             t.rollback();
             e.printStackTrace();
         }
-        
-        
+
     }
-    
+
     @Override
     public DefaultMutableTreeNode listarCategorias() {
         //throw new UnsupportedOperationException("Not supported yet.");
@@ -106,6 +101,7 @@ public class Controller implements IController {
         DefaultMutableTreeNode raiz = nodosArbolCategorias(catRaiz);
         return raiz;
     }
+
     //helper para listarCategorias() recursivo
     private DefaultMutableTreeNode nodosArbolCategorias(Categoria cat) {
         if (cat == null) {
@@ -146,16 +142,17 @@ public class Controller implements IController {
             em.persist(cat);   // gracias a la relación, JPA guarda con la FK al padre
             t.commit();
         } catch (Exception e) {
-            if (t.isActive()) t.rollback();
+            if (t.isActive()) {
+                t.rollback();
+            }
             e.printStackTrace();
         }
     }
 
-    
     @Override
     public ArrayList<String> listarColaboradores() {
         List<String> aux;
-        
+
         String query = "SELECT c.nickname FROM Colaborador c";
         try {
             aux = em.createQuery(query, String.class).getResultList();
@@ -164,207 +161,236 @@ public class Controller implements IController {
         }
         return new ArrayList<>(aux);
     }
-    
+
     @Override
     public DTColaborador obtenerDTColaborador(String nick) {
         try {
             Colaborador c = em.find(Colaborador.class, nick);
             if (c != null) {
                 return new DTColaborador(
-                c.getNickname(), c.getNombre(), c.getApellido(),
-                c.getEmail(), c.getFechaNacimiento(), c.getImagen());
+                        c.getNickname(), c.getNombre(), c.getApellido(),
+                        c.getEmail(), c.getFechaNacimiento(), c.getImagen());
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
-    
+
     @Override
     public ArrayList<String> listarProponentes() {
         ArrayList<String> aux = new ArrayList<String>();
-        
-         try {
-        List<Proponente> result = em.createQuery("SELECT p FROM Proponente p", Proponente.class)
-                                    .getResultList();
-        for (Proponente p : result) {
-            aux.add(p.getNickname());
-        }
+
+        try {
+            List<Proponente> result = em.createQuery("SELECT p FROM Proponente p", Proponente.class)
+                    .getResultList();
+            for (Proponente p : result) {
+                aux.add(p.getNickname());
+            }
         } catch (Exception e) {
-        e.printStackTrace();
+            e.printStackTrace();
         }
-        
+
         return aux;
     }
-    
+
     @Override
     public void addPropuesta(DTPropuesta prop) {
         String titulo = prop.getTitulo();
-        
+
         if (this.propuestas.containsKey(titulo)) {
             return;//agregar exception luego
         }
-        
+
         String descripcion = prop.getDescripcion();
         String imagen = prop.getImagen();
         String lugarRealizara = prop.getLugarRealizara();
         LocalDate fechaRealizara = prop.getFechaRealizara();
         float precioEntrada = prop.getPrecioEntrada();
         float montoAReunir = prop.getMontoAReunir();
-        
+
         Estado est = prop.getEstadoActual();
         // Buscar en la base de datos la categoría y el proponente
         Categoria tipoPropuesta = em.find(Categoria.class, prop.getTipoPropuesta());
         Proponente proponedor = em.find(Proponente.class, prop.getNickProponedor());
 
         List<TipoRetorno> tiposRetorno = prop.getTiposRetorno();
-        
-        Propuesta propuesta = new Propuesta(titulo, descripcion, imagen, lugarRealizara, fechaRealizara, precioEntrada, montoAReunir, tiposRetorno, 
-                tipoPropuesta, proponedor,est);
-        
+
+        Propuesta propuesta = new Propuesta(titulo, descripcion, imagen, lugarRealizara, fechaRealizara, precioEntrada, montoAReunir, tiposRetorno,
+                tipoPropuesta, proponedor, est);
+
         this.propuestas.put(titulo, propuesta);
         EntityTransaction t = em.getTransaction();
-        try{
-           t.begin();
-           em.persist(propuesta);
-           t.commit();
-        }catch(Exception  e){
+        try {
+            t.begin();
+            em.persist(propuesta);
+            t.commit();
+        } catch (Exception e) {
             t.rollback();
             e.printStackTrace();
         }
-        }
+    }
 
-  
+    @Override
+    public void modPropuesta(DTPropuesta prop) {
+        String titulo = prop.getTitulo();
+
+        Propuesta aux = null;
+        try {
+            aux = em.createQuery(
+                    "SELECT p FROM Propuesta p WHERE p.titulo = :titulo", Propuesta.class)
+                    .setParameter("titulo", titulo)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            System.out.println("No se encontró la propuesta a modificar en la base de datos");
+            return;
+        }
+        EstadoPropuesta ese = prop.getEstadoActual().getEstado();
+        if(ese.ordinal() == 1){
+            aux.setFechaPublicacion(LocalDate.now());
+        }
+        aux.setDescripcion(prop.getDescripcion());
+        aux.setImagen(prop.getImagen());
+        aux.setLugarRealizara(prop.getLugarRealizara());
+        aux.setFechaRealizara(prop.getFechaRealizara());
+        aux.setPrecioEntrada(prop.getPrecioEntrada());
+        aux.setMontoAReunir(prop.getMontoAReunir());
+        aux.setEstadoActual(prop.getEstadoActual());
+        aux.setTiposRetorno(prop.getTiposRetorno());
+        EntityTransaction t = em.getTransaction();
+        try {
+            t.begin();
+            em.merge(aux);
+            t.commit();
+        } catch (Exception e) {
+            t.rollback();
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public DTProponente obtenerDTProponente(String nick) {
-    try {
-        Proponente p = em.find(Proponente.class, nick); // Buscar proponente por PK
-        if (p != null) {
-            return new DTProponente(
-                p.getDireccion(),
-                p.getBiografia(),
-                p.getSitioWeb(),
-                p.getNickname(),
-                p.getNombre(),
-                p.getApellido(),
-                p.getEmail(),
-                p.getFechaNacimiento(),
-                p.getImagen()
-            );
+        try {
+            Proponente p = em.find(Proponente.class, nick); // Buscar proponente por PK
+            if (p != null) {
+                return new DTProponente(
+                        p.getDireccion(),
+                        p.getBiografia(),
+                        p.getSitioWeb(),
+                        p.getNickname(),
+                        p.getNombre(),
+                        p.getApellido(),
+                        p.getEmail(),
+                        p.getFechaNacimiento(),
+                        p.getImagen()
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+        return null;
     }
-    return null;
-}
 
     public ArrayList<String> listaPropuestasUsu(String nick) {
-    List<String> aux;
-        
-    String query = "SELECT p.titulo FROM Propuesta p WHERE p.proponente.nickname = :nick";            
-    try {
-         aux = em.createQuery(query, String.class).setParameter("nick", nick).getResultList();
-    } catch (Exception e) {
-         aux = Collections.emptyList();
-         e.printStackTrace();
+        List<String> aux;
+
+        String query = "SELECT p.titulo FROM Propuesta p WHERE p.proponente.nickname = :nick";
+        try {
+            aux = em.createQuery(query, String.class).setParameter("nick", nick).getResultList();
+        } catch (Exception e) {
+            aux = Collections.emptyList();
+            e.printStackTrace();
+        }
+        return new ArrayList<>(aux);
     }
-    return new ArrayList<>(aux);
+
+    public ArrayList<String> listarPropuestasEstado(int estado) {
+        List<String> aux;
+        EstadoPropuesta est = EstadoPropuesta.values()[estado];
+        String query = "SELECT p.titulo FROM Propuesta p WHERE p.estadoActual.estado = :est";
+        try {
+            aux = em.createQuery(query, String.class).setParameter("est", est).getResultList();
+        } catch (Exception e) {
+            aux = Collections.emptyList();
+            e.printStackTrace();
+        }
+        return new ArrayList<>(aux);
     }
-    
-    
-    public ArrayList<String> listarPropuestasEstado(int estado){
-    List<String> aux;
-    EstadoPropuesta est = EstadoPropuesta.values()[estado];    
-    String query = "SELECT p.titulo FROM Propuesta p WHERE p.estadoActual.estado = :est";            
-    try {
-         aux = em.createQuery(query, String.class).setParameter("est", est).getResultList();
-    } catch (Exception e) {
-         aux = Collections.emptyList();
-         e.printStackTrace();
+
+    public ArrayList<String> listarPropuestas() {
+        List<String> aux;
+
+        String query = "SELECT p.titulo FROM Propuesta p";
+        try {
+            aux = em.createQuery(query, String.class).getResultList();
+        } catch (Exception e) {
+            aux = Collections.emptyList();
+            e.printStackTrace();
+        }
+        return new ArrayList<>(aux);
     }
-    return new ArrayList<>(aux);
-    }
-    
-    
-    public ArrayList<String> listarPropuestas(){
-    List<String> aux;
-       
-    String query = "SELECT p.titulo FROM Propuesta p";            
-    try {
-         aux = em.createQuery(query, String.class).getResultList();
-    } catch (Exception e) {
-         aux = Collections.emptyList();
-         e.printStackTrace();
-    }
-    return new ArrayList<>(aux);
-    }
-    
-    
+
     @Override
     public DTPropuesta obtenerDTPropuesta(String titulo) {
-    try {
-        Propuesta p = em.find(Propuesta.class, titulo);
-        if (p != null) {
-            return new DTPropuesta(
-                p.getTitulo(), p.getDescripcion(), p.getImagen(), p.getLugarRealizara(), p.getFechaRealizara(), 
-            p.getPrecioEntrada(), p.getMontoAReunir(), p.getFechaPublicacion(),
-                    p.getTipoPropuesta().getNombre(),
-                    p.getProponedor().getNickname(),
-                    p.getTiposRetorno(), p.getEstadoActual());
+        try {
+            Propuesta p = em.find(Propuesta.class, titulo);
+            if (p != null) {
+                return new DTPropuesta(
+                        p.getTitulo(), p.getDescripcion(), p.getImagen(), p.getLugarRealizara(), p.getFechaRealizara(),
+                        p.getPrecioEntrada(), p.getMontoAReunir(), p.getFechaPublicacion(),
+                        p.getTipoPropuesta().getNombre(),
+                        p.getProponedor().getNickname(),
+                        p.getTiposRetorno(), p.getEstadoActual());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+        return null;
     }
-    return null;
-}  
+
     @Override
-    public ArrayList<String> listarUsuarios(){
+    public ArrayList<String> listarUsuarios() {
         ArrayList<String> aux = new ArrayList<String>();
-        try{
+        try {
             List<Usuario> result = em.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
-            for(Usuario u : result){
+            for (Usuario u : result) {
                 aux.add(u.getNickname());
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return aux;
     }
-   
-        
- 
+
     @Override
-    public void seguirUsuario(String nickSegui, String nickUsu){
+    public void seguirUsuario(String nickSegui, String nickUsu) {
         List<Usuario> usu1 = em.createQuery("SELECT u FROM Usuario u WHERE u.nickname = :nickSegui", Usuario.class)
                 .setParameter("nickSegui", nickSegui).getResultList();
-        
+
         List<Usuario> usu2 = em.createQuery("SELECT u FROM Usuario u WHERE u.nickname = :nickUsu", Usuario.class)
                 .setParameter("nickUsu", nickUsu).getResultList();
-        
-       
-        
+
         List<Usuario> aux = usu1.get(0).getUsuariosSeguidos();
         aux.add(usu2.get(0));
         usu1.get(0).setUsuariosSeguidos(aux);
-        
-         EntityTransaction t = em.getTransaction();
-        try{
-           t.begin();
-           em.persist(usu1.get(0));
-           t.commit();
-        }catch(Exception  e){
+
+        EntityTransaction t = em.getTransaction();
+        try {
+            t.begin();
+            em.persist(usu1.get(0));
+            t.commit();
+        } catch (Exception e) {
             t.rollback();
             e.printStackTrace();
-        
+
         }
-        
+
     }
-        
-    
+
     @Override
-    public ArrayList<String>listarUsuariosSeguir(String nickname){
-        
-         List<String> aux;
+    public ArrayList<String> listarUsuariosSeguir(String nickname) {
+
+        List<String> aux;
         String query = """
                 SELECT u.nickname 
                 FROM Usuario u 
@@ -376,21 +402,21 @@ public class Controller implements IController {
                     WHERE user.nickname = :nick
                 )
         """;
-                           
+
         try {
-         aux = em.createQuery(query, String.class).setParameter("nick", nickname).getResultList();
+            aux = em.createQuery(query, String.class).setParameter("nick", nickname).getResultList();
         } catch (Exception e) {
-         aux = Collections.emptyList();
-         e.printStackTrace();
+            aux = Collections.emptyList();
+            e.printStackTrace();
         }
-    return new ArrayList<>(aux);
+        return new ArrayList<>(aux);
     }
-    
+
     @Override
     public ArrayList<String> listarPropuestasProponentes() {
         List<Object[]> aux;
         List<String> aux2 = new ArrayList<String>();
-        
+
         String query = "SELECT p.titulo, p.proponente.nickname FROM Propuesta p"
                 + " WHERE p.estadoActual.estado = :estado1 OR p.estadoActual.estado = :estado2";
         try {
@@ -406,36 +432,36 @@ public class Controller implements IController {
         }
         return (ArrayList<String>) aux2;
     }
-    
+
     @Override
-    public ArrayList<String> listarUsuariosSiguiendo(String nickname){
+    public ArrayList<String> listarUsuariosSiguiendo(String nickname) {
         List<Usuario> aux;
         List<Usuario> aux2;
         List<String> aux3 = new ArrayList<String>();
-        try{
+        try {
             aux = em.createQuery("SELECT u FROM Usuario u WHERE u.nickname = :nickname", Usuario.class)
-                .setParameter("nickname", nickname).getResultList();
+                    .setParameter("nickname", nickname).getResultList();
             aux2 = aux.get(0).getUsuariosSeguidos();
-             for(Usuario u : aux2){
+            for (Usuario u : aux2) {
                 aux3.add(u.getNickname());
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             aux3 = Collections.emptyList();
             e.printStackTrace();
         }
-        return (ArrayList<String>)aux3;
-         
+        return (ArrayList<String>) aux3;
+
     }
-    
+
     @Override
     public void realizarColaboracion(String nickColab, String tituloProp, float montoColab, String tipoRetorno) {
         Colaborador colab = em.find(Colaborador.class, nickColab);
         Propuesta prop = em.find(Propuesta.class, tituloProp);
         List<String> aux = new ArrayList<String>();
-        
+
         String query = "SELECT c.propuestaColaborada.titulo FROM Colaboracion c WHERE c.colaborador.nickname = :nickColab"
                 + " AND c.propuestaColaborada.titulo = :tituloProp";
-        
+
         try {
             aux = em.createQuery(query, String.class)
                     .setParameter("nickColab", nickColab)
@@ -445,42 +471,41 @@ public class Controller implements IController {
             e.printStackTrace();
             return;
         }
-        
+
         if (colab != null && prop != null && aux.isEmpty()) {
             Colaboracion colaboracion = new Colaboracion(montoColab, tipoRetorno, colab, prop);
-            
+
             EntityTransaction t = em.getTransaction();
             try {
                 t.begin();
                 em.persist(colaboracion);
                 t.commit();
-            } catch(Exception  e) {
+            } catch (Exception e) {
                 t.rollback();
                 e.printStackTrace();
             }
         }//hacer un else y tirar una excepción
     }
-    
+
     @Override
-    public String obtenerDineroRecaudado(String tituloProp){
-    List<Float> aux;
-    Float resultado = 0f;
-    String query = "SELECT c.monto FROM Colaboracion c WHERE c.propuestaColaborada.titulo = :tituloProp";           
-    try {
-         aux = em.createQuery(query, Float.class).setParameter("tituloProp", tituloProp).getResultList();
-    } catch (Exception e) {
-         aux = Collections.emptyList();
-         e.printStackTrace();
-         return "0"; 
-    }
-    for (Float actual : aux) {
+    public String obtenerDineroRecaudado(String tituloProp) {
+        List<Float> aux;
+        Float resultado = 0f;
+        String query = "SELECT c.monto FROM Colaboracion c WHERE c.propuestaColaborada.titulo = :tituloProp";
+        try {
+            aux = em.createQuery(query, Float.class).setParameter("tituloProp", tituloProp).getResultList();
+        } catch (Exception e) {
+            aux = Collections.emptyList();
+            e.printStackTrace();
+            return "0";
+        }
+        for (Float actual : aux) {
             resultado += actual;
         }
-    return resultado.toString();
-        
-        
+        return resultado.toString();
+
     }
-    
+
     @Override
     public ArrayList<String> obtenerColaboradoresColaboracion(String tituloProp) {
         List<String> aux = null;
@@ -490,16 +515,16 @@ public class Controller implements IController {
         } catch (Exception e) {
             aux = Collections.emptyList();
             e.printStackTrace();
-            
+
         }
         return new ArrayList<>(aux);
     }
 
     @Override
     public ArrayList<String> obtenerPropuestasColaboradas(String nick) {
-        
+
         List<String> aux;
-        
+
         String query = "SELECT c.propuestaColaborada.titulo FROM Colaboracion c"
                 + " WHERE c.colaborador.nickname = :nick";
         try {
@@ -509,31 +534,29 @@ public class Controller implements IController {
         } catch (Exception e) {
             aux = Collections.emptyList();
         }
-        
+
         return new ArrayList<String>(aux);
     }
-    
+
     @Override
-    public void dejarDeSeguirUsuario(String nickSegui, String nickSiguiendo){
+    public void dejarDeSeguirUsuario(String nickSegui, String nickSiguiendo) {
         List<Usuario> usu1 = em.createQuery("SELECT u FROM Usuario u WHERE u.nickname = :nickSegui", Usuario.class)
                 .setParameter("nickSegui", nickSegui).getResultList();
-        
+
         List<Usuario> usu2 = em.createQuery("SELECT u FROM Usuario u WHERE u.nickname = :nickUsu", Usuario.class)
                 .setParameter("nickUsu", nickSiguiendo).getResultList();
         List<Usuario> aux = usu1.get(0).getUsuariosSeguidos();
         aux.remove(usu2.get(0));
         usu1.get(0).setUsuariosSeguidos(aux);
-        
-         EntityTransaction t = em.getTransaction();
-        try{
-           t.begin();
-           em.persist(usu1.get(0));
-           t.commit();
-        }catch(Exception  e){
+
+        EntityTransaction t = em.getTransaction();
+        try {
+            t.begin();
+            em.persist(usu1.get(0));
+            t.commit();
+        } catch (Exception e) {
             t.rollback();
             e.printStackTrace();
         }
     }
 }
-
-    
