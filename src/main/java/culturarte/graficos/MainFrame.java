@@ -59,11 +59,11 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
-        menuConsultarColaboracion = new javax.swing.JMenuItem();
         menuCancelarColaboracion = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
-        JMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
+        menuConsultarColaboracion = new javax.swing.JMenuItem();
+        JMenuItem8 = new javax.swing.JMenuItem();
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
@@ -150,14 +150,6 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem7);
 
-        menuConsultarColaboracion.setText("Consultar Colaboración");
-        menuConsultarColaboracion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuConsultarColaboracionActionPerformed(evt);
-            }
-        });
-        jMenu1.add(menuConsultarColaboracion);
-
         menuCancelarColaboracion.setText("Cancelar Colaboración");
         menuCancelarColaboracion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -174,6 +166,22 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem9);
 
+        jMenuItem10.setText("Consulta de Propuesta");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem10);
+
+        menuConsultarColaboracion.setText("Consultar Colaboración");
+        menuConsultarColaboracion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuConsultarColaboracionActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuConsultarColaboracion);
+
         JMenuItem8.setText("Consulta Propuesta por Estado");
         JMenuItem8.setActionCommand("jMenu8");
         JMenuItem8.addActionListener(new java.awt.event.ActionListener() {
@@ -182,14 +190,6 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         jMenu1.add(JMenuItem8);
-
-        jMenuItem10.setText("Consulta de Propuesta");
-        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem10ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem10);
 
         jMenuBar1.add(jMenu1);
 

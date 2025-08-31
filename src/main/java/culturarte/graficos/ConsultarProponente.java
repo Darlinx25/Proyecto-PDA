@@ -15,6 +15,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -53,7 +55,14 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
                         nick.setText(dt.getNickname());
                         nombre.setText(dt.getNombre());
                         apellido.setText(dt.getApellido());
-                        fechaNac.setText(dt.getFechaNacimiento().toString());
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                        LocalDate fechaNacimiento = dt.getFechaNacimiento();
+                    if (fechaNacimiento == null) {
+                            fechaNac.setText("");
+                        } else {
+                            fechaNac.setText(fechaNacimiento.format(formatter));
+                        }
+
                         correo.setText(dt.getEmail());
                         biografia.setText(dt.getBiografia());
                         web.setText(dt.getSitioWeb());
