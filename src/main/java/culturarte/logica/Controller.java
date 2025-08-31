@@ -96,12 +96,12 @@ public class Controller implements IController {
             t.begin();
             em.persist(usu);
             t.commit();
-            return salida.EXITO;
         } catch (Exception e) {
             t.rollback();
             e.printStackTrace();
+            return salida.ERROR;
         }
-        return salida.ERROR; // Error Inesperado
+        return salida.EXITO; // Error Inesperado
 
     }
 
