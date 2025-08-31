@@ -11,6 +11,7 @@ import culturarte.logica.DTUsuario;
 import culturarte.logica.IControllerFactory;
 import culturarte.logica.IController;
 import culturarte.logica.ResultadoRegistroUsr;
+import culturarte.utils.FiltroAlfanumerico;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -28,6 +29,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
 import java.nio.file.*;
 import javax.swing.JOptionPane;
+import javax.swing.text.AbstractDocument;
 
 public class AltaUsuario extends javax.swing.JInternalFrame {
 
@@ -43,6 +45,8 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         this.controller = fabrica.getIController();
 
         initComponents();
+        
+        ((AbstractDocument) this.campoNickname.getDocument()).setDocumentFilter(new FiltroAlfanumerico());
     }
 
     private String obtenerExtension(String nombreArchivo) {
