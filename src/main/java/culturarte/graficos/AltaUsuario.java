@@ -10,6 +10,7 @@ import culturarte.logica.DTProponente;
 import culturarte.logica.DTUsuario;
 import culturarte.logica.IControllerFactory;
 import culturarte.logica.IController;
+import culturarte.logica.ResultadoRegistroUsr;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -520,7 +521,21 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
                 
                 user = new DTProponente(direccion, biografia, sitioWeb, nick, nombre, apellido, email, fechaNac, this.rutaImagenUsuario);
             }
-            this.controller.addUsuario(user);  
+            
+            ResultadoRegistroUsr check = null;
+            if (this.controller.addUsuario(user) == check.EXITO){
+                System.out.println("Usuario Registrado con exito");
+            }else if(this.controller.addUsuario(user) == check.NICK_REPETIDO) {
+                System.out.println("Error al registrar usuario, Nick ya existente");
+            }
+            else if(this.controller.addUsuario(user) == check.EMAIL_REPETIDO) {
+                System.out.println("Error al registrar usuario, Email ya existente");
+            }
+            else if(this.controller.addUsuario(user) == check.ERROR) {
+                System.out.println("Error Inesperado");
+            }
+            
+            
         } else {
             return;
         }

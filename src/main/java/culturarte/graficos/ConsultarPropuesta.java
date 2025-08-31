@@ -186,7 +186,6 @@ public class ConsultarPropuesta extends javax.swing.JInternalFrame {
 
         jLabel9.setText("Colaboradores: ");
 
-        Colaboradores.setEnabled(false);
         jScrollPane2.setViewportView(Colaboradores);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

@@ -56,16 +56,26 @@ public class Controller implements IController {
     }
 
     @Override
-    public void addUsuario(DTUsuario user) {
+    public ResultadoRegistroUsr addUsuario(DTUsuario user) {
         String nick = user.getNickname();
-
-        if (this.usuarios.containsKey(nick)) {
-            return;//agregar exception luego
+        String email = user.getEmail();
+        ResultadoRegistroUsr salida = null;
+        TypedQuery<Long> q1 = em.createQuery(
+                "SELECT COUNT(u) FROM Usuario u WHERE u.nickname = :nick", Long.class);
+        q1.setParameter("nick", nick);
+        if (q1.getSingleResult() > 0){
+            return salida.NICK_REPETIDO;
         }
+        TypedQuery<Long> q2 = em.createQuery(
+                "SELECT COUNT(u) FROM Usuario u WHERE u.email = :email", Long.class);
+        q2.setParameter("email", email);
+        if (q2.getSingleResult() > 0){
+            return salida.EMAIL_REPETIDO; 
+        }
+        
         //corroborar emails únicos luego
         String nombre = user.getNombre();
         String apellido = user.getApellido();
-        String email = user.getEmail();
         LocalDate fechaNac = user.getFechaNacimiento();
         String imagen = user.getImagen();
 
@@ -86,10 +96,12 @@ public class Controller implements IController {
             t.begin();
             em.persist(usu);
             t.commit();
+            return salida.EXITO;
         } catch (Exception e) {
             t.rollback();
             e.printStackTrace();
         }
+        return salida.ERROR; // Error Inesperado
 
     }
 

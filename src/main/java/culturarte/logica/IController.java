@@ -12,7 +12,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
  * @author mark
  */
 public interface IController {
-    public void addUsuario(DTUsuario user);
+    public ResultadoRegistroUsr addUsuario(DTUsuario user);
     
     /*Alta de Categoría*/
     public DefaultMutableTreeNode listarCategorias();

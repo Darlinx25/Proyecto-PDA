@@ -428,7 +428,7 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
             EstadoPropuesta auxEst =  EstadoPropuesta.valueOf(this.estado.getSelectedItem().toString());
             Estado est = new Estado(auxEst);
             String lug = this.lugar.getText();
-            DTPropuesta propuesta = new DTPropuesta(titulo,descri,this.imagenProponente,lug,f,Float.parseFloat(this.precioentrada.getText()),Float.parseFloat(this.montoreunir.getText()),tipoPropuesta,"Sin nombre",tiposRetorno,est);
+            DTPropuesta propuesta = new DTPropuesta(titulo,descri,this.imagenProponente,lug,f,Float.parseFloat(this.precioentrada.getText()),Float.parseFloat(this.montoreunir.getText()),tipoPropuesta,null,tiposRetorno,est);
             controller.modPropuesta(propuesta);
             
             this.dispose();
