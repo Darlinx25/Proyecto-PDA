@@ -342,10 +342,11 @@ public class RegistrarColaboracion extends javax.swing.JInternalFrame {
 
     private void listaPropuestaProponenteValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaPropuestaProponenteValueChanged
         String tituloProp = this.listaPropuestaProponente.getSelectedValue();
-        int primerEspacio = tituloProp.indexOf(' ');
+        int primerEspacio = tituloProp.indexOf(" - ");
         if (primerEspacio != -1) {
             tituloProp = tituloProp.substring(0, primerEspacio);
         }
+        System.out.println(tituloProp);
         DTPropuesta datosProp = this.controller.obtenerDTPropuesta(tituloProp);
 
         this.areaDescripcion.setText(datosProp.getDescripcion());
