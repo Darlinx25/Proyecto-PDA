@@ -422,6 +422,7 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
             return false;
         }
         if (!(this.checkEntradaGratis.isSelected() || this.checkGanancias.isSelected())) {
+            JOptionPane.showMessageDialog(this, "Seleccione al menos un tipo de retorno", "Alta de Propuesta", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         if (!this.campoTitulo.isEnabled()) {

@@ -16,17 +16,21 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.NumberFormatter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
@@ -43,6 +47,10 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
         IControllerFactory fabrica = IControllerFactory.getInstance();
         this.controller = fabrica.getIController();
         initComponents();
+        NumberFormatter numberFormatter = (NumberFormatter) this.precioentrada.getFormatter();
+        numberFormatter.setMinimum(0);
+        NumberFormatter numberFormatter2 = (NumberFormatter) this.montoreunir.getFormatter();
+        numberFormatter2.setMinimum(0);
         controller.listarPropuestas();
         DefaultListModel<String> modelo = (DefaultListModel<String>) ListaPropuestas.getModel();
         modelo.clear();
@@ -172,7 +180,19 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
         if (this.montoreunir.getText().isBlank()) {
             return false;
         }
+        if (Float.parseFloat(this.montoreunir.getText()) <= 0) {
+            JOptionPane.showMessageDialog(this, "El monto a reunir debe ser mayor a 0", "Modificar Propuesta", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
         if (this.precioentrada.getText().isBlank()) {
+            return false;
+        }
+        if (Float.parseFloat(this.precioentrada.getText()) <= 0) {
+            JOptionPane.showMessageDialog(this, "El precio de la entrada debe ser mayor a 0", "Modificar Propuesta", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (!(this.retornoGratis.isSelected() || this.retornoGanancia.isSelected())) {
+            JOptionPane.showMessageDialog(this, "Seleccione al menos un tipo de retorno", "Modificar Propuesta", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -194,8 +214,6 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
         labelFechaRealizar = new javax.swing.JLabel();
         labelPrecio = new javax.swing.JLabel();
         lugar = new javax.swing.JTextField();
-        precioentrada = new javax.swing.JTextField();
-        montoreunir = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         descripcion = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
@@ -208,12 +226,15 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
         retornoGanancia = new javax.swing.JCheckBox();
         labelRetorno = new javax.swing.JLabel();
         retornoGratis = new javax.swing.JCheckBox();
+        precioentrada = new javax.swing.JFormattedTextField();
+        montoreunir = new javax.swing.JFormattedTextField();
 
         labelImagen.setText("jLabel2");
 
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        setTitle("Modificar propuesta");
         setPreferredSize(new java.awt.Dimension(900, 415));
 
         jButton1.setText("Cancelar");
@@ -246,10 +267,6 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
         labelPrecio.setText("Precio de entrada:");
 
         lugar.setEnabled(false);
-
-        precioentrada.setEnabled(false);
-
-        montoreunir.setEnabled(false);
 
         jScrollPane2.setEnabled(false);
 
@@ -298,6 +315,34 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
         retornoGratis.setText("Entrada Gratis");
         retornoGratis.setEnabled(false);
 
+        precioentrada.setEnabled(false);
+        precioentrada.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("0.00", new DecimalFormatSymbols(Locale.US)))));
+
+        precioentrada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                precioentradaActionPerformed(evt);
+            }
+        });
+        precioentrada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                precioentradaActionPerformed(evt);
+            }
+        });
+
+        montoreunir.setEnabled(false);
+        montoreunir.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("0.00", new DecimalFormatSymbols(Locale.US)))));
+
+        montoreunir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                montoreunirActionPerformed(evt);
+            }
+        });
+        montoreunir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                montoreunirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -334,12 +379,12 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
                             .addComponent(labelCategoria1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(precioentrada, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-                            .addComponent(montoreunir)
-                            .addComponent(lugar)
+                            .addComponent(lugar, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
                             .addComponent(Aceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(fecharealizar)
-                            .addComponent(estado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(estado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(precioentrada)
+                            .addComponent(montoreunir)))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(41, 41, 41))
         );
@@ -370,15 +415,15 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
                             .addComponent(categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(precioentrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelPrecio))
+                            .addComponent(labelPrecio)
+                            .addComponent(precioentrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(montoreunir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(labelMontoReunir)
-                                    .addComponent(SelectImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(SelectImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(montoreunir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(labelCategoria1)
@@ -389,7 +434,7 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
                                 .addComponent(retornoGratis)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(retornoGanancia)))
-                        .addGap(43, 54, Short.MAX_VALUE)
+                        .addGap(43, 50, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1)
                             .addComponent(Aceptar)))
@@ -480,6 +525,14 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_fecharealizarActionPerformed
 
+    private void precioentradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precioentradaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_precioentradaActionPerformed
+
+    private void montoreunirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_montoreunirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_montoreunirActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Aceptar;
@@ -504,8 +557,8 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
     private javax.swing.JLabel labelPrecio;
     private javax.swing.JLabel labelRetorno;
     private javax.swing.JTextField lugar;
-    private javax.swing.JTextField montoreunir;
-    private javax.swing.JTextField precioentrada;
+    private javax.swing.JFormattedTextField montoreunir;
+    private javax.swing.JFormattedTextField precioentrada;
     private javax.swing.JCheckBox retornoGanancia;
     private javax.swing.JCheckBox retornoGratis;
     // End of variables declaration//GEN-END:variables
