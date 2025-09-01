@@ -4,6 +4,7 @@
  */
 package culturarte.logica;
 
+import culturarte.excepciones.PropuestaYaColaboradaException;
 import java.util.ArrayList;
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -40,7 +41,7 @@ public interface IController {
     /*Registrar colaboracion a propuesta*/
     public ArrayList<String> listarPropuestasProponentes();
     //usar TipoRetorno luego en vez de String
-    public void realizarColaboracion(String nickColab, String tituloProp, float montoColab, String tipoRetorno);
+    public void realizarColaboracion(String nickColab, String tituloProp, float montoColab, String tipoRetorno) throws PropuestaYaColaboradaException;
     public String obtenerDineroRecaudado(String nombre);
     public ArrayList<String> obtenerColaboradoresColaboracion(String tituloProp);
     public ArrayList<String> listarPropuestas();

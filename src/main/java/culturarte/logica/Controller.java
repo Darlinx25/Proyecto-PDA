@@ -4,6 +4,7 @@
  */
 package culturarte.logica;
 
+import culturarte.excepciones.PropuestaYaColaboradaException;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -468,7 +469,7 @@ public class Controller implements IController {
     }
 
     @Override
-    public void realizarColaboracion(String nickColab, String tituloProp, float montoColab, String tipoRetorno) {
+    public void realizarColaboracion(String nickColab, String tituloProp, float montoColab, String tipoRetorno) throws PropuestaYaColaboradaException {
         Colaborador colab = em.find(Colaborador.class, nickColab);
         Propuesta prop = em.find(Propuesta.class, tituloProp);
         List<String> aux = new ArrayList<String>();
@@ -498,7 +499,9 @@ public class Controller implements IController {
                 t.rollback();
                 e.printStackTrace();
             }
-        }//hacer un else y tirar una excepción
+        } else {
+            throw new PropuestaYaColaboradaException(nickColab + " ya tiene una colaboración con " + tituloProp);
+        }
     }
 
     @Override

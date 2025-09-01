@@ -4,6 +4,7 @@
  */
 package culturarte.graficos;
 
+import culturarte.excepciones.PropuestaYaColaboradaException;
 import culturarte.logica.DTPropuesta;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Locale;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -372,9 +374,14 @@ public class RegistrarColaboracion extends javax.swing.JInternalFrame {
             String tituloProp = cortarTituloProp(this.listaPropuestaProponente.getSelectedValue());
             float montoColab = Float.parseFloat(this.campoMontoColab.getText());
             String tipoRetorno = this.comboRetorno.getSelectedItem().toString();
-            this.controller.realizarColaboracion(nickColab, tituloProp, montoColab, tipoRetorno);
-
-            this.dispose();
+            try {
+                this.controller.realizarColaboracion(nickColab, tituloProp, montoColab, tipoRetorno);
+                JOptionPane.showMessageDialog(this, "Colaboración realizada con éxito", "Registrar Colaboración",
+                        JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+            } catch (PropuestaYaColaboradaException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Registrar Colaboración", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_botonAceptarActionPerformed
 
