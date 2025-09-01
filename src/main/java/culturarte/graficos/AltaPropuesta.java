@@ -27,7 +27,9 @@ import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.NumberFormatter;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
@@ -45,6 +47,10 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
         this.imagenPropuesta = null;
 
         initComponents();
+        NumberFormatter numberFormatter = (NumberFormatter) this.campoPrecioEntrada.getFormatter();
+        numberFormatter.setMinimum(0);
+        NumberFormatter numberFormatter2 = (NumberFormatter) this.campoMontoReunir.getFormatter();
+        numberFormatter2.setMinimum(0);
 
         DefaultListModel<String> modelo = (DefaultListModel<String>) listaProponentes.getModel();
         modelo.clear();
@@ -405,12 +411,14 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
             return false;
         }
         if (Float.parseFloat(this.campoPrecioEntrada.getText()) <= 0) {
+            JOptionPane.showMessageDialog(this, "El precio de la entrada debe ser mayor a 0", "Alta de Propuesta", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         if (this.campoMontoReunir.getText().isBlank()) {
             return false;
         }
         if (Float.parseFloat(this.campoMontoReunir.getText()) <= 0) {
+            JOptionPane.showMessageDialog(this, "El monto a reunir debe ser mayor a 0", "Alta de Propuesta", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         if (!(this.checkEntradaGratis.isSelected() || this.checkGanancias.isSelected())) {

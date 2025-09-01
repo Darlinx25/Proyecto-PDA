@@ -21,6 +21,7 @@ import java.util.Locale;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.text.NumberFormatter;
 
 /**
  *
@@ -38,6 +39,8 @@ public class RegistrarColaboracion extends javax.swing.JInternalFrame {
         this.controller = fabrica.getIController();
 
         initComponents();
+        NumberFormatter numberFormatter = (NumberFormatter) this.campoMontoColab.getFormatter();
+        numberFormatter.setMinimum(0);
         
         
     }
@@ -408,6 +411,7 @@ public class RegistrarColaboracion extends javax.swing.JInternalFrame {
             return false;
         }
         if (Float.parseFloat(this.campoMontoColab.getText()) <= 0) {
+            JOptionPane.showMessageDialog(this, "El monto colaborado debe ser mayor a 0", "Registrar Colaboración", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
