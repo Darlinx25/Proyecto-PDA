@@ -26,16 +26,18 @@ public class Controller implements IController {
     private Map<String, Categoria> categorias;
 
     private static Controller instancia;
-
-    private EntityManagerFactory emf; // se declara estos objetos como atributos, para que todos los métodos puedan usarlos
-    private EntityManager em;
-
+    
+    private EntityManagerFactory emf;//HAY Q SACAR ESTO
+    private EntityManager em;//Y ESTO
+    private Manejador emr = Manejador.getInstance(); //Y USAR ESTO, DE MOMENTO SE LLAMA EMR pero cuando saquemos lo anterior taria bueno llamro em
+    
+    
     private Controller() {
         usuarios = new HashMap<>();
         propuestas = new HashMap<>();
         categorias = new HashMap<>();
 
-        emf = Persistence.createEntityManagerFactory("Proyecto_PDA");
+        emf = Persistence.createEntityManagerFactory("Proyecto_PDA");//ESTO TAMBIEN SE VA
         em = emf.createEntityManager();
 
         // Verificar si la raíz ya existe en la DB
@@ -92,8 +94,9 @@ public class Controller implements IController {
             usu = new Proponente(direccion, biografia, sitioWeb, nick, nombre, apellido, email, fechaNac, imagen);
         }
         this.usuarios.put(nick, usu);
-        EntityTransaction t = em.getTransaction();
-        try {
+        emr.addUsuario(usu);
+        //EntityTransaction t = em.getTransaction();
+        /*try {
             t.begin();
             em.persist(usu);
             t.commit();
@@ -101,7 +104,7 @@ public class Controller implements IController {
             t.rollback();
             e.printStackTrace();
             return salida.ERROR;
-        }
+        }*/
         return salida.EXITO; 
 
     }
