@@ -41,13 +41,11 @@ public class Controller implements IController {
         em = emf.createEntityManager();
 
         // Verificar si la raíz ya existe en la DB
-        Categoria raiz = em.find(Categoria.class, "Categorías");
+        //Categoria raiz = em.find(Categoria.class, "Categorías");
+        Categoria raiz = emr.find(Categoria.class,"Categorías");
         if (raiz == null) {
             raiz = new Categoria("Categorías");
-            EntityTransaction t = em.getTransaction();
-            t.begin();
-            em.persist(raiz);
-            t.commit();
+            emr.add(raiz);
         }
     }
 
@@ -94,7 +92,7 @@ public class Controller implements IController {
             usu = new Proponente(direccion, biografia, sitioWeb, nick, nombre, apellido, email, fechaNac, imagen);
         }
         this.usuarios.put(nick, usu);
-        emr.addUsuario(usu);
+        emr.add(usu);
         //EntityTransaction t = em.getTransaction();
         /*try {
             t.begin();
@@ -112,7 +110,8 @@ public class Controller implements IController {
     @Override
     public DefaultMutableTreeNode listarCategorias() {
         //throw new UnsupportedOperationException("Not supported yet.");
-        Categoria catRaiz = em.find(Categoria.class, "Categorías");
+        //Categoria catRaiz = em.find(Categoria.class, "Categorías");
+        Categoria catRaiz = emr.find(Categoria.class,"Categorías");
         DefaultMutableTreeNode raiz = nodosArbolCategorias(catRaiz);
         return raiz;
     }
@@ -140,18 +139,18 @@ public class Controller implements IController {
         Categoria cat = new Categoria(nombre);
 
         if (nombrePadre != null) {
-            Categoria padre = em.find(Categoria.class, nombrePadre);
+            Categoria padre = emr.find(Categoria.class, nombrePadre);
             if (padre != null) {
                 padre.addSubcategoria(cat);
                 cat.setPadre(padre);
             }
         } else {
-            Categoria raiz = em.find(Categoria.class, "Categorías");
+            Categoria raiz = emr.find(Categoria.class, "Categorías");
             raiz.addSubcategoria(cat);
             cat.setPadre(raiz);
         }
-
-        EntityTransaction t = em.getTransaction();
+        emr.add(cat);
+        /*EntityTransaction t = em.getTransaction();
         try {
             t.begin();
             em.persist(cat);   // gracias a la relación, JPA guarda con la FK al padre
@@ -162,6 +161,7 @@ public class Controller implements IController {
             }
             e.printStackTrace();
         }
+        */
     }
 
     @Override

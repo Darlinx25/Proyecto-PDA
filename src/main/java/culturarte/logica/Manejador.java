@@ -28,11 +28,11 @@ public class Manejador {
     }
     
     
-    public void addUsuario(Usuario usu){
+    public void add(Object clase){
         EntityTransaction t = em.getTransaction();
         try{
             t.begin();
-            em.persist(usu);
+            em.persist(clase);
             t.commit();
         }
         catch(Exception e){
@@ -41,6 +41,10 @@ public class Manejador {
         }
         
         
+    }
+    
+    public <Entidad> Entidad find(Class<Entidad> clase ,String id){
+        return em.find(clase,id);
     }
     
 }
