@@ -5,6 +5,8 @@
 package culturarte.logica;
 
 import jakarta.persistence.*;
+import java.util.Collections;
+import java.util.List;
 
 /**
  *
@@ -37,20 +39,28 @@ public class Manejador {
 
     }
 
-    public <Entidad> Entidad find(Class<Entidad> clase, String id) {
+    public <T, ID> T find(Class<T> clase, ID id) {
         return em.find(clase, id);
     }
-    
-    
-   public Long datoUsuarioRepetido(String campo, String valor) {
-    if (!campo.equals("nickname") && !campo.equals("email")) {
-        throw new IllegalArgumentException("Campo no permitido: " + campo);
+
+    public Long datoUsuarioRepetido(String campo, String valor) {
+        if (!campo.equals("nickname") && !campo.equals("email")) {
+            throw new IllegalArgumentException("Campo no permitido: " + campo);
+        }
+        String jpql = "SELECT COUNT(u) FROM Usuario u WHERE u." + campo + " = :valor";
+        TypedQuery<Long> q1 = em.createQuery(jpql, Long.class);
+        q1.setParameter("valor", valor);
+
+        return q1.getSingleResult();
     }
-    String jpql = "SELECT COUNT(u) FROM Usuario u WHERE u." + campo + " = :valor";
-    TypedQuery<Long> q1 = em.createQuery(jpql, Long.class);
-    q1.setParameter("valor", valor);
-
-    return q1.getSingleResult();
-}
-
+    
+    
+        public List<String> listarNickColaboradores() {
+        try {
+            String jpql = "SELECT c.nickname FROM Colaborador c";
+            return em.createQuery(jpql, String.class).getResultList();
+        } catch (Exception e) {
+            return Collections.emptyList();
+        }
+    }
 }

@@ -81,7 +81,7 @@ public class Controller implements IController {
         if (q2.getSingleResult() > 0){
             return salida.EMAIL_REPETIDO; 
         }
-        */
+        */ 
         //corroborar emails únicos luego
         String nombre = user.getNombre();
         String apellido = user.getApellido();
@@ -174,14 +174,7 @@ public class Controller implements IController {
 
     @Override
     public ArrayList<String> listarColaboradores() {
-        List<String> aux;
-
-        String query = "SELECT c.nickname FROM Colaborador c";
-        try {
-            aux = em.createQuery(query, String.class).getResultList();
-        } catch (Exception e) {
-            aux = Collections.emptyList();
-        }
+        List<String> aux = emr.listarNickColaboradores();
         return new ArrayList<>(aux);
     }
 
