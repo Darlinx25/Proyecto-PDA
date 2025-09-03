@@ -237,14 +237,8 @@ public class Controller implements IController {
 
         this.propuestas.put(titulo, propuesta);
         EntityTransaction t = em.getTransaction();
-        try {
-            t.begin();
-            em.persist(propuesta);
-            t.commit();
-        } catch (Exception e) {
-            t.rollback();
-            e.printStackTrace();
-        }
+        emr.add(propuesta);
+      
     }
 
     @Override

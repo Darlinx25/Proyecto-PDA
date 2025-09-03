@@ -62,5 +62,20 @@ public class Manejador {
         } catch (Exception e) {
             return Collections.emptyList();
         }
+        
+        
+        /* Esta esta alternativa generica a la funcion de arriba, 
+        implica pasar por parametro asi (String.class, "nickname", "Colaborador")
+        public <T> List<T> listarAtributos(Class<T> tipoResultado, String atributo, String entidad) {
+        try {
+        String jpql = "SELECT e." + atributo + " FROM " + entidad + " e";
+        return em.createQuery(jpql, tipoResultado).getResultList();
+         } catch (Exception e) {
+        return Collections.emptyList();
+        }
+}
+
+        
+        */
     }
 }
