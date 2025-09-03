@@ -61,6 +61,14 @@ public class Controller implements IController {
         String nick = user.getNickname();
         String email = user.getEmail();
         ResultadoRegistroUsr salida = null;
+        
+        if (emr.datoUsuarioRepetido("nickname",nick) > 0){
+            return salida.NICK_REPETIDO;
+        }
+        if (emr.datoUsuarioRepetido("email",email) > 0){
+            return salida.EMAIL_REPETIDO;
+        }
+        /*
         TypedQuery<Long> q1 = em.createQuery(
                 "SELECT COUNT(u) FROM Usuario u WHERE u.nickname = :nick", Long.class);
         q1.setParameter("nick", nick);
@@ -73,7 +81,7 @@ public class Controller implements IController {
         if (q2.getSingleResult() > 0){
             return salida.EMAIL_REPETIDO; 
         }
-        
+        */
         //corroborar emails únicos luego
         String nombre = user.getNombre();
         String apellido = user.getApellido();
