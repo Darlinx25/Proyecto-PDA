@@ -259,7 +259,7 @@ public class Controller implements IController {
     }
 
     public ArrayList<String> listarPropuestasEstado(int estado) {
-        return emr.obtenerPorpuestasEstado(estado);
+        return emr.obtenerPropuestasEstado(estado);
     }
 
     public ArrayList<String> listarPropuestas() {
@@ -315,52 +315,21 @@ public class Controller implements IController {
 
     @Override
     public void seguirUsuario(String nickSegui, String nickUsu) {
-        List<Usuario> usu1 = em.createQuery("SELECT u FROM Usuario u WHERE u.nickname = :nickSegui", Usuario.class)
-                .setParameter("nickSegui", nickSegui).getResultList();
+        List<Usuario> usu1 = emr.obtenerUsuario(nickSegui);
 
-        List<Usuario> usu2 = em.createQuery("SELECT u FROM Usuario u WHERE u.nickname = :nickUsu", Usuario.class)
-                .setParameter("nickUsu", nickUsu).getResultList();
+        List<Usuario> usu2 = emr.obtenerUsuario(nickUsu);
 
         List<Usuario> aux = usu1.get(0).getUsuariosSeguidos();
         aux.add(usu2.get(0));
         usu1.get(0).setUsuariosSeguidos(aux);
-
-        EntityTransaction t = em.getTransaction();
-        try {
-            t.begin();
-            em.persist(usu1.get(0));
-            t.commit();
-        } catch (Exception e) {
-            t.rollback();
-            e.printStackTrace();
-
-        }
+        emr.add(usu1.get(0));
+      
 
     }
 
     @Override
     public ArrayList<String> listarUsuariosSeguir(String nickname) {
-
-        List<String> aux;
-        String query = """
-                SELECT u.nickname 
-                FROM Usuario u 
-                WHERE u.nickname != :nick 
-                AND u.nickname NOT IN (
-                    SELECT us.nickname 
-                    FROM Usuario user 
-                    JOIN user.usuariosSeguidos us 
-                    WHERE user.nickname = :nick
-                )
-        """;
-
-        try {
-            aux = em.createQuery(query, String.class).setParameter("nick", nickname).getResultList();
-        } catch (Exception e) {
-            aux = Collections.emptyList();
-            e.printStackTrace();
-        }
-        return new ArrayList<>(aux);
+       return emr.obtenerUsuariosSeguir(nickname);
     }
 
     @Override
@@ -390,8 +359,7 @@ public class Controller implements IController {
         List<Usuario> aux2;
         List<String> aux3 = new ArrayList<String>();
         try {
-            aux = em.createQuery("SELECT u FROM Usuario u WHERE u.nickname = :nickname", Usuario.class)
-                    .setParameter("nickname", nickname).getResultList();
+            aux = emr.obtenerUsuario(nickname);
             aux2 = aux.get(0).getUsuariosSeguidos();
             for (Usuario u : aux2) {
                 aux3.add(u.getNickname());
@@ -493,24 +461,14 @@ public class Controller implements IController {
 
     @Override
     public void dejarDeSeguirUsuario(String nickSegui, String nickSiguiendo) {
-        List<Usuario> usu1 = em.createQuery("SELECT u FROM Usuario u WHERE u.nickname = :nickSegui", Usuario.class)
-                .setParameter("nickSegui", nickSegui).getResultList();
+        List<Usuario> usu1 = emr.obtenerUsuario(nickSegui);
 
-        List<Usuario> usu2 = em.createQuery("SELECT u FROM Usuario u WHERE u.nickname = :nickUsu", Usuario.class)
-                .setParameter("nickUsu", nickSiguiendo).getResultList();
+        List<Usuario> usu2 = emr.obtenerUsuario(nickSiguiendo);
+
         List<Usuario> aux = usu1.get(0).getUsuariosSeguidos();
         aux.remove(usu2.get(0));
         usu1.get(0).setUsuariosSeguidos(aux);
-
-        EntityTransaction t = em.getTransaction();
-        try {
-            t.begin();
-            em.persist(usu1.get(0));
-            t.commit();
-        } catch (Exception e) {
-            t.rollback();
-            e.printStackTrace();
-        }
+        emr.add(usu1.get(0));
     }
 
     @Override

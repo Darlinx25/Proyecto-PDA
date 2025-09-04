@@ -75,7 +75,7 @@ public class Manejador {
         }
     }
     
-    public ArrayList<String> obtenerPorpuestasEstado(int estado){
+    public ArrayList<String> obtenerPropuestasEstado(int estado){
         List<String> aux;
         EstadoPropuesta est = EstadoPropuesta.values()[estado];
         String query = "SELECT p.titulo FROM Propuesta p WHERE p.estadoActual.estado = :est";
@@ -88,8 +88,32 @@ public class Manejador {
         return new ArrayList<>(aux);
     }
     
-    
-    
+    public List<Usuario> obtenerUsuario(String nickname){
+       return em.createQuery("SELECT u FROM Usuario u WHERE u.nickname = :nickname", Usuario.class)
+                .setParameter("nickname", nickname).getResultList();
+    }
+    public ArrayList<String> obtenerUsuariosSeguir(String nickname){
+     List<String> aux;
+        String query = """
+                SELECT u.nickname 
+                FROM Usuario u 
+                WHERE u.nickname != :nick 
+                AND u.nickname NOT IN (
+                    SELECT us.nickname 
+                    FROM Usuario user 
+                    JOIN user.usuariosSeguidos us 
+                    WHERE user.nickname = :nick
+                )
+        """;
+
+        try {
+            aux = em.createQuery(query, String.class).setParameter("nick", nickname).getResultList();
+        } catch (Exception e) {
+            aux = Collections.emptyList();
+            e.printStackTrace();
+        }
+        return new ArrayList<>(aux);
+    }
     
     
     
