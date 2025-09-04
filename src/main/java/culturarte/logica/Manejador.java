@@ -5,6 +5,7 @@
 package culturarte.logica;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,7 +37,18 @@ public class Manejador {
             t.rollback();
             e.printStackTrace();
         }
-
+    }
+    
+    public void mod(Object clase){
+        EntityTransaction t = em.getTransaction();
+        try {
+            t.begin();
+            em.merge(clase);
+            t.commit();
+        } catch (Exception e) {
+            t.rollback();
+            e.printStackTrace();
+        }
     }
 
     public <T, ID> T find(Class<T> clase, ID id) {
@@ -53,29 +65,60 @@ public class Manejador {
 
         return q1.getSingleResult();
     }
-    
-    
-        public List<String> listarNickColaboradores() {
+
+    public <T> List<T> listarAtributo(Class<T> tipoResultado, String atributo, String entidad) {
         try {
-            String jpql = "SELECT c.nickname FROM Colaborador c";
-            return em.createQuery(jpql, String.class).getResultList();
+            String jpql = "SELECT e." + atributo + " FROM " + entidad + " e";
+            return em.createQuery(jpql, tipoResultado).getResultList();
         } catch (Exception e) {
             return Collections.emptyList();
         }
-        
-        
-        /* Esta esta alternativa generica a la funcion de arriba, 
-        implica pasar por parametro asi (String.class, "nickname", "Colaborador")
-        public <T> List<T> listarAtributos(Class<T> tipoResultado, String atributo, String entidad) {
+    }
+    
+    public ArrayList<String> obtenerPorpuestasEstado(int estado){
+        List<String> aux;
+        EstadoPropuesta est = EstadoPropuesta.values()[estado];
+        String query = "SELECT p.titulo FROM Propuesta p WHERE p.estadoActual.estado = :est";
         try {
-        String jpql = "SELECT e." + atributo + " FROM " + entidad + " e";
-        return em.createQuery(jpql, tipoResultado).getResultList();
-         } catch (Exception e) {
-        return Collections.emptyList();
+            aux = em.createQuery(query, String.class).setParameter("est", est).getResultList();
+        } catch (Exception e) {
+            aux = Collections.emptyList();
+            e.printStackTrace();
         }
+        return new ArrayList<>(aux);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*public <T,V> T listarAtributoPorCondicion(
+            Class <T> tipoResultado,
+            String atributo,
+            String entidad,
+            String atributo_cond,
+            V condicion ){
+        try{
+            String jpql = "Select e." + atributo + " FROM " + entidad + " e " + " WHERE e." + atributo_cond + " =:valor";
+            return em.createQuery(jpql, tipoResultado).setParameter("valor",condicion);
+        }catch(Exception e){
+            return Collections.emptyList();
+        }
+        
+    } No anda ni se usa esto de momento
+    */ 
+    
+    
+    
+    
+    
 }
 
-        
-        */
-    }
-}

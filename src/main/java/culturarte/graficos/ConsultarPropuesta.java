@@ -106,6 +106,7 @@ public class ConsultarPropuesta extends javax.swing.JInternalFrame {
                                 break;
                         }
                     }
+                    
                 }
             }
         });
@@ -275,10 +276,10 @@ public class ConsultarPropuesta extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(labelRetorno)
                         .addGap(57, 57, 57)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(retornoGratis, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(retornoGanancia, javax.swing.GroupLayout.Alignment.LEADING))))
-                .addContainerGap(201, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(retornoGratis)
+                            .addComponent(retornoGanancia))))
+                .addContainerGap(202, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -336,7 +337,7 @@ public class ConsultarPropuesta extends javax.swing.JInternalFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(retornoGanancia))))
                             .addComponent(labelImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();

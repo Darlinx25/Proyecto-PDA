@@ -68,28 +68,11 @@ public class Controller implements IController {
         if (emr.datoUsuarioRepetido("email",email) > 0){
             return salida.EMAIL_REPETIDO;
         }
-        /*
-        TypedQuery<Long> q1 = em.createQuery(
-                "SELECT COUNT(u) FROM Usuario u WHERE u.nickname = :nick", Long.class);
-        q1.setParameter("nick", nick);
-        if (q1.getSingleResult() > 0){
-            return salida.NICK_REPETIDO;
-        }
-        TypedQuery<Long> q2 = em.createQuery(
-                "SELECT COUNT(u) FROM Usuario u WHERE u.email = :email", Long.class);
-        q2.setParameter("email", email);
-        if (q2.getSingleResult() > 0){
-            return salida.EMAIL_REPETIDO; 
-        }
-        */ 
-        //corroborar emails únicos luego
         String nombre = user.getNombre();
         String apellido = user.getApellido();
         LocalDate fechaNac = user.getFechaNacimiento();
         String imagen = user.getImagen();
-
         Usuario usu = null;
-
         if (user instanceof DTColaborador) {
             usu = new Colaborador(nick, nombre, apellido, email, fechaNac, imagen);
         } else if (user instanceof DTProponente) {
@@ -101,16 +84,6 @@ public class Controller implements IController {
         }
         this.usuarios.put(nick, usu);
         emr.add(usu);
-        //EntityTransaction t = em.getTransaction();
-        /*try {
-            t.begin();
-            em.persist(usu);
-            t.commit();
-        } catch (Exception e) {
-            t.rollback();
-            e.printStackTrace();
-            return salida.ERROR;
-        }*/
         return salida.EXITO; 
 
     }
@@ -118,7 +91,6 @@ public class Controller implements IController {
     @Override
     public DefaultMutableTreeNode listarCategorias() {
         //throw new UnsupportedOperationException("Not supported yet.");
-        //Categoria catRaiz = em.find(Categoria.class, "Categorías");
         Categoria catRaiz = emr.find(Categoria.class,"Categorías");
         DefaultMutableTreeNode raiz = nodosArbolCategorias(catRaiz);
         return raiz;
@@ -138,14 +110,12 @@ public class Controller implements IController {
         }
         return nodito;
     }
-
     @Override
     public void addCategoria(String nombre, String nombrePadre) {
         if (this.categorias.containsKey(nombre)) {
             return; // exception después
         }
         Categoria cat = new Categoria(nombre);
-
         if (nombrePadre != null) {
             Categoria padre = emr.find(Categoria.class, nombrePadre);
             if (padre != null) {
@@ -158,30 +128,18 @@ public class Controller implements IController {
             cat.setPadre(raiz);
         }
         emr.add(cat);
-        /*EntityTransaction t = em.getTransaction();
-        try {
-            t.begin();
-            em.persist(cat);   // gracias a la relación, JPA guarda con la FK al padre
-            t.commit();
-        } catch (Exception e) {
-            if (t.isActive()) {
-                t.rollback();
-            }
-            e.printStackTrace();
-        }
-        */
     }
 
     @Override
     public ArrayList<String> listarColaboradores() {
-        List<String> aux = emr.listarNickColaboradores();
+        List<String> aux = emr.listarAtributo(String.class,"nickname","Colaborador");
         return new ArrayList<>(aux);
     }
 
     @Override
     public DTColaborador obtenerDTColaborador(String nick) {
         try {
-            Colaborador c = em.find(Colaborador.class, nick);
+            Colaborador c = emr.find(Colaborador.class, nick);
             if (c != null) {
                 return new DTColaborador(
                         c.getNickname(), c.getNombre(), c.getApellido(),
@@ -195,19 +153,8 @@ public class Controller implements IController {
 
     @Override
     public ArrayList<String> listarProponentes() {
-        ArrayList<String> aux = new ArrayList<String>();
-
-        try {
-            List<Proponente> result = em.createQuery("SELECT p FROM Proponente p", Proponente.class)
-                    .getResultList();
-            for (Proponente p : result) {
-                aux.add(p.getNickname());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return aux;
+        List<String> aux = emr.listarAtributo(String.class,"nickname","Proponente");
+        return new ArrayList<>(aux);
     }
 
     @Override
@@ -227,8 +174,8 @@ public class Controller implements IController {
 
         Estado est = prop.getEstadoActual();
         // Buscar en la base de datos la categoría y el proponente
-        Categoria tipoPropuesta = em.find(Categoria.class, prop.getTipoPropuesta());
-        Proponente proponedor = em.find(Proponente.class, prop.getNickProponedor());
+        Categoria tipoPropuesta = emr.find(Categoria.class, prop.getTipoPropuesta());
+        Proponente proponedor = emr.find(Proponente.class, prop.getNickProponedor());
 
         List<TipoRetorno> tiposRetorno = prop.getTiposRetorno();
 
@@ -236,7 +183,6 @@ public class Controller implements IController {
                 tipoPropuesta, proponedor, est);
 
         this.propuestas.put(titulo, propuesta);
-        EntityTransaction t = em.getTransaction();
         emr.add(propuesta);
       
     }
@@ -247,10 +193,7 @@ public class Controller implements IController {
 
         Propuesta aux = null;
         try {
-            aux = em.createQuery(
-                    "SELECT p FROM Propuesta p WHERE p.titulo = :titulo", Propuesta.class)
-                    .setParameter("titulo", titulo)
-                    .getSingleResult();
+            aux = emr.find(Propuesta.class, titulo);
         } catch (NoResultException e) {
             System.out.println("No se encontró la propuesta a modificar en la base de datos");
             return;
@@ -270,15 +213,10 @@ public class Controller implements IController {
         aux.setMontoAReunir(prop.getMontoAReunir());
         aux.setEstadoActual(prop.getEstadoActual());
         aux.setTiposRetorno(prop.getTiposRetorno());
-        EntityTransaction t = em.getTransaction();
-        try {
-            t.begin();
-            em.merge(aux);
-            t.commit();
-        } catch (Exception e) {
-            t.rollback();
-            e.printStackTrace();
-        }
+        Categoria cat = emr.find(Categoria.class, prop.getTipoPropuesta());
+        aux.setTipoPropuesta(cat);
+        emr.mod(aux);
+        
     }
 
     @Override
@@ -306,7 +244,8 @@ public class Controller implements IController {
 
     public ArrayList<String> listaPropuestasUsu(String nick) {
         List<String> aux;
-
+        
+        /*
         String query = "SELECT p.titulo FROM Propuesta p WHERE p.proponente.nickname = :nick";
         try {
             aux = em.createQuery(query, String.class).setParameter("nick", nick).getResultList();
@@ -314,23 +253,17 @@ public class Controller implements IController {
             aux = Collections.emptyList();
             e.printStackTrace();
         }
+        */
+        aux = emr.listarAtributo(String.class,"titulo","Propuesta");
         return new ArrayList<>(aux);
     }
 
     public ArrayList<String> listarPropuestasEstado(int estado) {
-        List<String> aux;
-        EstadoPropuesta est = EstadoPropuesta.values()[estado];
-        String query = "SELECT p.titulo FROM Propuesta p WHERE p.estadoActual.estado = :est";
-        try {
-            aux = em.createQuery(query, String.class).setParameter("est", est).getResultList();
-        } catch (Exception e) {
-            aux = Collections.emptyList();
-            e.printStackTrace();
-        }
-        return new ArrayList<>(aux);
+        return emr.obtenerPorpuestasEstado(estado);
     }
 
     public ArrayList<String> listarPropuestas() {
+        /*
         List<String> aux;
 
         String query = "SELECT p.titulo FROM Propuesta p";
@@ -340,13 +273,15 @@ public class Controller implements IController {
             aux = Collections.emptyList();
             e.printStackTrace();
         }
+        */
+        List<String> aux = emr.listarAtributo(String.class,"titulo","Propuesta");
         return new ArrayList<>(aux);
     }
 
     @Override
     public DTPropuesta obtenerDTPropuesta(String titulo) {
         try {
-            Propuesta p = em.find(Propuesta.class, titulo);
+            Propuesta p = emr.find(Propuesta.class, titulo);
             if (p != null) {
                 return new DTPropuesta(
                         p.getTitulo(), p.getDescripcion(), p.getImagen(), p.getLugarRealizara(), p.getFechaRealizara(),
@@ -363,6 +298,7 @@ public class Controller implements IController {
 
     @Override
     public ArrayList<String> listarUsuarios() {
+        /*
         ArrayList<String> aux = new ArrayList<String>();
         try {
             List<Usuario> result = em.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
@@ -372,7 +308,9 @@ public class Controller implements IController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return aux;
+        */
+        List<String> aux = emr.listarAtributo(String.class,"nickname","Usuario");
+        return new ArrayList<>(aux);
     }
 
     @Override

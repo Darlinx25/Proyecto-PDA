@@ -415,6 +415,7 @@ public class ConsultarPropuestaEstado extends javax.swing.JInternalFrame {
         this.campoPrecio.setText("");
         this.campoMontoReunir.setText("");
         this.campoCategoria.setText("");
+        this.campoFechaPublicacion.setText("");
         this.imagen.setIcon(null);
 
     }
