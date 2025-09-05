@@ -67,8 +67,8 @@ public class Propuesta {
         this.tipoPropuesta = tipoPropuesta;
         this.proponente = proponente;
         this.estadoActual = estadoActual;
-        this.historialEstados = new ArrayList<Estado>();
-        this.colaboraciones = new ArrayList<Colaboracion>();
+        this.historialEstados = new ArrayList<>();
+        this.colaboraciones = new ArrayList<>();
     }
 
     

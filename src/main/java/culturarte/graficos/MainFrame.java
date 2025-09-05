@@ -9,7 +9,6 @@ package culturarte.graficos;
  * @author faxcundo
  */
 public class MainFrame extends javax.swing.JFrame {
-    int clicks=0;
     
     private AltaUsuario altaUsr;
     private AltaCategoria altaCategoria;
@@ -202,10 +201,8 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        if (this.altaUsr != null) {
-            if (this.altaUsr.isVisible()) {
-                return;
-            }
+        if (this.altaUsr != null && this.altaUsr.isVisible()) {
+            return;
         }
         this.altaUsr = new AltaUsuario();
         add(this.altaUsr);
@@ -213,10 +210,8 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        if (this.altaCategoria != null) {
-            if (this.altaCategoria.isVisible()) {
-                return;
-            }
+        if (this.altaCategoria != null && this.altaCategoria.isVisible()) {
+            return;
         }
         this.altaCategoria = new AltaCategoria();
         add(this.altaCategoria);
@@ -224,11 +219,8 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
-          if (this.altaPropuesta != null) {
-            if (this.altaPropuesta.isVisible()) {
-                return;
-            }
+        if (this.altaPropuesta != null && this.altaPropuesta.isVisible()) {
+            return;
         }
         this.altaPropuesta = new AltaPropuesta();
         add(this.altaPropuesta);
@@ -236,10 +228,8 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-                  if (this.consultarProp != null) {
-            if (this.consultarProp.isVisible()) {
-                return;
-            }
+        if (this.consultarProp != null && this.consultarProp.isVisible()) {
+            return;
         }
         this.consultarProp = new ConsultarProponente();
         add(this.consultarProp);
@@ -247,10 +237,8 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        if (this.consultarColaborador != null) {
-            if (this.consultarColaborador.isVisible()) {
-                return;
-            }
+        if (this.consultarColaborador != null && this.consultarColaborador.isVisible()) {
+            return;
         }
         this.consultarColaborador = new ConsultarColaborador();
         add(this.consultarColaborador);
@@ -258,10 +246,8 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        if(this.seguirUsuario !=null){
-            if (this.seguirUsuario.isVisible()){
-                return;
-            }
+        if (this.seguirUsuario != null && this.seguirUsuario.isVisible()) {
+            return;
         }
         this.seguirUsuario = new SeguirUsuario();
         add(this.seguirUsuario);
@@ -269,10 +255,8 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        if (this.registrarColaboracion != null) {
-            if (this.registrarColaboracion.isVisible()) {
-                return;
-            }
+        if (this.registrarColaboracion != null && this.registrarColaboracion.isVisible()) {
+            return;
         }
         this.registrarColaboracion = new RegistrarColaboracion();
         add(this.registrarColaboracion);
@@ -280,10 +264,8 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void JMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuItem8ActionPerformed
-          if(this.consultaEstado !=null){
-            if (this.consultaEstado.isVisible()){
-                return;
-            }
+        if (this.consultaEstado != null && this.consultaEstado.isVisible()) {
+            return;
         }
         this.consultaEstado = new ConsultarPropuestaEstado();
         add(this.consultaEstado);
@@ -291,11 +273,8 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_JMenuItem8ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        // TODO add your handling code here:
-          if (this.dejarDeSeguirUsuario != null) {
-            if (this.dejarDeSeguirUsuario.isVisible()) {
-                return;
-            }
+        if (this.dejarDeSeguirUsuario != null && this.dejarDeSeguirUsuario.isVisible()) {
+            return;
         }
         this.dejarDeSeguirUsuario = new DejarDeSeguirUsuario();
         add(this.dejarDeSeguirUsuario);
@@ -303,10 +282,8 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-          if(this.modificarPropuesta !=null){
-            if (this.modificarPropuesta.isVisible()){
-                return;
-            }
+        if (this.modificarPropuesta != null && this.modificarPropuesta.isVisible()) {
+            return;
         }
         this.modificarPropuesta = new ModificarPropuesta();
         add(this.modificarPropuesta);
@@ -314,10 +291,8 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
-                  if(this.consultarPropuesta !=null){
-            if (this.consultarPropuesta.isVisible()){
-                return;
-            }
+        if (this.consultarPropuesta != null && this.consultarPropuesta.isVisible()) {
+            return;
         }
         this.consultarPropuesta = new ConsultarPropuesta();
         add(this.consultarPropuesta);
@@ -325,10 +300,8 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     private void menuConsultarColaboracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConsultarColaboracionActionPerformed
-        if (this.consultarColaboracion != null) {
-            if (this.consultarColaboracion.isVisible()) {
-                return;
-            }
+        if (this.consultarColaboracion != null && this.consultarColaboracion.isVisible()) {
+            return;
         }
         this.consultarColaboracion = new ConsultarColaboracion();
         add(this.consultarColaboracion);
@@ -336,10 +309,8 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_menuConsultarColaboracionActionPerformed
 
     private void menuCancelarColaboracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCancelarColaboracionActionPerformed
-        if (this.cancelarColaboracion != null) {
-            if (this.cancelarColaboracion.isVisible()) {
-                return;
-            }
+        if (this.cancelarColaboracion != null && this.cancelarColaboracion.isVisible()) {
+            return;
         }
         this.cancelarColaboracion = new CancelarColaboracion();
         add(this.cancelarColaboracion);

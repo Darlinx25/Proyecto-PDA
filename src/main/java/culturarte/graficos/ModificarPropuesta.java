@@ -453,9 +453,8 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
 
     private void AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarActionPerformed
         if (sonValidosLosCampos()) {
-            String x = this.ListaPropuestas.getSelectedValue();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            List<TipoRetorno> tiposRetorno = new ArrayList<TipoRetorno>();
+            List<TipoRetorno> tiposRetorno = new ArrayList<>();
             if (this.retornoGratis.isSelected()) {
                 tiposRetorno.add(TipoRetorno.ENTRADA_GRATIS);
             }

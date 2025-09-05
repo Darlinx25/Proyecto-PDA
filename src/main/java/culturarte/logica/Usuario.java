@@ -55,8 +55,8 @@ public abstract class Usuario {
         this.email = email;
         this.fechaNacimiento = fechaNacimiento;
         this.imagen = imagen;
-        this.usuariosSeguidos = new ArrayList<Usuario>();
-        this.propuestasFavoritas = new ArrayList<Propuesta>();
+        this.usuariosSeguidos = new ArrayList<>();
+        this.propuestasFavoritas = new ArrayList<>();
     }
     
     public String getNickname() {
@@ -119,7 +119,7 @@ public abstract class Usuario {
         return propuestasFavoritas;
     }
 
-    public void setPropuestasFavoritas(ArrayList<Propuesta> propuestasFavoritas) {
+    public void setPropuestasFavoritas(List<Propuesta> propuestasFavoritas) {
         this.propuestasFavoritas = propuestasFavoritas;
     }
     

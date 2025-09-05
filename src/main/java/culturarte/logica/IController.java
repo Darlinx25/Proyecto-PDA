@@ -33,7 +33,7 @@ public interface IController {
     public ArrayList<String> listarUsuarios();
     public void seguirUsuario(String nickSegui, String nickUsu);
     public void dejarDeSeguirUsuario(String nickSegui, String nickSiguiendo);
-    public ArrayList<String> listaPropuestasUsu(String nickname);
+    public ArrayList<String> listaPropuestasUsu(String nickname);//no devuelve las propuestas del usuario, devuelve todas
     public ArrayList<String> listarUsuariosSeguir(String nickname);
     
     public ArrayList<String> listarPropuestasEstado(int estado);

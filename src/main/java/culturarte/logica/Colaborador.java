@@ -25,7 +25,7 @@ public class Colaborador extends Usuario {
     
     public Colaborador(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, String imagen) {
         super(nickname, nombre, apellido, email, fechaNacimiento, imagen);
-        this.colaboraciones = new ArrayList<Colaboracion>();
+        this.colaboraciones = new ArrayList<>();
     }
     
     public List<Colaboracion> getColaboraciones() {

@@ -30,7 +30,7 @@ public class Proponente extends Usuario {
         this.direccion = direccion;
         this.biografia = biografia;
         this.sitioWeb = sitioWeb;
-        this.propuestas = new ArrayList<Propuesta>();
+        this.propuestas = new ArrayList<>();
     }
 
     public DTDireccion getDireccion() {

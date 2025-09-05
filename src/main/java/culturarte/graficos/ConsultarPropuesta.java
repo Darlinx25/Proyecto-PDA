@@ -29,12 +29,10 @@ import javax.swing.ImageIcon;
 public class ConsultarPropuesta extends javax.swing.JInternalFrame {
 
     private IController controller;
-    private BufferedImage imagenPropuesta;
 
     public ConsultarPropuesta() {
         IControllerFactory fabrica = IControllerFactory.getInstance();
         this.controller = fabrica.getIController();
-        this.imagenPropuesta = null;
         initComponents();
 
         DefaultListModel<String> modelo = (DefaultListModel<String>) listPropuestas.getModel();

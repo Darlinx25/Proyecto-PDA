@@ -30,7 +30,6 @@ import javax.swing.ImageIcon;
 public class ConsultarPropuestaEstado extends javax.swing.JInternalFrame {
 
     private IController controller;
-    private String imagenProp;
 
     /**
      * Creates new form ConsultaPropuestaEstado
@@ -379,19 +378,6 @@ public class ConsultarPropuestaEstado extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private String tipoImagen(File archivo) throws IOException {
-        Path path = archivo.toPath();
-        String mimeType = Files.probeContentType(path);
-        if (mimeType != null) {
-            if (mimeType.equals("image/png")) {
-                return "png";
-            } else if (mimeType.equals("image/jpeg")) {
-                return "jpg";
-            }
-        }
-        return "desconocido";
-    }
 
     private void ListaEstadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListaEstadosMouseClicked
         // TODO add your handling code here:

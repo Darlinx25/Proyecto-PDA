@@ -40,7 +40,6 @@ public class Controller implements IController {
         em = emf.createEntityManager();
 
         // Verificar si la raíz ya existe en la DB
-        //Categoria raiz = em.find(Categoria.class, "Categorías");
         Categoria raiz = emr.find(Categoria.class, "Categorías");
         if (raiz == null) {
             raiz = new Categoria("Categorías");
@@ -59,13 +58,12 @@ public class Controller implements IController {
     public ResultadoRegistroUsr addUsuario(DTUsuario user) {
         String nick = user.getNickname();
         String email = user.getEmail();
-        ResultadoRegistroUsr salida = null;
 
         if (emr.datoUsuarioRepetido("nickname", nick) > 0) {
-            return salida.NICK_REPETIDO;
+            return ResultadoRegistroUsr.NICK_REPETIDO;
         }
         if (emr.datoUsuarioRepetido("email", email) > 0) {
-            return salida.EMAIL_REPETIDO;
+            return ResultadoRegistroUsr.EMAIL_REPETIDO;
         }
         String nombre = user.getNombre();
         String apellido = user.getApellido();
@@ -83,16 +81,14 @@ public class Controller implements IController {
         }
         this.usuarios.put(nick, usu);
         emr.add(usu);
-        return salida.EXITO;
+        return ResultadoRegistroUsr.EXITO;
 
     }
 
     @Override
     public DefaultMutableTreeNode listarCategorias() {
-        //throw new UnsupportedOperationException("Not supported yet.");
         Categoria catRaiz = emr.find(Categoria.class, "Categorías");
-        DefaultMutableTreeNode raiz = nodosArbolCategorias(catRaiz);
-        return raiz;
+        return nodosArbolCategorias(catRaiz);
     }
 
     private DefaultMutableTreeNode nodosArbolCategorias(Categoria cat) {
@@ -194,7 +190,6 @@ public class Controller implements IController {
         try {
             aux = emr.find(Propuesta.class, titulo);
         } catch (NoResultException e) {
-            System.out.println("No se encontró la propuesta a modificar en la base de datos");
             return;
         }
         EstadoPropuesta ese = prop.getEstadoActual().getEstado();
@@ -241,38 +236,20 @@ public class Controller implements IController {
         return null;
     }
 
+    @Override
     public ArrayList<String> listaPropuestasUsu(String nick) {
         List<String> aux;
-
-        /*
-        String query = "SELECT p.titulo FROM Propuesta p WHERE p.proponente.nickname = :nick";
-        try {
-            aux = em.createQuery(query, String.class).setParameter("nick", nick).getResultList();
-        } catch (Exception e) {
-            aux = Collections.emptyList();
-            e.printStackTrace();
-        }
-         */
         aux = emr.listarAtributo(String.class, "titulo", "Propuesta");
         return new ArrayList<>(aux);
     }
 
+    @Override
     public ArrayList<String> listarPropuestasEstado(int estado) {
         return emr.obtenerPropuestasEstado(estado);
     }
 
+    @Override
     public ArrayList<String> listarPropuestas() {
-        /*
-        List<String> aux;
-
-        String query = "SELECT p.titulo FROM Propuesta p";
-        try {
-            aux = em.createQuery(query, String.class).getResultList();
-        } catch (Exception e) {
-            aux = Collections.emptyList();
-            e.printStackTrace();
-        }
-         */
         List<String> aux = emr.listarAtributo(String.class, "titulo", "Propuesta");
         return new ArrayList<>(aux);
     }
@@ -297,17 +274,6 @@ public class Controller implements IController {
 
     @Override
     public ArrayList<String> listarUsuarios() {
-        /*
-        ArrayList<String> aux = new ArrayList<String>();
-        try {
-            List<Usuario> result = em.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
-            for (Usuario u : result) {
-                aux.add(u.getNickname());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-         */
         List<String> aux = emr.listarAtributo(String.class, "nickname", "Usuario");
         return new ArrayList<>(aux);
     }
@@ -333,7 +299,7 @@ public class Controller implements IController {
     @Override
     public ArrayList<String> listarPropuestasProponentes() {
         List<Object[]> aux;
-        List<String> aux2 = new ArrayList<String>();
+        List<String> aux2 = new ArrayList<>();
 
         String query = "SELECT p.titulo, p.proponente.nickname FROM Propuesta p"
                 + " WHERE p.estadoActual.estado = :estado1 OR p.estadoActual.estado = :estado2";
@@ -355,7 +321,7 @@ public class Controller implements IController {
     public ArrayList<String> listarUsuariosSiguiendo(String nickname) {
         List<Usuario> aux;
         List<Usuario> aux2;
-        List<String> aux3 = new ArrayList<String>();
+        List<String> aux3 = new ArrayList<>();
         try {
             aux = emr.obtenerUsuario(nickname);
             aux2 = aux.get(0).getUsuariosSeguidos();
@@ -374,7 +340,7 @@ public class Controller implements IController {
     public void realizarColaboracion(String nickColab, String tituloProp, float montoColab, String tipoRetorno) throws PropuestaYaColaboradaException {
         Colaborador colab = em.find(Colaborador.class, nickColab);
         Propuesta prop = em.find(Propuesta.class, tituloProp);
-        List<String> aux = new ArrayList<String>();
+        List<String> aux = new ArrayList<>();
 
         String query = "SELECT c.propuestaColaborada.titulo FROM Colaboracion c WHERE c.colaborador.nickname = :nickColab"
                 + " AND c.propuestaColaborada.titulo = :tituloProp";
@@ -414,7 +380,6 @@ public class Controller implements IController {
         try {
             aux = em.createQuery(query, Float.class).setParameter("tituloProp", tituloProp).getResultList();
         } catch (Exception e) {
-            aux = Collections.emptyList();
             e.printStackTrace();
             return "0";
         }
@@ -427,7 +392,7 @@ public class Controller implements IController {
 
     @Override
     public ArrayList<String> obtenerColaboradoresColaboracion(String tituloProp) {
-        List<String> aux = null;
+        List<String> aux;
         String query = "SELECT c.colaborador.nickname FROM Colaboracion c WHERE c.propuestaColaborada.titulo = :tituloProp";
         try {
             aux = em.createQuery(query, String.class).setParameter("tituloProp", tituloProp).getResultList();
@@ -454,7 +419,7 @@ public class Controller implements IController {
             aux = Collections.emptyList();
         }
 
-        return new ArrayList<String>(aux);
+        return new ArrayList<>(aux);
     }
 
     @Override
@@ -487,7 +452,7 @@ public class Controller implements IController {
     @Override
     public ArrayList<String> listarColaboracionesColaborador(String nickColab) {
         List<Object[]> aux;
-        List<String> aux2 = new ArrayList<String>();
+        List<String> aux2 = new ArrayList<>();
 
         String query = "SELECT c.propuestaColaborada.titulo, c.id FROM Colaboracion c"
                 + " WHERE c.colaborador.nickname = :nick";
@@ -507,7 +472,7 @@ public class Controller implements IController {
     @Override
     public ArrayList<String> listarColaboraciones() {
         List<Object[]> aux;
-        List<String> aux2 = new ArrayList<String>();
+        List<String> aux2 = new ArrayList<>();
 
         String query = "SELECT c.propuestaColaborada.titulo, c.id FROM Colaboracion c";
         try {

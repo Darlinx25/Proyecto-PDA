@@ -26,7 +26,6 @@ import javax.swing.ImageIcon;
 public class ConsultarProponente extends javax.swing.JInternalFrame {
 
     private IController controller;
-    private BufferedImage imagenProponente;
 
     /**
      * Creates new form ConsultarProp
@@ -34,7 +33,6 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
     public ConsultarProponente() {
         IControllerFactory fabrica = IControllerFactory.getInstance();
         this.controller = fabrica.getIController();
-        this.imagenProponente = null;
         initComponents();
 
         DefaultListModel<String> modelo = (DefaultListModel<String>) listaProponentes.getModel();

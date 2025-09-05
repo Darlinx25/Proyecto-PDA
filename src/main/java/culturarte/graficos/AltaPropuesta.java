@@ -376,7 +376,7 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
             DefaultMutableTreeNode cat = (DefaultMutableTreeNode) arbolEspectaculo.getLastSelectedPathComponent();
             String tipoPropuesta = cat.toString();
             String nickProponedor = listaProponentes.getSelectedValue();
-            ArrayList<TipoRetorno> tiposRetorno = new ArrayList<TipoRetorno>();
+            ArrayList<TipoRetorno> tiposRetorno = new ArrayList<>();
             EstadoPropuesta estp = EstadoPropuesta.INGRESADA;
             Estado est = new Estado(estp);
             if (this.checkEntradaGratis.isSelected()) {
@@ -424,10 +424,7 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Seleccione al menos un tipo de retorno", "Alta de Propuesta", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if (!this.campoTitulo.isEnabled()) {
-            return false;
-        }
-        return true;
+        return this.campoTitulo.isEnabled();
     }
 
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed

@@ -31,7 +31,6 @@ import javax.swing.text.AbstractDocument;
 public class AltaUsuario extends javax.swing.JInternalFrame {
 
     private IController controller;
-    private static final String CARPETA_IMAGENES = System.getProperty("user.dir") + File.separator + "imagenesUsuarios" + File.separator;
     private String rutaImagenUsuario;
 
     /**
@@ -46,13 +45,6 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         ((AbstractDocument) this.campoNickname.getDocument()).setDocumentFilter(new FiltroAlfanumerico());
     }
 
-    private String obtenerExtension(String nombreArchivo) {
-        int i = nombreArchivo.lastIndexOf('.');
-        if (i > 0) {
-            return nombreArchivo.substring(i + 1);
-        }
-        return "png";
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.

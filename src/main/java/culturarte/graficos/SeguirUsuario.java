@@ -146,7 +146,6 @@ public class SeguirUsuario extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
-        // TODO add your handling code here:
         String seguidor = this.seguidores.getSelectedValue();
         String usuarioSeguir = this.usuariosASeguir.getSelectedValue();
         this.controller.seguirUsuario(seguidor,usuarioSeguir);
