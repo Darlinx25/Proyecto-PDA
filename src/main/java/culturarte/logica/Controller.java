@@ -26,12 +26,11 @@ public class Controller implements IController {
     private Map<String, Categoria> categorias;
 
     private static Controller instancia;
-    
+
     private EntityManagerFactory emf;//HAY Q SACAR ESTO
     private EntityManager em;//Y ESTO
     private Manejador emr = Manejador.getInstance(); //Y USAR ESTO, DE MOMENTO SE LLAMA EMR pero cuando saquemos lo anterior taria bueno llamro em
-    
-    
+
     private Controller() {
         usuarios = new HashMap<>();
         propuestas = new HashMap<>();
@@ -42,7 +41,7 @@ public class Controller implements IController {
 
         // Verificar si la raíz ya existe en la DB
         //Categoria raiz = em.find(Categoria.class, "Categorías");
-        Categoria raiz = emr.find(Categoria.class,"Categorías");
+        Categoria raiz = emr.find(Categoria.class, "Categorías");
         if (raiz == null) {
             raiz = new Categoria("Categorías");
             emr.add(raiz);
@@ -61,11 +60,11 @@ public class Controller implements IController {
         String nick = user.getNickname();
         String email = user.getEmail();
         ResultadoRegistroUsr salida = null;
-        
-        if (emr.datoUsuarioRepetido("nickname",nick) > 0){
+
+        if (emr.datoUsuarioRepetido("nickname", nick) > 0) {
             return salida.NICK_REPETIDO;
         }
-        if (emr.datoUsuarioRepetido("email",email) > 0){
+        if (emr.datoUsuarioRepetido("email", email) > 0) {
             return salida.EMAIL_REPETIDO;
         }
         String nombre = user.getNombre();
@@ -84,19 +83,18 @@ public class Controller implements IController {
         }
         this.usuarios.put(nick, usu);
         emr.add(usu);
-        return salida.EXITO; 
+        return salida.EXITO;
 
     }
 
     @Override
     public DefaultMutableTreeNode listarCategorias() {
         //throw new UnsupportedOperationException("Not supported yet.");
-        Categoria catRaiz = emr.find(Categoria.class,"Categorías");
+        Categoria catRaiz = emr.find(Categoria.class, "Categorías");
         DefaultMutableTreeNode raiz = nodosArbolCategorias(catRaiz);
         return raiz;
     }
 
-    
     private DefaultMutableTreeNode nodosArbolCategorias(Categoria cat) {
         if (cat == null) {
             return null;
@@ -110,6 +108,7 @@ public class Controller implements IController {
         }
         return nodito;
     }
+
     @Override
     public void addCategoria(String nombre, String nombrePadre) {
         if (this.categorias.containsKey(nombre)) {
@@ -132,7 +131,7 @@ public class Controller implements IController {
 
     @Override
     public ArrayList<String> listarColaboradores() {
-        List<String> aux = emr.listarAtributo(String.class,"nickname","Colaborador");
+        List<String> aux = emr.listarAtributo(String.class, "nickname", "Colaborador");
         return new ArrayList<>(aux);
     }
 
@@ -153,7 +152,7 @@ public class Controller implements IController {
 
     @Override
     public ArrayList<String> listarProponentes() {
-        List<String> aux = emr.listarAtributo(String.class,"nickname","Proponente");
+        List<String> aux = emr.listarAtributo(String.class, "nickname", "Proponente");
         return new ArrayList<>(aux);
     }
 
@@ -184,7 +183,7 @@ public class Controller implements IController {
 
         this.propuestas.put(titulo, propuesta);
         emr.add(propuesta);
-      
+
     }
 
     @Override
@@ -199,14 +198,14 @@ public class Controller implements IController {
             return;
         }
         EstadoPropuesta ese = prop.getEstadoActual().getEstado();
-        if(ese.ordinal() == 1){
+        if (ese.ordinal() == 1) {
             aux.setFechaPublicacion(LocalDate.now());
         }
         aux.setDescripcion(prop.getDescripcion());
-        if(prop.getImagen() != null){
+        if (prop.getImagen() != null) {
             aux.setImagen(prop.getImagen());
         }
-        
+
         aux.setLugarRealizara(prop.getLugarRealizara());
         aux.setFechaRealizara(prop.getFechaRealizara());
         aux.setPrecioEntrada(prop.getPrecioEntrada());
@@ -216,7 +215,7 @@ public class Controller implements IController {
         Categoria cat = emr.find(Categoria.class, prop.getTipoPropuesta());
         aux.setTipoPropuesta(cat);
         emr.mod(aux);
-        
+
     }
 
     @Override
@@ -244,7 +243,7 @@ public class Controller implements IController {
 
     public ArrayList<String> listaPropuestasUsu(String nick) {
         List<String> aux;
-        
+
         /*
         String query = "SELECT p.titulo FROM Propuesta p WHERE p.proponente.nickname = :nick";
         try {
@@ -253,8 +252,8 @@ public class Controller implements IController {
             aux = Collections.emptyList();
             e.printStackTrace();
         }
-        */
-        aux = emr.listarAtributo(String.class,"titulo","Propuesta");
+         */
+        aux = emr.listarAtributo(String.class, "titulo", "Propuesta");
         return new ArrayList<>(aux);
     }
 
@@ -273,8 +272,8 @@ public class Controller implements IController {
             aux = Collections.emptyList();
             e.printStackTrace();
         }
-        */
-        List<String> aux = emr.listarAtributo(String.class,"titulo","Propuesta");
+         */
+        List<String> aux = emr.listarAtributo(String.class, "titulo", "Propuesta");
         return new ArrayList<>(aux);
     }
 
@@ -308,8 +307,8 @@ public class Controller implements IController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        */
-        List<String> aux = emr.listarAtributo(String.class,"nickname","Usuario");
+         */
+        List<String> aux = emr.listarAtributo(String.class, "nickname", "Usuario");
         return new ArrayList<>(aux);
     }
 
@@ -323,13 +322,12 @@ public class Controller implements IController {
         aux.add(usu2.get(0));
         usu1.get(0).setUsuariosSeguidos(aux);
         emr.add(usu1.get(0));
-      
 
     }
 
     @Override
     public ArrayList<String> listarUsuariosSeguir(String nickname) {
-       return emr.obtenerUsuariosSeguir(nickname);
+        return emr.obtenerUsuariosSeguir(nickname);
     }
 
     @Override
@@ -522,7 +520,7 @@ public class Controller implements IController {
         }
         return (ArrayList<String>) aux2;
     }
-    
+
     @Override
     public void eliminarColaboracion(Long id) {
         EntityTransaction t = em.getTransaction();
@@ -547,4 +545,6 @@ public class Controller implements IController {
             e.printStackTrace();
         }
     }
+
+ 
 }

@@ -106,7 +106,7 @@ public class ConsultarPropuesta extends javax.swing.JInternalFrame {
                                 break;
                         }
                     }
-                    
+                    dineroRecaudado.setText(controller.obtenerDineroRecaudado(DTProp.getTitulo()));
                 }
             }
         });
@@ -148,6 +148,8 @@ public class ConsultarPropuesta extends javax.swing.JInternalFrame {
         retornoGanancia = new javax.swing.JCheckBox();
         labelRetorno = new javax.swing.JLabel();
         retornoGratis = new javax.swing.JCheckBox();
+        dineroRecaudado = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -219,6 +221,15 @@ public class ConsultarPropuesta extends javax.swing.JInternalFrame {
         retornoGratis.setText("Entrada Gratis");
         retornoGratis.setEnabled(false);
 
+        dineroRecaudado.setEditable(false);
+        dineroRecaudado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dineroRecaudadoActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Dinero Recaudado :");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -269,17 +280,21 @@ public class ConsultarPropuesta extends javax.swing.JInternalFrame {
                             .addComponent(labelCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
                             .addComponent(campoCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel1)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel1)
+                                .addComponent(jLabel8))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(campoEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(campoEstado, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                                .addComponent(dineroRecaudado))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(labelRetorno)
                         .addGap(57, 57, 57)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(retornoGratis)
                             .addComponent(retornoGanancia))))
-                .addContainerGap(202, Short.MAX_VALUE))
+                .addContainerGap(201, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -328,15 +343,19 @@ public class ConsultarPropuesta extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(campoEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1))
+                                    .addComponent(jLabel1)))
+                            .addComponent(labelImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(dineroRecaudado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelRetorno)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(retornoGratis)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelRetorno)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(retornoGratis)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(retornoGanancia))))
-                            .addComponent(labelImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(retornoGanancia)))))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -346,6 +365,10 @@ public class ConsultarPropuesta extends javax.swing.JInternalFrame {
     private void campoEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoEstadoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoEstadoActionPerformed
+
+    private void dineroRecaudadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dineroRecaudadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dineroRecaudadoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -359,7 +382,9 @@ public class ConsultarPropuesta extends javax.swing.JInternalFrame {
     private javax.swing.JTextField campoLugar;
     private javax.swing.JTextField campoMontoReunir;
     private javax.swing.JTextField campoPrecio;
+    private javax.swing.JTextField dineroRecaudado;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
