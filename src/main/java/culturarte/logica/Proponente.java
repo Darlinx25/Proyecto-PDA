@@ -17,6 +17,7 @@ public class Proponente extends Usuario {
     @Embedded
     private DTDireccion direccion;
     
+    @Column(length = 2000)
     private String biografia;
     private String sitioWeb;
     

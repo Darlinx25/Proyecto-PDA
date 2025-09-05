@@ -7,11 +7,12 @@ package culturarte.logica;
 import culturarte.excepciones.PropuestaYaColaboradaException;
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
+
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
@@ -21,10 +22,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 //SINGLETON
 public class Controller implements IController {
 
-    private Map<String, Usuario> usuarios;
-    private Map<String, Propuesta> propuestas;
-    private Map<String, Categoria> categorias;
-
     private static Controller instancia;
 
     private EntityManagerFactory emf;//HAY Q SACAR ESTO
@@ -32,9 +29,6 @@ public class Controller implements IController {
     private Manejador emr = Manejador.getInstance(); //Y USAR ESTO, DE MOMENTO SE LLAMA EMR pero cuando saquemos lo anterior taria bueno llamro em
 
     private Controller() {
-        usuarios = new HashMap<>();
-        propuestas = new HashMap<>();
-        categorias = new HashMap<>();
 
         emf = Persistence.createEntityManagerFactory("Proyecto_PDA");//ESTO TAMBIEN SE VA
         em = emf.createEntityManager();
@@ -53,7 +47,26 @@ public class Controller implements IController {
         }
         return instancia;
     }
-
+    
+    @Override
+    public void cargarDatosPrueba(){
+        List<Usuario> usu = new ArrayList<>();
+        DTDireccion a = new DTDireccion("Montevideo"," 18 de Julio", 1234);
+        usu.add(new Proponente(new DTDireccion("Montevideo"," 18 de Julio", 1234),"Horacio Rubino Torres nace el 25 de febrero de 1962, es conductor, actor y libretista. Debuta en 1982 en carnaval\n" +
+        "en Los \"Klaper´s\", donde estuvo cuatro años, actuando y libretando. Luego para \"Gaby´s\" (6 años), escribió en\n" +
+        "categoría revistas y humoristas y desde el comienzo y hasta el presente en su propio conjunto Momosapiens.",
+        "https://twitter.com/horaciorubino","hrubino","horacio.rubino@guambia.com.uy","Horacio","Rubino",LocalDate.of(1980,5, 20),"1757102402423.jpg"));//HACER Q LA IMAGEN SE SAQUE DE OTRA CARPETA, 
+                                                                                                                                                        //(ASI COMO ESTA LA SACA DE LA MISMA CARPETA)
+                                                                                                                                                        //Y ESA CARPETA LA SUBIMOS AL REPO CON LAS IMAGENES DE PRUEBA
+        
+        
+        
+        for (Usuario u : usu) {
+            emr.add(u);
+        }
+        
+    }
+    
     @Override
     public ResultadoRegistroUsr addUsuario(DTUsuario user) {
         String nick = user.getNickname();
@@ -79,7 +92,7 @@ public class Controller implements IController {
             String sitioWeb = userProp.getSitioWeb();
             usu = new Proponente(direccion, biografia, sitioWeb, nick, nombre, apellido, email, fechaNac, imagen);
         }
-        this.usuarios.put(nick, usu);
+
         emr.add(usu);
         return ResultadoRegistroUsr.EXITO;
 
@@ -107,9 +120,7 @@ public class Controller implements IController {
 
     @Override
     public void addCategoria(String nombre, String nombrePadre) {
-        if (this.categorias.containsKey(nombre)) {
-            return; // exception después
-        }
+
         Categoria cat = new Categoria(nombre);
         if (nombrePadre != null) {
             Categoria padre = emr.find(Categoria.class, nombrePadre);
@@ -156,10 +167,6 @@ public class Controller implements IController {
     public void addPropuesta(DTPropuesta prop) {
         String titulo = prop.getTitulo();
 
-        if (this.propuestas.containsKey(titulo)) {
-            return;//agregar exception luego
-        }
-
         String descripcion = prop.getDescripcion();
         String imagen = prop.getImagen();
         String lugarRealizara = prop.getLugarRealizara();
@@ -177,7 +184,6 @@ public class Controller implements IController {
         Propuesta propuesta = new Propuesta(titulo, descripcion, imagen, lugarRealizara, fechaRealizara, precioEntrada, montoAReunir, tiposRetorno,
                 tipoPropuesta, proponedor, est);
 
-        this.propuestas.put(titulo, propuesta);
         emr.add(propuesta);
 
     }
@@ -238,7 +244,7 @@ public class Controller implements IController {
 
     @Override
     public ArrayList<String> listaPropuestasUsu(String nick) {
-        
+
         return emr.listaPropuestasUsuario(nick);
     }
 
@@ -510,5 +516,4 @@ public class Controller implements IController {
         }
     }
 
- 
 }

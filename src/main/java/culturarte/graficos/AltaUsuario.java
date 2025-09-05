@@ -499,7 +499,6 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
             String email = this.campoEmail.getText();
             Date fecha = (Date) this.campoFNac.getValue();
             LocalDate fechaNac = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
             DTUsuario user = null;
             if (this.radioColaborador.isSelected()) {
                 user = new DTColaborador(nick, nombre, apellido, email, fechaNac, this.rutaImagenUsuario);

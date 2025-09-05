@@ -4,6 +4,9 @@
  */
 package culturarte.graficos;
 
+import culturarte.logica.IController;
+import culturarte.logica.IControllerFactory;
+
 /**
  *
  * @author faxcundo
@@ -25,14 +28,15 @@ public class MainFrame extends javax.swing.JFrame {
     private CancelarColaboracion cancelarColaboracion;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
-    
+    private IController controller;
 
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         this.setTitle("Culturarte");
-        
+        IControllerFactory fabrica = IControllerFactory.getInstance();
+        this.controller = fabrica.getIController();
         initComponents();
     }
 
@@ -62,6 +66,8 @@ public class MainFrame extends javax.swing.JFrame {
         itemConsultarPropuesta = new javax.swing.JMenuItem();
         itemConsultarColaboracion = new javax.swing.JMenuItem();
         itemConsultPropsPorEstado = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        campoCargarDatos = new javax.swing.JMenuItem();
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
@@ -183,6 +189,18 @@ public class MainFrame extends javax.swing.JFrame {
         menuPropuestas.add(itemConsultPropsPorEstado);
 
         jMenuBar1.add(menuPropuestas);
+
+        jMenu1.setText("Sistema");
+
+        campoCargarDatos.setText("Cargar datos prueba");
+        campoCargarDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoCargarDatosActionPerformed(evt);
+            }
+        });
+        jMenu1.add(campoCargarDatos);
+
+        jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
 
@@ -317,6 +335,10 @@ public class MainFrame extends javax.swing.JFrame {
         this.cancelarColaboracion.setVisible(true);
     }//GEN-LAST:event_itemCancelarColaboracionActionPerformed
 
+    private void campoCargarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoCargarDatosActionPerformed
+        controller.cargarDatosPrueba();
+    }//GEN-LAST:event_campoCargarDatosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -343,6 +365,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem campoCargarDatos;
     private javax.swing.JMenuItem itemAltaCategoria;
     private javax.swing.JMenuItem itemAltaPropuesta;
     private javax.swing.JMenuItem itemAltaUsuario;
@@ -357,6 +380,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemRegistrarColaboracion;
     private javax.swing.JMenuItem itemSeguirUsuario;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu menuPropuestas;
     private javax.swing.JMenu menuUsuarios;

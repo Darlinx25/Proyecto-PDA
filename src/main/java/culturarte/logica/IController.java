@@ -46,4 +46,5 @@ public interface IController {
     public ArrayList<String> obtenerColaboradoresColaboracion(String tituloProp);
     public ArrayList<String> listarPropuestas();
     public void modPropuesta(DTPropuesta prop);
+    public void cargarDatosPrueba();
 }
