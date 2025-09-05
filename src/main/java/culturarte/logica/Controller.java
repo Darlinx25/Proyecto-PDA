@@ -238,9 +238,8 @@ public class Controller implements IController {
 
     @Override
     public ArrayList<String> listaPropuestasUsu(String nick) {
-        List<String> aux;
-        aux = emr.listarAtributo(String.class, "titulo", "Propuesta");
-        return new ArrayList<>(aux);
+        
+        return emr.listaPropuestasUsuario(nick);
     }
 
     @Override

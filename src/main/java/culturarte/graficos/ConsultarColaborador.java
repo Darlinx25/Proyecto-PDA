@@ -318,15 +318,29 @@ public class ConsultarColaborador extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_listaColaboradoresValueChanged
 
     private void listaPropuestasColaboradasValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaPropuestasColaboradasValueChanged
+        resetCampos();
         String tituloProp = this.listaPropuestasColaboradas.getSelectedValue();
-        DTPropuesta prop = this.controller.obtenerDTPropuesta(tituloProp);
+        if(tituloProp == null){
+            System.out.println("Propuesta Null");
+        }else{
+            DTPropuesta prop = this.controller.obtenerDTPropuesta(tituloProp);
+            this.campoNickProp.setText(prop.getNickProponedor());
+            this.campoEstado.setText(prop.getEstadoActual().getEstado().toString());
+        }
         String montoRecaudado = this.controller.obtenerDineroRecaudado(tituloProp);
-        
-        this.campoNickProp.setText(prop.getNickProponedor());
+        if(montoRecaudado == null){
+            System.out.println("Monto NULL");
+        }else{
         this.campoDineroRecaudado.setText(montoRecaudado);
-        this.campoEstado.setText(prop.getEstadoActual().getEstado().toString());
+        }
     }//GEN-LAST:event_listaPropuestasColaboradasValueChanged
-
+    
+    private void resetCampos(){
+        this.campoDineroRecaudado.setText("");
+        this.campoNickProp.setText("");
+        this.campoEstado.setText("");
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField campoApellido;

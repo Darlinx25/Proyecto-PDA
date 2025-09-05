@@ -115,7 +115,19 @@ public class Manejador {
         return new ArrayList<>(aux);
     }
     
-    
+    public ArrayList<String> listaPropuestasUsuario(String nick) {
+        List<String> aux;
+
+
+        String query = "SELECT p.titulo FROM Propuesta p WHERE p.proponente.nickname = :nick";
+        try {
+            aux = em.createQuery(query, String.class).setParameter("nick", nick).getResultList();
+        } catch (Exception e) {
+            aux = Collections.emptyList();
+            e.printStackTrace();
+        }
+        return new ArrayList<>(aux);
+    }
     
     
     
