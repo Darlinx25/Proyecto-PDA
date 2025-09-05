@@ -19,22 +19,22 @@ public class SeguirUsuario extends javax.swing.JInternalFrame {
          this.controller = fabrica.getIController();
          
     initComponents();
-        DefaultListModel<String> modelo = (DefaultListModel<String>) seguidores.getModel();
+        DefaultListModel<String> modelo = (DefaultListModel<String>) listaSeguidores.getModel();
         modelo.clear();
         for(String nick : controller.listarUsuarios()){
             modelo.addElement(nick);
         }
-      seguidores.addListSelectionListener(e ->{
+      listaSeguidores.addListSelectionListener(e ->{
           if (!e.getValueIsAdjusting()) {
-            String seleccionado = seguidores.getSelectedValue();
+            String seleccionado = listaSeguidores.getSelectedValue();
               if(seleccionado!= null){
-              DefaultListModel<String> modelo1 = (DefaultListModel<String>) usuariosASeguir.getModel();
+              DefaultListModel<String> modelo1 = (DefaultListModel<String>) listaUsuariosASeguir.getModel();
                 modelo1.clear();
                 for (String nick1 : controller.listarUsuariosSeguir(seleccionado)) {
                     modelo1.addElement(nick1);
                 }
               }
-              String selected2 = usuariosASeguir.getSelectedValue();
+              String selected2 = listaUsuariosASeguir.getSelectedValue();
               if(seleccionado != null && selected2 != null){
                   enableAceptar();
               }
@@ -43,9 +43,9 @@ public class SeguirUsuario extends javax.swing.JInternalFrame {
               }
       }
     });
-      usuariosASeguir.addListSelectionListener(e ->{
-          String seleccionado = seguidores.getSelectedValue();
-          String selected2 = usuariosASeguir.getSelectedValue();
+      listaUsuariosASeguir.addListSelectionListener(e ->{
+          String seleccionado = listaSeguidores.getSelectedValue();
+          String selected2 = listaUsuariosASeguir.getSelectedValue();
           if(seleccionado!= null && selected2 != null){
               enableAceptar();
           }
@@ -64,12 +64,12 @@ public class SeguirUsuario extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        cancelar = new javax.swing.JButton();
-        aceptar = new javax.swing.JButton();
+        botonCancelar = new javax.swing.JButton();
+        botonAceptar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        seguidores = seguidores = new javax.swing.JList<>(new javax.swing.DefaultListModel<>());
+        listaSeguidores = listaSeguidores = new javax.swing.JList<>(new javax.swing.DefaultListModel<>());
         jScrollPane2 = new javax.swing.JScrollPane();
-        usuariosASeguir = usuariosASeguir = new javax.swing.JList<>(new javax.swing.DefaultListModel<>());
+        listaUsuariosASeguir = listaUsuariosASeguir = new javax.swing.JList<>(new javax.swing.DefaultListModel<>());
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -77,25 +77,26 @@ public class SeguirUsuario extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Seguir usuario");
 
-        cancelar.setText("Cancelar");
-        cancelar.addActionListener(new java.awt.event.ActionListener() {
+        botonCancelar.setText("Cancelar");
+        botonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelarActionPerformed(evt);
+                botonCancelarActionPerformed(evt);
             }
         });
 
-        aceptar.setText("Aceptar");
-        aceptar.setEnabled(false);
-        aceptar.addActionListener(new java.awt.event.ActionListener() {
+        botonAceptar.setText("Aceptar");
+        botonAceptar.setEnabled(false);
+        botonAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                aceptarActionPerformed(evt);
+                botonAceptarActionPerformed(evt);
             }
         });
 
-        jScrollPane1.setViewportView(seguidores);
+        jScrollPane1.setViewportView(listaSeguidores);
 
-        jScrollPane2.setViewportView(usuariosASeguir);
+        jScrollPane2.setViewportView(listaUsuariosASeguir);
 
         jLabel1.setText("Seguidor:");
 
@@ -109,9 +110,9 @@ public class SeguirUsuario extends javax.swing.JInternalFrame {
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(cancelar)
+                        .addComponent(botonCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(aceptar))
+                        .addComponent(botonAceptar))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -137,39 +138,39 @@ public class SeguirUsuario extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cancelar)
-                    .addComponent(aceptar))
+                    .addComponent(botonCancelar)
+                    .addComponent(botonAceptar))
                 .addGap(21, 21, 21))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
-        String seguidor = this.seguidores.getSelectedValue();
-        String usuarioSeguir = this.usuariosASeguir.getSelectedValue();
+    private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
+        String seguidor = this.listaSeguidores.getSelectedValue();
+        String usuarioSeguir = this.listaUsuariosASeguir.getSelectedValue();
         this.controller.seguirUsuario(seguidor,usuarioSeguir);
         this.dispose();
-    }//GEN-LAST:event_aceptarActionPerformed
+    }//GEN-LAST:event_botonAceptarActionPerformed
 
-    private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
+    private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
         this.dispose();
-    }//GEN-LAST:event_cancelarActionPerformed
+    }//GEN-LAST:event_botonCancelarActionPerformed
     private void enableAceptar(){
-        this.aceptar.setEnabled(true);
+        this.botonAceptar.setEnabled(true);
     }
     private void disableAceptar(){
-        this.aceptar.setEnabled(false);
+        this.botonAceptar.setEnabled(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton aceptar;
-    private javax.swing.JButton cancelar;
+    private javax.swing.JButton botonAceptar;
+    private javax.swing.JButton botonCancelar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JList<String> seguidores;
-    private javax.swing.JList<String> usuariosASeguir;
+    private javax.swing.JList<String> listaSeguidores;
+    private javax.swing.JList<String> listaUsuariosASeguir;
     // End of variables declaration//GEN-END:variables
 }

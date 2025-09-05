@@ -90,7 +90,7 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Registrar un Usuario");
+        setTitle("Registrar un usuario");
         setRequestFocusEnabled(false);
 
         jLabel1.setText("Nickname:");

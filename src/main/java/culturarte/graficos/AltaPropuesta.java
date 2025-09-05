@@ -111,12 +111,12 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
         DescripcionL = new javax.swing.JLabel();
         botonAddImagen = new javax.swing.JButton();
         LugarL = new javax.swing.JLabel();
-        Lugar = new javax.swing.JTextField();
+        campoLugar = new javax.swing.JTextField();
         Fecha_realizarL = new javax.swing.JLabel();
         PrecioEntradaL = new javax.swing.JLabel();
         MontoReunirL = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        Descripcion = new javax.swing.JTextArea();
+        areaDescripcion = new javax.swing.JTextArea();
         campoTitulo = new javax.swing.JTextField();
         arbolEspectaculo = new javax.swing.JTree(this.controller.listarCategorias());
         labelRetorno = new javax.swing.JLabel();
@@ -133,7 +133,7 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Alta de Propuesta");
+        setTitle("Alta de propuesta");
         setPreferredSize(new java.awt.Dimension(1000, 500));
 
         botonAceptar.setText("Aceptar");
@@ -173,10 +173,10 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
         LugarL.setText("Lugar:");
         LugarL.setEnabled(false);
 
-        Lugar.setEnabled(false);
-        Lugar.addActionListener(new java.awt.event.ActionListener() {
+        campoLugar.setEnabled(false);
+        campoLugar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LugarActionPerformed(evt);
+                campoLugarActionPerformed(evt);
             }
         });
 
@@ -191,10 +191,10 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
 
         jScrollPane3.setEnabled(false);
 
-        Descripcion.setColumns(20);
-        Descripcion.setRows(5);
-        Descripcion.setEnabled(false);
-        jScrollPane3.setViewportView(Descripcion);
+        areaDescripcion.setColumns(20);
+        areaDescripcion.setRows(5);
+        areaDescripcion.setEnabled(false);
+        jScrollPane3.setViewportView(areaDescripcion);
 
         campoTitulo.setEnabled(false);
         campoTitulo.addActionListener(new java.awt.event.ActionListener() {
@@ -293,7 +293,7 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
                                 .addComponent(MontoReunirL)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Lugar)
+                            .addComponent(campoLugar)
                             .addComponent(campoFechaRealizar, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
                             .addComponent(campoMontoReunir))
                         .addGap(112, 112, 112))))
@@ -323,7 +323,7 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(LugarL)
-                                            .addComponent(Lugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(campoLugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(Fecha_realizarL)
@@ -364,8 +364,8 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
         if (sonValidosLosCampos()) {
 
             String titulo = this.campoTitulo.getText();
-            String descripcion = this.Descripcion.getText();
-            String lugarRealizara = this.Lugar.getText();
+            String descripcion = this.areaDescripcion.getText();
+            String lugarRealizara = this.campoLugar.getText();
             Date fecha = (Date) this.campoFechaRealizar.getValue();
             LocalDate fechaRealizara = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             Number precioEntrada1 = (Number) this.campoPrecioEntrada.getValue();
@@ -397,10 +397,10 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
         if (this.campoTitulo.getText().isBlank()) {
             return false;
         }
-        if (this.Descripcion.getText().isBlank()) {
+        if (this.areaDescripcion.getText().isBlank()) {
             return false;
         }
-        if (this.Lugar.getText().isBlank()) {
+        if (this.campoLugar.getText().isBlank()) {
             return false;
         }
         if (this.campoFechaRealizar.getText().isBlank()) {
@@ -482,18 +482,18 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
         return "desconocido";
     }//GEN-LAST:event_botonAddImagenActionPerformed
 
-    private void LugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LugarActionPerformed
+    private void campoLugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoLugarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_LugarActionPerformed
+    }//GEN-LAST:event_campoLugarActionPerformed
     
     
     private void enableDatosPropuesta(){
-        this.Descripcion.setEnabled(true);
+        this.areaDescripcion.setEnabled(true);
         this.DescripcionL.setEnabled(true);
         this.campoFechaRealizar.setEnabled(true);
         this.Fecha_realizarL.setEnabled(true);
         this.botonAddImagen.setEnabled(true);
-        this.Lugar.setEnabled(true);
+        this.campoLugar.setEnabled(true);
         this.LugarL.setEnabled(true);
         this.MontoReunirL.setEnabled(true);
         this.campoTitulo.setEnabled(true);
@@ -508,19 +508,19 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
     }
     
      private void disableDatosPropuesta(){
-        this.Descripcion.setEnabled(false);
+        this.areaDescripcion.setEnabled(false);
         this.DescripcionL.setEnabled(false);
         this.campoFechaRealizar.setEnabled(false);
         this.Fecha_realizarL.setEnabled(false);
         this.botonAddImagen.setEnabled(false);
-        this.Lugar.setEnabled(false);
+        this.campoLugar.setEnabled(false);
         this.LugarL.setEnabled(false);
         this.MontoReunirL.setEnabled(false);
         this.campoTitulo.setEnabled(false);
         this.NombreL.setEnabled(false);
         this.PrecioEntradaL.setEnabled(false);
         this.campoPrecioEntrada.setEnabled(false);
-        this.Descripcion.setEnabled(false);
+        this.areaDescripcion.setEnabled(false);
         this.labelRetorno.setEnabled(false);
         this.checkEntradaGratis.setEnabled(false);   
         this.checkGanancias.setEnabled(false); 
@@ -540,10 +540,8 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea Descripcion;
     private javax.swing.JLabel DescripcionL;
     private javax.swing.JLabel Fecha_realizarL;
-    private javax.swing.JTextField Lugar;
     private javax.swing.JLabel LugarL;
     private javax.swing.JLabel MontoReunirL;
     private javax.swing.JLabel NombreL;
@@ -551,10 +549,12 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
     private javax.swing.JLabel Proponentes;
     private javax.swing.JLabel Tipo_de_Espectaculo;
     private javax.swing.JTree arbolEspectaculo;
+    private javax.swing.JTextArea areaDescripcion;
     private javax.swing.JButton botonAceptar;
     private javax.swing.JButton botonAddImagen;
     private javax.swing.JButton botonCancelar;
     private javax.swing.JFormattedTextField campoFechaRealizar;
+    private javax.swing.JTextField campoLugar;
     private javax.swing.JFormattedTextField campoMontoReunir;
     private javax.swing.JFormattedTextField campoPrecioEntrada;
     private javax.swing.JTextField campoTitulo;

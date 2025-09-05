@@ -43,16 +43,16 @@
               </Group>
               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="SelectImagen" max="32767" attributes="0"/>
+                  <Component id="botonAddImagen" max="32767" attributes="0"/>
                   <Component id="campoImagen" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="74" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="labelCategoria" min="-2" pref="127" max="-2" attributes="0"/>
-                  <Component id="categoria" min="-2" pref="115" max="-2" attributes="0"/>
+                  <Component id="arbolCategoria" min="-2" pref="115" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="retornoGratis" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="retornoGanancia" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="checkRetornoGratis" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="checkRetornoGanancia" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="labelRetorno" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
@@ -68,17 +68,17 @@
                           <Component id="labelPrecio" alignment="1" min="-2" pref="127" max="-2" attributes="0"/>
                           <Component id="labelFechaRealizar" alignment="1" min="-2" pref="127" max="-2" attributes="0"/>
                           <Component id="labelLugar" alignment="0" min="-2" pref="127" max="-2" attributes="0"/>
-                          <Component id="jButton1" alignment="1" min="-2" pref="92" max="-2" attributes="0"/>
+                          <Component id="botonCancelar" alignment="1" min="-2" pref="92" max="-2" attributes="0"/>
                           <Component id="labelCategoria1" alignment="1" min="-2" pref="127" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="lugar" alignment="0" pref="153" max="32767" attributes="0"/>
-                          <Component id="Aceptar" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
-                          <Component id="fecharealizar" alignment="0" max="32767" attributes="0"/>
-                          <Component id="estado" min="-2" max="-2" attributes="0"/>
-                          <Component id="precioentrada" alignment="0" max="32767" attributes="0"/>
-                          <Component id="montoreunir" alignment="0" max="32767" attributes="0"/>
+                          <Component id="campoLugar" alignment="0" pref="153" max="32767" attributes="0"/>
+                          <Component id="botonAceptar" alignment="0" min="-2" pref="92" max="-2" attributes="0"/>
+                          <Component id="campoFechaRealizar" alignment="0" max="32767" attributes="0"/>
+                          <Component id="comboEstado" min="-2" max="-2" attributes="0"/>
+                          <Component id="campoPrecioEntrada" alignment="0" max="32767" attributes="0"/>
+                          <Component id="campoMontoReunir" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Component id="jScrollPane2" alignment="0" min="-2" pref="298" max="-2" attributes="0"/>
@@ -105,49 +105,49 @@
                               <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lugar" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="campoLugar" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="labelLugar" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="labelFechaRealizar" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="fecharealizar" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="campoFechaRealizar" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Component id="campoImagen" min="-2" pref="133" max="-2" attributes="0"/>
-                          <Component id="categoria" min="-2" pref="133" max="-2" attributes="0"/>
+                          <Component id="arbolCategoria" min="-2" pref="133" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelPrecio" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="precioentrada" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="campoPrecioEntrada" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="labelMontoReunir" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="SelectImagen" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                                  <Component id="montoreunir" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="botonAddImagen" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                                  <Component id="campoMontoReunir" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="labelCategoria1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="estado" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="comboEstado" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="labelRetorno" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="retornoGratis" min="-2" max="-2" attributes="0"/>
+                              <Component id="checkRetornoGratis" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="retornoGanancia" min="-2" max="-2" attributes="0"/>
+                              <Component id="checkRetornoGanancia" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="43" pref="50" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="Aceptar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="botonCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="botonAceptar" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Component id="jScrollPane1" min="-2" pref="199" max="-2" attributes="0"/>
@@ -158,21 +158,21 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="botonCancelar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cancelar"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonCancelarActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="Aceptar">
+    <Component class="javax.swing.JButton" name="botonAceptar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Aceptar"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AceptarActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonAceptarActionPerformed"/>
       </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -182,7 +182,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JList" name="ListaPropuestas">
+        <Component class="javax.swing.JList" name="listaPropuestas">
           <Properties>
             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
               <StringArray count="0"/>
@@ -225,7 +225,7 @@
         <Property name="text" type="java.lang.String" value="Precio de entrada:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="lugar">
+    <Component class="javax.swing.JTextField" name="campoLugar">
       <Properties>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
@@ -240,7 +240,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextArea" name="descripcion">
+        <Component class="javax.swing.JTextArea" name="areaDescripcion">
           <Properties>
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
@@ -262,13 +262,13 @@
         <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="labelImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);&#xa;&#xa;labelImagen.setVerticalAlignment(javax.swing.SwingConstants.TOP);"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JButton" name="SelectImagen">
+    <Component class="javax.swing.JButton" name="botonAddImagen">
       <Properties>
         <Property name="text" type="java.lang.String" value="Seleccionar Imagen"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SelectImagenActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonAddImagenActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="labelCategoria1">
@@ -276,7 +276,7 @@
         <Property name="text" type="java.lang.String" value="Estado:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JFormattedTextField" name="fecharealizar">
+    <Component class="javax.swing.JFormattedTextField" name="campoFechaRealizar">
       <Properties>
         <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
           <Format format="dd/MM/y" subtype="-1" type="1"/>
@@ -284,10 +284,10 @@
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fecharealizarActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campoFechaRealizarActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JComboBox" name="estado">
+    <Component class="javax.swing.JComboBox" name="comboEstado">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="6">
@@ -304,12 +304,12 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JTree" name="categoria">
+    <Component class="javax.swing.JTree" name="arbolCategoria">
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTree(this.controller.listarCategorias())"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="retornoGanancia">
+    <Component class="javax.swing.JCheckBox" name="checkRetornoGanancia">
       <Properties>
         <Property name="text" type="java.lang.String" value="Porcentaje de Ganancias"/>
         <Property name="enabled" type="boolean" value="false"/>
@@ -320,32 +320,32 @@
         <Property name="text" type="java.lang.String" value="Tipo de Retorno:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="retornoGratis">
+    <Component class="javax.swing.JCheckBox" name="checkRetornoGratis">
       <Properties>
         <Property name="text" type="java.lang.String" value="Entrada Gratis"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JFormattedTextField" name="precioentrada">
+    <Component class="javax.swing.JFormattedTextField" name="campoPrecioEntrada">
       <Properties>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="precioentradaActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campoPrecioEntradaActionPerformed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="precioentrada.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat(&quot;0.00&quot;, new DecimalFormatSymbols(Locale.US)))));&#xa;&#xa;precioentrada.addActionListener(new java.awt.event.ActionListener() {&#xa;    public void actionPerformed(java.awt.event.ActionEvent evt) {&#xa;        precioentradaActionPerformed(evt);&#xa;    }&#xa;});"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="campoPrecioEntrada.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat(&quot;0.00&quot;, new DecimalFormatSymbols(Locale.US)))));&#xa;&#xa;campoPrecioEntrada.addActionListener(new java.awt.event.ActionListener() {&#xa;    public void actionPerformed(java.awt.event.ActionEvent evt) {&#xa;        campoPrecioEntradaActionPerformed(evt);&#xa;    }&#xa;});"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JFormattedTextField" name="montoreunir">
+    <Component class="javax.swing.JFormattedTextField" name="campoMontoReunir">
       <Properties>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="montoreunirActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campoMontoReunirActionPerformed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="montoreunir.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat(&quot;0.00&quot;, new DecimalFormatSymbols(Locale.US)))));&#xa;&#xa;montoreunir.addActionListener(new java.awt.event.ActionListener() {&#xa;    public void actionPerformed(java.awt.event.ActionEvent evt) {&#xa;        montoreunirActionPerformed(evt);&#xa;    }&#xa;});"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="campoMontoReunir.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat(&quot;0.00&quot;, new DecimalFormatSymbols(Locale.US)))));&#xa;&#xa;campoMontoReunir.addActionListener(new java.awt.event.ActionListener() {&#xa;    public void actionPerformed(java.awt.event.ActionEvent evt) {&#xa;        campoMontoReunirActionPerformed(evt);&#xa;    }&#xa;});"/>
       </AuxValues>
     </Component>
   </SubComponents>

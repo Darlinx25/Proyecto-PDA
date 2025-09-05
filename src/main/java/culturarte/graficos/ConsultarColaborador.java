@@ -75,7 +75,7 @@ public class ConsultarColaborador extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Consultar Colaborador");
+        setTitle("Consultar colaborador");
         getContentPane().setLayout(new java.awt.CardLayout());
 
         listaColaboradores.addListSelectionListener(new javax.swing.event.ListSelectionListener() {

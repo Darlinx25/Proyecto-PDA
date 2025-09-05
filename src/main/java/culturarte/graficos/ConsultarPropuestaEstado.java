@@ -39,23 +39,23 @@ public class ConsultarPropuestaEstado extends javax.swing.JInternalFrame {
         this.controller = fabrica.getIController();
         initComponents();
 
-        ListaEstados.addListSelectionListener(e -> {
+        listaEstados.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
-                String selec = ListaEstados.getSelectedValue();
+                String selec = listaEstados.getSelectedValue();
 
                 if (selec != null) {
-                    int estado = ListaEstados.getSelectedIndex();
+                    int estado = listaEstados.getSelectedIndex();
                     controller.listarPropuestasEstado(estado);
-                    DefaultListModel<String> modelo = (DefaultListModel<String>) listPropEstado.getModel();
+                    DefaultListModel<String> modelo = (DefaultListModel<String>) listaPropEstado.getModel();
                     modelo.clear();
                     for (String prop : controller.listarPropuestasEstado(estado)) {
                         modelo.addElement(prop);
                     }
                     resetCampos();
-                    listPropEstado.addListSelectionListener(i -> {
+                    listaPropEstado.addListSelectionListener(i -> {
 
                         if (!i.getValueIsAdjusting()) {
-                            String propuesta = listPropEstado.getSelectedValue();
+                            String propuesta = listaPropEstado.getSelectedValue();
                             if (propuesta != null) {
                                 DTPropuesta datosProp = controller.obtenerDTPropuesta(propuesta);
                                 this.areaDescripcion.setText(datosProp.getDescripcion());
@@ -93,16 +93,16 @@ public class ConsultarPropuestaEstado extends javax.swing.JInternalFrame {
                                     }
                                 }
                                 List<TipoRetorno> aux = datosProp.getTiposRetorno();
-                                this.retornoGratis.setSelected(false);
-                                this.retornoGanancia.setSelected(false);
+                                this.campoRetornoGratis.setSelected(false);
+                                this.campoRetornoGanancia.setSelected(false);
                                 for (TipoRetorno item : aux) {
 
                                     switch (item) {
                                         case ENTRADA_GRATIS:
-                                            this.retornoGratis.setSelected(true);
+                                            this.campoRetornoGratis.setSelected(true);
                                             break;
                                         case PORCENTAJE_GANANCIAS:
-                                            this.retornoGanancia.setSelected(true);
+                                            this.campoRetornoGanancia.setSelected(true);
                                             break;
                                     }
                                 }
@@ -126,10 +126,10 @@ public class ConsultarPropuestaEstado extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        ListaEstados = new javax.swing.JList<>();
+        listaEstados = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        listPropEstado = new javax.swing.JList<>(new javax.swing.DefaultListModel<>());
+        listaPropEstado = new javax.swing.JList<>(new javax.swing.DefaultListModel<>());
         jLabel2 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         areaDescripcion = new javax.swing.JTextArea();
@@ -147,32 +147,33 @@ public class ConsultarPropuestaEstado extends javax.swing.JInternalFrame {
         campoMontoReunir = new javax.swing.JTextField();
         labelImagen = new javax.swing.JLabel();
         labelMontoReunir = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        botonSalir = new javax.swing.JButton();
         imagen = new javax.swing.JLabel();
         labelRetorno = new javax.swing.JLabel();
-        retornoGratis = new javax.swing.JCheckBox();
-        retornoGanancia = new javax.swing.JCheckBox();
+        campoRetornoGratis = new javax.swing.JCheckBox();
+        campoRetornoGanancia = new javax.swing.JCheckBox();
 
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
+        setTitle("Consultar propuestas por estado");
         setPreferredSize(new java.awt.Dimension(720, 450));
 
-        ListaEstados.setModel(new javax.swing.AbstractListModel<String>() {
+        listaEstados.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Ingresada", "Publicada", "En Financiacion", "Financiada", "No Financida", "Cancelada" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        ListaEstados.addMouseListener(new java.awt.event.MouseAdapter() {
+        listaEstados.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ListaEstadosMouseClicked(evt);
+                listaEstadosMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(ListaEstados);
+        jScrollPane1.setViewportView(listaEstados);
 
         jLabel1.setText("Estados");
 
-        jScrollPane2.setViewportView(listPropEstado);
+        jScrollPane2.setViewportView(listaPropEstado);
 
         jLabel2.setText("Propuestas");
 
@@ -215,11 +216,11 @@ public class ConsultarPropuestaEstado extends javax.swing.JInternalFrame {
 
         labelMontoReunir.setText("Monto a reunir:");
 
-        jButton1.setText("Salir");
-        jButton1.setToolTipText("");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botonSalir.setText("Salir");
+        botonSalir.setToolTipText("");
+        botonSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botonSalirActionPerformed(evt);
             }
         });
 
@@ -235,11 +236,11 @@ public class ConsultarPropuestaEstado extends javax.swing.JInternalFrame {
 
         labelRetorno.setText("Tipo de Retorno:");
 
-        retornoGratis.setText("Entrada Gratis");
-        retornoGratis.setEnabled(false);
+        campoRetornoGratis.setText("Entrada Gratis");
+        campoRetornoGratis.setEnabled(false);
 
-        retornoGanancia.setText("Porcentaje de Ganancias");
-        retornoGanancia.setEnabled(false);
+        campoRetornoGanancia.setText("Porcentaje de Ganancias");
+        campoRetornoGanancia.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -250,7 +251,7 @@ public class ConsultarPropuestaEstado extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(botonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(76, 76, 76))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -306,8 +307,8 @@ public class ConsultarPropuestaEstado extends javax.swing.JInternalFrame {
                                             .addGroup(layout.createSequentialGroup()
                                                 .addGap(18, 18, 18)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addComponent(retornoGratis, javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(retornoGanancia, javax.swing.GroupLayout.Alignment.LEADING))))))
+                                                    .addComponent(campoRetornoGratis, javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(campoRetornoGanancia, javax.swing.GroupLayout.Alignment.LEADING))))))
                                 .addGap(69, 69, 69))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(labelRetorno)
@@ -361,11 +362,11 @@ public class ConsultarPropuestaEstado extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelRetorno)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(retornoGratis)
+                                .addComponent(campoRetornoGratis)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(retornoGanancia)))
+                                .addComponent(campoRetornoGanancia)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addComponent(botonSalir)
                         .addGap(23, 23, 23))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -379,13 +380,13 @@ public class ConsultarPropuestaEstado extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ListaEstadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListaEstadosMouseClicked
+    private void listaEstadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaEstadosMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_ListaEstadosMouseClicked
+    }//GEN-LAST:event_listaEstadosMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_botonSalirActionPerformed
 
     private void imagenAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_imagenAncestorAdded
         // TODO add your handling code here:
@@ -404,16 +405,17 @@ public class ConsultarPropuestaEstado extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList<String> ListaEstados;
     private javax.swing.JTextArea areaDescripcion;
+    private javax.swing.JButton botonSalir;
     private javax.swing.JTextField campoCategoria;
     private javax.swing.JTextField campoFechaPublicacion;
     private javax.swing.JTextField campoFechaRealizar;
     private javax.swing.JTextField campoLugar;
     private javax.swing.JTextField campoMontoReunir;
     private javax.swing.JTextField campoPrecio;
+    private javax.swing.JCheckBox campoRetornoGanancia;
+    private javax.swing.JCheckBox campoRetornoGratis;
     private javax.swing.JLabel imagen;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -428,8 +430,7 @@ public class ConsultarPropuestaEstado extends javax.swing.JInternalFrame {
     private javax.swing.JLabel labelMontoReunir;
     private javax.swing.JLabel labelPrecio;
     private javax.swing.JLabel labelRetorno;
-    private javax.swing.JList<String> listPropEstado;
-    private javax.swing.JCheckBox retornoGanancia;
-    private javax.swing.JCheckBox retornoGratis;
+    private javax.swing.JList<String> listaEstados;
+    private javax.swing.JList<String> listaPropEstado;
     // End of variables declaration//GEN-END:variables
 }
