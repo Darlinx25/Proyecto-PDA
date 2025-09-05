@@ -4,7 +4,6 @@
  */
 package culturarte.logica;
 import jakarta.persistence.*;
-import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

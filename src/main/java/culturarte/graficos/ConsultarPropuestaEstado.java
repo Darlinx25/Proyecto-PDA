@@ -5,7 +5,6 @@
 package culturarte.graficos;
 
 import culturarte.logica.DTPropuesta;
-import culturarte.logica.EstadoPropuesta;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
 import culturarte.logica.TipoRetorno;
@@ -23,8 +22,6 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 /**
  *

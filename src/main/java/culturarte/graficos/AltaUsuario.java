@@ -14,7 +14,6 @@ import culturarte.logica.ResultadoRegistroUsr;
 import culturarte.utils.FiltroAlfanumerico;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,8 +25,6 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.io.*;
-import java.nio.file.*;
 import javax.swing.JOptionPane;
 import javax.swing.text.AbstractDocument;
 
