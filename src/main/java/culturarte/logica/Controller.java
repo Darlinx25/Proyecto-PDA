@@ -50,21 +50,35 @@ public class Controller implements IController {
     
     @Override
     public void cargarDatosPrueba(){
-        List<Usuario> usu = new ArrayList<>();
-        DTDireccion a = new DTDireccion("Montevideo"," 18 de Julio", 1234);
-        usu.add(new Proponente(new DTDireccion("Montevideo"," 18 de Julio", 1234),"Horacio Rubino Torres nace el 25 de febrero de 1962, es conductor, actor y libretista. Debuta en 1982 en carnaval\n" +
+        cargarUsuariosPrueba();
+        
+        
+        
+        
+    }
+    
+    private void cargarUsuariosPrueba() {
+        List<DTUsuario> usu = obtenerProponentesPrueba();
+        usu.addAll(obtenerColaboradoresPrueba());
+        
+        for (DTUsuario u : usu) {
+            addUsuario(u);
+        }
+    }
+    private List<DTUsuario> obtenerProponentesPrueba() {
+        List<DTUsuario> usu = new ArrayList<>();
+        usu.add(new DTProponente(new DTDireccion("Montevideo"," 18 de Julio", 1234),"Horacio Rubino Torres nace el 25 de febrero de 1962, es conductor, actor y libretista. Debuta en 1982 en carnaval\n" +
         "en Los \"Klaper´s\", donde estuvo cuatro años, actuando y libretando. Luego para \"Gaby´s\" (6 años), escribió en\n" +
         "categoría revistas y humoristas y desde el comienzo y hasta el presente en su propio conjunto Momosapiens.",
-        "https://twitter.com/horaciorubino","hrubino","horacio.rubino@guambia.com.uy","Horacio","Rubino",LocalDate.of(1980,5, 20),"1757102402423.jpg"));//HACER Q LA IMAGEN SE SAQUE DE OTRA CARPETA, 
-                                                                                                                                                        //(ASI COMO ESTA LA SACA DE LA MISMA CARPETA)
-                                                                                                                                                        //Y ESA CARPETA LA SUBIMOS AL REPO CON LAS IMAGENES DE PRUEBA
+        "https://twitter.com/horaciorubino","hrubino","Horacio","Rubino","horacio.rubino@guambia.com.uy",LocalDate.of(1980,5, 20),"../imagenesRespaldoBD/HRimg.jpg"));
         
+        return usu;
+    }
+    private List<DTUsuario> obtenerColaboradoresPrueba() {
+        List<DTUsuario> usu = new ArrayList<>();
+        usu.add(new DTColaborador("robinh", "Robin", "Henderson", "Robin.h@tinglesa.com.uy", LocalDate.of(1940, 8, 3), "../imagenesRespladoBD/RHimg.jpg"));
         
-        
-        for (Usuario u : usu) {
-            emr.add(u);
-        }
-        
+        return usu;
     }
     
     @Override
