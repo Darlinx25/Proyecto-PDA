@@ -120,27 +120,27 @@ public class Controller implements IController {
     }
     private List<DTUsuario> obtenerColaboradoresPrueba() {
         List<DTUsuario> usu = new ArrayList<>();
-        usu.add(new DTColaborador("robinh", "Robin", "Henderson", "Robin.h@tinglesa.com.uy", LocalDate.of(1940, 8, 3), "../imagenesRespladoBD/RHimg.jpg"));
+        usu.add(new DTColaborador("robinh", "Robin", "Henderson", "Robin.h@tinglesa.com.uy", LocalDate.of(1940, 8, 3), "../imagenesRespaldoBD/RHimg.jpg"));
         
-        usu.add(new DTColaborador("marcelot", "Marcelo", "Tinelli", "marcelot@ideasdelsur.com.ar", LocalDate.of(1960, 4, 1), "../imagenesRespladoBD/MTimg.jpg"));
+        usu.add(new DTColaborador("marcelot", "Marcelo", "Tinelli", "marcelot@ideasdelsur.com.ar", LocalDate.of(1960, 4, 1), "../imagenesRespaldoBD/MTimg.jpg"));
         
-        usu.add(new DTColaborador("novick", "Edgardo", "Novick", "edgardo@novick.com.uy", LocalDate.of(1952, 7, 17), "../imagenesRespladoBD/ENimg.jpg"));
+        usu.add(new DTColaborador("novick", "Edgardo", "Novick", "edgardo@novick.com.uy", LocalDate.of(1952, 7, 17), "../imagenesRespaldoBD/ENimg.jpg"));
         
-        usu.add(new DTColaborador("sergiop", "Sergio", "Puglia", "puglia@alpanpan.com.uy", LocalDate.of(1950, 1, 28), "../imagenesRespladoBD/SPimg.jpg"));
+        usu.add(new DTColaborador("sergiop", "Sergio", "Puglia", "puglia@alpanpan.com.uy", LocalDate.of(1950, 1, 28), "../imagenesRespaldoBD/SPimg.jpg"));
         
-        usu.add(new DTColaborador("chino", "Alvaro", "Recoba", "chino@trico.org.uy", LocalDate.of(1976, 3, 17), "../imagenesRespladoBD/ARimg.jpg"));
+        usu.add(new DTColaborador("chino", "Alvaro", "Recoba", "chino@trico.org.uy", LocalDate.of(1976, 3, 17), "../imagenesRespaldoBD/ARimg.jpg"));
         
-        usu.add(new DTColaborador("tonyp", "Antonio", "Pacheco", "eltony@manya.org.uy", LocalDate.of(1955, 2, 14), "../imagenesRespladoBD/APimg.jpg"));
+        usu.add(new DTColaborador("tonyp", "Antonio", "Pacheco", "eltony@manya.org.uy", LocalDate.of(1955, 2, 14), "../imagenesRespaldoBD/APimg.jpg"));
         
-        usu.add(new DTColaborador("nicoJ", "Nicolás", "Jodal", "jodal@artech.com.uy", LocalDate.of(1960, 8, 9), "../imagenesRespladoBD/NJimg.jpg"));
+        usu.add(new DTColaborador("nicoJ", "Nicolás", "Jodal", "jodal@artech.com.uy", LocalDate.of(1960, 8, 9), "../imagenesRespaldoBD/NJimg.jpg"));
         
-        usu.add(new DTColaborador("juanP", "Juan", "Perez", "juanp@elpueblo.com", LocalDate.of(1970, 1, 1), "../imagenesRespladoBD/JPimg.jpg"));
+        usu.add(new DTColaborador("juanP", "Juan", "Perez", "juanp@elpueblo.com", LocalDate.of(1970, 1, 1), "../imagenesRespaldoBD/JPimg.jpg"));
         
-        usu.add(new DTColaborador("Mengano", "Mengano", "Gómez", "menganog@elpueblo.com", LocalDate.of(1982, 2, 2), "../imagenesRespladoBD/MGimg.jpg"));
+        usu.add(new DTColaborador("Mengano", "Mengano", "Gómez", "menganog@elpueblo.com", LocalDate.of(1982, 2, 2), "../imagenesRespaldoBD/MGimg.jpg"));
         
-        usu.add(new DTColaborador("Perengano", "Perengano", "López", "pere@elpueblo.com", LocalDate.of(1985, 3, 3), "../imagenesRespladoBD/PLimg.jpg"));
+        usu.add(new DTColaborador("Perengano", "Perengano", "López", "pere@elpueblo.com", LocalDate.of(1985, 3, 3), "../imagenesRespaldoBD/PLimg.jpg"));
         
-        usu.add(new DTColaborador("Tiajaci", "Tía", "Jacinta", "jacinta@elpueblo.com", LocalDate.of(1990, 4, 4), "../imagenesRespladoBD/TJimg.jpg"));
+        usu.add(new DTColaborador("Tiajaci", "Tía", "Jacinta", "jacinta@elpueblo.com", LocalDate.of(1990, 4, 4), "../imagenesRespaldoBD/TJimg.jpg"));
         
         return usu;
     }
