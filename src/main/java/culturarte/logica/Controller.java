@@ -52,10 +52,39 @@ public class Controller implements IController {
     public void cargarDatosPrueba(){
         cargarUsuariosPrueba();
         cargarSeguidoresPrueba();
+        cargarCategoriasPrueba();
         
         
         
+    }
+    
+    private void cargarCategoriasPrueba() {
+        addCategoria("Teatro", "Categorías");
+        addCategoria("Teatro Dramático", "Teatro");
+        addCategoria("Teatro Musical", "Teatro");
+        addCategoria("Comedia", "Teatro");
+        addCategoria("Stand-up", "Comedia");
         
+        addCategoria("Literatura", "Categorías");
+        
+        addCategoria("Música", "Categorías");
+        addCategoria("Festival", "Música");
+        addCategoria("Concierto", "Música");
+        
+        addCategoria("Cine", "Categorías");
+        addCategoria("Cine al Aire Libre", "Cine");
+        addCategoria("Cine a Pedal", "Cine");
+        
+        addCategoria("Danza", "Categorías");
+        addCategoria("Ballet", "Danza");
+        addCategoria("Flamenco", "Danza");
+        
+        addCategoria("Carnaval", "Categorías");
+        addCategoria("Murga", "Carnaval");
+        addCategoria("Humoristas", "Carnaval");
+        addCategoria("Parodistas", "Carnaval");
+        addCategoria("Lubolos", "Carnaval");
+        addCategoria("Revista", "Carnaval");
     }
     
     private void cargarSeguidoresPrueba() {
