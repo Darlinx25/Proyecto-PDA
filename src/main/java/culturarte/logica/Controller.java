@@ -23,15 +23,10 @@ import javax.swing.tree.DefaultMutableTreeNode;
 public class Controller implements IController {
 
     private static Controller instancia;
-
-    private EntityManagerFactory emf;//HAY Q SACAR ESTO
-    private EntityManager em;//Y ESTO
-    private Manejador emr = Manejador.getInstance(); //Y USAR ESTO, DE MOMENTO SE LLAMA EMR pero cuando saquemos lo anterior taria bueno llamro em
-
+    private Manejador emr = Manejador.getInstance(); 
     private Controller() {
 
-        emf = Persistence.createEntityManagerFactory("Proyecto_PDA");//ESTO TAMBIEN SE VA
-        em = emf.createEntityManager();
+
 
         // Verificar si la raíz ya existe en la DB
         Categoria raiz = emr.find(Categoria.class, "Categorías");
@@ -397,7 +392,7 @@ public class Controller implements IController {
     @Override
     public DTProponente obtenerDTProponente(String nick) {
         try {
-            Proponente p = em.find(Proponente.class, nick); // Buscar proponente por PK
+            Proponente p = emr.find(Proponente.class, nick); // Buscar proponente por PK
             if (p != null) {
                 return new DTProponente(
                         p.getDireccion(),
@@ -478,23 +473,8 @@ public class Controller implements IController {
 
     @Override
     public ArrayList<String> listarPropuestasProponentes() {
-        List<Object[]> aux;
-        List<String> aux2 = new ArrayList<>();
-
-        String query = "SELECT p.titulo, p.proponente.nickname FROM Propuesta p"
-                + " WHERE p.estadoActual.estado = :estado1 OR p.estadoActual.estado = :estado2";
-        try {
-            aux = em.createQuery(query, Object[].class)
-                    .setParameter("estado1", EstadoPropuesta.PUBLICADA)
-                    .setParameter("estado2", EstadoPropuesta.EN_FINANCIACION)
-                    .getResultList();
-            for (Object[] fila : aux) {
-                aux2.add(fila[0] + " - " + fila[1]);
-            }
-        } catch (Exception e) {
-            aux2 = Collections.emptyList();
-        }
-        return (ArrayList<String>) aux2;
+        
+        return emr.listPropuestasProponentes();
     }
 
     @Override
@@ -518,35 +498,17 @@ public class Controller implements IController {
 
     @Override
     public void realizarColaboracion(String nickColab, String tituloProp, float montoColab, String tipoRetorno) throws PropuestaYaColaboradaException {
-        Colaborador colab = em.find(Colaborador.class, nickColab);
-        Propuesta prop = em.find(Propuesta.class, tituloProp);
+        Colaborador colab = emr.find(Colaborador.class, nickColab);
+        Propuesta prop = emr.find(Propuesta.class, tituloProp);
         List<String> aux = new ArrayList<>();
-
-        String query = "SELECT c.propuestaColaborada.titulo FROM Colaboracion c WHERE c.colaborador.nickname = :nickColab"
-                + " AND c.propuestaColaborada.titulo = :tituloProp";
-
-        try {
-            aux = em.createQuery(query, String.class)
-                    .setParameter("nickColab", nickColab)
-                    .setParameter("tituloProp", tituloProp)
-                    .getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
-
+        
+        
+        emr.propuestaColaboradaPorUser(nickColab, tituloProp);
+        
         if (colab != null && prop != null && aux.isEmpty()) {
             Colaboracion colaboracion = new Colaboracion(montoColab, tipoRetorno, colab, prop);
 
-            EntityTransaction t = em.getTransaction();
-            try {
-                t.begin();
-                em.persist(colaboracion);
-                t.commit();
-            } catch (Exception e) {
-                t.rollback();
-                e.printStackTrace();
-            }
+            emr.add(colaboracion);
         } else {
             throw new PropuestaYaColaboradaException(nickColab + " ya tiene una colaboración con " + tituloProp);
         }
@@ -554,52 +516,26 @@ public class Controller implements IController {
 
     @Override
     public String obtenerDineroRecaudado(String tituloProp) {
-        List<Float> aux;
-        Float resultado = 0f;
-        String query = "SELECT c.monto FROM Colaboracion c WHERE c.propuestaColaborada.titulo = :tituloProp";
-        try {
-            aux = em.createQuery(query, Float.class).setParameter("tituloProp", tituloProp).getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
+        List<Float> aux = emr.obtenerDinero(tituloProp);
+        float resultado = 0f;
+        if(aux.isEmpty()){
             return "0";
         }
         for (Float actual : aux) {
             resultado += actual;
         }
-        return resultado.toString();
+        return String.valueOf(resultado);
 
     }
 
     @Override
     public ArrayList<String> obtenerColaboradoresColaboracion(String tituloProp) {
-        List<String> aux;
-        String query = "SELECT c.colaborador.nickname FROM Colaboracion c WHERE c.propuestaColaborada.titulo = :tituloProp";
-        try {
-            aux = em.createQuery(query, String.class).setParameter("tituloProp", tituloProp).getResultList();
-        } catch (Exception e) {
-            aux = Collections.emptyList();
-            e.printStackTrace();
-
-        }
-        return new ArrayList<>(aux);
+        return emr.colaboradoresColaboracion(tituloProp);
     }
 
     @Override
     public ArrayList<String> obtenerPropuestasColaboradas(String nick) {
-
-        List<String> aux;
-
-        String query = "SELECT c.propuestaColaborada.titulo FROM Colaboracion c"
-                + " WHERE c.colaborador.nickname = :nick";
-        try {
-            aux = em.createQuery(query, String.class)
-                    .setParameter("nick", nick)
-                    .getResultList();
-        } catch (Exception e) {
-            aux = Collections.emptyList();
-        }
-
-        return new ArrayList<>(aux);
+        return emr.propuestasColaboradas(nick);
     }
 
     @Override
@@ -617,7 +553,7 @@ public class Controller implements IController {
     @Override
     public DTColaboracion obtenerDTColaboracion(Long id) {
         try {
-            Colaboracion c = em.find(Colaboracion.class, id);
+            Colaboracion c = emr.find(Colaboracion.class, id);
             if (c != null) {
                 return new DTColaboracion(
                         c.getId(), c.getMonto(), c.getFechaHora(),
@@ -631,64 +567,17 @@ public class Controller implements IController {
 
     @Override
     public ArrayList<String> listarColaboracionesColaborador(String nickColab) {
-        List<Object[]> aux;
-        List<String> aux2 = new ArrayList<>();
-
-        String query = "SELECT c.propuestaColaborada.titulo, c.id FROM Colaboracion c"
-                + " WHERE c.colaborador.nickname = :nick";
-        try {
-            aux = em.createQuery(query, Object[].class)
-                    .setParameter("nick", nickColab)
-                    .getResultList();
-            for (Object[] fila : aux) {
-                aux2.add(fila[0] + " - " + fila[1].toString());
-            }
-        } catch (Exception e) {
-            aux2 = Collections.emptyList();
-        }
-        return (ArrayList<String>) aux2;
+        return emr.colaboracionesColaborador(nickColab);
     }
 
     @Override
     public ArrayList<String> listarColaboraciones() {
-        List<Object[]> aux;
-        List<String> aux2 = new ArrayList<>();
-
-        String query = "SELECT c.propuestaColaborada.titulo, c.id FROM Colaboracion c";
-        try {
-            aux = em.createQuery(query, Object[].class).getResultList();
-            for (Object[] fila : aux) {
-                aux2.add(fila[0] + " - " + fila[1].toString());
-            }
-        } catch (Exception e) {
-            aux2 = Collections.emptyList();
-        }
-        return (ArrayList<String>) aux2;
+        return emr.Colaboraciones();
     }
 
     @Override
     public void eliminarColaboracion(Long id) {
-        EntityTransaction t = em.getTransaction();
-        try {
-            t.begin();
-            Colaboracion c = em.find(Colaboracion.class, id);
-            if (c != null) {
-                if (c.getColaborador() != null) {
-                    c.getColaborador().getColaboraciones().remove(c);
-                    c.setColaborador(null);
-                }
-                if (c.getPropuestaColaborada() != null) {
-                    c.getPropuestaColaborada().getColaboraciones().remove(c);
-                    c.setPropuestaColaborada(null);
-                }
-                em.remove(c);
-                em.flush();
-            }
-            t.commit();
-        } catch (Exception e) {
-            t.rollback();
-            e.printStackTrace();
-        }
+        emr.eliminarColab(id);
     }
 
 }

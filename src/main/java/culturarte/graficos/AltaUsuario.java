@@ -530,7 +530,7 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
             }
 
         } else {
-            JOptionPane.showMessageDialog(this, "Faltan rellenar campos.",
+            JOptionPane.showMessageDialog(this, "Campos Inválidos.",
                     "Error", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
@@ -568,7 +568,12 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
             ret = false;
         } else if (this.campoFNac.getText().isBlank()) {
             ret = false;
-        }
+        } 
+        Date fecha = (Date) this.campoFNac.getValue();
+        LocalDate fechaNac = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        if (fechaNac.getYear() > LocalDate.now().getYear()){
+           ret = false;     
+        }    
         return ret;
     }
 

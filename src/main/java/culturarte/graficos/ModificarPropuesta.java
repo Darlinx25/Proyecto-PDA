@@ -165,7 +165,10 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
     }
 
     private boolean sonValidosLosCampos() {
-
+        if (this.arbolCategoria.getLastSelectedPathComponent().toString() == "Categorías"){
+            JOptionPane.showMessageDialog(this, "Categoria Invalida","Modificar Propuesta", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
         if (this.areaDescripcion.getText().isBlank()) {
             return false;
         }
@@ -269,6 +272,7 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
         jScrollPane2.setEnabled(false);
 
         areaDescripcion.setColumns(20);
+        areaDescripcion.setLineWrap(true);
         areaDescripcion.setRows(5);
         areaDescripcion.setEnabled(false);
         jScrollPane2.setViewportView(areaDescripcion);

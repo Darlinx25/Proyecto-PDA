@@ -129,13 +129,144 @@ public class Manejador {
         return new ArrayList<>(aux);
     }
     
+        public ArrayList<String> listPropuestasProponentes() {
+        List<Object[]> aux;
+        List<String> aux2 = new ArrayList<>();
+
+        String query = "SELECT p.titulo, p.proponente.nickname FROM Propuesta p"
+                + " WHERE p.estadoActual.estado = :estado1 OR p.estadoActual.estado = :estado2";
+        try {
+            aux = em.createQuery(query, Object[].class)
+                    .setParameter("estado1", EstadoPropuesta.PUBLICADA)
+                    .setParameter("estado2", EstadoPropuesta.EN_FINANCIACION)
+                    .getResultList();
+            for (Object[] fila : aux) {
+                aux2.add(fila[0] + " - " + fila[1]);
+            }
+        } catch (Exception e) {
+            aux2 = Collections.emptyList();
+        }
+        return (ArrayList<String>) aux2;
+    }
     
     
+    public ArrayList<String> propuestaColaboradaPorUser(String nickColab,String tituloProp){
+        List<String> aux = new ArrayList<>();
+        String query = "SELECT c.propuestaColaborada.titulo FROM Colaboracion c WHERE c.colaborador.nickname = :nickColab"
+                + " AND c.propuestaColaborada.titulo = :tituloProp";
+
+        try {
+            aux = em.createQuery(query, String.class)
+                    .setParameter("nickColab", nickColab)
+                    .setParameter("tituloProp", tituloProp)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            aux = Collections.emptyList();
+        }
+        return (ArrayList<String>) aux;
+    }    
     
+    public ArrayList<Float> obtenerDinero(String tituloProp ){
+        List<Float> aux;
+        Float resultado = 0f;
+        String query = "SELECT c.monto FROM Colaboracion c WHERE c.propuestaColaborada.titulo = :tituloProp";
+        try {
+            aux = em.createQuery(query, Float.class).setParameter("tituloProp", tituloProp).getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            aux = Collections.emptyList();;
+        }
+        return (ArrayList<Float>) aux;
+    } 
     
+    public ArrayList<String> colaboradoresColaboracion(String tituloProp){
+                List<String> aux;
+        String query = "SELECT c.colaborador.nickname FROM Colaboracion c WHERE c.propuestaColaborada.titulo = :tituloProp";
+        try {
+            aux = em.createQuery(query, String.class).setParameter("tituloProp", tituloProp).getResultList();
+        } catch (Exception e) {
+            aux = Collections.emptyList();
+            e.printStackTrace();
+
+        }
+        return (ArrayList<String>) aux;
+    }
     
+    public ArrayList<String> propuestasColaboradas (String nick){
+                List<String> aux;
+
+        String query = "SELECT c.propuestaColaborada.titulo FROM Colaboracion c"
+                + " WHERE c.colaborador.nickname = :nick";
+        try {
+            aux = em.createQuery(query, String.class)
+                    .setParameter("nick", nick)
+                    .getResultList();
+        } catch (Exception e) {
+            aux = Collections.emptyList();
+        }
+
+        return (ArrayList<String>) aux;
+    }
     
+    public ArrayList<String> colaboracionesColaborador(String nickColab){
+                List<Object[]> aux;
+        List<String> aux2 = new ArrayList<>();
+
+        String query = "SELECT c.propuestaColaborada.titulo, c.id FROM Colaboracion c"
+                + " WHERE c.colaborador.nickname = :nick";
+        try {
+            aux = em.createQuery(query, Object[].class)
+                    .setParameter("nick", nickColab)
+                    .getResultList();
+            for (Object[] fila : aux) {
+                aux2.add(fila[0] + " - " + fila[1].toString());
+            }
+        } catch (Exception e) {
+            aux2 = Collections.emptyList();
+        }
+        return (ArrayList<String>) aux2;
+    }
     
+    public ArrayList<String> Colaboraciones(){
+                List<Object[]> aux;
+        List<String> aux2 = new ArrayList<>();
+
+        String query = "SELECT c.propuestaColaborada.titulo, c.id FROM Colaboracion c";
+        try {
+            aux = em.createQuery(query, Object[].class).getResultList();
+            for (Object[] fila : aux) {
+                aux2.add(fila[0] + " - " + fila[1].toString());
+            }
+        } catch (Exception e) {
+            aux2 = Collections.emptyList();
+        }
+        return (ArrayList<String>) aux2;
+    }
+    
+    public void eliminarColab (Long id){
+                EntityTransaction t = em.getTransaction();
+        try {
+            t.begin();
+            Colaboracion c = em.find(Colaboracion.class, id);
+            if (c != null) {
+                if (c.getColaborador() != null) {
+                    c.getColaborador().getColaboraciones().remove(c);
+                    c.setColaborador(null);
+                }
+                if (c.getPropuestaColaborada() != null) {
+                    c.getPropuestaColaborada().getColaboraciones().remove(c);
+                    c.setPropuestaColaborada(null);
+                }
+                em.remove(c);
+                em.flush();
+            }
+            t.commit();
+        } catch (Exception e) {
+            t.rollback();
+            e.printStackTrace();
+        }
+    }
     /*public <T,V> T listarAtributoPorCondicion(
             Class <T> tipoResultado,
             String atributo,

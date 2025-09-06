@@ -330,8 +330,10 @@ public class ConsultarColaborador extends javax.swing.JInternalFrame {
         String montoRecaudado = this.controller.obtenerDineroRecaudado(tituloProp);
         if(montoRecaudado == null){
             System.out.println("Monto NULL");
+        }else if (montoRecaudado == "0"){
+            this.campoDineroRecaudado.setText("");
         }else{
-        this.campoDineroRecaudado.setText(montoRecaudado);
+            this.campoDineroRecaudado.setText(montoRecaudado);
         }
     }//GEN-LAST:event_listaPropuestasColaboradasValueChanged
     
