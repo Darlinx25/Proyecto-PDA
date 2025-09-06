@@ -52,7 +52,7 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
                         campoApellido.setText(dt.getApellido());
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                         LocalDate fechaNacimiento = dt.getFechaNacimiento();
-                    if (fechaNacimiento == null) {
+                        if (fechaNacimiento == null) {
                             campoFechaNac.setText("");
                         } else {
                             campoFechaNac.setText(fechaNacimiento.format(formatter));
@@ -82,6 +82,8 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
                             this.labelImagen.setIcon(null);
                         }
                         //sigue aca!!!
+                        campoDineroRecaudado.setText("");
+                        listaColaboradores.setModel(new DefaultListModel<>());
                         String nickdelp = dt.getNickname();
                         DefaultListModel<String> modelo1 = (DefaultListModel<String>) listaPropuestas.getModel();
                         modelo1.clear();
