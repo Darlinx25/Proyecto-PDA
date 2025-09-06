@@ -59,7 +59,7 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
                         }
 
                         campoCorreo.setText(dt.getEmail());
-                        campoBiografia.setText(dt.getBiografia());
+                        areaBiografia.setText(dt.getBiografia());
                         campoSitioWeb.setText(dt.getSitioWeb());
 
                         String basePath = System.getProperty("user.dir") + "/imagenesUsuarios/";
@@ -142,7 +142,6 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         listaPropuestas = listaPropuestas = new javax.swing.JList<>(new javax.swing.DefaultListModel<>());
         jLabel6 = new javax.swing.JLabel();
-        campoBiografia = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         campoSitioWeb = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -150,6 +149,8 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
         listaColaboradores = new javax.swing.JList<>();
         jLabel8 = new javax.swing.JLabel();
         campoDineroRecaudado = new javax.swing.JTextField();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        areaBiografia = new javax.swing.JTextArea();
 
         setClosable(true);
         setIconifiable(true);
@@ -216,13 +217,6 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Biografia:");
 
-        campoBiografia.setEditable(false);
-        campoBiografia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoBiografiaActionPerformed(evt);
-            }
-        });
-
         jLabel7.setText("Sitio Web:");
 
         campoSitioWeb.setEditable(false);
@@ -246,11 +240,17 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
             }
         });
 
+        areaBiografia.setEditable(false);
+        areaBiografia.setColumns(20);
+        areaBiografia.setLineWrap(true);
+        areaBiografia.setRows(5);
+        jScrollPane4.setViewportView(areaBiografia);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(Proponentes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -290,8 +290,8 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
                             .addComponent(campoCorreo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(campoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(campoNick, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(campoBiografia, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
-                    .addComponent(campoSitioWeb))
+                    .addComponent(campoSitioWeb, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(88, 88, 88))
         );
         layout.setVerticalGroup(
@@ -324,9 +324,11 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
                             .addComponent(jLabel5)
                             .addComponent(campoCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(campoBiografia, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(112, 112, 112))
+                            .addComponent(jScrollPane4)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Proponentes, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -376,10 +378,6 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_campoCorreoActionPerformed
 
-    private void campoBiografiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoBiografiaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoBiografiaActionPerformed
-
     private void campoSitioWebActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoSitioWebActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoSitioWebActionPerformed
@@ -392,8 +390,8 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Proponentes;
     private javax.swing.JLabel Proponentes1;
+    private javax.swing.JTextArea areaBiografia;
     private javax.swing.JTextField campoApellido;
-    private javax.swing.JTextField campoBiografia;
     private javax.swing.JTextField campoCorreo;
     private javax.swing.JTextField campoDineroRecaudado;
     private javax.swing.JTextField campoFechaNac;
@@ -412,6 +410,7 @@ public class ConsultarProponente extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel labelImagen;
     private javax.swing.JList<String> listaColaboradores;
     private javax.swing.JList<String> listaProponentes;
