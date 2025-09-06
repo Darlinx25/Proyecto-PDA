@@ -51,10 +51,78 @@ public class Controller implements IController {
     @Override
     public void cargarDatosPrueba(){
         cargarUsuariosPrueba();
+        cargarSeguidoresPrueba();
         
         
         
         
+    }
+    
+    private void cargarSeguidoresPrueba() {
+        seguirUsuario("hrubino", "hectorg");
+        seguirUsuario("hrubino", "diegop");
+        seguirUsuario("hrubino", "losBardo");
+        
+        seguirUsuario("mbusca", "tabarec");
+        seguirUsuario("mbusca", "cachilas");
+        seguirUsuario("mbusca", "kairoh");
+        
+        seguirUsuario("hectorg", "mbusca");
+        seguirUsuario("hectorg", "juliob");
+        
+        seguirUsuario("tabarec", "hrubino");
+        seguirUsuario("tabarec", "cachilas");
+        
+        seguirUsuario("cachilas", "hrubino");
+        
+        seguirUsuario("juliob", "mbusca");
+        seguirUsuario("juliob", "diegop");
+        
+        seguirUsuario("diegop", "hectorg");
+        seguirUsuario("diegop", "losBardo");
+        
+        seguirUsuario("kairoh", "sergiop");
+        
+        seguirUsuario("losBardo", "hrubino");
+        seguirUsuario("losBardo", "nicoJ");
+        
+        seguirUsuario("robinh", "hectorg");
+        seguirUsuario("robinh", "juliob");
+        seguirUsuario("robinh", "diegop");
+        
+        seguirUsuario("marcelot", "cachilas");
+        seguirUsuario("marcelot", "juliob");
+        seguirUsuario("marcelot", "kairoh");
+        
+        seguirUsuario("novick", "hrubino");
+        seguirUsuario("novick", "tabarec");
+        seguirUsuario("novick", "cachilas");
+        
+        seguirUsuario("sergiop", "mbusca");
+        seguirUsuario("sergiop", "juliob");
+        seguirUsuario("sergiop", "diegop");
+        
+        seguirUsuario("chino", "tonyp");
+        
+        seguirUsuario("tonyp", "chino");
+        
+        seguirUsuario("nicoJ", "diegop");
+        seguirUsuario("nicoJ", "losBardo");
+        
+        seguirUsuario("juanP", "tabarec");
+        seguirUsuario("juanP", "cachilas");
+        seguirUsuario("juanP", "kairoh");
+        
+        seguirUsuario("Mengano", "hectorg");
+        seguirUsuario("Mengano", "juliob");
+        seguirUsuario("Mengano", "chino");
+        
+        seguirUsuario("Perengano", "diegop");
+        seguirUsuario("Perengano", "tonyp");
+        
+        seguirUsuario("Tiajaci", "juliob");
+        seguirUsuario("Tiajaci", "kairoh");
+        seguirUsuario("Tiajaci", "sergiop");
     }
     
     private void cargarUsuariosPrueba() {
