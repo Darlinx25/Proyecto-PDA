@@ -72,11 +72,75 @@ public class Controller implements IController {
         "categoría revistas y humoristas y desde el comienzo y hasta el presente en su propio conjunto Momosapiens.",
         "https://twitter.com/horaciorubino","hrubino","Horacio","Rubino","horacio.rubino@guambia.com.uy",LocalDate.of(1980,5, 20),"../imagenesRespaldoBD/HRimg.jpg"));
         
+        usu.add(new DTProponente(new DTDireccion("Montevideo", " Colonia", 4321),"Martín Buscaglia (Montevideo, 1972) es un artista, músico, compositor y productor uruguayo. Tanto con su banda" +
+        "(“Los Bochamakers”) como en su formato “Hombre orquesta”, o solo con su guitarra, ha recorrido el mundo" +
+        "tocando entre otros países en España, Estados Unidos, Inglaterra, Francia, Australia, Brasil, Colombia, Argentina," +
+        "Chile, Paraguay, México y Uruguay. (Actualmente los Bochamakers son Matías Rada, Martín Ibarburu, Mateo" +
+        "Moreno, Herman Klang) Paralelamente, tiene proyectos a dúo con el español Kiko Veneno, la cubana Yusa, el" +
+        "argentino Lisandro Aristimuño, su compatriota Antolín, y a trío junto a los brasileros Os Mulheres Negras.",
+        "http://www.martinbuscaglia.com/","mbusca","Martín","Buscaglia","Martin.bus@agadu.org.uy",LocalDate.of(1972, 6, 14),"../imagenesRespaldoBD/MBimg.jpg"));
+        
+        usu.add(new DTProponente(new DTDireccion("Montevideo", " Gral. Flores", 5645),"En 1972 ingresó a la Escuela de Arte Dramático del teatro El Galpón. Participó en más de treinta obras teatrales y" +
+        "varios largometrajes. Integró el elenco estable de Radioteatro del Sodre, y en 2006 fue asesor de su Consejo" +
+        "Directivo. Como actor recibió múltiples reconocimientos: cuatro premios Florencio, premio al mejor actor" +
+        "extranjero del Festival de Miami y premio Mejor Actor de Cine 2008. Durante varios períodos fue directivo del" +
+        "teatro El Galpón y dirigente de la Sociedad Uruguaya de Actores (SUA); integró también la Federación Uruguaya" +
+        "de Teatros Independientes (FUTI). Formó parte del equipo de gestión de la refacción de los teatros La Máscara," +
+        "Astral y El Galpón, y del equipo de gestión en la construcción del teatro De la Candela y de la sala Atahualpa de El" +
+        "Galpón.",
+        "http://www.martinbuscaglia.com/","hectorg","Héctor","Guido","hector.gui@elgalpon.org.uy",LocalDate.of(1954, 1, 7),"../imagenesRespaldoBD/HGimg.jpg"));
+        
+        usu.add(new DTProponente(new DTDireccion("Montevideo", " Santiago Rivas", 1212),"Tabaré Cardozo (Montevideo, 24 de julio de 1971) es un cantante, compositor y murguista uruguayo; conocido por" +
+        "su participación en la murga Agarrate Catalina, conjunto que fundó junto a su hermano Yamandú y Carlos" +
+        "Tanco en el año 2001.",
+        "https://www.facebook.com/Tabar%C3%A9-\nCardozo-55179094281/?ref=br_rs","tabarec","Tabaré","Cardozo","tabare.car@agadu.org.uy",LocalDate.of(1971, 7, 24),"../imagenesRespaldoBD/TCimg.jpg"));
+        
+        usu.add(new DTProponente(new DTDireccion("Montevideo", " Br. Artigas", 4567),"Nace en el año 1947 en el conventillo \"Medio Mundo\" ubicado en pleno Barrio Sur. Es heredero parcialmente-" +
+        "junto al resto de sus hermanos- de la Comparsa \"Morenada\" (inactiva desde el fallecimiento de Juan Ángel Silva)," +
+        "en 1999 forma su propia Comparsa de negros y lubolos \"Cuareim 1080\". Director responsable, compositor y" +
+        "cantante de la misma.",
+        "https://www.facebook.com/C1080?ref=br_rs","cachilas","Waldemar “Cachila”","Silva","Cachila.sil@c1080.org.uy",LocalDate.of(1947, 1, 1),"../imagenesRespaldoBD/CSimg.jpg"));
+        
+        usu.add(new DTProponente(new DTDireccion("Montevideo", " Benito Blanco", 4321),"",
+        "","juliob","Julio","Bocca","juliobocca@sodre.com.uy",LocalDate.of(1967, 3, 16),"../imagenesRespaldoBD/JBimg.jpg"));
+        
+        usu.add(new DTProponente(new DTDireccion("Montevideo", " Emilio Frugoni Ap. 02", 1138),"",
+        "http://www.efectocine.com","diegop","Diego","Parodi","diego@efectocine.com",LocalDate.of(1975, 1, 1),"../imagenesRespaldoBD/DPimg.jpg"));
+        
+        usu.add(new DTProponente(new DTDireccion("Montevideo", " Paraguay", 1423),"",
+        "","kairoh","Kairo","Herrera","kairoher@pilsenrock.com.uy",LocalDate.of(1840, 4, 25),"../imagenesRespaldoBD/KHimg.jpg"));
+        
+        usu.add(new DTProponente(new DTDireccion("Montevideo", " 8 de Octubre", 1429),"Queremos ser vistos y reconocidos como una organización: referente en divulgación científica con un fuerte" +
+        "espíritu didáctico y divertido, a través de acciones coordinadas con otros divulgadores científicos, que permitan" +
+        "establecer puentes de comunicación. Impulsora en la generación de espacios de democratización y apropiación" +
+        "social del conocimiento científico.",
+        "https://bardocientifico.com/","losBardo","Los","Bardo","losbardo@bardocientifico.com",LocalDate.of(1980, 10, 31),"../imagenesRespaldoBD/LBimg.jpg"));
+        
         return usu;
     }
     private List<DTUsuario> obtenerColaboradoresPrueba() {
         List<DTUsuario> usu = new ArrayList<>();
         usu.add(new DTColaborador("robinh", "Robin", "Henderson", "Robin.h@tinglesa.com.uy", LocalDate.of(1940, 8, 3), "../imagenesRespladoBD/RHimg.jpg"));
+        
+        usu.add(new DTColaborador("marcelot", "Marcelo", "Tinelli", "marcelot@ideasdelsur.com.ar", LocalDate.of(1960, 4, 1), "../imagenesRespladoBD/MTimg.jpg"));
+        
+        usu.add(new DTColaborador("novick", "Edgardo", "Novick", "edgardo@novick.com.uy", LocalDate.of(1952, 7, 17), "../imagenesRespladoBD/ENimg.jpg"));
+        
+        usu.add(new DTColaborador("sergiop", "Sergio", "Puglia", "puglia@alpanpan.com.uy", LocalDate.of(1950, 1, 28), "../imagenesRespladoBD/SPimg.jpg"));
+        
+        usu.add(new DTColaborador("chino", "Alvaro", "Recoba", "chino@trico.org.uy", LocalDate.of(1976, 3, 17), "../imagenesRespladoBD/ARimg.jpg"));
+        
+        usu.add(new DTColaborador("tonyp", "Antonio", "Pacheco", "eltony@manya.org.uy", LocalDate.of(1955, 2, 14), "../imagenesRespladoBD/APimg.jpg"));
+        
+        usu.add(new DTColaborador("nicoJ", "Nicolás", "Jodal", "jodal@artech.com.uy", LocalDate.of(1960, 8, 9), "../imagenesRespladoBD/NJimg.jpg"));
+        
+        usu.add(new DTColaborador("juanP", "Juan", "Perez", "juanp@elpueblo.com", LocalDate.of(1970, 1, 1), "../imagenesRespladoBD/JPimg.jpg"));
+        
+        usu.add(new DTColaborador("Mengano", "Mengano", "Gómez", "menganog@elpueblo.com", LocalDate.of(1982, 2, 2), "../imagenesRespladoBD/MGimg.jpg"));
+        
+        usu.add(new DTColaborador("Perengano", "Perengano", "López", "pere@elpueblo.com", LocalDate.of(1985, 3, 3), "../imagenesRespladoBD/PLimg.jpg"));
+        
+        usu.add(new DTColaborador("Tiajaci", "Tía", "Jacinta", "jacinta@elpueblo.com", LocalDate.of(1990, 4, 4), "../imagenesRespladoBD/TJimg.jpg"));
         
         return usu;
     }

@@ -66,8 +66,8 @@ public class MainFrame extends javax.swing.JFrame {
         itemConsultarPropuesta = new javax.swing.JMenuItem();
         itemConsultarColaboracion = new javax.swing.JMenuItem();
         itemConsultPropsPorEstado = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
-        campoCargarDatos = new javax.swing.JMenuItem();
+        menuSistema = new javax.swing.JMenu();
+        itemCargarDatos = new javax.swing.JMenuItem();
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
@@ -190,17 +190,17 @@ public class MainFrame extends javax.swing.JFrame {
 
         jMenuBar1.add(menuPropuestas);
 
-        jMenu1.setText("Sistema");
+        menuSistema.setText("Sistema");
 
-        campoCargarDatos.setText("Cargar datos prueba");
-        campoCargarDatos.addActionListener(new java.awt.event.ActionListener() {
+        itemCargarDatos.setText("Cargar datos prueba");
+        itemCargarDatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoCargarDatosActionPerformed(evt);
+                itemCargarDatosActionPerformed(evt);
             }
         });
-        jMenu1.add(campoCargarDatos);
+        menuSistema.add(itemCargarDatos);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(menuSistema);
 
         setJMenuBar(jMenuBar1);
 
@@ -335,9 +335,9 @@ public class MainFrame extends javax.swing.JFrame {
         this.cancelarColaboracion.setVisible(true);
     }//GEN-LAST:event_itemCancelarColaboracionActionPerformed
 
-    private void campoCargarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoCargarDatosActionPerformed
+    private void itemCargarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCargarDatosActionPerformed
         controller.cargarDatosPrueba();
-    }//GEN-LAST:event_campoCargarDatosActionPerformed
+    }//GEN-LAST:event_itemCargarDatosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -365,11 +365,11 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem campoCargarDatos;
     private javax.swing.JMenuItem itemAltaCategoria;
     private javax.swing.JMenuItem itemAltaPropuesta;
     private javax.swing.JMenuItem itemAltaUsuario;
     private javax.swing.JMenuItem itemCancelarColaboracion;
+    private javax.swing.JMenuItem itemCargarDatos;
     private javax.swing.JMenuItem itemConsultPropsPorEstado;
     private javax.swing.JMenuItem itemConsultarColaboracion;
     private javax.swing.JMenuItem itemConsultarColaborador;
@@ -380,9 +380,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemRegistrarColaboracion;
     private javax.swing.JMenuItem itemSeguirUsuario;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu menuPropuestas;
+    private javax.swing.JMenu menuSistema;
     private javax.swing.JMenu menuUsuarios;
     // End of variables declaration//GEN-END:variables
 }

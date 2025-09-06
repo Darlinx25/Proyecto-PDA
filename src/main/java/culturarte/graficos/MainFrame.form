@@ -129,17 +129,17 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu1">
+        <Menu class="javax.swing.JMenu" name="menuSistema">
           <Properties>
             <Property name="text" type="java.lang.String" value="Sistema"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="campoCargarDatos">
+            <MenuItem class="javax.swing.JMenuItem" name="itemCargarDatos">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Cargar datos prueba"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campoCargarDatosActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemCargarDatosActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
