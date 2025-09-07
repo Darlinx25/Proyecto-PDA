@@ -5,6 +5,7 @@
 package culturarte.logica;
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -19,7 +20,7 @@ public class Estado {
     private EstadoPropuesta estado;
     
     
-    private LocalDate fechaEstado;
+    private LocalDateTime fechaEstado;
     
     public Estado(){
         
@@ -27,7 +28,7 @@ public class Estado {
     
     public Estado(EstadoPropuesta estado) {
         this.estado = estado;
-        this.fechaEstado = LocalDate.now();
+        this.fechaEstado = LocalDateTime.now();
     }
 
     
@@ -40,11 +41,11 @@ public class Estado {
         this.estado = estado;
     }
 
-    public LocalDate getFechaEstado() {
+    public LocalDateTime getFechaEstado() {
         return fechaEstado;
     }
 
-    public void setFechaEstado(LocalDate fechaEstado) {
+    public void setFechaEstado(LocalDateTime fechaEstado) {
         this.fechaEstado = fechaEstado;
     }
     

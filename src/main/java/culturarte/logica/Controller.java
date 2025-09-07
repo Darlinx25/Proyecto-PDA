@@ -349,8 +349,7 @@ public class Controller implements IController {
         Categoria tipoPropuesta = emr.find(Categoria.class, prop.getTipoPropuesta());
         Proponente proponedor = emr.find(Proponente.class, prop.getNickProponedor());
 
-        List<TipoRetorno> tiposRetorno = prop.getTiposRetorno();
-
+        List<TipoRetorno> tiposRetorno = prop.getTiposRetorno(); 
         Propuesta propuesta = new Propuesta(titulo, descripcion, imagen, lugarRealizara, fechaRealizara, precioEntrada, montoAReunir, tiposRetorno,
                 tipoPropuesta, proponedor, est);
 
@@ -376,15 +375,21 @@ public class Controller implements IController {
         if (prop.getImagen() != null) {
             aux.setImagen(prop.getImagen());
         }
-
+        
+        if(aux.getEstadoActual().getEstado() != prop.getEstadoActual().getEstado()){
+            aux.agregarEstadoAlHistorial();
+            aux.setEstadoActual(prop.getEstadoActual());
+        }
+        
         aux.setLugarRealizara(prop.getLugarRealizara());
         aux.setFechaRealizara(prop.getFechaRealizara());
         aux.setPrecioEntrada(prop.getPrecioEntrada());
         aux.setMontoAReunir(prop.getMontoAReunir());
-        aux.setEstadoActual(prop.getEstadoActual());
         aux.setTiposRetorno(prop.getTiposRetorno());
         Categoria cat = emr.find(Categoria.class, prop.getTipoPropuesta());
         aux.setTipoPropuesta(cat);
+        
+        
         emr.mod(aux);
 
     }

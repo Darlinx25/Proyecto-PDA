@@ -185,5 +185,11 @@ public class Propuesta {
         this.colaboraciones = colaboraciones;
     }
     
+    public void agregarEstadoAlHistorial(){
+        this.historialEstados.add(estadoActual);
+        
+        
+    }
+    
     
 }
