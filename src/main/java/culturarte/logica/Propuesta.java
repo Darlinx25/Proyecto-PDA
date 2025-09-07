@@ -19,6 +19,7 @@ public class Propuesta {
     @Id
     private String titulo;
     
+    @Column(length = 65000)
     private String descripcion;
     
     private String imagen;
@@ -185,7 +186,7 @@ public class Propuesta {
         this.colaboraciones = colaboraciones;
     }
     
-    public void agregarEstadoAlHistorial(){
+    public void agregarEstadoActualAlHistorial(){
         this.historialEstados.add(estadoActual);
         
         
