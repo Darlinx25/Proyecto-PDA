@@ -50,8 +50,54 @@ public class Controller implements IController {
         cargarSeguidoresPrueba();
         cargarCategoriasPrueba();
         cargarPropuestasPrueba();
+        cargarColaboracionesPrueba();
+    }
+    
+    private void cargarColaboracionesPrueba() {
+        try {
+            realizarColaboracionPaPrueba("novick", "Cine en el Botánico", LocalDateTime.of(2017, 5, 20, 14, 30), 50000, "Porcentaje de ganancias");
+            realizarColaboracionPaPrueba("robinh", "Cine en el Botánico", LocalDateTime.of(2017, 5, 24, 17, 25), 50000, "Porcentaje de ganancias");
+            realizarColaboracionPaPrueba("nicoJ", "Cine en el Botánico", LocalDateTime.of(2017, 5, 30, 18, 30), 50000, "Porcentaje de ganancias");
+            
+            realizarColaboracionPaPrueba("marcelot", "Religiosamente", LocalDateTime.of(2017, 6, 30, 14, 25), 200000, "Porcentaje de ganancias");
+            realizarColaboracionPaPrueba("Tiajaci", "Religiosamente", LocalDateTime.of(2017, 7, 1, 18, 5), 500, "Entradas gratis");
+            realizarColaboracionPaPrueba("Mengano", "Religiosamente", LocalDateTime.of(2017, 7, 7, 17, 45), 600, "Entradas gratis");
+            realizarColaboracionPaPrueba("novick", "Religiosamente", LocalDateTime.of(2017, 7, 10, 14, 35), 50000, "Porcentaje de ganancias");
+            realizarColaboracionPaPrueba("sergiop", "Religiosamente", LocalDateTime.of(2017, 7, 15, 9, 45), 50000, "Porcentaje de ganancias");
+            
+            realizarColaboracionPaPrueba("marcelot", "El Pimiento Indomable", LocalDateTime.of(2017, 8, 1, 7, 40), 200000, "Porcentaje de ganancias");
+            realizarColaboracionPaPrueba("sergiop", "El Pimiento Indomable", LocalDateTime.of(2017, 8, 3, 9, 25), 80000, "Porcentaje de ganancias");
+            
+            realizarColaboracionPaPrueba("chino", "Pilsen Rock", LocalDateTime.of(2017, 8, 5, 16, 50), 50000, "Entradas gratis");
+            realizarColaboracionPaPrueba("novick", "Pilsen Rock", LocalDateTime.of(2017, 8, 10, 15, 50), 120000, "Porcentaje de ganancias");
+            realizarColaboracionPaPrueba("tonyp", "Pilsen Rock", LocalDateTime.of(2017, 8, 15, 19, 30), 120000, "Entradas gratis");
+            
+            realizarColaboracionPaPrueba("sergiop", "Romeo y Julieta", LocalDateTime.of(2017, 8, 13, 4, 58), 100000, "Porcentaje de ganancias");
+            realizarColaboracionPaPrueba("marcelot", "Romeo y Julieta", LocalDateTime.of(2017, 8, 14, 11, 25), 200000, "Porcentaje de ganancias");
+            
+            realizarColaboracionPaPrueba("tonyp", "Un día de Julio", LocalDateTime.of(2017, 8, 15, 4, 48), 30000, "Entradas gratis");
+            realizarColaboracionPaPrueba("marcelot", "Un día de Julio", LocalDateTime.of(2017, 8, 17, 15, 30), 150000, "Porcentaje de ganancias");
+        } catch (PropuestaYaColaboradaException ex) {
+            System.getLogger(Controller.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }
+    
+    private void realizarColaboracionPaPrueba(String nickColab, String tituloProp, LocalDateTime fecha, float montoColab, String tipoRetorno) throws PropuestaYaColaboradaException {
+        Colaborador colab = emr.find(Colaborador.class, nickColab);
+        Propuesta prop = emr.find(Propuesta.class, tituloProp);
+        List<String> aux = new ArrayList<>();
         
         
+        emr.propuestaColaboradaPorUser(nickColab, tituloProp);
+        
+        if (colab != null && prop != null && aux.isEmpty()) {
+            Colaboracion colaboracion = new Colaboracion(montoColab, tipoRetorno, colab, prop);
+            colaboracion.setFechaHora(fecha);
+
+            emr.add(colaboracion);
+        } else {
+            throw new PropuestaYaColaboradaException(nickColab + " ya tiene una colaboración con " + tituloProp);
+        }
     }
     
     private void cargarPropuestasPrueba() {

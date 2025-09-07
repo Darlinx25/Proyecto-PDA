@@ -203,6 +203,12 @@ public class ConsultarColaboracion extends javax.swing.JInternalFrame {
 
     private void listaColaboracionesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listaColaboracionesValueChanged
         String idString = this.listaColaboraciones.getSelectedValue();
+        if (idString == null) {
+            this.campoFechaHora.setText("");
+            this.campoMonto.setText("");
+            this.campoRetorno.setText("");
+            return;
+        }
         Long id;
         int primerEspacio = idString.lastIndexOf(' ');
         if (primerEspacio != -1) {
