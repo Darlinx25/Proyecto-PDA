@@ -26,6 +26,11 @@ public class Estado {
         
     }
     
+    public Estado(EstadoPropuesta estado, LocalDateTime fechaEstado) {
+        this.estado = estado;
+        this.fechaEstado = fechaEstado;
+    }
+    
     public Estado(EstadoPropuesta estado) {
         this.estado = estado;
         this.fechaEstado = LocalDateTime.now();
