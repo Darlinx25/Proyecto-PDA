@@ -4,6 +4,7 @@
  */
 package culturarte.graficos;
 
+import culturarte.excepciones.CategoriaDuplicadaException;
 import culturarte.excepciones.EmailRepetidoException;
 import culturarte.excepciones.NickRepetidoException;
 import culturarte.excepciones.PropuestaDuplicadaException;
@@ -344,7 +345,7 @@ public class MainFrame extends javax.swing.JFrame {
             controller.cargarDatosPrueba();
             JOptionPane.showMessageDialog(this, "Datos de prueba cargados correctamente.",
                     "Información", JOptionPane.INFORMATION_MESSAGE);
-        } catch (NickRepetidoException | EmailRepetidoException | PropuestaDuplicadaException e) {
+        } catch (NickRepetidoException | EmailRepetidoException | PropuestaDuplicadaException | CategoriaDuplicadaException e) {
             JOptionPane.showMessageDialog(this, "Error al cargar datos de prueba: " + e.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
         }

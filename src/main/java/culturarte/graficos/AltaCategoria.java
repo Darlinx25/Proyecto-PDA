@@ -3,26 +3,32 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package culturarte.graficos;
+
+import culturarte.excepciones.CategoriaDuplicadaException;
 import culturarte.logica.IControllerFactory;
 import culturarte.logica.IController;
 import culturarte.utils.FiltroLimitarChars;
+import javax.swing.JOptionPane;
 import javax.swing.text.AbstractDocument;
 import javax.swing.tree.DefaultMutableTreeNode;
+
 /**
  *
  * @author mark
  */
 public class AltaCategoria extends javax.swing.JInternalFrame {
+
     private IController controller;
+
     /**
      * Creates new form AltaCategoria
      */
     public AltaCategoria() {
         IControllerFactory fabrica = IControllerFactory.getInstance();
         this.controller = fabrica.getIController();
-        
+
         initComponents();
-        
+
         ((AbstractDocument) this.campoCategoria.getDocument()).setDocumentFilter(new FiltroLimitarChars(100));
     }
 
@@ -132,15 +138,20 @@ public class AltaCategoria extends javax.swing.JInternalFrame {
             return;
         }
         String nombrePadre = null;
-        DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode)jTree1.getLastSelectedPathComponent();
+        DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode) jTree1.getLastSelectedPathComponent();
         if (nodoSeleccionado != null) {
             nombrePadre = nodoSeleccionado.toString();
         }
-        this.controller.addCategoria(nombreCat, nombrePadre);
+        try {
+            this.controller.addCategoria(nombreCat, nombrePadre);
+            JOptionPane.showMessageDialog(this, "Categoría agregada con éxito");
+        } catch (CategoriaDuplicadaException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
         dispose();
     }//GEN-LAST:event_botonAceptarActionPerformed
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAceptar;

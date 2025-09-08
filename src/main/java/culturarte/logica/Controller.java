@@ -4,6 +4,7 @@
  */
 package culturarte.logica;
 
+import culturarte.excepciones.CategoriaDuplicadaException;
 import culturarte.excepciones.EmailRepetidoException;
 import culturarte.excepciones.NickRepetidoException;
 import culturarte.excepciones.PropuestaDuplicadaException;
@@ -47,7 +48,7 @@ public class Controller implements IController {
     }
 
     @Override
-    public void cargarDatosPrueba()throws NickRepetidoException, EmailRepetidoException, PropuestaDuplicadaException {
+    public void cargarDatosPrueba() throws NickRepetidoException, EmailRepetidoException, PropuestaDuplicadaException, CategoriaDuplicadaException {
         cargarUsuariosPrueba();
         cargarSeguidoresPrueba();
         cargarCategoriasPrueba();
@@ -211,7 +212,7 @@ public class Controller implements IController {
         addPropuesta(prop);
     }
 
-    private void cargarCategoriasPrueba() {
+    private void cargarCategoriasPrueba() throws CategoriaDuplicadaException {
         addCategoria("Teatro", "Categorías");
         addCategoria("Teatro Dramático", "Teatro");
         addCategoria("Teatro Musical", "Teatro");
@@ -312,8 +313,8 @@ public class Controller implements IController {
         usu.addAll(obtenerColaboradoresPrueba());
 
         for (DTUsuario u : usu) {
-                addUsuario(u);
-            
+            addUsuario(u);
+
         }
     }
 
@@ -425,7 +426,6 @@ public class Controller implements IController {
         }
 
         emr.add(usu);
-        
 
     }
 
@@ -450,8 +450,11 @@ public class Controller implements IController {
     }
 
     @Override
-    public void addCategoria(String nombre, String nombrePadre) {
-
+    public void addCategoria(String nombre, String nombrePadre) throws CategoriaDuplicadaException {
+        Categoria existente = emr.find(Categoria.class, nombre);
+        if (existente != null) {
+            throw new CategoriaDuplicadaException("Ya existe una categoría con ese nombre");
+        }
         Categoria cat = new Categoria(nombre);
         if (nombrePadre != null) {
             Categoria padre = emr.find(Categoria.class, nombrePadre);
@@ -495,11 +498,11 @@ public class Controller implements IController {
     }
 
     @Override
-    public void addPropuesta(DTPropuesta prop)throws PropuestaDuplicadaException {
+    public void addPropuesta(DTPropuesta prop) throws PropuestaDuplicadaException {
         String titulo = prop.getTitulo();
-            if (emr.find(Propuesta.class, titulo) != null) {
-        throw new PropuestaDuplicadaException("Ya existe una propuesta con ese titulo. ");
-    }
+        if (emr.find(Propuesta.class, titulo) != null) {
+            throw new PropuestaDuplicadaException("Ya existe una propuesta con ese titulo.");
+        }
         String descripcion = prop.getDescripcion();
         String imagen = prop.getImagen();
         String lugarRealizara = prop.getLugarRealizara();

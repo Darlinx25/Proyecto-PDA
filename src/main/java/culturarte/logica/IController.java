@@ -4,6 +4,7 @@
  */
 package culturarte.logica;
 
+import culturarte.excepciones.CategoriaDuplicadaException;
 import culturarte.excepciones.EmailRepetidoException;
 import culturarte.excepciones.NickRepetidoException;
 import culturarte.excepciones.PropuestaDuplicadaException;
@@ -20,7 +21,7 @@ public interface IController {
     
     /*Alta de Categoría*/
     public DefaultMutableTreeNode listarCategorias();
-    public void addCategoria(String nombre, String nombrePadre);
+    public void addCategoria(String nombre, String nombrePadre) throws CategoriaDuplicadaException;
     /*Consulta de Perfil de colaborador*/
     public ArrayList<String> listarColaboradores();
     public DTColaborador obtenerDTColaborador(String nick);
@@ -49,5 +50,5 @@ public interface IController {
     public ArrayList<String> obtenerColaboradoresColaboracion(String tituloProp);
     public ArrayList<String> listarPropuestas();
     public void modPropuesta(DTPropuesta prop);
-    public void cargarDatosPrueba()throws NickRepetidoException, EmailRepetidoException, PropuestaDuplicadaException;
+    public void cargarDatosPrueba() throws NickRepetidoException, EmailRepetidoException, PropuestaDuplicadaException, CategoriaDuplicadaException ;
 }
