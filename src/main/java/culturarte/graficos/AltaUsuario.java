@@ -12,7 +12,6 @@ import culturarte.logica.DTProponente;
 import culturarte.logica.DTUsuario;
 import culturarte.logica.IControllerFactory;
 import culturarte.logica.IController;
-import culturarte.logica.ResultadoRegistroUsr;
 import culturarte.utils.FiltroAlfanumerico;
 import culturarte.utils.FiltroLimitarChars;
 import java.awt.Image;
@@ -524,19 +523,14 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
             }
 
             try {
-                this.controller.addUsuario(user); 
+                this.controller.addUsuario(user);
                 JOptionPane.showMessageDialog(this, "Usuario registrado con éxito.",
                         "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-            } catch (NickRepetidoException e) {
+            } catch (NickRepetidoException | EmailRepetidoException e) {
                 JOptionPane.showMessageDialog(this, e.getMessage(),
                         "Error", JOptionPane.ERROR_MESSAGE);
-
-            } catch (EmailRepetidoException e) {
-                JOptionPane.showMessageDialog(this, e.getMessage(),
-                        "Error", JOptionPane.ERROR_MESSAGE);
-
-            } catch (Exception e) { 
+            } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Error inesperado: " + e.getMessage(),
                         "Error", JOptionPane.ERROR_MESSAGE);
             }
