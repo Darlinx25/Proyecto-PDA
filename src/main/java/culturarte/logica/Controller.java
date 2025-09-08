@@ -6,6 +6,7 @@ package culturarte.logica;
 
 import culturarte.excepciones.EmailRepetidoException;
 import culturarte.excepciones.NickRepetidoException;
+import culturarte.excepciones.PropuestaDuplicadaException;
 import culturarte.excepciones.PropuestaYaColaboradaException;
 import jakarta.persistence.*;
 import java.time.LocalDate;
@@ -46,7 +47,7 @@ public class Controller implements IController {
     }
 
     @Override
-    public void cargarDatosPrueba()throws NickRepetidoException, EmailRepetidoException {
+    public void cargarDatosPrueba()throws NickRepetidoException, EmailRepetidoException, PropuestaDuplicadaException {
         cargarUsuariosPrueba();
         cargarSeguidoresPrueba();
         cargarCategoriasPrueba();
@@ -100,7 +101,7 @@ public class Controller implements IController {
         }
     }
 
-    private void cargarPropuestasPrueba() {
+    private void cargarPropuestasPrueba() throws PropuestaDuplicadaException {
         List<TipoRetorno> porcentaje = new ArrayList<>();
         porcentaje.add(TipoRetorno.PORCENTAJE_GANANCIAS);
         List<TipoRetorno> entrada = new ArrayList<>();
@@ -424,7 +425,7 @@ public class Controller implements IController {
         }
 
         emr.add(usu);
-        //return ResultadoRegistroUsr.EXITO;
+        
 
     }
 
@@ -494,9 +495,11 @@ public class Controller implements IController {
     }
 
     @Override
-    public void addPropuesta(DTPropuesta prop) {
+    public void addPropuesta(DTPropuesta prop)throws PropuestaDuplicadaException {
         String titulo = prop.getTitulo();
-
+            if (emr.find(Propuesta.class, titulo) != null) {
+        throw new PropuestaDuplicadaException("Ya existe una propuesta con ese titulo. ");
+    }
         String descripcion = prop.getDescripcion();
         String imagen = prop.getImagen();
         String lugarRealizara = prop.getLugarRealizara();

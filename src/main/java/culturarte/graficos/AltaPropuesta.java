@@ -4,6 +4,7 @@
  */
 package culturarte.graficos;
 
+import culturarte.excepciones.PropuestaDuplicadaException;
 import culturarte.logica.DTPropuesta;
 import culturarte.logica.Estado;
 import culturarte.logica.EstadoPropuesta;
@@ -52,7 +53,7 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
         numberFormatter.setMinimum(0);
         NumberFormatter numberFormatter2 = (NumberFormatter) this.campoMontoReunir.getFormatter();
         numberFormatter2.setMinimum(0);
-        
+
         ((AbstractDocument) this.campoTitulo.getDocument()).setDocumentFilter(new FiltroLimitarChars(100));
         ((AbstractDocument) this.campoLugar.getDocument()).setDocumentFilter(new FiltroLimitarChars(100));
         ((AbstractDocument) this.areaDescripcion.getDocument()).setDocumentFilter(new FiltroLimitarChars(64999));
@@ -76,7 +77,7 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
                     } else {
                         disableDatosPropuesta();
                     }
-                    
+
                 }
             }
         });
@@ -88,11 +89,11 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
 
             if (select1 != null && select2 != null) {
                 String cat = select2.toString();
-                    if (!cat.equals("Categorías")) {
-                        enableDatosPropuesta();
-                    } else {
-                        disableDatosPropuesta();
-                    }
+                if (!cat.equals("Categorías")) {
+                    enableDatosPropuesta();
+                } else {
+                    disableDatosPropuesta();
+                }
             }
         });
     }
@@ -394,7 +395,12 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
             DTPropuesta propuesta = new DTPropuesta(titulo, descripcion, this.imagenPropuesta, lugarRealizara, fechaRealizara,
                     precioEntrada, montoAReunir, tipoPropuesta, nickProponedor, tiposRetorno, est);
 
-            this.controller.addPropuesta(propuesta);
+            try {
+                controller.addPropuesta(propuesta);
+                JOptionPane.showMessageDialog(this, "Propuesta agregada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } catch (PropuestaDuplicadaException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
             this.dispose();
         }
     }//GEN-LAST:event_botonAceptarActionPerformed
@@ -439,7 +445,7 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
 
     private void botonAddImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAddImagenActionPerformed
 
-       JFileChooser selectorImagen = new JFileChooser();
+        JFileChooser selectorImagen = new JFileChooser();
         String[] tiposImagen = {"jpg", "png"};
         FileNameExtensionFilter filtroImagen = new FileNameExtensionFilter("Archivos .jpg o .png", tiposImagen);
         selectorImagen.setFileFilter(filtroImagen);
@@ -491,9 +497,8 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
     private void campoLugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoLugarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoLugarActionPerformed
-    
-    
-    private void enableDatosPropuesta(){
+
+    private void enableDatosPropuesta() {
         this.areaDescripcion.setEnabled(true);
         this.DescripcionL.setEnabled(true);
         this.campoFechaRealizar.setEnabled(true);
@@ -508,12 +513,12 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
         this.campoPrecioEntrada.setEnabled(true);
         this.campoMontoReunir.setEnabled(true);
         this.labelRetorno.setEnabled(true);
-        this.checkEntradaGratis.setEnabled(true);   
-        this.checkGanancias.setEnabled(true);   
+        this.checkEntradaGratis.setEnabled(true);
+        this.checkGanancias.setEnabled(true);
 
     }
-    
-     private void disableDatosPropuesta(){
+
+    private void disableDatosPropuesta() {
         this.areaDescripcion.setEnabled(false);
         this.DescripcionL.setEnabled(false);
         this.campoFechaRealizar.setEnabled(false);
@@ -528,10 +533,10 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
         this.campoPrecioEntrada.setEnabled(false);
         this.areaDescripcion.setEnabled(false);
         this.labelRetorno.setEnabled(false);
-        this.checkEntradaGratis.setEnabled(false);   
-        this.checkGanancias.setEnabled(false); 
+        this.checkEntradaGratis.setEnabled(false);
+        this.checkGanancias.setEnabled(false);
     }
-    
+
     private void campoTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTituloActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoTituloActionPerformed

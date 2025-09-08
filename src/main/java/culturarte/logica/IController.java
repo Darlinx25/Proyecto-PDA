@@ -6,6 +6,7 @@ package culturarte.logica;
 
 import culturarte.excepciones.EmailRepetidoException;
 import culturarte.excepciones.NickRepetidoException;
+import culturarte.excepciones.PropuestaDuplicadaException;
 import culturarte.excepciones.PropuestaYaColaboradaException;
 import java.util.ArrayList;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -25,7 +26,7 @@ public interface IController {
     public DTColaborador obtenerDTColaborador(String nick);
     public ArrayList<String> obtenerPropuestasColaboradas(String nick);
     public ArrayList<String> listarProponentes();
-    public void addPropuesta(DTPropuesta prop);
+    public void addPropuesta(DTPropuesta prop)throws PropuestaDuplicadaException;
     public DTProponente obtenerDTProponente(String nick);
     public DTPropuesta obtenerDTPropuesta(String titulo);
     public ArrayList<String> listarColaboracionesColaborador(String nickColab);
@@ -48,5 +49,5 @@ public interface IController {
     public ArrayList<String> obtenerColaboradoresColaboracion(String tituloProp);
     public ArrayList<String> listarPropuestas();
     public void modPropuesta(DTPropuesta prop);
-    public void cargarDatosPrueba()throws NickRepetidoException, EmailRepetidoException;
+    public void cargarDatosPrueba()throws NickRepetidoException, EmailRepetidoException, PropuestaDuplicadaException;
 }

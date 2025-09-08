@@ -6,6 +6,7 @@ package culturarte.graficos;
 
 import culturarte.excepciones.EmailRepetidoException;
 import culturarte.excepciones.NickRepetidoException;
+import culturarte.excepciones.PropuestaDuplicadaException;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
 import javax.swing.JOptionPane;
@@ -343,7 +344,7 @@ public class MainFrame extends javax.swing.JFrame {
             controller.cargarDatosPrueba();
             JOptionPane.showMessageDialog(this, "Datos de prueba cargados correctamente.",
                     "Información", JOptionPane.INFORMATION_MESSAGE);
-        } catch (NickRepetidoException | EmailRepetidoException e) {
+        } catch (NickRepetidoException | EmailRepetidoException | PropuestaDuplicadaException e) {
             JOptionPane.showMessageDialog(this, "Error al cargar datos de prueba: " + e.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
