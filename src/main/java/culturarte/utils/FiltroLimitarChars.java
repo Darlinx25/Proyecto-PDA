@@ -12,8 +12,12 @@ import javax.swing.text.DocumentFilter;
  *
  * @author mark
  */
-public class FiltroAlfanumerico extends DocumentFilter {
-    private static final int MAX_LENGTH = 20;
+public class FiltroLimitarChars extends DocumentFilter {
+    private final int maxLength;
+
+    public FiltroLimitarChars(int maxLength) {
+        this.maxLength = maxLength;
+    }
 
     @Override
     public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
@@ -22,17 +26,15 @@ public class FiltroAlfanumerico extends DocumentFilter {
             return;
         }
 
-        String filtered = filterAlphanumeric(string);
-
         int currentLength = fb.getDocument().getLength();
-        int newLength = currentLength + filtered.length();
+        int newLength = currentLength + string.length();
 
-        if (newLength <= MAX_LENGTH) {
-            super.insertString(fb, offset, filtered, attr);
+        if (newLength <= maxLength) {
+            super.insertString(fb, offset, string, attr);
         } else {
-            int allowed = MAX_LENGTH - currentLength;
+            int allowed = maxLength - currentLength;
             if (allowed > 0) {
-                super.insertString(fb, offset, filtered.substring(0, allowed), attr);
+                super.insertString(fb, offset, string.substring(0, allowed), attr);
             }
         }
     }
@@ -45,28 +47,16 @@ public class FiltroAlfanumerico extends DocumentFilter {
             return;
         }
 
-        String filtered = filterAlphanumeric(text);
-
         int currentLength = fb.getDocument().getLength();
-        int newLength = currentLength - length + filtered.length();
+        int newLength = currentLength - length + text.length();
 
-        if (newLength <= MAX_LENGTH) {
-            super.replace(fb, offset, length, filtered, attrs);
+        if (newLength <= maxLength) {
+            super.replace(fb, offset, length, text, attrs);
         } else {
-            int allowed = MAX_LENGTH - (currentLength - length);
+            int allowed = maxLength - (currentLength - length);
             if (allowed > 0) {
-                super.replace(fb, offset, length, filtered.substring(0, allowed), attrs);
+                super.replace(fb, offset, length, text.substring(0, allowed), attrs);
             }
         }
-    }
-
-    private String filterAlphanumeric(String text) {
-        StringBuilder sb = new StringBuilder(text.length());
-        for (char c : text.toCharArray()) {
-            if (Character.isLetterOrDigit(c)) {
-                sb.append(c);
-            }
-        }
-        return sb.toString();
     }
 }

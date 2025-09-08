@@ -12,6 +12,7 @@ import culturarte.logica.IControllerFactory;
 import culturarte.logica.IController;
 import culturarte.logica.ResultadoRegistroUsr;
 import culturarte.utils.FiltroAlfanumerico;
+import culturarte.utils.FiltroLimitarChars;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -43,6 +44,14 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         initComponents();
         
         ((AbstractDocument) this.campoNickname.getDocument()).setDocumentFilter(new FiltroAlfanumerico());
+        ((AbstractDocument) this.campoNombre.getDocument()).setDocumentFilter(new FiltroLimitarChars(40));
+        ((AbstractDocument) this.campoApellido.getDocument()).setDocumentFilter(new FiltroLimitarChars(40));
+        ((AbstractDocument) this.campoEmail.getDocument()).setDocumentFilter(new FiltroLimitarChars(100));
+        ((AbstractDocument) this.campoCiudad.getDocument()).setDocumentFilter(new FiltroLimitarChars(40));
+        ((AbstractDocument) this.campoCalle.getDocument()).setDocumentFilter(new FiltroLimitarChars(40));
+        ((AbstractDocument) this.areaBiografia.getDocument()).setDocumentFilter(new FiltroLimitarChars(1999));
+        ((AbstractDocument) this.campoNombre.getDocument()).setDocumentFilter(new FiltroLimitarChars(40));
+        ((AbstractDocument) this.campoSitioWeb.getDocument()).setDocumentFilter(new FiltroLimitarChars(250));
     }
 
 
