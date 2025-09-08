@@ -4,6 +4,8 @@
  */
 package culturarte.logica;
 
+import culturarte.excepciones.EmailRepetidoException;
+import culturarte.excepciones.NickRepetidoException;
 import culturarte.excepciones.PropuestaYaColaboradaException;
 import jakarta.persistence.*;
 import java.time.LocalDate;
@@ -24,10 +26,9 @@ import javax.swing.tree.DefaultMutableTreeNode;
 public class Controller implements IController {
 
     private static Controller instancia;
-    private Manejador emr = Manejador.getInstance(); 
+    private Manejador emr = Manejador.getInstance();
+
     private Controller() {
-
-
 
         // Verificar si la raíz ya existe en la DB
         Categoria raiz = emr.find(Categoria.class, "Categorías");
@@ -43,53 +44,52 @@ public class Controller implements IController {
         }
         return instancia;
     }
-    
+
     @Override
-    public void cargarDatosPrueba(){
+    public void cargarDatosPrueba()throws NickRepetidoException, EmailRepetidoException {
         cargarUsuariosPrueba();
         cargarSeguidoresPrueba();
         cargarCategoriasPrueba();
         cargarPropuestasPrueba();
         cargarColaboracionesPrueba();
     }
-    
+
     private void cargarColaboracionesPrueba() {
         try {
             realizarColaboracionPaPrueba("novick", "Cine en el Botánico", LocalDateTime.of(2017, 5, 20, 14, 30), 50000, "Porcentaje de ganancias");
             realizarColaboracionPaPrueba("robinh", "Cine en el Botánico", LocalDateTime.of(2017, 5, 24, 17, 25), 50000, "Porcentaje de ganancias");
             realizarColaboracionPaPrueba("nicoJ", "Cine en el Botánico", LocalDateTime.of(2017, 5, 30, 18, 30), 50000, "Porcentaje de ganancias");
-            
+
             realizarColaboracionPaPrueba("marcelot", "Religiosamente", LocalDateTime.of(2017, 6, 30, 14, 25), 200000, "Porcentaje de ganancias");
             realizarColaboracionPaPrueba("Tiajaci", "Religiosamente", LocalDateTime.of(2017, 7, 1, 18, 5), 500, "Entradas gratis");
             realizarColaboracionPaPrueba("Mengano", "Religiosamente", LocalDateTime.of(2017, 7, 7, 17, 45), 600, "Entradas gratis");
             realizarColaboracionPaPrueba("novick", "Religiosamente", LocalDateTime.of(2017, 7, 10, 14, 35), 50000, "Porcentaje de ganancias");
             realizarColaboracionPaPrueba("sergiop", "Religiosamente", LocalDateTime.of(2017, 7, 15, 9, 45), 50000, "Porcentaje de ganancias");
-            
+
             realizarColaboracionPaPrueba("marcelot", "El Pimiento Indomable", LocalDateTime.of(2017, 8, 1, 7, 40), 200000, "Porcentaje de ganancias");
             realizarColaboracionPaPrueba("sergiop", "El Pimiento Indomable", LocalDateTime.of(2017, 8, 3, 9, 25), 80000, "Porcentaje de ganancias");
-            
+
             realizarColaboracionPaPrueba("chino", "Pilsen Rock", LocalDateTime.of(2017, 8, 5, 16, 50), 50000, "Entradas gratis");
             realizarColaboracionPaPrueba("novick", "Pilsen Rock", LocalDateTime.of(2017, 8, 10, 15, 50), 120000, "Porcentaje de ganancias");
             realizarColaboracionPaPrueba("tonyp", "Pilsen Rock", LocalDateTime.of(2017, 8, 15, 19, 30), 120000, "Entradas gratis");
-            
+
             realizarColaboracionPaPrueba("sergiop", "Romeo y Julieta", LocalDateTime.of(2017, 8, 13, 4, 58), 100000, "Porcentaje de ganancias");
             realizarColaboracionPaPrueba("marcelot", "Romeo y Julieta", LocalDateTime.of(2017, 8, 14, 11, 25), 200000, "Porcentaje de ganancias");
-            
+
             realizarColaboracionPaPrueba("tonyp", "Un día de Julio", LocalDateTime.of(2017, 8, 15, 4, 48), 30000, "Entradas gratis");
             realizarColaboracionPaPrueba("marcelot", "Un día de Julio", LocalDateTime.of(2017, 8, 17, 15, 30), 150000, "Porcentaje de ganancias");
         } catch (PropuestaYaColaboradaException ex) {
             System.getLogger(Controller.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }
-    
+
     private void realizarColaboracionPaPrueba(String nickColab, String tituloProp, LocalDateTime fecha, float montoColab, String tipoRetorno) throws PropuestaYaColaboradaException {
         Colaborador colab = emr.find(Colaborador.class, nickColab);
         Propuesta prop = emr.find(Propuesta.class, tituloProp);
         List<String> aux = new ArrayList<>();
-        
-        
+
         emr.propuestaColaboradaPorUser(nickColab, tituloProp);
-        
+
         if (colab != null && prop != null && aux.isEmpty()) {
             Colaboracion colaboracion = new Colaboracion(montoColab, tipoRetorno, colab, prop);
             colaboracion.setFechaHora(fecha);
@@ -99,7 +99,7 @@ public class Controller implements IController {
             throw new PropuestaYaColaboradaException(nickColab + " ya tiene una colaboración con " + tituloProp);
         }
     }
-    
+
     private void cargarPropuestasPrueba() {
         List<TipoRetorno> porcentaje = new ArrayList<>();
         porcentaje.add(TipoRetorno.PORCENTAJE_GANANCIAS);
@@ -111,10 +111,10 @@ public class Controller implements IController {
         Propuesta aux;
         List<Estado> listAux;
         DTPropuesta prop;
-        prop = new DTPropuesta("Cine en el Botánico", 
-                "El 16 de Diciembre a la hora 20 se proyectará la película \"Clever\", en el Jardín Botánico (Av. 19 de Abril 1181) en el marco" +
-                " de las actividades realizadas por el ciclo Cultura al Aire Libre. El largometraje uruguayo de ficción Clever es dirigido por " +
-                "Federico Borgia y Guillermo Madeiro. Es apto para mayores de 15 años.", "../imagenesRespaldoBD/CEBimg.jpg", "Jardín Botánico",
+        prop = new DTPropuesta("Cine en el Botánico",
+                "El 16 de Diciembre a la hora 20 se proyectará la película \"Clever\", en el Jardín Botánico (Av. 19 de Abril 1181) en el marco"
+                + " de las actividades realizadas por el ciclo Cultura al Aire Libre. El largometraje uruguayo de ficción Clever es dirigido por "
+                + "Federico Borgia y Guillermo Madeiro. Es apto para mayores de 15 años.", "../imagenesRespaldoBD/CEBimg.jpg", "Jardín Botánico",
                 LocalDate.of(2017, 9, 16), 200, 150000, "Cine al Aire Libre", "diegop", porcentaje, new Estado(EstadoPropuesta.CANCELADA, LocalDateTime.of(2017, 6, 15, 14, 50)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "Cine en el Botánico");
@@ -124,12 +124,12 @@ public class Controller implements IController {
         listAux.add(new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 5, 20, 14, 30)));
         listAux.add(new Estado(EstadoPropuesta.FINANCIADA, LocalDateTime.of(2017, 5, 30, 18, 30)));
         aux.setHistorialEstados(listAux);
-        
-        prop = new DTPropuesta("Religiosamente", 
-                "MOMOSAPIENS presenta \"Religiosamente\". Mediante dos parodias y un hilo conductor que aborda la temática de la " +
-"religión Momosapiens, mediante el humor y la reflexión, hilvana una historia que muestra al hombre inmerso en el tema " +
-"religioso. El libreto está escrito utilizando diferentes lenguajes de humor, dando una visión satírica y reflexiva desde " +
-"distintos puntos de vista, logrando mediante situaciones paródicas armar una propuesta plena de arte carnavalero.", "../imagenesRespaldoBD/MOMimg.jpg", "Teatro de Verano",
+
+        prop = new DTPropuesta("Religiosamente",
+                "MOMOSAPIENS presenta \"Religiosamente\". Mediante dos parodias y un hilo conductor que aborda la temática de la "
+                + "religión Momosapiens, mediante el humor y la reflexión, hilvana una historia que muestra al hombre inmerso en el tema "
+                + "religioso. El libreto está escrito utilizando diferentes lenguajes de humor, dando una visión satírica y reflexiva desde "
+                + "distintos puntos de vista, logrando mediante situaciones paródicas armar una propuesta plena de arte carnavalero.", "../imagenesRespaldoBD/MOMimg.jpg", "Teatro de Verano",
                 LocalDate.of(2017, 10, 7), 300, 300000, "Parodistas", "hrubino", entPor, new Estado(EstadoPropuesta.FINANCIADA, LocalDateTime.of(2017, 7, 15, 9, 45)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "Religiosamente");
@@ -138,12 +138,12 @@ public class Controller implements IController {
         listAux.add(new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 6, 20, 4, 56)));
         listAux.add(new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 6, 30, 14, 25)));
         aux.setHistorialEstados(listAux);
-        
-        prop = new DTPropuesta("El Pimiento Indomable", 
-                "El Pimiento Indomable, formación compuesta por Kiko Veneno y el uruguayo Martín Buscaglia, presentará este 19 de " +
-"Octubre, su primer trabajo. Bajo un título homónimo al del grupo, es un disco que según los propios protagonistas “no se " +
-"parece al de ninguno de los dos por separado. Entre los títulos que se podrán escuchar se encuentran “Nadador salvador”, " +
-"“América es más grande”, “Pescaito Enroscado” o “La reina del placer”.", "../imagenesRespaldoBD/PIMimg.jpg", "Teatro Solís",
+
+        prop = new DTPropuesta("El Pimiento Indomable",
+                "El Pimiento Indomable, formación compuesta por Kiko Veneno y el uruguayo Martín Buscaglia, presentará este 19 de "
+                + "Octubre, su primer trabajo. Bajo un título homónimo al del grupo, es un disco que según los propios protagonistas “no se "
+                + "parece al de ninguno de los dos por separado. Entre los títulos que se podrán escuchar se encuentran “Nadador salvador”, "
+                + "“América es más grande”, “Pescaito Enroscado” o “La reina del placer”.", "../imagenesRespaldoBD/PIMimg.jpg", "Teatro Solís",
                 LocalDate.of(2017, 10, 19), 400, 400000, "Concierto", "mbusca", porcentaje, new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 8, 1, 7, 40)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "El Pimiento Indomable");
@@ -151,11 +151,11 @@ public class Controller implements IController {
         listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 7, 26, 15, 30)));
         listAux.add(new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 7, 31, 8, 30)));
         aux.setHistorialEstados(listAux);
-        
-        prop = new DTPropuesta("Pilsen Rock", 
-                "La edición 2017 del Pilsen Rock se celebrará el 21 de Octubre en la Rural del Prado y contará con la participación de más " +
-"de 15 bandas nacionales. Quienes no puedan trasladarse al lugar, tendrán la posibilidad de disfrutar los shows a través de " +
-"Internet, así como entrevistas en vivo a los músicos una vez finalizados los conciertos.", "../imagenesRespaldoBD/PILimg.jpg", "Rural de Prado",
+
+        prop = new DTPropuesta("Pilsen Rock",
+                "La edición 2017 del Pilsen Rock se celebrará el 21 de Octubre en la Rural del Prado y contará con la participación de más "
+                + "de 15 bandas nacionales. Quienes no puedan trasladarse al lugar, tendrán la posibilidad de disfrutar los shows a través de "
+                + "Internet, así como entrevistas en vivo a los músicos una vez finalizados los conciertos.", "../imagenesRespaldoBD/PILimg.jpg", "Rural de Prado",
                 LocalDate.of(2017, 10, 21), 1000, 900000, "Festival", "kairoh", entPor, new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 8, 5, 16, 50)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "Pilsen Rock");
@@ -163,12 +163,12 @@ public class Controller implements IController {
         listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 7, 30, 15, 40)));
         listAux.add(new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 1, 14, 30)));
         aux.setHistorialEstados(listAux);
-        
-        prop = new DTPropuesta("Romeo y Julieta", 
-                "Romeo y Julieta de Kenneth MacMillan, uno de los ballets favoritos del director artístico Julio Bocca, se presentará " +
-"nuevamente el 5 de Noviembre en el Auditorio Nacional del Sodre. Basada en la obra homónima de William Shakespeare, " +
-"Romeo y Julieta es considerada la coreografía maestra del MacMillan. La producción de vestuario y escenografía se realizó " +
-"en los Talleres del Auditorio Adela Reta, sobre los diseños originales.", "../imagenesRespaldoBD/RYJimg.jpg", "Auditorio Nacional del Sodre",
+
+        prop = new DTPropuesta("Romeo y Julieta",
+                "Romeo y Julieta de Kenneth MacMillan, uno de los ballets favoritos del director artístico Julio Bocca, se presentará "
+                + "nuevamente el 5 de Noviembre en el Auditorio Nacional del Sodre. Basada en la obra homónima de William Shakespeare, "
+                + "Romeo y Julieta es considerada la coreografía maestra del MacMillan. La producción de vestuario y escenografía se realizó "
+                + "en los Talleres del Auditorio Adela Reta, sobre los diseños originales.", "../imagenesRespaldoBD/RYJimg.jpg", "Auditorio Nacional del Sodre",
                 LocalDate.of(2017, 11, 5), 800, 750000, "Ballet", "juliob", porcentaje, new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 8, 5, 16, 50)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "Romeo y Julieta");
@@ -176,11 +176,11 @@ public class Controller implements IController {
         listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 8, 4, 12, 20)));
         listAux.add(new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 10, 10, 25)));
         aux.setHistorialEstados(listAux);
-        
-        prop = new DTPropuesta("Un día de Julio", 
-                "La Catalina presenta el espectáculo \"Un Día de Julio\" en Landia. Un hombre misterioso y solitario vive encerrado entre las " +
-"cuatro paredes de su casa. Intenta, con sus teorías extravagantes, cambiar el mundo exterior que le resulta inhabitable. Un " +
-"día de Julio sucederá algo que cambiará su vida y la de su entorno para siempre.", "../imagenesRespaldoBD/UDJimg.jpg", "Landia",
+
+        prop = new DTPropuesta("Un día de Julio",
+                "La Catalina presenta el espectáculo \"Un Día de Julio\" en Landia. Un hombre misterioso y solitario vive encerrado entre las "
+                + "cuatro paredes de su casa. Intenta, con sus teorías extravagantes, cambiar el mundo exterior que le resulta inhabitable. Un "
+                + "día de Julio sucederá algo que cambiará su vida y la de su entorno para siempre.", "../imagenesRespaldoBD/UDJimg.jpg", "Landia",
                 LocalDate.of(2017, 11, 16), 650, 300000, "Murga", "tabarec", entPor, new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 8, 15, 4, 48)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "Un día de Julio");
@@ -188,49 +188,49 @@ public class Controller implements IController {
         listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 8, 6, 2, 0)));
         listAux.add(new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 12, 4, 50)));
         aux.setHistorialEstados(listAux);
-        
-        prop = new DTPropuesta("El Lazarillo de Tormes", 
-                "Vuelve unas de las producciones de El Galpón más aclamadas de los últimos tiempos. Esta obra se ha presentado en " +
-"Miami, Nueva York, Washington, México, Guadalajara, Río de Janeiro y La Habana. En nuestro país, El Lazarillo de " +
-"Tormes fue nominado en los rubros mejor espectáculo y mejor dirección a los Premios Florencio 1995, obteniendo su " +
-"protagonista Héctor Guido el Florencio a Mejor actor de ese año.", "../imagenesRespaldoBD/LDTimg.jpg", "Teatro el Galpón",
+
+        prop = new DTPropuesta("El Lazarillo de Tormes",
+                "Vuelve unas de las producciones de El Galpón más aclamadas de los últimos tiempos. Esta obra se ha presentado en "
+                + "Miami, Nueva York, Washington, México, Guadalajara, Río de Janeiro y La Habana. En nuestro país, El Lazarillo de "
+                + "Tormes fue nominado en los rubros mejor espectáculo y mejor dirección a los Premios Florencio 1995, obteniendo su "
+                + "protagonista Héctor Guido el Florencio a Mejor actor de ese año.", "../imagenesRespaldoBD/LDTimg.jpg", "Teatro el Galpón",
                 LocalDate.of(2017, 12, 3), 350, 175000, "Teatro Dramático", "hectorg", entrada, new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 20, 21, 58)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "El Lazarillo de Tormes");
         listAux = new ArrayList<>();
         listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 8, 18, 2, 40)));
         aux.setHistorialEstados(listAux);
-        
-        prop = new DTPropuesta("Bardo en la FING", 
-                "El 10 de Diciembre se presentará Bardo Científico en la FING. El humor puede ser usado como una herramienta " +
-"importante para el aprendizaje y la democratización de la ciencia, los monólogos científicos son una forma didáctica de " +
-"apropiación del conocimiento científico y contribuyen a que el público aprenda ciencia de forma amena. Los invitamos a " +
-"pasar un rato divertido, en un espacio en el cual aprenderán cosas de la ciencia que los sorprenderán. ¡Los esperamos!", "../imagenesRespaldoBD/BEFimg.jpg", "Anfiteatro Edificio \"José Luis Massera\"",
+
+        prop = new DTPropuesta("Bardo en la FING",
+                "El 10 de Diciembre se presentará Bardo Científico en la FING. El humor puede ser usado como una herramienta "
+                + "importante para el aprendizaje y la democratización de la ciencia, los monólogos científicos son una forma didáctica de "
+                + "apropiación del conocimiento científico y contribuyen a que el público aprenda ciencia de forma amena. Los invitamos a "
+                + "pasar un rato divertido, en un espacio en el cual aprenderán cosas de la ciencia que los sorprenderán. ¡Los esperamos!", "../imagenesRespaldoBD/BEFimg.jpg", "Anfiteatro Edificio \"José Luis Massera\"",
                 LocalDate.of(2017, 12, 10), 200, 100000, "Stand-up", "losBardo", entrada, new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 8, 23, 2, 12)));
         addPropuesta(prop);
     }
-    
+
     private void cargarCategoriasPrueba() {
         addCategoria("Teatro", "Categorías");
         addCategoria("Teatro Dramático", "Teatro");
         addCategoria("Teatro Musical", "Teatro");
         addCategoria("Comedia", "Teatro");
         addCategoria("Stand-up", "Comedia");
-        
+
         addCategoria("Literatura", "Categorías");
-        
+
         addCategoria("Música", "Categorías");
         addCategoria("Festival", "Música");
         addCategoria("Concierto", "Música");
-        
+
         addCategoria("Cine", "Categorías");
         addCategoria("Cine al Aire Libre", "Cine");
         addCategoria("Cine a Pedal", "Cine");
-        
+
         addCategoria("Danza", "Categorías");
         addCategoria("Ballet", "Danza");
         addCategoria("Flamenco", "Danza");
-        
+
         addCategoria("Carnaval", "Categorías");
         addCategoria("Murga", "Carnaval");
         addCategoria("Humoristas", "Carnaval");
@@ -238,172 +238,175 @@ public class Controller implements IController {
         addCategoria("Lubolos", "Carnaval");
         addCategoria("Revista", "Carnaval");
     }
-    
+
     private void cargarSeguidoresPrueba() {
         seguirUsuario("hrubino", "hectorg");
         seguirUsuario("hrubino", "diegop");
         seguirUsuario("hrubino", "losBardo");
-        
+
         seguirUsuario("mbusca", "tabarec");
         seguirUsuario("mbusca", "cachilas");
         seguirUsuario("mbusca", "kairoh");
-        
+
         seguirUsuario("hectorg", "mbusca");
         seguirUsuario("hectorg", "juliob");
-        
+
         seguirUsuario("tabarec", "hrubino");
         seguirUsuario("tabarec", "cachilas");
-        
+
         seguirUsuario("cachilas", "hrubino");
-        
+
         seguirUsuario("juliob", "mbusca");
         seguirUsuario("juliob", "diegop");
-        
+
         seguirUsuario("diegop", "hectorg");
         seguirUsuario("diegop", "losBardo");
-        
+
         seguirUsuario("kairoh", "sergiop");
-        
+
         seguirUsuario("losBardo", "hrubino");
         seguirUsuario("losBardo", "nicoJ");
-        
+
         seguirUsuario("robinh", "hectorg");
         seguirUsuario("robinh", "juliob");
         seguirUsuario("robinh", "diegop");
-        
+
         seguirUsuario("marcelot", "cachilas");
         seguirUsuario("marcelot", "juliob");
         seguirUsuario("marcelot", "kairoh");
-        
+
         seguirUsuario("novick", "hrubino");
         seguirUsuario("novick", "tabarec");
         seguirUsuario("novick", "cachilas");
-        
+
         seguirUsuario("sergiop", "mbusca");
         seguirUsuario("sergiop", "juliob");
         seguirUsuario("sergiop", "diegop");
-        
+
         seguirUsuario("chino", "tonyp");
-        
+
         seguirUsuario("tonyp", "chino");
-        
+
         seguirUsuario("nicoJ", "diegop");
         seguirUsuario("nicoJ", "losBardo");
-        
+
         seguirUsuario("juanP", "tabarec");
         seguirUsuario("juanP", "cachilas");
         seguirUsuario("juanP", "kairoh");
-        
+
         seguirUsuario("Mengano", "hectorg");
         seguirUsuario("Mengano", "juliob");
         seguirUsuario("Mengano", "chino");
-        
+
         seguirUsuario("Perengano", "diegop");
         seguirUsuario("Perengano", "tonyp");
-        
+
         seguirUsuario("Tiajaci", "juliob");
         seguirUsuario("Tiajaci", "kairoh");
         seguirUsuario("Tiajaci", "sergiop");
     }
-    
-    private void cargarUsuariosPrueba() {
+
+    private void cargarUsuariosPrueba() throws NickRepetidoException, EmailRepetidoException {
         List<DTUsuario> usu = obtenerProponentesPrueba();
         usu.addAll(obtenerColaboradoresPrueba());
-        
+
         for (DTUsuario u : usu) {
-            addUsuario(u);
+                addUsuario(u);
+            
         }
     }
+
     private List<DTUsuario> obtenerProponentesPrueba() {
         List<DTUsuario> usu = new ArrayList<>();
-        usu.add(new DTProponente(new DTDireccion("Montevideo"," 18 de Julio", 1234),"Horacio Rubino Torres nace el 25 de febrero de 1962, es conductor, actor y libretista. Debuta en 1982 en carnaval\n" +
-        "en Los \"Klaper´s\", donde estuvo cuatro años, actuando y libretando. Luego para \"Gaby´s\" (6 años), escribió en\n" +
-        "categoría revistas y humoristas y desde el comienzo y hasta el presente en su propio conjunto Momosapiens.",
-        "https://twitter.com/horaciorubino","hrubino","Horacio","Rubino","horacio.rubino@guambia.com.uy",LocalDate.of(1980,5, 20),"../imagenesRespaldoBD/HRimg.jpg"));
-        
-        usu.add(new DTProponente(new DTDireccion("Montevideo", " Colonia", 4321),"Martín Buscaglia (Montevideo, 1972) es un artista, músico, compositor y productor uruguayo. Tanto con su banda" +
-        "(“Los Bochamakers”) como en su formato “Hombre orquesta”, o solo con su guitarra, ha recorrido el mundo" +
-        "tocando entre otros países en España, Estados Unidos, Inglaterra, Francia, Australia, Brasil, Colombia, Argentina," +
-        "Chile, Paraguay, México y Uruguay. (Actualmente los Bochamakers son Matías Rada, Martín Ibarburu, Mateo" +
-        "Moreno, Herman Klang) Paralelamente, tiene proyectos a dúo con el español Kiko Veneno, la cubana Yusa, el" +
-        "argentino Lisandro Aristimuño, su compatriota Antolín, y a trío junto a los brasileros Os Mulheres Negras.",
-        "http://www.martinbuscaglia.com/","mbusca","Martín","Buscaglia","Martin.bus@agadu.org.uy",LocalDate.of(1972, 6, 14),"../imagenesRespaldoBD/MBimg.jpg"));
-        
-        usu.add(new DTProponente(new DTDireccion("Montevideo", " Gral. Flores", 5645),"En 1972 ingresó a la Escuela de Arte Dramático del teatro El Galpón. Participó en más de treinta obras teatrales y" +
-        "varios largometrajes. Integró el elenco estable de Radioteatro del Sodre, y en 2006 fue asesor de su Consejo" +
-        "Directivo. Como actor recibió múltiples reconocimientos: cuatro premios Florencio, premio al mejor actor" +
-        "extranjero del Festival de Miami y premio Mejor Actor de Cine 2008. Durante varios períodos fue directivo del" +
-        "teatro El Galpón y dirigente de la Sociedad Uruguaya de Actores (SUA); integró también la Federación Uruguaya" +
-        "de Teatros Independientes (FUTI). Formó parte del equipo de gestión de la refacción de los teatros La Máscara," +
-        "Astral y El Galpón, y del equipo de gestión en la construcción del teatro De la Candela y de la sala Atahualpa de El" +
-        "Galpón.",
-        "http://www.martinbuscaglia.com/","hectorg","Héctor","Guido","hector.gui@elgalpon.org.uy",LocalDate.of(1954, 1, 7),"../imagenesRespaldoBD/HGimg.jpg"));
-        
-        usu.add(new DTProponente(new DTDireccion("Montevideo", " Santiago Rivas", 1212),"Tabaré Cardozo (Montevideo, 24 de julio de 1971) es un cantante, compositor y murguista uruguayo; conocido por" +
-        "su participación en la murga Agarrate Catalina, conjunto que fundó junto a su hermano Yamandú y Carlos" +
-        "Tanco en el año 2001.",
-        "https://www.facebook.com/Tabar%C3%A9-\nCardozo-55179094281/?ref=br_rs","tabarec","Tabaré","Cardozo","tabare.car@agadu.org.uy",LocalDate.of(1971, 7, 24),"../imagenesRespaldoBD/TCimg.jpg"));
-        
-        usu.add(new DTProponente(new DTDireccion("Montevideo", " Br. Artigas", 4567),"Nace en el año 1947 en el conventillo \"Medio Mundo\" ubicado en pleno Barrio Sur. Es heredero parcialmente-" +
-        "junto al resto de sus hermanos- de la Comparsa \"Morenada\" (inactiva desde el fallecimiento de Juan Ángel Silva)," +
-        "en 1999 forma su propia Comparsa de negros y lubolos \"Cuareim 1080\". Director responsable, compositor y" +
-        "cantante de la misma.",
-        "https://www.facebook.com/C1080?ref=br_rs","cachilas","Waldemar “Cachila”","Silva","Cachila.sil@c1080.org.uy",LocalDate.of(1947, 1, 1),"../imagenesRespaldoBD/CSimg.jpg"));
-        
-        usu.add(new DTProponente(new DTDireccion("Montevideo", " Benito Blanco", 4321),"",
-        "","juliob","Julio","Bocca","juliobocca@sodre.com.uy",LocalDate.of(1967, 3, 16),"../imagenesRespaldoBD/JBimg.jpg"));
-        
-        usu.add(new DTProponente(new DTDireccion("Montevideo", " Emilio Frugoni Ap. 02", 1138),"",
-        "http://www.efectocine.com","diegop","Diego","Parodi","diego@efectocine.com",LocalDate.of(1975, 1, 1),"../imagenesRespaldoBD/DPimg.jpg"));
-        
-        usu.add(new DTProponente(new DTDireccion("Montevideo", " Paraguay", 1423),"",
-        "","kairoh","Kairo","Herrera","kairoher@pilsenrock.com.uy",LocalDate.of(1840, 4, 25),"../imagenesRespaldoBD/KHimg.jpg"));
-        
-        usu.add(new DTProponente(new DTDireccion("Montevideo", " 8 de Octubre", 1429),"Queremos ser vistos y reconocidos como una organización: referente en divulgación científica con un fuerte" +
-        "espíritu didáctico y divertido, a través de acciones coordinadas con otros divulgadores científicos, que permitan" +
-        "establecer puentes de comunicación. Impulsora en la generación de espacios de democratización y apropiación" +
-        "social del conocimiento científico.",
-        "https://bardocientifico.com/","losBardo","Los","Bardo","losbardo@bardocientifico.com",LocalDate.of(1980, 10, 31),"../imagenesRespaldoBD/LBimg.jpg"));
-        
+        usu.add(new DTProponente(new DTDireccion("Montevideo", " 18 de Julio", 1234), "Horacio Rubino Torres nace el 25 de febrero de 1962, es conductor, actor y libretista. Debuta en 1982 en carnaval\n"
+                + "en Los \"Klaper´s\", donde estuvo cuatro años, actuando y libretando. Luego para \"Gaby´s\" (6 años), escribió en\n"
+                + "categoría revistas y humoristas y desde el comienzo y hasta el presente en su propio conjunto Momosapiens.",
+                "https://twitter.com/horaciorubino", "hrubino", "Horacio", "Rubino", "horacio.rubino@guambia.com.uy", LocalDate.of(1980, 5, 20), "../imagenesRespaldoBD/HRimg.jpg"));
+
+        usu.add(new DTProponente(new DTDireccion("Montevideo", " Colonia", 4321), "Martín Buscaglia (Montevideo, 1972) es un artista, músico, compositor y productor uruguayo. Tanto con su banda"
+                + "(“Los Bochamakers”) como en su formato “Hombre orquesta”, o solo con su guitarra, ha recorrido el mundo"
+                + "tocando entre otros países en España, Estados Unidos, Inglaterra, Francia, Australia, Brasil, Colombia, Argentina,"
+                + "Chile, Paraguay, México y Uruguay. (Actualmente los Bochamakers son Matías Rada, Martín Ibarburu, Mateo"
+                + "Moreno, Herman Klang) Paralelamente, tiene proyectos a dúo con el español Kiko Veneno, la cubana Yusa, el"
+                + "argentino Lisandro Aristimuño, su compatriota Antolín, y a trío junto a los brasileros Os Mulheres Negras.",
+                "http://www.martinbuscaglia.com/", "mbusca", "Martín", "Buscaglia", "Martin.bus@agadu.org.uy", LocalDate.of(1972, 6, 14), "../imagenesRespaldoBD/MBimg.jpg"));
+
+        usu.add(new DTProponente(new DTDireccion("Montevideo", " Gral. Flores", 5645), "En 1972 ingresó a la Escuela de Arte Dramático del teatro El Galpón. Participó en más de treinta obras teatrales y"
+                + "varios largometrajes. Integró el elenco estable de Radioteatro del Sodre, y en 2006 fue asesor de su Consejo"
+                + "Directivo. Como actor recibió múltiples reconocimientos: cuatro premios Florencio, premio al mejor actor"
+                + "extranjero del Festival de Miami y premio Mejor Actor de Cine 2008. Durante varios períodos fue directivo del"
+                + "teatro El Galpón y dirigente de la Sociedad Uruguaya de Actores (SUA); integró también la Federación Uruguaya"
+                + "de Teatros Independientes (FUTI). Formó parte del equipo de gestión de la refacción de los teatros La Máscara,"
+                + "Astral y El Galpón, y del equipo de gestión en la construcción del teatro De la Candela y de la sala Atahualpa de El"
+                + "Galpón.",
+                "http://www.martinbuscaglia.com/", "hectorg", "Héctor", "Guido", "hector.gui@elgalpon.org.uy", LocalDate.of(1954, 1, 7), "../imagenesRespaldoBD/HGimg.jpg"));
+
+        usu.add(new DTProponente(new DTDireccion("Montevideo", " Santiago Rivas", 1212), "Tabaré Cardozo (Montevideo, 24 de julio de 1971) es un cantante, compositor y murguista uruguayo; conocido por"
+                + "su participación en la murga Agarrate Catalina, conjunto que fundó junto a su hermano Yamandú y Carlos"
+                + "Tanco en el año 2001.",
+                "https://www.facebook.com/Tabar%C3%A9-\nCardozo-55179094281/?ref=br_rs", "tabarec", "Tabaré", "Cardozo", "tabare.car@agadu.org.uy", LocalDate.of(1971, 7, 24), "../imagenesRespaldoBD/TCimg.jpg"));
+
+        usu.add(new DTProponente(new DTDireccion("Montevideo", " Br. Artigas", 4567), "Nace en el año 1947 en el conventillo \"Medio Mundo\" ubicado en pleno Barrio Sur. Es heredero parcialmente-"
+                + "junto al resto de sus hermanos- de la Comparsa \"Morenada\" (inactiva desde el fallecimiento de Juan Ángel Silva),"
+                + "en 1999 forma su propia Comparsa de negros y lubolos \"Cuareim 1080\". Director responsable, compositor y"
+                + "cantante de la misma.",
+                "https://www.facebook.com/C1080?ref=br_rs", "cachilas", "Waldemar “Cachila”", "Silva", "Cachila.sil@c1080.org.uy", LocalDate.of(1947, 1, 1), "../imagenesRespaldoBD/CSimg.jpg"));
+
+        usu.add(new DTProponente(new DTDireccion("Montevideo", " Benito Blanco", 4321), "",
+                "", "juliob", "Julio", "Bocca", "juliobocca@sodre.com.uy", LocalDate.of(1967, 3, 16), "../imagenesRespaldoBD/JBimg.jpg"));
+
+        usu.add(new DTProponente(new DTDireccion("Montevideo", " Emilio Frugoni Ap. 02", 1138), "",
+                "http://www.efectocine.com", "diegop", "Diego", "Parodi", "diego@efectocine.com", LocalDate.of(1975, 1, 1), "../imagenesRespaldoBD/DPimg.jpg"));
+
+        usu.add(new DTProponente(new DTDireccion("Montevideo", " Paraguay", 1423), "",
+                "", "kairoh", "Kairo", "Herrera", "kairoher@pilsenrock.com.uy", LocalDate.of(1840, 4, 25), "../imagenesRespaldoBD/KHimg.jpg"));
+
+        usu.add(new DTProponente(new DTDireccion("Montevideo", " 8 de Octubre", 1429), "Queremos ser vistos y reconocidos como una organización: referente en divulgación científica con un fuerte"
+                + "espíritu didáctico y divertido, a través de acciones coordinadas con otros divulgadores científicos, que permitan"
+                + "establecer puentes de comunicación. Impulsora en la generación de espacios de democratización y apropiación"
+                + "social del conocimiento científico.",
+                "https://bardocientifico.com/", "losBardo", "Los", "Bardo", "losbardo@bardocientifico.com", LocalDate.of(1980, 10, 31), "../imagenesRespaldoBD/LBimg.jpg"));
+
         return usu;
     }
+
     private List<DTUsuario> obtenerColaboradoresPrueba() {
         List<DTUsuario> usu = new ArrayList<>();
         usu.add(new DTColaborador("robinh", "Robin", "Henderson", "Robin.h@tinglesa.com.uy", LocalDate.of(1940, 8, 3), "../imagenesRespaldoBD/RHimg.jpg"));
-        
+
         usu.add(new DTColaborador("marcelot", "Marcelo", "Tinelli", "marcelot@ideasdelsur.com.ar", LocalDate.of(1960, 4, 1), "../imagenesRespaldoBD/MTimg.jpg"));
-        
+
         usu.add(new DTColaborador("novick", "Edgardo", "Novick", "edgardo@novick.com.uy", LocalDate.of(1952, 7, 17), "../imagenesRespaldoBD/ENimg.jpg"));
-        
+
         usu.add(new DTColaborador("sergiop", "Sergio", "Puglia", "puglia@alpanpan.com.uy", LocalDate.of(1950, 1, 28), "../imagenesRespaldoBD/SPimg.jpg"));
-        
+
         usu.add(new DTColaborador("chino", "Alvaro", "Recoba", "chino@trico.org.uy", LocalDate.of(1976, 3, 17), "../imagenesRespaldoBD/ARimg.jpg"));
-        
+
         usu.add(new DTColaborador("tonyp", "Antonio", "Pacheco", "eltony@manya.org.uy", LocalDate.of(1955, 2, 14), "../imagenesRespaldoBD/APimg.jpg"));
-        
+
         usu.add(new DTColaborador("nicoJ", "Nicolás", "Jodal", "jodal@artech.com.uy", LocalDate.of(1960, 8, 9), "../imagenesRespaldoBD/NJimg.jpg"));
-        
+
         usu.add(new DTColaborador("juanP", "Juan", "Perez", "juanp@elpueblo.com", LocalDate.of(1970, 1, 1), "../imagenesRespaldoBD/JPimg.jpg"));
-        
+
         usu.add(new DTColaborador("Mengano", "Mengano", "Gómez", "menganog@elpueblo.com", LocalDate.of(1982, 2, 2), "../imagenesRespaldoBD/MGimg.jpg"));
-        
+
         usu.add(new DTColaborador("Perengano", "Perengano", "López", "pere@elpueblo.com", LocalDate.of(1985, 3, 3), "../imagenesRespaldoBD/PLimg.jpg"));
-        
+
         usu.add(new DTColaborador("Tiajaci", "Tía", "Jacinta", "jacinta@elpueblo.com", LocalDate.of(1990, 4, 4), "../imagenesRespaldoBD/TJimg.jpg"));
-        
+
         return usu;
     }
-    
+
     @Override
-    public ResultadoRegistroUsr addUsuario(DTUsuario user) {
+    public void addUsuario(DTUsuario user) throws NickRepetidoException, EmailRepetidoException {
         String nick = user.getNickname();
         String email = user.getEmail();
 
         if (emr.datoUsuarioRepetido("nickname", nick) > 0) {
-            return ResultadoRegistroUsr.NICK_REPETIDO;
+            throw new NickRepetidoException("Error al registrar usuario, Nick ya existente.");
         }
         if (emr.datoUsuarioRepetido("email", email) > 0) {
-            return ResultadoRegistroUsr.EMAIL_REPETIDO;
+            throw new EmailRepetidoException("Error al registrar usuario, Email ya existente.");
         }
         String nombre = user.getNombre();
         String apellido = user.getApellido();
@@ -421,7 +424,7 @@ public class Controller implements IController {
         }
 
         emr.add(usu);
-        return ResultadoRegistroUsr.EXITO;
+        //return ResultadoRegistroUsr.EXITO;
 
     }
 
@@ -506,7 +509,7 @@ public class Controller implements IController {
         Categoria tipoPropuesta = emr.find(Categoria.class, prop.getTipoPropuesta());
         Proponente proponedor = emr.find(Proponente.class, prop.getNickProponedor());
 
-        List<TipoRetorno> tiposRetorno = prop.getTiposRetorno(); 
+        List<TipoRetorno> tiposRetorno = prop.getTiposRetorno();
         Propuesta propuesta = new Propuesta(titulo, descripcion, imagen, lugarRealizara, fechaRealizara, precioEntrada, montoAReunir, tiposRetorno,
                 tipoPropuesta, proponedor, est);
 
@@ -532,12 +535,12 @@ public class Controller implements IController {
         if (prop.getImagen() != null) {
             aux.setImagen(prop.getImagen());
         }
-        
-        if(aux.getEstadoActual().getEstado() != prop.getEstadoActual().getEstado()){
+
+        if (aux.getEstadoActual().getEstado() != prop.getEstadoActual().getEstado()) {
             aux.agregarEstadoActualAlHistorial();
             aux.setEstadoActual(prop.getEstadoActual());
         }
-        
+
         aux.setLugarRealizara(prop.getLugarRealizara());
         aux.setFechaRealizara(prop.getFechaRealizara());
         aux.setPrecioEntrada(prop.getPrecioEntrada());
@@ -545,8 +548,7 @@ public class Controller implements IController {
         aux.setTiposRetorno(prop.getTiposRetorno());
         Categoria cat = emr.find(Categoria.class, prop.getTipoPropuesta());
         aux.setTipoPropuesta(cat);
-        
-        
+
         emr.mod(aux);
 
     }
@@ -635,7 +637,7 @@ public class Controller implements IController {
 
     @Override
     public ArrayList<String> listarPropuestasProponentes() {
-        
+
         return emr.listPropuestasProponentes();
     }
 
@@ -663,10 +665,9 @@ public class Controller implements IController {
         Colaborador colab = emr.find(Colaborador.class, nickColab);
         Propuesta prop = emr.find(Propuesta.class, tituloProp);
         List<String> aux = new ArrayList<>();
-        
-        
+
         emr.propuestaColaboradaPorUser(nickColab, tituloProp);
-        
+
         if (colab != null && prop != null && aux.isEmpty()) {
             Colaboracion colaboracion = new Colaboracion(montoColab, tipoRetorno, colab, prop);
 
@@ -680,7 +681,7 @@ public class Controller implements IController {
     public String obtenerDineroRecaudado(String tituloProp) {
         List<Float> aux = emr.obtenerDinero(tituloProp);
         float resultado = 0f;
-        if(aux.isEmpty()){
+        if (aux.isEmpty()) {
             return "0";
         }
         for (Float actual : aux) {

@@ -4,15 +4,18 @@
  */
 package culturarte.graficos;
 
+import culturarte.excepciones.EmailRepetidoException;
+import culturarte.excepciones.NickRepetidoException;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author faxcundo
  */
 public class MainFrame extends javax.swing.JFrame {
-    
+
     private AltaUsuario altaUsr;
     private AltaCategoria altaCategoria;
     private AltaPropuesta altaPropuesta;
@@ -26,7 +29,7 @@ public class MainFrame extends javax.swing.JFrame {
     private ConsultarPropuesta consultarPropuesta;
     private ConsultarColaboracion consultarColaboracion;
     private CancelarColaboracion cancelarColaboracion;
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
     private IController controller;
 
@@ -224,7 +227,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
         this.altaUsr = new AltaUsuario();
         add(this.altaUsr);
-        this.altaUsr.setVisible(true);    
+        this.altaUsr.setVisible(true);
     }//GEN-LAST:event_itemAltaUsuarioActionPerformed
 
     private void itemAltaCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAltaCategoriaActionPerformed
@@ -242,7 +245,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
         this.altaPropuesta = new AltaPropuesta();
         add(this.altaPropuesta);
-        this.altaPropuesta.setVisible(true);    
+        this.altaPropuesta.setVisible(true);
     }//GEN-LAST:event_itemAltaPropuestaActionPerformed
 
     private void itemConsultarProponenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemConsultarProponenteActionPerformed
@@ -336,7 +339,14 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_itemCancelarColaboracionActionPerformed
 
     private void itemCargarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCargarDatosActionPerformed
-        controller.cargarDatosPrueba();
+        try {
+            controller.cargarDatosPrueba();
+            JOptionPane.showMessageDialog(this, "Datos de prueba cargados correctamente.",
+                    "Información", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NickRepetidoException | EmailRepetidoException e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar datos de prueba: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_itemCargarDatosActionPerformed
 
     /**

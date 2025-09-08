@@ -4,6 +4,8 @@
  */
 package culturarte.graficos;
 
+import culturarte.excepciones.EmailRepetidoException;
+import culturarte.excepciones.NickRepetidoException;
 import culturarte.logica.DTColaborador;
 import culturarte.logica.DTDireccion;
 import culturarte.logica.DTProponente;
@@ -42,7 +44,7 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         this.controller = fabrica.getIController();
 
         initComponents();
-        
+
         ((AbstractDocument) this.campoNickname.getDocument()).setDocumentFilter(new FiltroAlfanumerico());
         ((AbstractDocument) this.campoNombre.getDocument()).setDocumentFilter(new FiltroLimitarChars(40));
         ((AbstractDocument) this.campoApellido.getDocument()).setDocumentFilter(new FiltroLimitarChars(40));
@@ -53,7 +55,6 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         ((AbstractDocument) this.campoNombre.getDocument()).setDocumentFilter(new FiltroLimitarChars(40));
         ((AbstractDocument) this.campoSitioWeb.getDocument()).setDocumentFilter(new FiltroLimitarChars(250));
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -522,20 +523,22 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
                 user = new DTProponente(direccion, biografia, sitioWeb, nick, nombre, apellido, email, fechaNac, this.rutaImagenUsuario);
             }
 
-            ResultadoRegistroUsr check = null;
-            if (this.controller.addUsuario(user) == check.EXITO) {
+            try {
+                this.controller.addUsuario(user); 
                 JOptionPane.showMessageDialog(this, "Usuario registrado con éxito.",
                         "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            } else if (this.controller.addUsuario(user) == check.NICK_REPETIDO) {
-                JOptionPane.showMessageDialog(this, "Error al registrar usuario, Nick ya existente.",
-                        "Error", JOptionPane.INFORMATION_MESSAGE);
-            } else if (this.controller.addUsuario(user) == check.EMAIL_REPETIDO) {
-                JOptionPane.showMessageDialog(this, "Error al registrar usuario, Email ya existente.",
-                        "Error", JOptionPane.INFORMATION_MESSAGE);
 
-            } else if (this.controller.addUsuario(user) == check.ERROR) {
-                JOptionPane.showMessageDialog(this, "Error Inesperado.",
-                        "Error", JOptionPane.INFORMATION_MESSAGE);
+            } catch (NickRepetidoException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
+
+            } catch (EmailRepetidoException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
+
+            } catch (Exception e) { 
+                JOptionPane.showMessageDialog(this, "Error inesperado: " + e.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
             }
 
         } else {
@@ -577,12 +580,12 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
             ret = false;
         } else if (this.campoFNac.getText().isBlank()) {
             ret = false;
-        } 
+        }
         Date fecha = (Date) this.campoFNac.getValue();
         LocalDate fechaNac = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        if (fechaNac.getYear() > LocalDate.now().getYear()){
-           ret = false;     
-        }    
+        if (fechaNac.getYear() > LocalDate.now().getYear()) {
+            ret = false;
+        }
         return ret;
     }
 
