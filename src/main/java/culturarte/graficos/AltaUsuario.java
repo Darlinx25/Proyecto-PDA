@@ -577,7 +577,7 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         }
         Date fecha = (Date) this.campoFNac.getValue();
         LocalDate fechaNac = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        if (fechaNac.getYear() > LocalDate.now().getYear()) {
+        if (fechaNac.getYear() > LocalDate.now().getYear() || fechaNac.getYear() < LocalDate.now().getYear()-100) {
             ret = false;
         }
         return ret;
