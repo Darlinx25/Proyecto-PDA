@@ -5,6 +5,8 @@
 package culturarte.graficos;
 import culturarte.logica.IControllerFactory;
 import culturarte.logica.IController;
+import culturarte.utils.FiltroLimitarChars;
+import javax.swing.text.AbstractDocument;
 import javax.swing.tree.DefaultMutableTreeNode;
 /**
  *
@@ -20,6 +22,8 @@ public class AltaCategoria extends javax.swing.JInternalFrame {
         this.controller = fabrica.getIController();
         
         initComponents();
+        
+        ((AbstractDocument) this.campoCategoria.getDocument()).setDocumentFilter(new FiltroLimitarChars(100));
     }
 
     /**

@@ -10,6 +10,7 @@ import culturarte.logica.EstadoPropuesta;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
 import culturarte.logica.TipoRetorno;
+import culturarte.utils.FiltroLimitarChars;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -28,6 +29,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.AbstractDocument;
 import javax.swing.text.NumberFormatter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
@@ -49,6 +51,10 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
         numberFormatter.setMinimum(0);
         NumberFormatter numberFormatter2 = (NumberFormatter) this.campoMontoReunir.getFormatter();
         numberFormatter2.setMinimum(0);
+        
+        ((AbstractDocument) this.campoLugar.getDocument()).setDocumentFilter(new FiltroLimitarChars(100));
+        ((AbstractDocument) this.areaDescripcion.getDocument()).setDocumentFilter(new FiltroLimitarChars(64999));
+        
         controller.listarPropuestas();
         DefaultListModel<String> modelo = (DefaultListModel<String>) listaPropuestas.getModel();
         modelo.clear();
