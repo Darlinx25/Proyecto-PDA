@@ -5,7 +5,9 @@
 package culturarte.graficos;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
+import culturarte.logica.ResultadoSeguirUsuario;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -163,7 +165,11 @@ public class DejarDeSeguirUsuario extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         String seguidor = this.listaSeguidores.getSelectedValue();
         String usuarioSiguiendo = this.listaUsuariosSiguiendo.getSelectedValue();
-        this.controller.dejarDeSeguirUsuario(seguidor,usuarioSiguiendo);
+         ResultadoSeguirUsuario check = null;
+            if (this.controller.dejarDeSeguirUsuario(seguidor, usuarioSiguiendo) == check.EXITO) {
+                JOptionPane.showMessageDialog(this, seguidor + " a dejado de seguir a " + usuarioSiguiendo,
+                        "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            }
         this.dispose();
     }//GEN-LAST:event_botonAceptarActionPerformed
 

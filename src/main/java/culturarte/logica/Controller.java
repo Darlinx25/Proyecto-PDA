@@ -616,7 +616,7 @@ public class Controller implements IController {
     }
 
     @Override
-    public void seguirUsuario(String nickSegui, String nickUsu) {
+    public ResultadoSeguirUsuario seguirUsuario(String nickSegui, String nickUsu) {
         List<Usuario> usu1 = emr.obtenerUsuario(nickSegui);
 
         List<Usuario> usu2 = emr.obtenerUsuario(nickUsu);
@@ -625,7 +625,7 @@ public class Controller implements IController {
         aux.add(usu2.get(0));
         usu1.get(0).setUsuariosSeguidos(aux);
         emr.add(usu1.get(0));
-
+        return ResultadoSeguirUsuario.EXITO;
     }
 
     @Override
@@ -701,7 +701,7 @@ public class Controller implements IController {
     }
 
     @Override
-    public void dejarDeSeguirUsuario(String nickSegui, String nickSiguiendo) {
+    public ResultadoSeguirUsuario dejarDeSeguirUsuario(String nickSegui, String nickSiguiendo) {
         List<Usuario> usu1 = emr.obtenerUsuario(nickSegui);
 
         List<Usuario> usu2 = emr.obtenerUsuario(nickSiguiendo);
@@ -710,6 +710,7 @@ public class Controller implements IController {
         aux.remove(usu2.get(0));
         usu1.get(0).setUsuariosSeguidos(aux);
         emr.add(usu1.get(0));
+        return ResultadoSeguirUsuario.EXITO;
     }
 
     @Override

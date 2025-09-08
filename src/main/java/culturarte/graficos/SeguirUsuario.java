@@ -5,7 +5,9 @@
 package culturarte.graficos;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
+import culturarte.logica.ResultadoSeguirUsuario;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -149,8 +151,12 @@ public class SeguirUsuario extends javax.swing.JInternalFrame {
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
         String seguidor = this.listaSeguidores.getSelectedValue();
         String usuarioSeguir = this.listaUsuariosASeguir.getSelectedValue();
-        this.controller.seguirUsuario(seguidor,usuarioSeguir);
-        this.dispose();
+           ResultadoSeguirUsuario check = null;
+            if (this.controller.seguirUsuario(seguidor, usuarioSeguir) == check.EXITO) {
+                JOptionPane.showMessageDialog(this, "Ahora " + seguidor + " esta siguiendo a " + usuarioSeguir,
+                        "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            }
+        this.dispose();    
     }//GEN-LAST:event_botonAceptarActionPerformed
 
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed

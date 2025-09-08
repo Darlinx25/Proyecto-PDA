@@ -31,8 +31,8 @@ public interface IController {
     public ArrayList<String> listarColaboraciones();
     public void eliminarColaboracion(Long id);
     public ArrayList<String> listarUsuarios();
-    public void seguirUsuario(String nickSegui, String nickUsu);
-    public void dejarDeSeguirUsuario(String nickSegui, String nickSiguiendo);
+    public ResultadoSeguirUsuario seguirUsuario(String nickSegui, String nickUsu);
+    public ResultadoSeguirUsuario dejarDeSeguirUsuario(String nickSegui, String nickSiguiendo);
     public ArrayList<String> listaPropuestasUsu(String nickname);//no devuelve las propuestas del usuario, devuelve todas
     public ArrayList<String> listarUsuariosSeguir(String nickname);
     
