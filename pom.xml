@@ -74,6 +74,12 @@
     <profiles>
         <profile>
             <id>release</id>
+            <properties>
+                <DB_HOST>db</DB_HOST>
+                <DB_PORT>3306</DB_PORT>
+                <DB_USER>culturarte</DB_USER>
+                <DB_PASS>culturarte</DB_PASS>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
