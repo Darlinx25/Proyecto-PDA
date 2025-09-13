@@ -1,6 +1,7 @@
 # Maven
 /target/
 
+dependency-reduced-pom.xml
 
 # Docker
 docker/mysql/data/
