@@ -23,8 +23,8 @@ public class Colaborador extends Usuario {
         
     }
     
-    public Colaborador(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, String imagen) {
-        super(nickname, nombre, apellido, email, fechaNacimiento, imagen);
+    public Colaborador(String nickname, String nombre, String apellido, String passwordSalt, String passwordHash, String email, LocalDate fechaNacimiento, String imagen) {
+        super(nickname, nombre, apellido, passwordSalt, passwordHash, email, fechaNacimiento, imagen);
         this.colaboraciones = new ArrayList<>();
     }
     

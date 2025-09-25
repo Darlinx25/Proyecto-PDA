@@ -22,6 +22,8 @@ public abstract class Usuario {
     
     private String nombre;
     private String apellido;
+    private String passwordSalt;
+    private String passwordHash;
     
     @Column(nullable  = false, unique = true)
     private String email;
@@ -48,10 +50,12 @@ public abstract class Usuario {
     protected Usuario(){
         
     }
-    protected Usuario(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, String imagen) {
+    protected Usuario(String nickname, String nombre, String apellido, String passwordSalt, String passwordHash, String email, LocalDate fechaNacimiento, String imagen) {
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
+        this.passwordSalt = passwordSalt;
+        this.passwordHash = passwordHash;
         this.email = email;
         this.fechaNacimiento = fechaNacimiento;
         this.imagen = imagen;
@@ -81,6 +85,22 @@ public abstract class Usuario {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
+    }
+
+    public String getPasswordSalt() {
+        return passwordSalt;
+    }
+
+    public void setPasswordSalt(String passwordSalt) {
+        this.passwordSalt = passwordSalt;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     public String getEmail() {

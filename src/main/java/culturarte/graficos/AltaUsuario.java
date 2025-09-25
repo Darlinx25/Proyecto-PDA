@@ -4,6 +4,7 @@
  */
 package culturarte.graficos;
 
+import culturarte.excepciones.BadPasswordException;
 import culturarte.excepciones.EmailRepetidoException;
 import culturarte.excepciones.NickRepetidoException;
 import culturarte.logica.DTColaborador;
@@ -22,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Arrays;
 import java.util.Date;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -45,6 +47,8 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         initComponents();
 
         ((AbstractDocument) this.campoNickname.getDocument()).setDocumentFilter(new FiltroAlfanumerico());
+        ((AbstractDocument) this.campoPassword.getDocument()).setDocumentFilter(new FiltroLimitarChars(24));
+        ((AbstractDocument) this.campoPasswordConfirm.getDocument()).setDocumentFilter(new FiltroLimitarChars(24));
         ((AbstractDocument) this.campoNombre.getDocument()).setDocumentFilter(new FiltroLimitarChars(40));
         ((AbstractDocument) this.campoApellido.getDocument()).setDocumentFilter(new FiltroLimitarChars(40));
         ((AbstractDocument) this.campoEmail.getDocument()).setDocumentFilter(new FiltroLimitarChars(100));
@@ -94,6 +98,11 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         campoNumPuerta = new javax.swing.JFormattedTextField();
         labelImagen = new javax.swing.JLabel();
         campoFNac = new javax.swing.JFormattedTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        campoPassword = new javax.swing.JPasswordField();
+        campoPasswordConfirm = new javax.swing.JPasswordField();
+        jLabel8 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -234,7 +243,7 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
                             .addComponent(labelNumPuerta))
                         .addGroup(panelProponenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelProponenteLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                                 .addComponent(labelProponente)
                                 .addGap(67, 67, 67))
                             .addGroup(panelProponenteLayout.createSequentialGroup()
@@ -275,7 +284,7 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
                 .addComponent(labelBiografia)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(labelSitioWeb)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(campoSitioWeb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -291,6 +300,12 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
                 campoFNacActionPerformed(evt);
             }
         });
+
+        jLabel6.setText("Contraseña:");
+
+        jLabel7.setText("Confirmar Contraseña:");
+
+        jLabel8.setText("8 a 24 caracteres");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -308,29 +323,38 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(campoNickname, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
-                                    .addComponent(campoNombre)
-                                    .addComponent(campoApellido)
-                                    .addComponent(campoEmail)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(16, 16, 16)
-                                        .addComponent(radioColaborador)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(radioColaborador)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(83, 83, 83)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addComponent(radioProponente)
                                         .addGap(17, 17, 17))
-                                    .addComponent(campoFNac, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                                    .addComponent(campoFNac, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(campoNickname, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+                                    .addComponent(campoNombre)
+                                    .addComponent(campoApellido)
+                                    .addComponent(campoEmail)
+                                    .addComponent(campoPassword)
+                                    .addComponent(campoPasswordConfirm))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelProponente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -358,6 +382,16 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
                             .addComponent(jLabel1)
                             .addComponent(campoNickname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(campoPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel8)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(campoPasswordConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(campoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
@@ -381,7 +415,7 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
                         .addComponent(botonAddImagen)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(53, 53, 53))))
         );
 
         pack();
@@ -503,6 +537,8 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
         if (sonValidosLosCampos()) {
             String nick = this.campoNickname.getText();
+            char[] password = this.campoPassword.getPassword();
+            char[] passwordConfirm = this.campoPasswordConfirm.getPassword();
             String nombre = this.campoNombre.getText();
             String apellido = this.campoApellido.getText();
             String email = this.campoEmail.getText();
@@ -510,7 +546,7 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
             LocalDate fechaNac = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             DTUsuario user = null;
             if (this.radioColaborador.isSelected()) {
-                user = new DTColaborador(nick, nombre, apellido, email, fechaNac, this.rutaImagenUsuario);
+                user = new DTColaborador(nick, nombre, apellido, password, passwordConfirm, email, fechaNac, this.rutaImagenUsuario);
             } else if (this.radioProponente.isSelected()) {
                 String ciudad = this.campoCiudad.getText();
                 String calle = this.campoCiudad.getText();
@@ -519,28 +555,27 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
                 String biografia = this.areaBiografia.getText();
                 String sitioWeb = this.campoSitioWeb.getText();
 
-                user = new DTProponente(direccion, biografia, sitioWeb, nick, nombre, apellido, email, fechaNac, this.rutaImagenUsuario);
+                user = new DTProponente(direccion, biografia, sitioWeb, nick, nombre, apellido, password, passwordConfirm, email, fechaNac, this.rutaImagenUsuario);
             }
 
             try {
                 this.controller.addUsuario(user);
                 JOptionPane.showMessageDialog(this, "Usuario registrado con éxito.",
                         "Éxito", JOptionPane.INFORMATION_MESSAGE);
-
-            } catch (NickRepetidoException | EmailRepetidoException e) {
+                this.dispose();
+            } catch (NickRepetidoException | EmailRepetidoException | BadPasswordException e) {
                 JOptionPane.showMessageDialog(this, e.getMessage(),
                         "Error", JOptionPane.ERROR_MESSAGE);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Error inesperado: " + e.getMessage(),
                         "Error", JOptionPane.ERROR_MESSAGE);
             }
-
+            Arrays.fill(password, 'x');
+            Arrays.fill(passwordConfirm, 'x');
         } else {
             JOptionPane.showMessageDialog(this, "Campos Inválidos.",
                     "Error", JOptionPane.INFORMATION_MESSAGE);
-            return;
         }
-        this.dispose();
     }//GEN-LAST:event_botonAceptarActionPerformed
 
     private void campoFNacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoFNacActionPerformed
@@ -554,6 +589,9 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         if (!sonValidosCamposBase()) {
             return false;
         }
+        if (!sonValidasLasPassword()) {
+            return false;
+        }
         if (this.radioProponente.isSelected()) {
             if (!sonValidosCamposProponente()) {
                 return false;
@@ -561,7 +599,14 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
         }
         return true;
     }
-
+    
+    private boolean sonValidasLasPassword() {
+        if (!Arrays.equals(this.campoPassword.getPassword(), this.campoPasswordConfirm.getPassword())) {
+            return false;
+        }
+        return !(this.campoPassword.getPassword().length < 8 || this.campoPassword.getPassword().length > 24);
+    }
+    
     private boolean sonValidosCamposBase() {
         boolean ret = true;
         if (this.campoNickname.getText().isBlank()) {
@@ -609,12 +654,17 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JTextField campoNickname;
     private javax.swing.JTextField campoNombre;
     private javax.swing.JFormattedTextField campoNumPuerta;
+    private javax.swing.JPasswordField campoPassword;
+    private javax.swing.JPasswordField campoPasswordConfirm;
     private javax.swing.JTextField campoSitioWeb;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelBiografia;
     private javax.swing.JLabel labelCalle;

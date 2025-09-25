@@ -4,19 +4,28 @@
  */
 package culturarte.logica;
 
+import culturarte.excepciones.BadPasswordException;
 import culturarte.excepciones.CategoriaDuplicadaException;
 import culturarte.excepciones.EmailRepetidoException;
 import culturarte.excepciones.NickRepetidoException;
 import culturarte.excepciones.PropuestaDuplicadaException;
 import culturarte.excepciones.PropuestaYaColaboradaException;
 import jakarta.persistence.*;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.Collections;
 
 import java.util.List;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -48,7 +57,7 @@ public class Controller implements IController {
     }
 
     @Override
-    public void cargarDatosPrueba() throws NickRepetidoException, EmailRepetidoException, PropuestaDuplicadaException, CategoriaDuplicadaException {
+    public void cargarDatosPrueba() throws NickRepetidoException, EmailRepetidoException, PropuestaDuplicadaException, CategoriaDuplicadaException, BadPasswordException {
         cargarUsuariosPrueba();
         cargarSeguidoresPrueba();
         cargarCategoriasPrueba();
@@ -308,7 +317,7 @@ public class Controller implements IController {
         seguirUsuario("Tiajaci", "sergiop");
     }
 
-    private void cargarUsuariosPrueba() throws NickRepetidoException, EmailRepetidoException {
+    private void cargarUsuariosPrueba() throws NickRepetidoException, EmailRepetidoException, BadPasswordException {
         List<DTUsuario> usu = obtenerProponentesPrueba();
         usu.addAll(obtenerColaboradoresPrueba());
 
@@ -323,7 +332,7 @@ public class Controller implements IController {
         usu.add(new DTProponente(new DTDireccion("Montevideo", " 18 de Julio", 1234), "Horacio Rubino Torres nace el 25 de febrero de 1962, es conductor, actor y libretista. Debuta en 1982 en carnaval\n"
                 + "en Los \"Klaper´s\", donde estuvo cuatro años, actuando y libretando. Luego para \"Gaby´s\" (6 años), escribió en\n"
                 + "categoría revistas y humoristas y desde el comienzo y hasta el presente en su propio conjunto Momosapiens.",
-                "https://twitter.com/horaciorubino", "hrubino", "Horacio", "Rubino", "horacio.rubino@guambia.com.uy", LocalDate.of(1980, 5, 20), "../imagenesRespaldoBD/HRimg.jpg"));
+                "https://twitter.com/horaciorubino", "hrubino", "Horacio", "Rubino", "12345678".toCharArray(), "12345678".toCharArray(), "horacio.rubino@guambia.com.uy", LocalDate.of(1980, 5, 20), "../imagenesRespaldoBD/HRimg.jpg"));
 
         usu.add(new DTProponente(new DTDireccion("Montevideo", " Colonia", 4321), "Martín Buscaglia (Montevideo, 1972) es un artista, músico, compositor y productor uruguayo. Tanto con su banda"
                 + "(“Los Bochamakers”) como en su formato “Hombre orquesta”, o solo con su guitarra, ha recorrido el mundo"
@@ -331,7 +340,7 @@ public class Controller implements IController {
                 + "Chile, Paraguay, México y Uruguay. (Actualmente los Bochamakers son Matías Rada, Martín Ibarburu, Mateo"
                 + "Moreno, Herman Klang) Paralelamente, tiene proyectos a dúo con el español Kiko Veneno, la cubana Yusa, el"
                 + "argentino Lisandro Aristimuño, su compatriota Antolín, y a trío junto a los brasileros Os Mulheres Negras.",
-                "http://www.martinbuscaglia.com/", "mbusca", "Martín", "Buscaglia", "Martin.bus@agadu.org.uy", LocalDate.of(1972, 6, 14), "../imagenesRespaldoBD/MBimg.jpg"));
+                "http://www.martinbuscaglia.com/", "mbusca", "Martín", "Buscaglia", "12345678".toCharArray(), "12345678".toCharArray(), "Martin.bus@agadu.org.uy", LocalDate.of(1972, 6, 14), "../imagenesRespaldoBD/MBimg.jpg"));
 
         usu.add(new DTProponente(new DTDireccion("Montevideo", " Gral. Flores", 5645), "En 1972 ingresó a la Escuela de Arte Dramático del teatro El Galpón. Participó en más de treinta obras teatrales y"
                 + "varios largometrajes. Integró el elenco estable de Radioteatro del Sodre, y en 2006 fue asesor de su Consejo"
@@ -341,66 +350,66 @@ public class Controller implements IController {
                 + "de Teatros Independientes (FUTI). Formó parte del equipo de gestión de la refacción de los teatros La Máscara,"
                 + "Astral y El Galpón, y del equipo de gestión en la construcción del teatro De la Candela y de la sala Atahualpa de El"
                 + "Galpón.",
-                "http://www.martinbuscaglia.com/", "hectorg", "Héctor", "Guido", "hector.gui@elgalpon.org.uy", LocalDate.of(1954, 1, 7), "../imagenesRespaldoBD/HGimg.jpg"));
+                "http://www.martinbuscaglia.com/", "hectorg", "Héctor", "Guido", "12345678".toCharArray(), "12345678".toCharArray(), "hector.gui@elgalpon.org.uy", LocalDate.of(1954, 1, 7), "../imagenesRespaldoBD/HGimg.jpg"));
 
         usu.add(new DTProponente(new DTDireccion("Montevideo", " Santiago Rivas", 1212), "Tabaré Cardozo (Montevideo, 24 de julio de 1971) es un cantante, compositor y murguista uruguayo; conocido por"
                 + "su participación en la murga Agarrate Catalina, conjunto que fundó junto a su hermano Yamandú y Carlos"
                 + "Tanco en el año 2001.",
-                "https://www.facebook.com/Tabar%C3%A9-\nCardozo-55179094281/?ref=br_rs", "tabarec", "Tabaré", "Cardozo", "tabare.car@agadu.org.uy", LocalDate.of(1971, 7, 24), "../imagenesRespaldoBD/TCimg.jpg"));
+                "https://www.facebook.com/Tabar%C3%A9-\nCardozo-55179094281/?ref=br_rs", "tabarec", "Tabaré", "Cardozo", "12345678".toCharArray(), "12345678".toCharArray(), "tabare.car@agadu.org.uy", LocalDate.of(1971, 7, 24), "../imagenesRespaldoBD/TCimg.jpg"));
 
         usu.add(new DTProponente(new DTDireccion("Montevideo", " Br. Artigas", 4567), "Nace en el año 1947 en el conventillo \"Medio Mundo\" ubicado en pleno Barrio Sur. Es heredero parcialmente-"
                 + "junto al resto de sus hermanos- de la Comparsa \"Morenada\" (inactiva desde el fallecimiento de Juan Ángel Silva),"
                 + "en 1999 forma su propia Comparsa de negros y lubolos \"Cuareim 1080\". Director responsable, compositor y"
                 + "cantante de la misma.",
-                "https://www.facebook.com/C1080?ref=br_rs", "cachilas", "Waldemar “Cachila”", "Silva", "Cachila.sil@c1080.org.uy", LocalDate.of(1947, 1, 1), "../imagenesRespaldoBD/CSimg.jpg"));
+                "https://www.facebook.com/C1080?ref=br_rs", "cachilas", "Waldemar “Cachila”", "Silva", "12345678".toCharArray(), "12345678".toCharArray(), "Cachila.sil@c1080.org.uy", LocalDate.of(1947, 1, 1), "../imagenesRespaldoBD/CSimg.jpg"));
 
         usu.add(new DTProponente(new DTDireccion("Montevideo", " Benito Blanco", 4321), "",
-                "", "juliob", "Julio", "Bocca", "juliobocca@sodre.com.uy", LocalDate.of(1967, 3, 16), "../imagenesRespaldoBD/JBimg.jpg"));
+                "", "juliob", "Julio", "Bocca", "12345678".toCharArray(), "12345678".toCharArray(), "juliobocca@sodre.com.uy", LocalDate.of(1967, 3, 16), "../imagenesRespaldoBD/JBimg.jpg"));
 
         usu.add(new DTProponente(new DTDireccion("Montevideo", " Emilio Frugoni Ap. 02", 1138), "",
-                "http://www.efectocine.com", "diegop", "Diego", "Parodi", "diego@efectocine.com", LocalDate.of(1975, 1, 1), "../imagenesRespaldoBD/DPimg.jpg"));
+                "http://www.efectocine.com", "diegop", "Diego", "Parodi", "12345678".toCharArray(), "12345678".toCharArray(), "diego@efectocine.com", LocalDate.of(1975, 1, 1), "../imagenesRespaldoBD/DPimg.jpg"));
 
         usu.add(new DTProponente(new DTDireccion("Montevideo", " Paraguay", 1423), "",
-                "", "kairoh", "Kairo", "Herrera", "kairoher@pilsenrock.com.uy", LocalDate.of(1840, 4, 25), "../imagenesRespaldoBD/KHimg.jpg"));
+                "", "kairoh", "Kairo", "Herrera", "12345678".toCharArray(), "12345678".toCharArray(), "kairoher@pilsenrock.com.uy", LocalDate.of(1840, 4, 25), "../imagenesRespaldoBD/KHimg.jpg"));
 
         usu.add(new DTProponente(new DTDireccion("Montevideo", " 8 de Octubre", 1429), "Queremos ser vistos y reconocidos como una organización: referente en divulgación científica con un fuerte"
                 + "espíritu didáctico y divertido, a través de acciones coordinadas con otros divulgadores científicos, que permitan"
                 + "establecer puentes de comunicación. Impulsora en la generación de espacios de democratización y apropiación"
                 + "social del conocimiento científico.",
-                "https://bardocientifico.com/", "losBardo", "Los", "Bardo", "losbardo@bardocientifico.com", LocalDate.of(1980, 10, 31), "../imagenesRespaldoBD/LBimg.jpg"));
+                "https://bardocientifico.com/", "losBardo", "Los", "Bardo", "12345678".toCharArray(), "12345678".toCharArray(), "losbardo@bardocientifico.com", LocalDate.of(1980, 10, 31), "../imagenesRespaldoBD/LBimg.jpg"));
 
         return usu;
     }
 
     private List<DTUsuario> obtenerColaboradoresPrueba() {
         List<DTUsuario> usu = new ArrayList<>();
-        usu.add(new DTColaborador("robinh", "Robin", "Henderson", "Robin.h@tinglesa.com.uy", LocalDate.of(1940, 8, 3), "../imagenesRespaldoBD/RHimg.jpg"));
+        usu.add(new DTColaborador("robinh", "Robin", "Henderson", "12345678".toCharArray(), "12345678".toCharArray(), "Robin.h@tinglesa.com.uy", LocalDate.of(1940, 8, 3), "../imagenesRespaldoBD/RHimg.jpg"));
 
-        usu.add(new DTColaborador("marcelot", "Marcelo", "Tinelli", "marcelot@ideasdelsur.com.ar", LocalDate.of(1960, 4, 1), "../imagenesRespaldoBD/MTimg.jpg"));
+        usu.add(new DTColaborador("marcelot", "Marcelo", "Tinelli", "12345678".toCharArray(), "12345678".toCharArray(), "marcelot@ideasdelsur.com.ar", LocalDate.of(1960, 4, 1), "../imagenesRespaldoBD/MTimg.jpg"));
 
-        usu.add(new DTColaborador("novick", "Edgardo", "Novick", "edgardo@novick.com.uy", LocalDate.of(1952, 7, 17), "../imagenesRespaldoBD/ENimg.jpg"));
+        usu.add(new DTColaborador("novick", "Edgardo", "Novick", "12345678".toCharArray(), "12345678".toCharArray(), "edgardo@novick.com.uy", LocalDate.of(1952, 7, 17), "../imagenesRespaldoBD/ENimg.jpg"));
 
-        usu.add(new DTColaborador("sergiop", "Sergio", "Puglia", "puglia@alpanpan.com.uy", LocalDate.of(1950, 1, 28), "../imagenesRespaldoBD/SPimg.jpg"));
+        usu.add(new DTColaborador("sergiop", "Sergio", "Puglia", "12345678".toCharArray(), "12345678".toCharArray(), "puglia@alpanpan.com.uy", LocalDate.of(1950, 1, 28), "../imagenesRespaldoBD/SPimg.jpg"));
 
-        usu.add(new DTColaborador("chino", "Alvaro", "Recoba", "chino@trico.org.uy", LocalDate.of(1976, 3, 17), "../imagenesRespaldoBD/ARimg.jpg"));
+        usu.add(new DTColaborador("chino", "Alvaro", "Recoba", "12345678".toCharArray(), "12345678".toCharArray(), "chino@trico.org.uy", LocalDate.of(1976, 3, 17), "../imagenesRespaldoBD/ARimg.jpg"));
 
-        usu.add(new DTColaborador("tonyp", "Antonio", "Pacheco", "eltony@manya.org.uy", LocalDate.of(1955, 2, 14), "../imagenesRespaldoBD/APimg.jpg"));
+        usu.add(new DTColaborador("tonyp", "Antonio", "Pacheco", "12345678".toCharArray(), "12345678".toCharArray(), "eltony@manya.org.uy", LocalDate.of(1955, 2, 14), "../imagenesRespaldoBD/APimg.jpg"));
 
-        usu.add(new DTColaborador("nicoJ", "Nicolás", "Jodal", "jodal@artech.com.uy", LocalDate.of(1960, 8, 9), "../imagenesRespaldoBD/NJimg.jpg"));
+        usu.add(new DTColaborador("nicoJ", "Nicolás", "Jodal", "12345678".toCharArray(), "12345678".toCharArray(), "jodal@artech.com.uy", LocalDate.of(1960, 8, 9), "../imagenesRespaldoBD/NJimg.jpg"));
 
-        usu.add(new DTColaborador("juanP", "Juan", "Perez", "juanp@elpueblo.com", LocalDate.of(1970, 1, 1), "../imagenesRespaldoBD/JPimg.jpg"));
+        usu.add(new DTColaborador("juanP", "Juan", "Perez", "12345678".toCharArray(), "12345678".toCharArray(), "juanp@elpueblo.com", LocalDate.of(1970, 1, 1), "../imagenesRespaldoBD/JPimg.jpg"));
 
-        usu.add(new DTColaborador("Mengano", "Mengano", "Gómez", "menganog@elpueblo.com", LocalDate.of(1982, 2, 2), "../imagenesRespaldoBD/MGimg.jpg"));
+        usu.add(new DTColaborador("Mengano", "Mengano", "Gómez", "12345678".toCharArray(), "12345678".toCharArray(), "menganog@elpueblo.com", LocalDate.of(1982, 2, 2), "../imagenesRespaldoBD/MGimg.jpg"));
 
-        usu.add(new DTColaborador("Perengano", "Perengano", "López", "pere@elpueblo.com", LocalDate.of(1985, 3, 3), "../imagenesRespaldoBD/PLimg.jpg"));
+        usu.add(new DTColaborador("Perengano", "Perengano", "López", "12345678".toCharArray(), "12345678".toCharArray(), "pere@elpueblo.com", LocalDate.of(1985, 3, 3), "../imagenesRespaldoBD/PLimg.jpg"));
 
-        usu.add(new DTColaborador("Tiajaci", "Tía", "Jacinta", "jacinta@elpueblo.com", LocalDate.of(1990, 4, 4), "../imagenesRespaldoBD/TJimg.jpg"));
+        usu.add(new DTColaborador("Tiajaci", "Tía", "Jacinta", "12345678".toCharArray(), "12345678".toCharArray(), "jacinta@elpueblo.com", LocalDate.of(1990, 4, 4), "../imagenesRespaldoBD/TJimg.jpg"));
 
         return usu;
     }
 
     @Override
-    public void addUsuario(DTUsuario user) throws NickRepetidoException, EmailRepetidoException {
+    public void addUsuario(DTUsuario user) throws NickRepetidoException, EmailRepetidoException, BadPasswordException {
         String nick = user.getNickname();
         String email = user.getEmail();
 
@@ -410,25 +419,67 @@ public class Controller implements IController {
         if (emr.datoUsuarioRepetido("email", email) > 0) {
             throw new EmailRepetidoException("Error al registrar usuario, Email ya existente.");
         }
+        validarPassword(user.getPassword(), user.getPasswordConfirm());
+        
+        String passwordSalt = crearPasswordSalt();
+        String passwordHash;
+        try {
+            passwordHash = crearPasswordHash(passwordSalt, user.getPassword());
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
+            System.getLogger(Controller.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            return;
+        }
+        
         String nombre = user.getNombre();
         String apellido = user.getApellido();
         LocalDate fechaNac = user.getFechaNacimiento();
         String imagen = user.getImagen();
         Usuario usu = null;
         if (user instanceof DTColaborador) {
-            usu = new Colaborador(nick, nombre, apellido, email, fechaNac, imagen);
+            usu = new Colaborador(nick, nombre, apellido, passwordSalt, passwordHash, email, fechaNac, imagen);
         } else if (user instanceof DTProponente) {
             DTProponente userProp = (DTProponente) user;//downcast
             DTDireccion direccion = userProp.getDireccion();
             String biografia = userProp.getBiografia();
             String sitioWeb = userProp.getSitioWeb();
-            usu = new Proponente(direccion, biografia, sitioWeb, nick, nombre, apellido, email, fechaNac, imagen);
+            usu = new Proponente(direccion, biografia, sitioWeb, nick, nombre, apellido, passwordSalt, passwordHash, email, fechaNac, imagen);
         }
 
         emr.add(usu);
-
+        
+        Arrays.fill(user.getPassword(), 'x');
+        Arrays.fill(user.getPasswordConfirm(), 'x');
     }
-
+    
+    private String crearPasswordHash(String passwordSalt, char[] password) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        byte[] salt = Base64.getDecoder().decode(passwordSalt);
+        KeySpec spec = new PBEKeySpec(password, salt, 65536, 128);
+        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        byte[] hash = factory.generateSecret(spec).getEncoded();
+        
+        return Base64.getEncoder().encodeToString(hash);
+    }
+    
+    private String crearPasswordSalt() {
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[16];
+        random.nextBytes(salt);
+        
+        return Base64.getEncoder().encodeToString(salt);
+    }
+    
+    private void validarPassword(char[] pass, char[] passConfirm) throws BadPasswordException {
+        if (pass.length < 8 || pass.length > 24) {
+            throw new BadPasswordException("La contraseña tiene que tener de 8 a 24 caracteres de largo");
+        }
+        if (passConfirm.length < 8 || passConfirm.length > 24) {
+            throw new BadPasswordException("La contraseña tiene que tener de 8 a 24 caracteres de largo");
+        }
+        if (!Arrays.equals(pass, passConfirm)) {
+            throw new BadPasswordException("La contraseña y la confirmación no coinciden");
+        }
+    }
+    
     @Override
     public DefaultMutableTreeNode listarCategorias() {
         Categoria catRaiz = emr.find(Categoria.class, "Categorías");

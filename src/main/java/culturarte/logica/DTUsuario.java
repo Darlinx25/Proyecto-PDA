@@ -14,6 +14,8 @@ public abstract class DTUsuario {
     private String nickname;
     private String nombre;
     private String apellido;
+    private char[] password;
+    private char[] passwordConfirm;
     private String email;
     private LocalDate fechaNacimiento;
     private String imagen;
@@ -21,6 +23,18 @@ public abstract class DTUsuario {
     protected DTUsuario(){
         
     }
+    /*para crear*/
+    protected DTUsuario(String nickname, String nombre, String apellido, char[] password, char[] passwordConfirm, String email, LocalDate fechaNacimiento, String imagen) {
+        this.nickname = nickname;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.password = password;
+        this.passwordConfirm = passwordConfirm;
+        this.email = email;
+        this.fechaNacimiento = fechaNacimiento;
+        this.imagen = imagen;
+    }
+    /*para consultar*/
     protected DTUsuario(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, String imagen) {
         this.nickname = nickname;
         this.nombre = nombre;
@@ -40,6 +54,14 @@ public abstract class DTUsuario {
 
     public String getApellido() {
         return apellido;
+    }
+
+    public char[] getPassword() {
+        return password;
+    }
+
+    public char[] getPasswordConfirm() {
+        return passwordConfirm;
     }
 
     public String getEmail() {

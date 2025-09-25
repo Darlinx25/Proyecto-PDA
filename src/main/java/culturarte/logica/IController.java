@@ -4,6 +4,7 @@
  */
 package culturarte.logica;
 
+import culturarte.excepciones.BadPasswordException;
 import culturarte.excepciones.CategoriaDuplicadaException;
 import culturarte.excepciones.EmailRepetidoException;
 import culturarte.excepciones.NickRepetidoException;
@@ -17,7 +18,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
  * @author mark
  */
 public interface IController {
-    public void addUsuario(DTUsuario user) throws NickRepetidoException, EmailRepetidoException; 
+    public void addUsuario(DTUsuario user) throws NickRepetidoException, EmailRepetidoException, BadPasswordException; 
     
     /*Alta de Categoría*/
     public DefaultMutableTreeNode listarCategorias();
@@ -50,5 +51,5 @@ public interface IController {
     public ArrayList<String> obtenerColaboradoresColaboracion(String tituloProp);
     public ArrayList<String> listarPropuestas();
     public void modPropuesta(DTPropuesta prop);
-    public void cargarDatosPrueba() throws NickRepetidoException, EmailRepetidoException, PropuestaDuplicadaException, CategoriaDuplicadaException ;
+    public void cargarDatosPrueba() throws NickRepetidoException, EmailRepetidoException, PropuestaDuplicadaException, CategoriaDuplicadaException, BadPasswordException;
 }
