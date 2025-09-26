@@ -800,5 +800,24 @@ public class Controller implements IController {
     public void eliminarColaboracion(Long id) {
         emr.eliminarColab(id);
     }
-
+    
+    @Override
+    public ArrayList<String> listarPropuestasProponentesIngresadas() {
+        return emr.listPropuestasProponentesIngresadas();
+    }
+    
+    @Override
+    public void cambiarEstadoPropuestaIngresada(String tituloProp, EstadoPropuesta estProp) {
+        Propuesta prop = emr.find(Propuesta.class, tituloProp);
+        if (prop != null && prop.getEstadoActual().getEstado() == EstadoPropuesta.INGRESADA
+                && (estProp == EstadoPropuesta.PUBLICADA || estProp == EstadoPropuesta.CANCELADA)) {
+            Estado estadoNuevo = new Estado(estProp);
+            prop.agregarEstadoActualAlHistorial();
+            prop.setEstadoActual(estadoNuevo);
+            if (estProp == EstadoPropuesta.PUBLICADA) {
+                prop.setFechaPublicacion(estadoNuevo.getFechaEstado().toLocalDate());
+            }
+            emr.mod(prop);
+        }
+    }
 }

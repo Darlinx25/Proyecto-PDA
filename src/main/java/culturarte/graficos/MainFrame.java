@@ -32,6 +32,7 @@ public class MainFrame extends javax.swing.JFrame {
     private ConsultarPropuesta consultarPropuesta;
     private ConsultarColaboracion consultarColaboracion;
     private CancelarColaboracion cancelarColaboracion;
+    private EvaluarPropuesta evaluarPropuesta;
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
     private IController controller;
@@ -68,6 +69,7 @@ public class MainFrame extends javax.swing.JFrame {
         itemAltaPropuesta = new javax.swing.JMenuItem();
         itemRegistrarColaboracion = new javax.swing.JMenuItem();
         itemCancelarColaboracion = new javax.swing.JMenuItem();
+        itemEvaluarPropuesta = new javax.swing.JMenuItem();
         itemModPropuesta = new javax.swing.JMenuItem();
         itemConsultarPropuesta = new javax.swing.JMenuItem();
         itemConsultarColaboracion = new javax.swing.JMenuItem();
@@ -128,6 +130,11 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuBar1.add(menuUsuarios);
 
         menuPropuestas.setText("Propuestas");
+        menuPropuestas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuPropuestasActionPerformed(evt);
+            }
+        });
 
         itemAltaCategoria.setText("Alta de Categoría");
         itemAltaCategoria.addActionListener(new java.awt.event.ActionListener() {
@@ -160,6 +167,14 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         menuPropuestas.add(itemCancelarColaboracion);
+
+        itemEvaluarPropuesta.setText("Evaluar Propuesta");
+        itemEvaluarPropuesta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemEvaluarPropuestaActionPerformed(evt);
+            }
+        });
+        menuPropuestas.add(itemEvaluarPropuesta);
 
         itemModPropuesta.setText("Modificar Propuesta");
         itemModPropuesta.addActionListener(new java.awt.event.ActionListener() {
@@ -352,6 +367,19 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_itemCargarDatosActionPerformed
 
+    private void menuPropuestasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPropuestasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuPropuestasActionPerformed
+
+    private void itemEvaluarPropuestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEvaluarPropuestaActionPerformed
+        if (this.evaluarPropuesta != null && this.evaluarPropuesta.isVisible()) {
+            return;
+        }
+        this.evaluarPropuesta = new EvaluarPropuesta();
+        add(this.evaluarPropuesta);
+        this.evaluarPropuesta.setVisible(true);
+    }//GEN-LAST:event_itemEvaluarPropuestaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -389,6 +417,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemConsultarProponente;
     private javax.swing.JMenuItem itemConsultarPropuesta;
     private javax.swing.JMenuItem itemDejarSeguirUsuario;
+    private javax.swing.JMenuItem itemEvaluarPropuesta;
     private javax.swing.JMenuItem itemModPropuesta;
     private javax.swing.JMenuItem itemRegistrarColaboracion;
     private javax.swing.JMenuItem itemSeguirUsuario;

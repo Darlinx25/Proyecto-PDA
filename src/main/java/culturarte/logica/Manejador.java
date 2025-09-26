@@ -149,7 +149,25 @@ public class Manejador {
         return (ArrayList<String>) aux2;
     }
     
-    
+    public ArrayList<String> listPropuestasProponentesIngresadas() {
+        List<Object[]> aux;
+        List<String> aux2 = new ArrayList<>();
+
+        String query = "SELECT p.titulo, p.proponente.nickname FROM Propuesta p"
+                + " WHERE p.estadoActual.estado = :estado1";
+        try {
+            aux = em.createQuery(query, Object[].class)
+                    .setParameter("estado1", EstadoPropuesta.INGRESADA)
+                    .getResultList();
+            for (Object[] fila : aux) {
+                aux2.add(fila[0] + " - " + fila[1]);
+            }
+        } catch (Exception e) {
+            aux2 = Collections.emptyList();
+        }
+        return (ArrayList<String>) aux2;
+    }
+        
     public ArrayList<String> propuestaColaboradaPorUser(String nickColab,String tituloProp){
         List<String> aux = new ArrayList<>();
         String query = "SELECT c.propuestaColaborada.titulo FROM Colaboracion c WHERE c.colaborador.nickname = :nickColab"

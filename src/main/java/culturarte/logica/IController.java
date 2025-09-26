@@ -52,4 +52,7 @@ public interface IController {
     public ArrayList<String> listarPropuestas();
     public void modPropuesta(DTPropuesta prop);
     public void cargarDatosPrueba() throws NickRepetidoException, EmailRepetidoException, PropuestaDuplicadaException, CategoriaDuplicadaException, BadPasswordException;
+    
+    public ArrayList<String> listarPropuestasProponentesIngresadas();
+    public void cambiarEstadoPropuestaIngresada(String tituloProp, EstadoPropuesta estProp);
 }
