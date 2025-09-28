@@ -1,10 +1,10 @@
 # Maven
-/target/
+estacion/target/
 
 dependency-reduced-pom.xml
 
 # Docker
-docker/mysql/data/
+estacion/docker/mysql/data/
 
 
 # Archivos temporales del sistema
@@ -18,10 +18,10 @@ docker/mysql/data/
 
 
 # Ignorar data de MySQL
-docker/mysql/data/
+estacion/docker/mysql/data/
 
 #Ignorar carpeta de imagenes
-imagenesUsuarios/
+estacion/imagenesUsuarios/
 
 
 # --- Build ---
