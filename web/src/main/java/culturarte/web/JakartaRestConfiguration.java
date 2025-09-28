@@ -1,4 +1,4 @@
-package com.mycompany.culturarte.web;
+package culturarte.web;
 
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
