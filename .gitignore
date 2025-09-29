@@ -1,5 +1,8 @@
 # Maven
 estacion/target/
+web/src/main/java/culturarte/excepciones
+web/src/main/java/culturarte/logica
+web/src/main/java/culturarte/utils
 
 dependency-reduced-pom.xml
 
