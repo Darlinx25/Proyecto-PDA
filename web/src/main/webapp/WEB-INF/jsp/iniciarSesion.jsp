@@ -22,7 +22,7 @@
                             <div class="card" style="border-radius: 15px;">
                                 <div class="card-body p-5">
                                     <h2 class="text-uppercase text-center mb-5">Iniciar Sesion</h2>
-                                    <form /*onsubmit="return coincidenPasswords()" action="/crear-cuenta" method="post"*/>
+                                    <form action="/login" method="post"/>
 
                                         <div data-mdb-input-init class="form-outline mb-4">
                                             <input type="text" id="nombre" name="nombre" required class="form-control form-control-lg" />
@@ -38,7 +38,7 @@
                                               data-mdb-ripple-init class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Iniciar Sesion</button>
                                         </div>
                                         
-                                        <p class="text-center text-muted mt-5 mb-0">¿No tenés cuenta? <a href="/login"
+                                        <p class="text-center text-muted mt-5 mb-0">¿No tenés cuenta? <a href="/crear-cuenta"
                                             class="fw-bold text-body"><u>Registrate</u></a></p>
                                         </form>
                                 </div>
