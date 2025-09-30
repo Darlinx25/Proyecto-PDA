@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author mark
  */
-@WebServlet(name = "UsuarioServlet", urlPatterns = {"/usuarios", "/crear-cuenta", "/perfil"})
+@WebServlet(name = "UsuarioServlet", urlPatterns = {"/usuarios", "/crear-cuenta", "/perfil","/login"})
 public class UsuarioServlet extends HttpServlet {
 
     /**
@@ -46,7 +46,11 @@ public class UsuarioServlet extends HttpServlet {
         
         switch (path) {
             case "/crear-cuenta":
+                
                 request.getRequestDispatcher("/WEB-INF/jsp/crearCuenta.jsp").forward(request, response);
+                break;
+            case "/login":
+                request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesion.jsp").forward(request, response);
                 break;
             default:
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
