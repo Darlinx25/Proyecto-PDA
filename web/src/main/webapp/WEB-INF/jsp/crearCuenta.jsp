@@ -1,15 +1,18 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Crear cuenta</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+        <link href="/resources/css/crearCuenta.css" rel="stylesheet">
     </head>
     <body class="bg-light d-flex justify-content-center align-items-center vh-100">
 
         <form action="/crear-cuenta" method="post" 
-              onsubmit="return coincidenPasswords()" 
-              class="card p-5 shadow" style="max-width: 650px; border-radius: 15px;">
+            onsubmit="return coincidenPasswords()" class="card p-5 shadow" id="formulario">
 
             <h2 class="text-center mb-4">Crear una cuenta</h2>
 
@@ -40,51 +43,30 @@
             </div>
 
             <div class="mb-3">
-                <label for="password" class="form-label">Contraseña (8 a 24 caracteres)</label>
+                <label for="password" class="form-label">ContraseÃ±a (8 a 24 caracteres)</label>
                 <input type="password" id="password" name="password" class="form-control" minlength="8" maxlength="24" required>
             </div>
 
             <div class="mb-3">
-                <label for="password-confirm" class="form-label">Confirmar contraseña</label>
+                <label for="password-confirm" class="form-label">Confirmar contraseÃ±a</label>
                 <input type="password" id="password-confirm" name="passwordConfirm" class="form-control" minlength="8" maxlength="24" required>
             </div>
 
             <div class="form-check mb-4 text-center">
                 <input type="checkbox" class="form-check-input me-2" id="aceptar-terminos" required>
                 <label class="form-check-label" for="aceptar-terminos">
-                    Acepto los <a href="#!"><u>Términos de Servicio</u></a>
+                    Acepto los <a href="#!"><u>TÃ©rminos de Servicio</u></a>
                 </label>
             </div>
 
             <button type="submit" class="btn btn-success w-100 mb-3">Registrarse</button>
 
             <p class="text-center text-muted mb-0">
-                ¿Ya tenés cuenta? <a href="/login" class="fw-bold">Iniciar sesión</a>
+                Â¿Ya tenÃ©s cuenta? <a href="/login" class="fw-bold">Iniciar sesiÃ³n</a>
             </p>
 
         </form>
 
-        <script>
-            function coincidenPasswords() {
-                const password = document.getElementById('password');
-                const passwordConfirm = document.getElementById('password-confirm');
-                if (password.value === passwordConfirm.value && password.value.length >= 8) {
-                    password.classList.remove('is-invalid');
-                    password.classList.add('is-valid');
-                    passwordConfirm.classList.remove('is-invalid');
-                    passwordConfirm.classList.add('is-valid');
-                    return true;
-                } else {
-                    password.classList.add('is-invalid');
-                    password.classList.remove('is-valid');
-                    passwordConfirm.classList.add('is-invalid');
-                    passwordConfirm.classList.remove('is-valid');
-                    return false;
-                }
-            }
-            document.getElementById('password').addEventListener('input', coincidenPasswords);
-            document.getElementById('password-confirm').addEventListener('input', coincidenPasswords);
-        </script>
-
+        <script src="/resources/js/validarPasswords.js"></script>
     </body>
 </html>
