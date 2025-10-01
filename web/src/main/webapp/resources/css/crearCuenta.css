@@ -11,3 +11,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     min-width: 25%;
     border-radius: 15px;
 }
+
+#campos-proponente {
+    display: none;
+}

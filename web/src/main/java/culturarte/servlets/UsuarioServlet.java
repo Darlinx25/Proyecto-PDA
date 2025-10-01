@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author mark
  */
-@WebServlet(name = "UsuarioServlet", urlPatterns = {"/usuarios", "/crear-cuenta", "/perfil","/login"})
+@WebServlet(name = "UsuarioServlet", urlPatterns = {"/usuarios", "/crear-cuenta", "/perfil", "/login"})
 public class UsuarioServlet extends HttpServlet {
 
     /**
@@ -46,7 +46,6 @@ public class UsuarioServlet extends HttpServlet {
         
         switch (path) {
             case "/crear-cuenta":
-                
                 request.getRequestDispatcher("/WEB-INF/jsp/crearCuenta.jsp").forward(request, response);
                 break;
             case "/login":
@@ -72,7 +71,19 @@ public class UsuarioServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        String path = request.getServletPath();
         
+        switch (path) {
+            case "/crear-cuenta":
+                response.sendRedirect("/index");
+                break;
+            case "/login":
+                response.sendRedirect("/index");
+                break;
+            default:
+                response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+        }
     }
 
     /**

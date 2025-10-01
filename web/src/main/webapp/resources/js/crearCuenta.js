@@ -23,3 +23,33 @@ function coincidenPasswords() {
 }
 document.getElementById('password').addEventListener('input', coincidenPasswords);
 document.getElementById('password-confirm').addEventListener('input', coincidenPasswords);
+
+/*ocultamos/mostramos los campos del proponente*/
+function toggleCamposProponente() {
+    const radioColab = document.getElementById('radio-colab');
+    const radioProp = document.getElementById('radio-prop');
+    const camposProp = document.getElementById('campos-proponente');
+    const ciudad = document.getElementById('ciudad');
+    const calle = document.getElementById('calle');
+    const numPuerta = document.getElementById('num-puerta');
+    
+    if (radioProp.checked) {
+        camposProp.style.display = 'block';
+        ciudad.required = true;
+        calle.required = true;
+        numPuerta.required = true;
+    } else if (radioColab.checked) {
+        camposProp.style.display = 'none';
+        ciudad.required = false;
+        calle.required = false;
+        numPuerta.required = false;
+    }
+}
+
+/*cuando refrescamos, aseguramos que los radio no estén check*/
+document.addEventListener('DOMContentLoaded', function() {
+    const radiosTipoUsuario = document.getElementsByName('tipoUsuario');
+    for (let i = 0; i < radiosTipoUsuario.length; i++) {
+        radiosTipoUsuario[i].checked = false;
+    }
+});

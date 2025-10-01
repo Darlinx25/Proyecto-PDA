@@ -9,7 +9,7 @@
               integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
         <link href="/resources/css/crearCuenta.css" rel="stylesheet">
     </head>
-    <body class="bg-light d-flex justify-content-center align-items-center vh-100">
+    <body class="bg-light d-flex justify-content-center align-items-center min-vh-100 py-2">
 
         <form action="/crear-cuenta" method="post" 
             onsubmit="return coincidenPasswords()" class="card p-5 shadow" id="formulario">
@@ -50,6 +50,40 @@
             <div class="mb-3">
                 <label for="password-confirm" class="form-label">Confirmar contraseña</label>
                 <input type="password" id="password-confirm" name="passwordConfirm" class="form-control" minlength="8" maxlength="24" required>
+            </div>
+            
+            <div class="mb-3">
+                <div class="form-check form-check-inline">
+                    <input onclick="toggleCamposProponente()" class="form-check-input" type="radio" name="tipoUsuario" id="radio-colab" value="colaborador" required>
+                    <label class="form-check-label" for="radio-colab">Colaborador</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input onclick="toggleCamposProponente()" class="form-check-input" type="radio" name="tipoUsuario" id="radio-prop" value="proponente" required>
+                    <label class="form-check-label" for="radio-prop">Proponente</label>
+                </div>
+            </div>
+            
+            <div class="mb-3" id="campos-proponente">
+                <div class="mb-3">
+                    <label for="ciudad" class="form-label">Ciudad</label>
+                    <input type="text" id="ciudad" name="ciudad" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="calle" class="form-label">Calle</label>
+                    <input type="text" id="calle" name="calle" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="num-puerta" class="form-label">Nº de Puerta</label>
+                    <input type="text" id="num-puerta" name="numPuerta" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="biografia" class="form-label">Biografía</label>
+                    <textarea class="form-control" id="biografia" name="biografia" rows="5" maxlength="1000"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="sitio-web" class="form-label">Sitio web</label>
+                    <input type="text" id="sitio-web" name="sitioWeb" class="form-control">
+                </div>
             </div>
 
             <div class="form-check mb-4 text-center">
