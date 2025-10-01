@@ -24,17 +24,17 @@
         <%
             if (rol == null) {
         %>
-            <h2>Bienvenido, visitante</h2>
-            <ul>
-                <li><a href="/login">Iniciar sesión</a></li>
-                <li><a href="/crear-cuenta">Registrarse</a></li>
-            </ul>
+        <h2>Bienvenido, visitante</h2>
+        <ul>
+            <li><a href="/login">Iniciar sesión</a></li>
+            <li><a href="/crear-cuenta">Registrarse</a></li>
+        </ul>
         <%
-            } else {
+        } else {
         %>
-            <h2>Bienvenido, <%= username %></h2>
-        <% } %>
-        
+        <h2>Bienvenido, <%= username%></h2>
+        <% }%>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     </body>
