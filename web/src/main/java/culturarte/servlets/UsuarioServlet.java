@@ -4,21 +4,43 @@
  */
 package culturarte.servlets;
 
+import culturarte.excepciones.BadPasswordException;
+import culturarte.excepciones.EmailRepetidoException;
+import culturarte.excepciones.NickRepetidoException;
+import culturarte.logica.DTColaborador;
+import culturarte.logica.DTDireccion;
+import culturarte.logica.DTProponente;
+import culturarte.logica.DTUsuario;
+import culturarte.logica.IController;
+import culturarte.logica.IControllerFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 /**
  *
  * @author mark
  */
 @WebServlet(name = "UsuarioServlet", urlPatterns = {"/usuarios", "/crear-cuenta", "/perfil", "/login"})
+@MultipartConfig(
+    fileSizeThreshold = 1024 * 1024,    //1MB+ se escriben al disco
+    maxFileSize = 1024 * 1024 * 5,      //5MB máximo por archivo
+    maxRequestSize = 1024 * 1024 * 10   //10MB máximo tamaño request
+)
 public class UsuarioServlet extends HttpServlet {
-
+    private IController controller = IControllerFactory.getInstance().getIController();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -76,6 +98,7 @@ public class UsuarioServlet extends HttpServlet {
         
         switch (path) {
             case "/crear-cuenta":
+                procesarCrearCuenta(request, response);
                 response.sendRedirect("/index");
                 break;
             case "/login":
@@ -86,6 +109,76 @@ public class UsuarioServlet extends HttpServlet {
         }
     }
 
+    protected void procesarCrearCuenta(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String nombre = request.getParameter("nombre");
+        String apellido = request.getParameter("apellido");
+        String email = request.getParameter("email");
+        String nickname = request.getParameter("nickname");
+        String password = request.getParameter("password");
+        String passwordConfirm = request.getParameter("passwordConfirm");
+        String tipoUsuario = request.getParameter("tipoUsuario");
+        
+        String fNacString = request.getParameter("fechaNacimiento");
+        LocalDate fechaNacimiento = parsearFecha(fNacString);
+        
+        Part parteArchivo = request.getPart("imagen");
+        byte[] bytesImagen = partABytes(parteArchivo);
+        
+        DTUsuario user = null;
+        
+        if (tipoUsuario.equals("proponente")) {
+            String ciudad = request.getParameter("ciudad");
+            String calle = request.getParameter("calle");
+            String numPuertaString = request.getParameter("numPuerta");
+            int numPuerta = Integer.parseInt(numPuertaString);
+            DTDireccion direccion = new DTDireccion(ciudad, calle, numPuerta);
+            String biografia = request.getParameter("biografia");
+            String sitioWeb = request.getParameter("sitioWeb");
+            
+            user = new DTProponente(direccion, biografia, sitioWeb, nickname, nombre, apellido,
+                    password.toCharArray(), passwordConfirm.toCharArray(), email, fechaNacimiento, null);
+            
+        } else if (tipoUsuario.equals("colaborador")) {
+            user = new DTColaborador(nickname, nombre, apellido,
+                    password.toCharArray(), passwordConfirm.toCharArray(), email, fechaNacimiento, null);
+        }
+        
+        try {
+            this.controller.addUsuario(user);
+        } catch (NickRepetidoException | EmailRepetidoException | BadPasswordException ex) {
+            System.getLogger(UsuarioServlet.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }
+    
+    private byte[] partABytes(Part parteArchivo) {
+        byte[] bytesArchivo = null;
+
+        if (parteArchivo != null && parteArchivo.getSize() > 0) {
+            try (InputStream input = parteArchivo.getInputStream()) {
+                bytesArchivo = input.readAllBytes();
+            } catch (IOException ex) {
+                System.getLogger(UsuarioServlet.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+        }
+        return bytesArchivo;
+    }
+    
+    private LocalDate parsearFecha(String fechaString) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date utilDate = null;
+        try {
+            utilDate = formatter.parse(fechaString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        LocalDate fecha = null;
+        if (utilDate != null) {
+            fecha = utilDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        }
+        return fecha;
+    }
+    
     /**
      * Returns a short description of the servlet.
      *

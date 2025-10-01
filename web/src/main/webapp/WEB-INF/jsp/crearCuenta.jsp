@@ -79,7 +79,7 @@
                 </div>
                 <div class="mb-2">
                     <label for="num-puerta" class="form-label">Nº de Puerta</label>
-                    <input type="text" id="num-puerta" name="numPuerta" class="form-control form-control-sm" required>
+                    <input type="number" id="num-puerta" name="numPuerta" min="1" max="99999" class="form-control form-control-sm" required>
                 </div>
                 <div class="mb-2">
                     <label for="biografia" class="form-label">Biografía</label>
