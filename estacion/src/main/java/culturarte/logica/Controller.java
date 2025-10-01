@@ -56,6 +56,22 @@ public class Controller implements IController {
     }
 
     @Override
+    public boolean obtenerUser(String nombre){
+        Usuario usu =  emr.find(Usuario.class,nombre);
+        if(usu == null){
+            return false;
+        }
+        return true;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    @Override
     public void cargarDatosPrueba() throws NickRepetidoException, EmailRepetidoException, PropuestaDuplicadaException, CategoriaDuplicadaException, BadPasswordException {
         cargarUsuariosPrueba();
         cargarSeguidoresPrueba();
@@ -525,7 +541,7 @@ public class Controller implements IController {
         List<String> aux = emr.listarAtributo(String.class, "nickname", "Colaborador");
         return new ArrayList<>(aux);
     }
-
+    
     @Override
     public DTColaborador obtenerDTColaborador(String nick) {
         try {

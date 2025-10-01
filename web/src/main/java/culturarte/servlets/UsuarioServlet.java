@@ -21,6 +21,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.InputStream;
 import java.text.ParseException;
@@ -35,12 +36,14 @@ import java.util.Date;
  */
 @WebServlet(name = "UsuarioServlet", urlPatterns = {"/usuarios", "/crear-cuenta", "/perfil", "/login"})
 @MultipartConfig(
-    fileSizeThreshold = 1024 * 1024,    //1MB+ se escriben al disco
-    maxFileSize = 1024 * 1024 * 5,      //5MB máximo por archivo
-    maxRequestSize = 1024 * 1024 * 10   //10MB máximo tamaño request
+        fileSizeThreshold = 1024 * 1024, //1MB+ se escriben al disco
+        maxFileSize = 1024 * 1024 * 5, //5MB máximo por archivo
+        maxRequestSize = 1024 * 1024 * 10 //10MB máximo tamaño request
 )
 public class UsuarioServlet extends HttpServlet {
+
     private IController controller = IControllerFactory.getInstance().getIController();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -65,7 +68,7 @@ public class UsuarioServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String path = request.getServletPath();
-        
+
         switch (path) {
             case "/crear-cuenta":
                 request.getRequestDispatcher("/WEB-INF/jsp/crearCuenta.jsp").forward(request, response);
@@ -77,11 +80,7 @@ public class UsuarioServlet extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
-    
-    
-    
-    
-    
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -95,18 +94,33 @@ public class UsuarioServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String path = request.getServletPath();
-        
+
         switch (path) {
             case "/crear-cuenta":
                 procesarCrearCuenta(request, response);
                 response.sendRedirect("/index");
                 break;
             case "/login":
+                iniciarSesion(request, response);
                 response.sendRedirect("/index");
                 break;
             default:
                 response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         }
+    }
+
+    protected void iniciarSesion(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String nombre = request.getParameter("nombre");
+        String password = request.getParameter("password");
+        if(this.controller.obtenerUser(nombre)){ // AGREGAR CONTROL DE CLAVE
+            HttpSession session = request.getSession(true);
+            session.setAttribute("rol", "colaborador");
+            session.setAttribute("username", nombre);
+        }else{
+            //AGREGAR MENSAJE POR USUARIO O CLAVE INEXISTENTE
+        }
+        
     }
 
     protected void procesarCrearCuenta(HttpServletRequest request, HttpServletResponse response)
@@ -118,15 +132,15 @@ public class UsuarioServlet extends HttpServlet {
         String password = request.getParameter("password");
         String passwordConfirm = request.getParameter("passwordConfirm");
         String tipoUsuario = request.getParameter("tipoUsuario");
-        
+
         String fNacString = request.getParameter("fechaNacimiento");
         LocalDate fechaNacimiento = parsearFecha(fNacString);
-        
+
         Part parteArchivo = request.getPart("imagen");
         byte[] bytesImagen = partABytes(parteArchivo);
-        
+
         DTUsuario user = null;
-        
+
         if (tipoUsuario.equals("proponente")) {
             String ciudad = request.getParameter("ciudad");
             String calle = request.getParameter("calle");
@@ -135,22 +149,22 @@ public class UsuarioServlet extends HttpServlet {
             DTDireccion direccion = new DTDireccion(ciudad, calle, numPuerta);
             String biografia = request.getParameter("biografia");
             String sitioWeb = request.getParameter("sitioWeb");
-            
+
             user = new DTProponente(direccion, biografia, sitioWeb, nickname, nombre, apellido,
                     password.toCharArray(), passwordConfirm.toCharArray(), email, fechaNacimiento, null);
-            
+
         } else if (tipoUsuario.equals("colaborador")) {
             user = new DTColaborador(nickname, nombre, apellido,
                     password.toCharArray(), passwordConfirm.toCharArray(), email, fechaNacimiento, null);
         }
-        
+
         try {
             this.controller.addUsuario(user);
         } catch (NickRepetidoException | EmailRepetidoException | BadPasswordException ex) {
             System.getLogger(UsuarioServlet.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }
-    
+
     private byte[] partABytes(Part parteArchivo) {
         byte[] bytesArchivo = null;
 
@@ -163,7 +177,7 @@ public class UsuarioServlet extends HttpServlet {
         }
         return bytesArchivo;
     }
-    
+
     private LocalDate parsearFecha(String fechaString) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date utilDate = null;
@@ -178,7 +192,7 @@ public class UsuarioServlet extends HttpServlet {
         }
         return fecha;
     }
-    
+
     /**
      * Returns a short description of the servlet.
      *

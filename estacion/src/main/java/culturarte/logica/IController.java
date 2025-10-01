@@ -55,4 +55,6 @@ public interface IController {
     
     public ArrayList<String> listarPropuestasProponentesIngresadas();
     public void cambiarEstadoPropuestaIngresada(String tituloProp, EstadoPropuesta estProp);
+    
+    public boolean obtenerUser(String nombre);
 }
