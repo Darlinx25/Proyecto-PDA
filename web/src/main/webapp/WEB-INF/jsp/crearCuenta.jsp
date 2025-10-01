@@ -67,6 +67,6 @@
 
         </form>
 
-        <script src="/resources/js/validarPasswords.js"></script>
+        <script src="/resources/js/crearCuenta.js"></script>
     </body>
 </html>
