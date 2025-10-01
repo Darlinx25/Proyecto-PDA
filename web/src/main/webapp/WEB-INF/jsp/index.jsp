@@ -13,11 +13,10 @@
         <title>Culturarte</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+        <link href="/resources/css/index.css" rel="stylesheet"
     </head>
     <body>
-        <div class="bg-primary text-white p-5 text-center">
-            <h1>Culturarte</h1>
-        </div>
+
         <%
             String rol = (String) session.getAttribute("rol");
             String username = (String) session.getAttribute("username");
@@ -25,6 +24,9 @@
         <%
             if (rol == null) {
         %>
+        <div class="bg-primary text-white p-5 text-center">
+            <h1>Culturarte</h1>
+        </div>
         <h2>Bienvenido, visitante</h2>
         <ul>
             <li><a href="/login">Iniciar sesión</a></li>
@@ -33,8 +35,21 @@
         <%
         } else {
         %>
+        <div class="bg-primary text-white p-5 text-center">
+            <h1>Culturarte</h1>
+            <div class="d-flex justify-content-end">
+                <form action="/logout" method="post">
+                    <button type="submit" class="btn btn-success w-100 mb-3" id="cerrar-sesion">Cerrar sesión</button>
+                </form>
+            </div>
+        </div>
+
         <h2>Bienvenido, <%= username%></h2>
+
+
+
+
         <% }%>
-        
+
     </body>
 </html>

@@ -34,7 +34,7 @@ import java.util.Date;
  *
  * @author mark
  */
-@WebServlet(name = "UsuarioServlet", urlPatterns = {"/usuarios", "/crear-cuenta", "/perfil", "/login"})
+@WebServlet(name = "UsuarioServlet", urlPatterns = {"/usuarios", "/crear-cuenta", "/perfil", "/login", "/logout"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, //1MB+ se escriben al disco
         maxFileSize = 1024 * 1024 * 5, //5MB máximo por archivo
@@ -104,6 +104,11 @@ public class UsuarioServlet extends HttpServlet {
                 iniciarSesion(request, response);
                 response.sendRedirect("/index");
                 break;
+            case "/logout":
+                cerrarSesion(request, response);
+                response.sendRedirect("/index");
+                break;
+                
             default:
                 response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         }
@@ -165,6 +170,13 @@ public class UsuarioServlet extends HttpServlet {
         }
     }
 
+    protected void cerrarSesion (HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+            HttpSession session = request.getSession(false);
+            session.setAttribute("rol", null);
+            session.setAttribute("username", null);
+    }
+    
     private byte[] partABytes(Part parteArchivo) {
         byte[] bytesArchivo = null;
 
