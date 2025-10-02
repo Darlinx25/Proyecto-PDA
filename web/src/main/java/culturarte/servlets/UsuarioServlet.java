@@ -176,8 +176,9 @@ public class UsuarioServlet extends HttpServlet {
     protected void cerrarSesion (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             HttpSession session = request.getSession(false);
-            session.setAttribute("rol", null);
-            session.setAttribute("username", null);
+            if (session != null) {
+                session.invalidate();
+            }
     }
     
     private byte[] partABytes(Part parteArchivo) {
