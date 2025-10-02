@@ -101,7 +101,7 @@ public class UsuarioServlet extends HttpServlet {
         switch (path) {
             case "/crear-cuenta":
                 procesarCrearCuenta(request, response);
-                response.sendRedirect("/index");
+                response.sendRedirect("/login");
                 break;
             case "/login":
                 iniciarSesion(request, response);
