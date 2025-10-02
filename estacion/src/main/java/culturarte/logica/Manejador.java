@@ -38,8 +38,8 @@ public class Manejador {
             e.printStackTrace();
         }
     }
-    
-    public void mod(Object clase){
+
+    public void mod(Object clase) {
         EntityTransaction t = em.getTransaction();
         try {
             t.begin();
@@ -74,8 +74,8 @@ public class Manejador {
             return Collections.emptyList();
         }
     }
-    
-    public ArrayList<String> obtenerPropuestasEstado(int estado){
+
+    public ArrayList<String> obtenerPropuestasEstado(int estado) {
         List<String> aux;
         EstadoPropuesta est = EstadoPropuesta.values()[estado];
         String query = "SELECT p.titulo FROM Propuesta p WHERE p.estadoActual.estado = :est";
@@ -87,13 +87,14 @@ public class Manejador {
         }
         return new ArrayList<>(aux);
     }
-    
-    public List<Usuario> obtenerUsuario(String nickname){
-       return em.createQuery("SELECT u FROM Usuario u WHERE u.nickname = :nickname", Usuario.class)
+
+    public List<Usuario> obtenerUsuario(String nickname) {
+        return em.createQuery("SELECT u FROM Usuario u WHERE u.nickname = :nickname", Usuario.class)
                 .setParameter("nickname", nickname).getResultList();
     }
-    public ArrayList<String> obtenerUsuariosSeguir(String nickname){
-     List<String> aux;
+
+    public ArrayList<String> obtenerUsuariosSeguir(String nickname) {
+        List<String> aux;
         String query = """
                 SELECT u.nickname 
                 FROM Usuario u 
@@ -114,10 +115,9 @@ public class Manejador {
         }
         return new ArrayList<>(aux);
     }
-    
+
     public ArrayList<String> listaPropuestasUsuario(String nick) {
         List<String> aux;
-
 
         String query = "SELECT p.titulo FROM Propuesta p WHERE p.proponente.nickname = :nick";
         try {
@@ -128,8 +128,8 @@ public class Manejador {
         }
         return new ArrayList<>(aux);
     }
-    
-        public ArrayList<String> listPropuestasProponentes() {
+
+    public ArrayList<String> listPropuestasProponentes() {
         List<Object[]> aux;
         List<String> aux2 = new ArrayList<>();
 
@@ -148,7 +148,7 @@ public class Manejador {
         }
         return (ArrayList<String>) aux2;
     }
-    
+
     public ArrayList<String> listPropuestasProponentesIngresadas() {
         List<Object[]> aux;
         List<String> aux2 = new ArrayList<>();
@@ -167,8 +167,8 @@ public class Manejador {
         }
         return (ArrayList<String>) aux2;
     }
-        
-    public ArrayList<String> propuestaColaboradaPorUser(String nickColab,String tituloProp){
+
+    public ArrayList<String> propuestaColaboradaPorUser(String nickColab, String tituloProp) {
         List<String> aux = new ArrayList<>();
         String query = "SELECT c.propuestaColaborada.titulo FROM Colaboracion c WHERE c.colaborador.nickname = :nickColab"
                 + " AND c.propuestaColaborada.titulo = :tituloProp";
@@ -183,9 +183,9 @@ public class Manejador {
             aux = Collections.emptyList();
         }
         return (ArrayList<String>) aux;
-    }    
-    
-    public ArrayList<Float> obtenerDinero(String tituloProp ){
+    }
+
+    public ArrayList<Float> obtenerDinero(String tituloProp) {
         List<Float> aux;
         Float resultado = 0f;
         String query = "SELECT c.monto FROM Colaboracion c WHERE c.propuestaColaborada.titulo = :tituloProp";
@@ -196,10 +196,10 @@ public class Manejador {
             aux = Collections.emptyList();;
         }
         return (ArrayList<Float>) aux;
-    } 
-    
-    public ArrayList<String> colaboradoresColaboracion(String tituloProp){
-                List<String> aux;
+    }
+
+    public ArrayList<String> colaboradoresColaboracion(String tituloProp) {
+        List<String> aux;
         String query = "SELECT c.colaborador.nickname FROM Colaboracion c WHERE c.propuestaColaborada.titulo = :tituloProp";
         try {
             aux = em.createQuery(query, String.class).setParameter("tituloProp", tituloProp).getResultList();
@@ -210,9 +210,9 @@ public class Manejador {
         }
         return (ArrayList<String>) aux;
     }
-    
-    public ArrayList<String> propuestasColaboradas (String nick){
-                List<String> aux;
+
+    public ArrayList<String> propuestasColaboradas(String nick) {
+        List<String> aux;
 
         String query = "SELECT c.propuestaColaborada.titulo FROM Colaboracion c"
                 + " WHERE c.colaborador.nickname = :nick";
@@ -226,9 +226,9 @@ public class Manejador {
 
         return (ArrayList<String>) aux;
     }
-    
-    public ArrayList<String> colaboracionesColaborador(String nickColab){
-                List<Object[]> aux;
+
+    public ArrayList<String> colaboracionesColaborador(String nickColab) {
+        List<Object[]> aux;
         List<String> aux2 = new ArrayList<>();
 
         String query = "SELECT c.propuestaColaborada.titulo, c.id FROM Colaboracion c"
@@ -245,9 +245,9 @@ public class Manejador {
         }
         return (ArrayList<String>) aux2;
     }
-    
-    public ArrayList<String> Colaboraciones(){
-                List<Object[]> aux;
+
+    public ArrayList<String> Colaboraciones() {
+        List<Object[]> aux;
         List<String> aux2 = new ArrayList<>();
 
         String query = "SELECT c.propuestaColaborada.titulo, c.id FROM Colaboracion c";
@@ -261,9 +261,22 @@ public class Manejador {
         }
         return (ArrayList<String>) aux2;
     }
-    
-    public void eliminarColab (Long id){
-                EntityTransaction t = em.getTransaction();
+
+    public ArrayList<String> darCategorias() {
+        List<String> aux;
+        String query = "SELECT c.nombre FROM Categoria c WHERE c.nombre != 'Categorías'";
+        try {
+            aux = em.createQuery(query, String.class).getResultList();
+            System.out.println("Categorias encontradas: " + aux);
+        } catch (Exception e) {
+            e.printStackTrace();
+            aux = Collections.emptyList();
+        }
+        return new ArrayList<>(aux);
+    }
+
+    public void eliminarColab(Long id) {
+        EntityTransaction t = em.getTransaction();
         try {
             t.begin();
             Colaboracion c = em.find(Colaboracion.class, id);
@@ -299,11 +312,6 @@ public class Manejador {
         }
         
     } No anda ni se usa esto de momento
-    */ 
-    
-    
-    
-    
-    
-}
+     */
 
+}

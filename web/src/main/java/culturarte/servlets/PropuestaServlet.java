@@ -4,6 +4,8 @@
  */
 package culturarte.servlets;
 
+import culturarte.logica.IController;
+import culturarte.logica.IControllerFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,6 +21,8 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "PropuestaServlet", urlPatterns = {"/propuestas", "/crear-propuesta"})
 public class PropuestaServlet extends HttpServlet {
+
+    private IController controller = IControllerFactory.getInstance().getIController();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -61,8 +66,10 @@ public class PropuestaServlet extends HttpServlet {
         String path = request.getServletPath();
 
         switch (path) {
-        case "/crear-propuesta":
-                 request.getRequestDispatcher("/WEB-INF/jsp/crearPropuesta.jsp").forward(request, response);
+            case "/crear-propuesta":
+                ArrayList<String> categorias = this.controller.obtenerCategorias();
+                request.setAttribute("categorias", categorias);
+                request.getRequestDispatcher("/WEB-INF/jsp/crearPropuesta.jsp").forward(request, response);
         }
     }
 
@@ -77,14 +84,17 @@ public class PropuestaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         String path = request.getServletPath();
 
         switch (path) {
-        case "/crear-propuesta":
-                 request.getRequestDispatcher("/WEB-INF/jsp/crearPropuesta.jsp").forward(request, response);
+            case "/crear-propuesta":
+                ArrayList<String> categorias = this.controller.obtenerCategorias();
+                request.setAttribute("categorias", categorias);
+                request.getRequestDispatcher("/WEB-INF/jsp/crearPropuesta.jsp").forward(request, response);
+                break;
         }
-        
+
     }
 
     /**

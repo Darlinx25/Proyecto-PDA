@@ -58,4 +58,5 @@ public interface IController {
     
     public String obtenerTipoUser(String nickname);
     public boolean autenticarUsuario(String nickname, char[] password);
+    public ArrayList<String> obtenerCategorias();
 }

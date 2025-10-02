@@ -525,7 +525,9 @@ public class Controller implements IController {
         Categoria catRaiz = emr.find(Categoria.class, "Categorías");
         return nodosArbolCategorias(catRaiz);
     }
-
+    
+    
+    
     private DefaultMutableTreeNode nodosArbolCategorias(Categoria cat) {
         if (cat == null) {
             return null;
@@ -859,5 +861,10 @@ public class Controller implements IController {
             }
             emr.mod(prop);
         }
+    }
+    
+    @Override
+    public ArrayList<String> obtenerCategorias(){
+        return emr.darCategorias();
     }
 }
