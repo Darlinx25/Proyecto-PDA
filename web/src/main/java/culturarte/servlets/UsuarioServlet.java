@@ -34,7 +34,7 @@ import java.util.Date;
  *
  * @author mark
  */
-@WebServlet(name = "UsuarioServlet", urlPatterns = {"/usuarios", "/crear-cuenta", "/perfil", "/login", "/logout"})
+@WebServlet(name = "UsuarioServlet", urlPatterns = {"/usuarios", "/crear-cuenta", "/perfil", "/login", "/logout","/seguir-usuario"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, //1MB+ se escriben al disco
         maxFileSize = 1024 * 1024 * 5, //5MB máximo por archivo
@@ -76,6 +76,9 @@ public class UsuarioServlet extends HttpServlet {
             case "/login":
                 request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesion.jsp").forward(request, response);
                 break;
+            case "/seguir-usuario":
+                 request.getRequestDispatcher("/WEB-INF/jsp/seguirUsuario.jsp").forward(request, response);
+                 break;
             default:
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }

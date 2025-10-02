@@ -31,12 +31,14 @@
         <ul>
             <li><a href="/login">Iniciar sesión</a></li>
             <li><a href="/crear-cuenta">Registrarse</a></li>
+            
         </ul>
         <%
         } else {
         %>
         <div class="bg-primary text-white p-5 text-center">
             <h1>Culturarte</h1>
+            
             <div class="d-flex justify-content-end">
                 <form action="/logout" method="post">
                     <button type="submit" class="btn btn-success w-100 mb-3" id="cerrar-sesion">Cerrar sesión</button>
@@ -45,7 +47,10 @@
         </div>
 
         <h2>Bienvenido, <%= username%></h2>
-
+        <ul>
+            <li><a href="/seguir-usuario">Seguir Usuario</a></li>
+            <li><a href="/crear-propuesta">Crear Propuesta</a></li>
+        </ul>
 
 
 

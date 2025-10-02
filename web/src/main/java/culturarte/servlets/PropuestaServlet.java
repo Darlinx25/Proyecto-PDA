@@ -57,7 +57,13 @@ public class PropuestaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        String path = request.getServletPath();
+
+        switch (path) {
+        case "/crear-propuesta":
+                 request.getRequestDispatcher("/WEB-INF/jsp/crearPropuesta.jsp").forward(request, response);
+        }
     }
 
     /**
@@ -71,7 +77,14 @@ public class PropuestaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         response.setContentType("text/html;charset=UTF-8");
+        String path = request.getServletPath();
+
+        switch (path) {
+        case "/crear-propuesta":
+                 request.getRequestDispatcher("/WEB-INF/jsp/crearPropuesta.jsp").forward(request, response);
+        }
+        
     }
 
     /**
