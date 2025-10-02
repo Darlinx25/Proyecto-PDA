@@ -13,6 +13,7 @@ import culturarte.logica.DTProponente;
 import culturarte.logica.DTUsuario;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -34,7 +35,7 @@ import java.util.Date;
  *
  * @author mark
  */
-@WebServlet(name = "UsuarioServlet", urlPatterns = {"/usuarios", "/crear-cuenta", "/perfil", "/login", "/logout","/seguir-usuario"})
+@WebServlet(name = "UsuarioServlet", urlPatterns = {"/usuarios", "/crear-cuenta", "/perfil", "/login", "/logout", "/seguir-usuario"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, //1MB+ se escriben al disco
         maxFileSize = 1024 * 1024 * 5, //5MB máximo por archivo
@@ -105,7 +106,6 @@ public class UsuarioServlet extends HttpServlet {
                 break;
             case "/login":
                 iniciarSesion(request, response);
-                response.sendRedirect("/index");
                 break;
             case "/logout":
                 cerrarSesion(request, response);
@@ -119,14 +119,18 @@ public class UsuarioServlet extends HttpServlet {
 
     protected void iniciarSesion(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String nombre = request.getParameter("nombre");
+        String nickname = request.getParameter("nickname");
         String password = request.getParameter("password");
-        if(this.controller.obtenerUser(nombre)){ // AGREGAR CONTROL DE CLAVE
+        String tipoUsuario = this.controller.obtenerTipoUser(nickname);
+        boolean autValida = this.controller.autenticarUsuario(nickname, password.toCharArray());
+        if (tipoUsuario != null && autValida) {
             HttpSession session = request.getSession(true);
-            session.setAttribute("rol", "colaborador");
-            session.setAttribute("username", nombre);
-        }else{
-            //AGREGAR MENSAJE POR USUARIO O CLAVE INEXISTENTE
+            session.setAttribute("rol", tipoUsuario);
+            session.setAttribute("username", nickname);
+            response.sendRedirect("/index");
+        } else {
+            request.setAttribute("mensajeError", "Usuario o contraseña incorrectos!");
+            request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesion.jsp").forward(request, response);
         }
         
     }

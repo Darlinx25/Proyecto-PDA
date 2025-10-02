@@ -13,6 +13,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     border-radius: 15px;
 }
 
-#p-registrarse {
+#mensaje-error {
+    color: rgb(220,20,20);
+}
+
+#mensaje-registrarse {
     margin-top: 20px;
 }
+

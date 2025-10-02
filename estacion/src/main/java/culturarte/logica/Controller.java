@@ -56,15 +56,38 @@ public class Controller implements IController {
     }
 
     @Override
-    public boolean obtenerUser(String nombre){
-        Usuario usu =  emr.find(Usuario.class,nombre);
-        if(usu == null){
-            return false;
+    public String obtenerTipoUser(String nickname){
+        Usuario usu =  emr.find(Usuario.class, nickname);
+        if (usu == null){
+            return null;
         }
-        return true;
+        if (usu instanceof Colaborador) {
+            return "colaborador";
+        } else {
+            return "proponente";
+        }
     }
     
-    
+    @Override
+    public boolean autenticarUsuario(String nickname, char[] password) {
+        Usuario usu = emr.find(Usuario.class, nickname);
+        if (usu == null) {
+            return false;
+        }
+        String b64Hash = usu.getPasswordHash();
+        String b64Salt = usu.getPasswordSalt();
+        
+        String passwordHash;
+        try {
+            passwordHash = crearPasswordHash(b64Salt, password);
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
+            System.getLogger(Controller.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            Arrays.fill(password, 'x');
+            return false;
+        }
+        Arrays.fill(password, 'x');
+        return passwordHash != null && passwordHash.equals(b64Hash);
+    }
     
     
     
@@ -442,6 +465,8 @@ public class Controller implements IController {
             passwordHash = crearPasswordHash(passwordSalt, user.getPassword());
         } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
             System.getLogger(Controller.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            Arrays.fill(user.getPassword(), 'x');
+            Arrays.fill(user.getPasswordConfirm(), 'x');
             return;
         }
         

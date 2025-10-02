@@ -14,10 +14,14 @@
         <form action="/login" method="post" class="card p-5 shadow" id="formulario">
 
             <h2 class="text-center mb-4">Iniciar sesión</h2>
-
+            
+            <% if (request.getAttribute("mensajeError") != null) { %>
+                <p class="text-center mb-0" id="mensaje-error"><%= request.getAttribute("mensajeError") %></p>
+            <% } %>
+            
             <div class="mb-3">
                 <label for="nombre" class="form-label">Usuario</label>
-                <input type="text" id="nombre" name="nombre" class="form-control" required>
+                <input type="text" id="nombre" name="nickname" class="form-control" required>
             </div>
 
             <div class="mb-3">
@@ -27,7 +31,7 @@
 
             <button type="submit" class="btn btn-success w-100 mb-3">Iniciar Sesión</button>
 
-            <p class="text-center text-muted mb-0" id="p-registrarse">
+            <p class="text-center text-muted mb-0" id="mensaje-registrarse">
                 ¿No tenés cuenta? <a href="/crear-cuenta" class="fw-bold">Registrate</a>
             </p>
 

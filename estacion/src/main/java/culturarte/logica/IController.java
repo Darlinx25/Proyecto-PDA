@@ -56,5 +56,6 @@ public interface IController {
     public ArrayList<String> listarPropuestasProponentesIngresadas();
     public void cambiarEstadoPropuestaIngresada(String tituloProp, EstadoPropuesta estProp);
     
-    public boolean obtenerUser(String nombre);
+    public String obtenerTipoUser(String nickname);
+    public boolean autenticarUsuario(String nickname, char[] password);
 }

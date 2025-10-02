@@ -48,8 +48,8 @@
 
         <h2>Bienvenido, <%= username%></h2>
         <ul>
-            <li><a href="/seguir-usuario">Seguir Usuario</a></li>
-            <li><a href="/crear-propuesta">Crear Propuesta</a></li>
+            <li><a href="/seguir-usuario">Seguir usuario</a></li>
+            <li><a href="/crear-propuesta">Crear propuesta</a></li>
         </ul>
 
 
