@@ -55,7 +55,7 @@ public class UsuarioServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -79,6 +79,9 @@ public class UsuarioServlet extends HttpServlet {
                 break;
             case "/seguir-usuario":
                  request.getRequestDispatcher("/WEB-INF/jsp/seguirUsuario.jsp").forward(request, response);
+                 break;
+            case "/perfil":
+                 request.getRequestDispatcher("/WEB-INF/jsp/perfilUsuario.jsp").forward(request, response);
                  break;
             default:
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -116,7 +119,10 @@ public class UsuarioServlet extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         }
     }
-
+    
+    
+    
+    
     protected void iniciarSesion(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String nickname = request.getParameter("nickname");
