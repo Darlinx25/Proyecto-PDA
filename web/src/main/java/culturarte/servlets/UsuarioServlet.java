@@ -81,6 +81,7 @@ public class UsuarioServlet extends HttpServlet {
                  request.getRequestDispatcher("/WEB-INF/jsp/seguirUsuario.jsp").forward(request, response);
                  break;
             case "/perfil":
+                 cargarDatosPerfil(request,response);
                  request.getRequestDispatcher("/WEB-INF/jsp/perfilUsuario.jsp").forward(request, response);
                  break;
             default:
@@ -121,7 +122,27 @@ public class UsuarioServlet extends HttpServlet {
     }
     
     
-    
+    protected void cargarDatosPerfil(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+              HttpSession session = request.getSession(false);
+            if (session != null) {
+                String user =(String) session.getAttribute("username");
+                String tipo = this.controller.obtenerTipoUser(user);
+                if(tipo == "colaborador"){
+                    DTColaborador colab = this.controller.obtenerDTColaborador(user);
+                    String nom = colab.getNombre();
+                    String apell = colab.getApellido();
+                    String correo = colab.getEmail();
+                    session.setAttribute("nombre", nom);
+                    session.setAttribute("apellido", apell);
+                    session.setAttribute("email", correo);
+                    
+                    
+                }else if(tipo == "proponente"){
+                    
+                }
+            }
+    }
     
     protected void iniciarSesion(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
