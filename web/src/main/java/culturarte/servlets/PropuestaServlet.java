@@ -4,6 +4,7 @@
  */
 package culturarte.servlets;
 
+import culturarte.logica.DTPropuesta;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
 import java.io.IOException;
@@ -13,7 +14,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
+import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -95,6 +104,53 @@ public class PropuestaServlet extends HttpServlet {
                 break;
         }
 
+    }
+    
+    protected void procesarCrearPropuesta(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        String titulo = request.getParameter("titulo");
+        String categoria = request.getParameter("categoria");
+        String descripcion = request.getParameter("descripcion");
+        String lugar = request.getParameter("lugar");
+        String precio = request.getParameter("precio");
+        float precioF = Float.parseFloat(precio);
+        String monto = request.getParameter("monto");
+        float montoF = Float.parseFloat(monto);
+        String fPrevistaString = request.getParameter("fecha-prevista");
+        LocalDate fechaPrevista = parsearFecha(fPrevistaString);
+        Part parteArchivo = request.getPart("imagen");
+        byte[] bytesImagen = partABytes(parteArchivo);
+        String nickProp =(String) session.getAttribute("username");
+        DTPropuesta prop = null;
+        
+        prop = new DTPropuesta();
+    }
+    private LocalDate parsearFecha(String fechaString) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date utilDate = null;
+        try {
+            utilDate = formatter.parse(fechaString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        LocalDate fecha = null;
+        if (utilDate != null) {
+            fecha = utilDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        }
+        return fecha;
+    }
+     private byte[] partABytes(Part parteArchivo) {
+        byte[] bytesArchivo = null;
+
+        if (parteArchivo != null && parteArchivo.getSize() > 0) {
+            try (InputStream input = parteArchivo.getInputStream()) {
+                bytesArchivo = input.readAllBytes();
+            } catch (IOException ex) {
+                System.getLogger(UsuarioServlet.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+        }
+        return bytesArchivo;
     }
 
     /**

@@ -10,10 +10,11 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
         <link href="/resources/css/formulario.css" rel="stylesheet">
+        <link href="/resources/css/crearPropuesta.css" rel="stylesheet">
     </head>
     <body class="bg-light d-flex justify-content-center align-items-center min-vh-100 py-2">
 
-        <form action="/crear-propuesta" method="post" enctype="multipart/form-data" class="card p-5 shadow" id="formulario">
+        <form action="/crear-propuesta" method="post" enctype="multipart/form-data" class="card p-5 shadow" id="formulario" onsubmit="return validarCheckboxes()">
 
             <h2 class="text-center mb-4">Crear propuesta</h2>
 
@@ -28,7 +29,7 @@
                 <select id="categoria" name="categoria" class="form-select form-select-sm" required>
                     <option value="" selected disabled>-- Seleccione una categoría --</option>
                     <% if (categorias != null) {
-                        for (String cat : categorias) {%>
+                            for (String cat : categorias) {%>
                     <option value="<%= cat%>"><%= cat%></option>
                     <%   }
                     } else { %>
@@ -64,7 +65,7 @@
                 <label for="Precio" class="form-label">Precio de cada entrada</label>
                 <div class="input-group input-group-sm">
                     <span class="input-group-text">$</span>
-                    <input type="text" id="Precio" name="Precio" class="form-control" required>
+                    <input type="number" id="precio" name="precio" class="form-control" required>
                 </div>
             </div>
 
@@ -72,16 +73,45 @@
                 <label for="Monto" class="form-label">Monto necesario</label>
                 <div class="input-group input-group-sm">
                     <span class="input-group-text">$</span>
-                    <input type="text" id="Monto" name="Monto" class="form-control" required>
+                    <input type="text" id="monto" name="monto" class="form-control" required>
                 </div>
             </div>
-
+            <div class="mb-2">
+                <label for="tipo-retorno" class="form-label">Tipo de retorno:</label>
+                <div class="mb-2">
+                    <input name="tipoRetorno" value="entradaGratis" type="checkbox" class="form-check-input me-2" id="tipo-retorno-check1" >
+                    <label class="form-check-label" for="tipo-retorno1">
+                        Entrada gratis
+                    </label>
+                    <input name="tipoRetorno" value="porcentajeGanancia" type="checkbox" class="form-check-input me-2" id="tipo-retorno-check2" >
+                    <label class="form-check-label" for="tipo-retorno1">
+                        Porcentaje de ganancia
+                    </label>
+                    
+                     <p class="text-center mb-0" id="mensaje-error">Debe seleccionar al menos un tipo de retorno</p>
+                </div>
+            </div>      
+            <script>
+                function validarCheckboxes() {
+                    const checkboxes = document.querySelectorAll('input[name="tipoRetorno"');
+                    for (let i = 0; i < checkboxes.length; i++) {
+                        if (checkboxes[i].checked) {
+                            return true; // Al menos uno seleccionado
+                        }
+                    }
+                    const mensajeError = document.getElementById("mensaje-error");
+                    mensajeError.style.display = 'block';
+                    
+                    return false; // No se envía el formulario
+                }
+            </script>
 
 
             <div class="mb-2">
                 <label for="imagen" class="form-label">Imagen de perfil (JPG o PNG)</label>
                 <input type="file" id="imagen" name="imagen" accept="image/png, image/jpeg" class="form-control form-control-sm">
             </div>
+
 
             <div class="form-check mb-4 d-flex justify-content-center">
                 <input type="checkbox" class="form-check-input me-2" id="aceptar-terminos" required>
