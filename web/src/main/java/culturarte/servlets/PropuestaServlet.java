@@ -4,12 +4,17 @@
  */
 package culturarte.servlets;
 
+import culturarte.excepciones.PropuestaDuplicadaException;
 import culturarte.logica.DTPropuesta;
+import culturarte.logica.Estado;
+import culturarte.logica.EstadoPropuesta;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
+import culturarte.logica.TipoRetorno;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,13 +27,21 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author mark
  */
 @WebServlet(name = "PropuestaServlet", urlPatterns = {"/propuestas", "/crear-propuesta"})
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024, //1MB+ se escriben al disco
+        maxFileSize = 1024 * 1024 * 5, //5MB máximo por archivo
+        maxRequestSize = 1024 * 1024 * 10 //10MB máximo tamaño request
+)
 public class PropuestaServlet extends HttpServlet {
 
     private IController controller = IControllerFactory.getInstance().getIController();
@@ -79,6 +92,7 @@ public class PropuestaServlet extends HttpServlet {
                 ArrayList<String> categorias = this.controller.obtenerCategorias();
                 request.setAttribute("categorias", categorias);
                 request.getRequestDispatcher("/WEB-INF/jsp/crearPropuesta.jsp").forward(request, response);
+                break;
         }
     }
 
@@ -98,9 +112,8 @@ public class PropuestaServlet extends HttpServlet {
 
         switch (path) {
             case "/crear-propuesta":
-                ArrayList<String> categorias = this.controller.obtenerCategorias();
-                request.setAttribute("categorias", categorias);
-                request.getRequestDispatcher("/WEB-INF/jsp/crearPropuesta.jsp").forward(request, response);
+                procesarCrearPropuesta(request, response);
+                response.sendRedirect("/index");
                 break;
         }
 
@@ -114,6 +127,18 @@ public class PropuestaServlet extends HttpServlet {
         String descripcion = request.getParameter("descripcion");
         String lugar = request.getParameter("lugar");
         String precio = request.getParameter("precio");
+        String[] aux = request.getParameterValues("tipoRetorno");
+        ArrayList<TipoRetorno> tiposRetorno = new ArrayList<>();
+        for (String aux2 : aux) {
+            if(aux2.equals("porcentajeGanancia")){
+                tiposRetorno.add(TipoRetorno.PORCENTAJE_GANANCIAS);
+            }
+             if(aux2.equals("entradaGratis")){
+                tiposRetorno.add(TipoRetorno.ENTRADA_GRATIS);
+            }
+         
+        }
+    
         float precioF = Float.parseFloat(precio);
         String monto = request.getParameter("monto");
         float montoF = Float.parseFloat(monto);
@@ -121,10 +146,19 @@ public class PropuestaServlet extends HttpServlet {
         LocalDate fechaPrevista = parsearFecha(fPrevistaString);
         Part parteArchivo = request.getPart("imagen");
         byte[] bytesImagen = partABytes(parteArchivo);
+        EstadoPropuesta estp = EstadoPropuesta.INGRESADA;
+        Estado est = new Estado(estp);
         String nickProp =(String) session.getAttribute("username");
-        DTPropuesta prop = null;
+        DTPropuesta prop = new DTPropuesta(titulo, descripcion,
+        null, lugar, fechaPrevista, precioF, montoF, categoria,
+                nickProp, tiposRetorno, est);
         
-        prop = new DTPropuesta();
+        try {
+            this.controller.addPropuesta(prop);
+        } catch (PropuestaDuplicadaException ex) {
+            Logger.getLogger(PropuestaServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
     private LocalDate parsearFecha(String fechaString) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
