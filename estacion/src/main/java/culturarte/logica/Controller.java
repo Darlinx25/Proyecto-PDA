@@ -11,6 +11,11 @@ import culturarte.excepciones.NickRepetidoException;
 import culturarte.excepciones.PropuestaDuplicadaException;
 import culturarte.excepciones.PropuestaYaColaboradaException;
 import jakarta.persistence.*;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
@@ -866,5 +871,38 @@ public class Controller implements IController {
     @Override
     public ArrayList<String> obtenerCategorias(){
         return emr.darCategorias();
+    }
+
+    @Override
+    public String guardarImagen(byte[] bytesImagen) {
+        String tipoImagen = obtenerTipoImagen(bytesImagen);
+        if (tipoImagen == null) {
+            return null;
+        }
+        String nombreArchivo = System.currentTimeMillis() + "." + tipoImagen;
+        
+        //porque si no tomcat mete el archivo a otra carpeta, en docker luego lo podemos cambiar más fácil
+        Path pathImagen = Paths.get(System.getProperty("user.home"), "Documents", "NetBeansProjects", "Proyecto-PDA", "estacion", "imagenesUsuarios", nombreArchivo);
+        
+        try {
+            Files.createDirectories(pathImagen.getParent());
+            Files.write(pathImagen, bytesImagen, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+            return nombreArchivo;
+        } catch (IOException ex) {
+            System.getLogger(Controller.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            return null;
+        }
+
+    }
+    
+    private String obtenerTipoImagen(byte[] bytesImagen) {
+        if (bytesImagen[0] == (byte) 0xFF && bytesImagen[1] == (byte) 0xD8 && bytesImagen[2] == (byte) 0xFF) {
+            return "jpg";
+        } else if (bytesImagen[0] == (byte) 0x89 && bytesImagen[1] == (byte) 0x50 && bytesImagen[2] == (byte) 0x4E &&
+                 bytesImagen[3] == (byte) 0x47 && bytesImagen[4] == (byte) 0x0D && bytesImagen[5] == (byte) 0x0A &&
+                 bytesImagen[6] == (byte) 0x1A && bytesImagen[7] == (byte) 0x0A) {
+            return "png";
+        }
+        return null;
     }
 }

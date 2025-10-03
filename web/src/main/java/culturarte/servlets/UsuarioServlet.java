@@ -177,6 +177,7 @@ public class UsuarioServlet extends HttpServlet {
 
         Part parteArchivo = request.getPart("imagen");
         byte[] bytesImagen = partABytes(parteArchivo);
+        String nombreImagen = this.controller.guardarImagen(bytesImagen);
 
         DTUsuario user = null;
 
@@ -190,11 +191,11 @@ public class UsuarioServlet extends HttpServlet {
             String sitioWeb = request.getParameter("sitioWeb");
 
             user = new DTProponente(direccion, biografia, sitioWeb, nickname, nombre, apellido,
-                    password.toCharArray(), passwordConfirm.toCharArray(), email, fechaNacimiento, null);
+                    password.toCharArray(), passwordConfirm.toCharArray(), email, fechaNacimiento, nombreImagen);
 
         } else if (tipoUsuario.equals("colaborador")) {
             user = new DTColaborador(nickname, nombre, apellido,
-                    password.toCharArray(), passwordConfirm.toCharArray(), email, fechaNacimiento, null);
+                    password.toCharArray(), passwordConfirm.toCharArray(), email, fechaNacimiento, nombreImagen);
         }
 
         try {

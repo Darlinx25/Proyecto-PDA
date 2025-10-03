@@ -146,11 +146,12 @@ public class PropuestaServlet extends HttpServlet {
         LocalDate fechaPrevista = parsearFecha(fPrevistaString);
         Part parteArchivo = request.getPart("imagen");
         byte[] bytesImagen = partABytes(parteArchivo);
+        String nombreImagen = this.controller.guardarImagen(bytesImagen);
         EstadoPropuesta estp = EstadoPropuesta.INGRESADA;
         Estado est = new Estado(estp);
         String nickProp =(String) session.getAttribute("username");
         DTPropuesta prop = new DTPropuesta(titulo, descripcion,
-        null, lugar, fechaPrevista, precioF, montoF, categoria,
+        nombreImagen, lugar, fechaPrevista, precioF, montoF, categoria,
                 nickProp, tiposRetorno, est);
         
         try {

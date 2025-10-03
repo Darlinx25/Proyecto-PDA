@@ -59,4 +59,5 @@ public interface IController {
     public String obtenerTipoUser(String nickname);
     public boolean autenticarUsuario(String nickname, char[] password);
     public ArrayList<String> obtenerCategorias();
+    public String guardarImagen(byte[] bytesImagen);//devuelve el nombre de la imagen luego de guardarla
 }
