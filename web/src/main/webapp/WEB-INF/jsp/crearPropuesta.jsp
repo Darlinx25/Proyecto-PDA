@@ -91,21 +91,6 @@
                      <p class="text-center mb-0" id="mensaje-error">Debe seleccionar al menos un tipo de retorno</p>
                 </div>
             </div>      
-            <script>
-                function validarCheckboxes() {
-                    const checkboxes = document.querySelectorAll('input[name="tipoRetorno"');
-                    for (let i = 0; i < checkboxes.length; i++) {
-                        if (checkboxes[i].checked) {
-                            return true; // Al menos uno seleccionado
-                        }
-                    }
-                    const mensajeError = document.getElementById("mensaje-error");
-                    mensajeError.style.display = 'block';
-                    
-                    return false; // No se envía el formulario
-                }
-            </script>
-
 
             <div class="mb-2">
                 <label for="imagen" class="form-label">Imagen de perfil (JPG o PNG)</label>
@@ -116,5 +101,6 @@
 
         </form>
 
+        <script src="/resources/js/crearPropuesta.js"></script>
     </body>
 </html>
