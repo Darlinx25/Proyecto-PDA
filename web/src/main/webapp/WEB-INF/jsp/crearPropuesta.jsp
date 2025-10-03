@@ -111,15 +111,7 @@
                 <label for="imagen" class="form-label">Imagen de perfil (JPG o PNG)</label>
                 <input type="file" id="imagen" name="imagen" accept="image/png, image/jpeg" class="form-control form-control-sm">
             </div>
-
-
-            <div class="form-check mb-4 d-flex justify-content-center">
-                <input type="checkbox" class="form-check-input me-2" id="aceptar-terminos" required>
-                <label class="form-check-label" for="aceptar-terminos">
-                    Acepto los <a href="#!"><u>Términos de Servicio</u></a>
-                </label>
-            </div>
-
+            
             <button type="submit" class="btn btn-success w-100 mb-3">Crear propuesta</button>
 
         </form>
