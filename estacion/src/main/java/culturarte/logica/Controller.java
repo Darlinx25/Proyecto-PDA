@@ -60,45 +60,7 @@ public class Controller implements IController {
         return instancia;
     }
 
-    @Override
-    public String obtenerTipoUser(String nickname){
-        Usuario usu =  emr.find(Usuario.class, nickname);
-        if (usu == null){
-            return null;
-        }
-        if (usu instanceof Colaborador) {
-            return "colaborador";
-        } else {
-            return "proponente";
-        }
-    }
-    
-    @Override
-    public boolean autenticarUsuario(String nickname, char[] password) {
-        Usuario usu = emr.find(Usuario.class, nickname);
-        if (usu == null) {
-            return false;
-        }
-        String b64Hash = usu.getPasswordHash();
-        String b64Salt = usu.getPasswordSalt();
-        
-        String passwordHash;
-        try {
-            passwordHash = crearPasswordHash(b64Salt, password);
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
-            System.getLogger(Controller.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            Arrays.fill(password, 'x');
-            return false;
-        }
-        Arrays.fill(password, 'x');
-        return passwordHash != null && passwordHash.equals(b64Hash);
-    }
-    
-    
-    
-    
-    
-    
+    // <editor-fold defaultstate="collapsed" desc="Cargar datos de prueba.">
     @Override
     public void cargarDatosPrueba() throws NickRepetidoException, EmailRepetidoException, PropuestaDuplicadaException, CategoriaDuplicadaException, BadPasswordException {
         cargarUsuariosPrueba();
@@ -366,7 +328,6 @@ public class Controller implements IController {
 
         for (DTUsuario u : usu) {
             addUsuario(u);
-
         }
     }
 
@@ -450,7 +411,9 @@ public class Controller implements IController {
 
         return usu;
     }
-
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Funciones usuarios.">
     @Override
     public void addUsuario(DTUsuario user) throws NickRepetidoException, EmailRepetidoException, BadPasswordException {
         String nick = user.getNickname();
@@ -496,78 +459,6 @@ public class Controller implements IController {
         Arrays.fill(user.getPasswordConfirm(), 'x');
     }
     
-    private String crearPasswordHash(String passwordSalt, char[] password) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        byte[] salt = Base64.getDecoder().decode(passwordSalt);
-        KeySpec spec = new PBEKeySpec(password, salt, 65536, 128);
-        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        byte[] hash = factory.generateSecret(spec).getEncoded();
-        
-        return Base64.getEncoder().encodeToString(hash);
-    }
-    
-    private String crearPasswordSalt() {
-        SecureRandom random = new SecureRandom();
-        byte[] salt = new byte[16];
-        random.nextBytes(salt);
-        
-        return Base64.getEncoder().encodeToString(salt);
-    }
-    
-    private void validarPassword(char[] pass, char[] passConfirm) throws BadPasswordException {
-        if (pass.length < 8 || pass.length > 24) {
-            throw new BadPasswordException("La contraseña tiene que tener de 8 a 24 caracteres de largo");
-        }
-        if (passConfirm.length < 8 || passConfirm.length > 24) {
-            throw new BadPasswordException("La contraseña tiene que tener de 8 a 24 caracteres de largo");
-        }
-        if (!Arrays.equals(pass, passConfirm)) {
-            throw new BadPasswordException("La contraseña y la confirmación no coinciden");
-        }
-    }
-    
-    @Override
-    public DefaultMutableTreeNode listarCategorias() {
-        Categoria catRaiz = emr.find(Categoria.class, "Categorías");
-        return nodosArbolCategorias(catRaiz);
-    }
-    
-    
-    
-    private DefaultMutableTreeNode nodosArbolCategorias(Categoria cat) {
-        if (cat == null) {
-            return null;
-        }
-        DefaultMutableTreeNode nodito = new DefaultMutableTreeNode(cat.getNombre());
-        if (cat.getSubCategorias().isEmpty()) {
-            return nodito;
-        }
-        for (Categoria c : cat.getSubCategorias()) {
-            nodito.add(nodosArbolCategorias(c));
-        }
-        return nodito;
-    }
-
-    @Override
-    public void addCategoria(String nombre, String nombrePadre) throws CategoriaDuplicadaException {
-        Categoria existente = emr.find(Categoria.class, nombre);
-        if (existente != null) {
-            throw new CategoriaDuplicadaException("Ya existe una categoría con ese nombre");
-        }
-        Categoria cat = new Categoria(nombre);
-        if (nombrePadre != null) {
-            Categoria padre = emr.find(Categoria.class, nombrePadre);
-            if (padre != null) {
-                padre.addSubcategoria(cat);
-                cat.setPadre(padre);
-            }
-        } else {
-            Categoria raiz = emr.find(Categoria.class, "Categorías");
-            raiz.addSubcategoria(cat);
-            cat.setPadre(raiz);
-        }
-        emr.add(cat);
-    }
-
     @Override
     public ArrayList<String> listarColaboradores() {
         List<String> aux = emr.listarAtributo(String.class, "nickname", "Colaborador");
@@ -588,13 +479,138 @@ public class Controller implements IController {
         }
         return null;
     }
-
+    
+    @Override
+    public ArrayList<String> obtenerPropuestasColaboradas(String nick) {
+        return emr.propuestasColaboradas(nick);
+    }
+    
     @Override
     public ArrayList<String> listarProponentes() {
         List<String> aux = emr.listarAtributo(String.class, "nickname", "Proponente");
         return new ArrayList<>(aux);
     }
+    
+    @Override
+    public DTProponente obtenerDTProponente(String nick) {
+        try {
+            Proponente p = emr.find(Proponente.class, nick); // Buscar proponente por PK
+            if (p != null) {
+                return new DTProponente(
+                        p.getDireccion(),
+                        p.getBiografia(),
+                        p.getSitioWeb(),
+                        p.getNickname(),
+                        p.getNombre(),
+                        p.getApellido(),
+                        p.getEmail(),
+                        p.getFechaNacimiento(),
+                        p.getImagen()
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    @Override
+    public ArrayList<String> listarColaboracionesColaborador(String nickColab) {
+        return emr.colaboracionesColaborador(nickColab);
+    }
+    
+    @Override
+    public ArrayList<String> listarUsuarios() {
+        List<String> aux = emr.listarAtributo(String.class, "nickname", "Usuario");
+        return new ArrayList<>(aux);
+    }
+    
+    @Override
+    public ResultadoSeguirUsuario seguirUsuario(String nickSegui, String nickUsu) {
+        List<Usuario> usu1 = emr.obtenerUsuario(nickSegui);
 
+        List<Usuario> usu2 = emr.obtenerUsuario(nickUsu);
+
+        List<Usuario> aux = usu1.get(0).getUsuariosSeguidos();
+        aux.add(usu2.get(0));
+        usu1.get(0).setUsuariosSeguidos(aux);
+        emr.add(usu1.get(0));
+        return ResultadoSeguirUsuario.EXITO;
+    }
+    
+    @Override
+    public ResultadoSeguirUsuario dejarDeSeguirUsuario(String nickSegui, String nickSiguiendo) {
+        List<Usuario> usu1 = emr.obtenerUsuario(nickSegui);
+
+        List<Usuario> usu2 = emr.obtenerUsuario(nickSiguiendo);
+
+        List<Usuario> aux = usu1.get(0).getUsuariosSeguidos();
+        aux.remove(usu2.get(0));
+        usu1.get(0).setUsuariosSeguidos(aux);
+        emr.add(usu1.get(0));
+        return ResultadoSeguirUsuario.EXITO;
+    }
+    
+    @Override
+    public ArrayList<String> listaPropuestasUsu(String nick) {
+
+        return emr.listaPropuestasUsuario(nick);
+    }
+    
+    @Override
+    public ArrayList<String> listarUsuariosSeguir(String nickname) {
+        return emr.obtenerUsuariosSeguir(nickname);
+    }
+    
+    @Override
+    public ArrayList<String> listarUsuariosSiguiendo(String nickname) {
+        List<Usuario> aux;
+        List<Usuario> aux2;
+        List<String> aux3 = new ArrayList<>();
+        try {
+            aux = emr.obtenerUsuario(nickname);
+            aux2 = aux.get(0).getUsuariosSeguidos();
+            for (Usuario u : aux2) {
+                aux3.add(u.getNickname());
+            }
+        } catch (Exception e) {
+            aux3 = Collections.emptyList();
+            e.printStackTrace();
+        }
+        return (ArrayList<String>) aux3;
+    }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Funciones categorías.">
+    @Override
+    public DefaultMutableTreeNode listarCategorias() {
+        Categoria catRaiz = emr.find(Categoria.class, "Categorías");
+        return nodosArbolCategorias(catRaiz);
+    }
+    
+    @Override
+    public void addCategoria(String nombre, String nombrePadre) throws CategoriaDuplicadaException {
+        Categoria existente = emr.find(Categoria.class, nombre);
+        if (existente != null) {
+            throw new CategoriaDuplicadaException("Ya existe una categoría con ese nombre");
+        }
+        Categoria cat = new Categoria(nombre);
+        if (nombrePadre != null) {
+            Categoria padre = emr.find(Categoria.class, nombrePadre);
+            if (padre != null) {
+                padre.addSubcategoria(cat);
+                cat.setPadre(padre);
+            }
+        } else {
+            Categoria raiz = emr.find(Categoria.class, "Categorías");
+            raiz.addSubcategoria(cat);
+            cat.setPadre(raiz);
+        }
+        emr.add(cat);
+    }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Funciones propuestas.">
     @Override
     public void addPropuesta(DTPropuesta prop) throws PropuestaDuplicadaException {
         String titulo = prop.getTitulo();
@@ -618,9 +634,76 @@ public class Controller implements IController {
                 tipoPropuesta, proponedor, est);
 
         emr.add(propuesta);
-
     }
+    
+    @Override
+    public DTPropuesta obtenerDTPropuesta(String titulo) {
+        try {
+            Propuesta p = emr.find(Propuesta.class, titulo);
+            if (p != null) {
+                return new DTPropuesta(
+                        p.getTitulo(), p.getDescripcion(), p.getImagen(), p.getLugarRealizara(), p.getFechaRealizara(),
+                        p.getPrecioEntrada(), p.getMontoAReunir(), p.getFechaPublicacion(),
+                        p.getTipoPropuesta().getNombre(),
+                        p.getProponedor().getNickname(),
+                        p.getTiposRetorno(), p.getEstadoActual());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    @Override
+    public ArrayList<String> listarPropuestasEstado(int estado) {
+        return emr.obtenerPropuestasEstado(estado);
+    }
+    
+    @Override
+    public String obtenerDineroRecaudado(String tituloProp) {
+        List<Float> aux = emr.obtenerDinero(tituloProp);
+        float resultado = 0f;
+        if (aux.isEmpty()) {
+            return "0";
+        }
+        for (Float actual : aux) {
+            resultado += actual;
+        }
+        return String.valueOf(resultado);
+    }
+    
+    @Override
+    public ArrayList<String> listarPropuestasProponentes() {
 
+        return emr.listPropuestasProponentes();
+    }
+    
+    @Override
+    public ArrayList<String> listarPropuestasProponentesIngresadas() {
+        return emr.listPropuestasProponentesIngresadas();
+    }
+    
+    @Override
+    public void cambiarEstadoPropuestaIngresada(String tituloProp, EstadoPropuesta estProp) {
+        Propuesta prop = emr.find(Propuesta.class, tituloProp);
+        if (prop != null && prop.getEstadoActual().getEstado() == EstadoPropuesta.INGRESADA
+                && (estProp == EstadoPropuesta.PUBLICADA || estProp == EstadoPropuesta.CANCELADA)) {
+            Estado estadoNuevo = new Estado(estProp);
+            prop.agregarEstadoActualAlHistorial();
+            prop.setEstadoActual(estadoNuevo);
+            if (estProp == EstadoPropuesta.PUBLICADA) {
+                prop.setFechaPublicacion(estadoNuevo.getFechaEstado().toLocalDate());
+            }
+            emr.mod(prop);
+        }
+    }
+    
+    @Override
+    public ArrayList<String> listarPropuestas() {
+        List<String> aux = emr.listarAtributo(String.class, "titulo", "Propuesta");
+        return new ArrayList<>(aux);
+    }
+    
     @Override
     public void modPropuesta(DTPropuesta prop) {
         String titulo = prop.getTitulo();
@@ -654,116 +737,10 @@ public class Controller implements IController {
         aux.setTipoPropuesta(cat);
 
         emr.mod(aux);
-
     }
-
-    @Override
-    public DTProponente obtenerDTProponente(String nick) {
-        try {
-            Proponente p = emr.find(Proponente.class, nick); // Buscar proponente por PK
-            if (p != null) {
-                return new DTProponente(
-                        p.getDireccion(),
-                        p.getBiografia(),
-                        p.getSitioWeb(),
-                        p.getNickname(),
-                        p.getNombre(),
-                        p.getApellido(),
-                        p.getEmail(),
-                        p.getFechaNacimiento(),
-                        p.getImagen()
-                );
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
-    public ArrayList<String> listaPropuestasUsu(String nick) {
-
-        return emr.listaPropuestasUsuario(nick);
-    }
-
-    @Override
-    public ArrayList<String> listarPropuestasEstado(int estado) {
-        return emr.obtenerPropuestasEstado(estado);
-    }
-
-    @Override
-    public ArrayList<String> listarPropuestas() {
-        List<String> aux = emr.listarAtributo(String.class, "titulo", "Propuesta");
-        return new ArrayList<>(aux);
-    }
-
-    @Override
-    public DTPropuesta obtenerDTPropuesta(String titulo) {
-        try {
-            Propuesta p = emr.find(Propuesta.class, titulo);
-            if (p != null) {
-                return new DTPropuesta(
-                        p.getTitulo(), p.getDescripcion(), p.getImagen(), p.getLugarRealizara(), p.getFechaRealizara(),
-                        p.getPrecioEntrada(), p.getMontoAReunir(), p.getFechaPublicacion(),
-                        p.getTipoPropuesta().getNombre(),
-                        p.getProponedor().getNickname(),
-                        p.getTiposRetorno(), p.getEstadoActual());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
-    public ArrayList<String> listarUsuarios() {
-        List<String> aux = emr.listarAtributo(String.class, "nickname", "Usuario");
-        return new ArrayList<>(aux);
-    }
-
-    @Override
-    public ResultadoSeguirUsuario seguirUsuario(String nickSegui, String nickUsu) {
-        List<Usuario> usu1 = emr.obtenerUsuario(nickSegui);
-
-        List<Usuario> usu2 = emr.obtenerUsuario(nickUsu);
-
-        List<Usuario> aux = usu1.get(0).getUsuariosSeguidos();
-        aux.add(usu2.get(0));
-        usu1.get(0).setUsuariosSeguidos(aux);
-        emr.add(usu1.get(0));
-        return ResultadoSeguirUsuario.EXITO;
-    }
-
-    @Override
-    public ArrayList<String> listarUsuariosSeguir(String nickname) {
-        return emr.obtenerUsuariosSeguir(nickname);
-    }
-
-    @Override
-    public ArrayList<String> listarPropuestasProponentes() {
-
-        return emr.listPropuestasProponentes();
-    }
-
-    @Override
-    public ArrayList<String> listarUsuariosSiguiendo(String nickname) {
-        List<Usuario> aux;
-        List<Usuario> aux2;
-        List<String> aux3 = new ArrayList<>();
-        try {
-            aux = emr.obtenerUsuario(nickname);
-            aux2 = aux.get(0).getUsuariosSeguidos();
-            for (Usuario u : aux2) {
-                aux3.add(u.getNickname());
-            }
-        } catch (Exception e) {
-            aux3 = Collections.emptyList();
-            e.printStackTrace();
-        }
-        return (ArrayList<String>) aux3;
-
-    }
-
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Funciones colaboraciones.">
     @Override
     public void realizarColaboracion(String nickColab, String tituloProp, float montoColab, String tipoRetorno) throws PropuestaYaColaboradaException {
         Colaborador colab = emr.find(Colaborador.class, nickColab);
@@ -780,44 +757,7 @@ public class Controller implements IController {
             throw new PropuestaYaColaboradaException(nickColab + " ya tiene una colaboración con " + tituloProp);
         }
     }
-
-    @Override
-    public String obtenerDineroRecaudado(String tituloProp) {
-        List<Float> aux = emr.obtenerDinero(tituloProp);
-        float resultado = 0f;
-        if (aux.isEmpty()) {
-            return "0";
-        }
-        for (Float actual : aux) {
-            resultado += actual;
-        }
-        return String.valueOf(resultado);
-
-    }
-
-    @Override
-    public ArrayList<String> obtenerColaboradoresColaboracion(String tituloProp) {
-        return emr.colaboradoresColaboracion(tituloProp);
-    }
-
-    @Override
-    public ArrayList<String> obtenerPropuestasColaboradas(String nick) {
-        return emr.propuestasColaboradas(nick);
-    }
-
-    @Override
-    public ResultadoSeguirUsuario dejarDeSeguirUsuario(String nickSegui, String nickSiguiendo) {
-        List<Usuario> usu1 = emr.obtenerUsuario(nickSegui);
-
-        List<Usuario> usu2 = emr.obtenerUsuario(nickSiguiendo);
-
-        List<Usuario> aux = usu1.get(0).getUsuariosSeguidos();
-        aux.remove(usu2.get(0));
-        usu1.get(0).setUsuariosSeguidos(aux);
-        emr.add(usu1.get(0));
-        return ResultadoSeguirUsuario.EXITO;
-    }
-
+    
     @Override
     public DTColaboracion obtenerDTColaboracion(Long id) {
         try {
@@ -832,40 +772,56 @@ public class Controller implements IController {
         }
         return null;
     }
-
-    @Override
-    public ArrayList<String> listarColaboracionesColaborador(String nickColab) {
-        return emr.colaboracionesColaborador(nickColab);
-    }
-
+    
     @Override
     public ArrayList<String> listarColaboraciones() {
         return emr.Colaboraciones();
     }
-
+    
     @Override
     public void eliminarColaboracion(Long id) {
         emr.eliminarColab(id);
     }
     
     @Override
-    public ArrayList<String> listarPropuestasProponentesIngresadas() {
-        return emr.listPropuestasProponentesIngresadas();
+    public ArrayList<String> obtenerColaboradoresColaboracion(String tituloProp) {
+        return emr.colaboradoresColaboracion(tituloProp);
+    }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Funciones web.">
+    @Override
+    public String obtenerTipoUser(String nickname){
+        Usuario usu =  emr.find(Usuario.class, nickname);
+        if (usu == null){
+            return null;
+        }
+        if (usu instanceof Colaborador) {
+            return "colaborador";
+        } else {
+            return "proponente";
+        }
     }
     
     @Override
-    public void cambiarEstadoPropuestaIngresada(String tituloProp, EstadoPropuesta estProp) {
-        Propuesta prop = emr.find(Propuesta.class, tituloProp);
-        if (prop != null && prop.getEstadoActual().getEstado() == EstadoPropuesta.INGRESADA
-                && (estProp == EstadoPropuesta.PUBLICADA || estProp == EstadoPropuesta.CANCELADA)) {
-            Estado estadoNuevo = new Estado(estProp);
-            prop.agregarEstadoActualAlHistorial();
-            prop.setEstadoActual(estadoNuevo);
-            if (estProp == EstadoPropuesta.PUBLICADA) {
-                prop.setFechaPublicacion(estadoNuevo.getFechaEstado().toLocalDate());
-            }
-            emr.mod(prop);
+    public boolean autenticarUsuario(String nickname, char[] password) {
+        Usuario usu = emr.find(Usuario.class, nickname);
+        if (usu == null) {
+            return false;
         }
+        String b64Hash = usu.getPasswordHash();
+        String b64Salt = usu.getPasswordSalt();
+        
+        String passwordHash;
+        try {
+            passwordHash = crearPasswordHash(b64Salt, password);
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
+            System.getLogger(Controller.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            Arrays.fill(password, 'x');
+            return false;
+        }
+        Arrays.fill(password, 'x');
+        return passwordHash != null && passwordHash.equals(b64Hash);
     }
     
     @Override
@@ -892,7 +848,51 @@ public class Controller implements IController {
             System.getLogger(Controller.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             return null;
         }
-
+    }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Funciones auxiliares.">
+    private String crearPasswordHash(String passwordSalt, char[] password) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        byte[] salt = Base64.getDecoder().decode(passwordSalt);
+        KeySpec spec = new PBEKeySpec(password, salt, 65536, 128);
+        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        byte[] hash = factory.generateSecret(spec).getEncoded();
+        
+        return Base64.getEncoder().encodeToString(hash);
+    }
+    
+    private String crearPasswordSalt() {
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[16];
+        random.nextBytes(salt);
+        
+        return Base64.getEncoder().encodeToString(salt);
+    }
+    
+    private void validarPassword(char[] pass, char[] passConfirm) throws BadPasswordException {
+        if (pass.length < 8 || pass.length > 24) {
+            throw new BadPasswordException("La contraseña tiene que tener de 8 a 24 caracteres de largo");
+        }
+        if (passConfirm.length < 8 || passConfirm.length > 24) {
+            throw new BadPasswordException("La contraseña tiene que tener de 8 a 24 caracteres de largo");
+        }
+        if (!Arrays.equals(pass, passConfirm)) {
+            throw new BadPasswordException("La contraseña y la confirmación no coinciden");
+        }
+    }
+    
+    private DefaultMutableTreeNode nodosArbolCategorias(Categoria cat) {
+        if (cat == null) {
+            return null;
+        }
+        DefaultMutableTreeNode nodito = new DefaultMutableTreeNode(cat.getNombre());
+        if (cat.getSubCategorias().isEmpty()) {
+            return nodito;
+        }
+        for (Categoria c : cat.getSubCategorias()) {
+            nodito.add(nodosArbolCategorias(c));
+        }
+        return nodito;
     }
     
     private String obtenerTipoImagen(byte[] bytesImagen) {
@@ -905,4 +905,6 @@ public class Controller implements IController {
         }
         return null;
     }
+    // </editor-fold>
+    
 }
