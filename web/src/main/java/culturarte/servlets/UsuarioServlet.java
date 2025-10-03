@@ -13,9 +13,7 @@ import culturarte.logica.DTProponente;
 import culturarte.logica.DTUsuario;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
-import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -45,25 +43,7 @@ public class UsuarioServlet extends HttpServlet {
 
     private IController controller = IControllerFactory.getInstance().getIController();
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-
-
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods.">
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -78,25 +58,17 @@ public class UsuarioServlet extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesion.jsp").forward(request, response);
                 break;
             case "/seguir-usuario":
-                 request.getRequestDispatcher("/WEB-INF/jsp/seguirUsuario.jsp").forward(request, response);
-                 break;
+                request.getRequestDispatcher("/WEB-INF/jsp/seguirUsuario.jsp").forward(request, response);
+                break;
             case "/perfil":
-                 cargarDatosPerfil(request,response);
-                 request.getRequestDispatcher("/WEB-INF/jsp/perfilUsuario.jsp").forward(request, response);
-                 break;
+                cargarDatosPerfil(request, response);
+                request.getRequestDispatcher("/WEB-INF/jsp/perfilUsuario.jsp").forward(request, response);
+                break;
             default:
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -115,35 +87,40 @@ public class UsuarioServlet extends HttpServlet {
                 cerrarSesion(request, response);
                 response.sendRedirect("/index");
                 break;
-                
+
             default:
                 response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         }
     }
-    
-    
+
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Procesamiento de requests.">
     protected void cargarDatosPerfil(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-              HttpSession session = request.getSession(false);
-            if (session != null) {
-                String user =(String) session.getAttribute("username");
-                String tipo = this.controller.obtenerTipoUser(user);
-                if(tipo == "colaborador"){
-                    DTColaborador colab = this.controller.obtenerDTColaborador(user);
-                    String nom = colab.getNombre();
-                    String apell = colab.getApellido();
-                    String correo = colab.getEmail();
-                    session.setAttribute("nombre", nom);
-                    session.setAttribute("apellido", apell);
-                    session.setAttribute("email", correo);
-                    
-                    
-                }else if(tipo == "proponente"){
-                    
-                }
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            String user = (String) session.getAttribute("username");
+            String tipo = this.controller.obtenerTipoUser(user);
+            if (tipo == "colaborador") {
+                DTColaborador colab = this.controller.obtenerDTColaborador(user);
+                String nom = colab.getNombre();
+                String apell = colab.getApellido();
+                String correo = colab.getEmail();
+                session.setAttribute("nombre", nom);
+                session.setAttribute("apellido", apell);
+                session.setAttribute("email", correo);
+
+            } else if (tipo == "proponente") {
+
             }
+        }
     }
-    
+
     protected void iniciarSesion(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String nickname = request.getParameter("nickname");
@@ -159,7 +136,7 @@ public class UsuarioServlet extends HttpServlet {
             request.setAttribute("mensajeError", "Usuario o contraseña incorrectos!");
             request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesion.jsp").forward(request, response);
         }
-        
+
     }
 
     protected void procesarCrearCuenta(HttpServletRequest request, HttpServletResponse response)
@@ -205,14 +182,16 @@ public class UsuarioServlet extends HttpServlet {
         }
     }
 
-    protected void cerrarSesion (HttpServletRequest request, HttpServletResponse response)
+    protected void cerrarSesion(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            HttpSession session = request.getSession(false);
-            if (session != null) {
-                session.invalidate();
-            }
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
     }
-    
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Funciones auxiliares.">
     private byte[] partABytes(Part parteArchivo) {
         byte[] bytesArchivo = null;
 
@@ -240,15 +219,6 @@ public class UsuarioServlet extends HttpServlet {
         }
         return fecha;
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+    // </editor-fold>
 
 }
