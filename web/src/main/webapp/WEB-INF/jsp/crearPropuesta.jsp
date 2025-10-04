@@ -65,7 +65,7 @@
                 <label for="Precio" class="form-label">Precio de cada entrada</label>
                 <div class="input-group input-group-sm">
                     <span class="input-group-text">$</span>
-                    <input type="number" id="precio" name="precio" class="form-control" required>
+                    <input type="text" id="precio" name="precio" class="form-control" required>
                 </div>
             </div>
 
