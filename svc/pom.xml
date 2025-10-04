@@ -10,7 +10,7 @@
     <artifactId>svc</artifactId>
     <packaging>jar</packaging>
     <properties>
-        <maven.compiler.release>24</maven.compiler.release>
+        <maven.compiler.release>17</maven.compiler.release>
         <exec.mainClass>culturarte.svc.Svc</exec.mainClass>
     </properties>
     
