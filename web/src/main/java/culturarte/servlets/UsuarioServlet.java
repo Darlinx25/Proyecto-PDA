@@ -108,12 +108,14 @@ public class UsuarioServlet extends HttpServlet {
             String tipo = (String) session.getAttribute("rol");
             if (tipo == "colaborador") {
                 DTColaborador colab = this.controller.obtenerDTColaborador(user);
-                String nom = colab.getNombre();
-                String apell = colab.getApellido();
-                String correo = colab.getEmail();
-                session.setAttribute("nombre", nom);
-                session.setAttribute("apellido", apell);
-                session.setAttribute("email", correo);
+                if (colab != null) {
+                    String apell = colab.getApellido();
+                    String correo = colab.getEmail();
+                    String ubi = colab.getImagen();
+                    session.setAttribute("apellido", apell);
+                    session.setAttribute("email", correo);
+                    session.setAttribute("ubiImagen", ubi);
+                }
 
             } else if (tipo == "proponente") {
 
@@ -127,11 +129,20 @@ public class UsuarioServlet extends HttpServlet {
         String password = request.getParameter("password");
         String tipoUsuario = this.controller.obtenerTipoUser(nickname);
         boolean autValida = this.controller.autenticarUsuario(nickname, password.toCharArray());
+
         if (tipoUsuario != null && autValida) {
             HttpSession session = request.getSession(true);
             session.setAttribute("rol", tipoUsuario);
             session.setAttribute("username", nickname);
             response.sendRedirect("/index");
+            if (tipoUsuario == "colaborador") {
+                DTColaborador colab = this.controller.obtenerDTColaborador(nickname);
+                String nom = colab.getNombre();
+                session.setAttribute("nombre", nom);
+
+            } else if (tipoUsuario == "proponente") {
+
+            }
         } else {
             request.setAttribute("mensajeError", "Usuario o contraseña incorrectos!");
             request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesion.jsp").forward(request, response);

@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Perfil</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link href="/resources/css/index.css" rel="stylesheet">
+        <link href="/resources/css/perfilUsuario.css" rel="stylesheet">
     </head>
     <body>
 
@@ -16,7 +16,7 @@
             String nombre = (String) session.getAttribute("nombre");
             String apellido = (String) session.getAttribute("apellido");
             String email = (String) session.getAttribute("email");
-
+            String imagen = (String) session.getAttribute("ubiImagen");
 
         %>
 
@@ -35,10 +35,10 @@
 
 
             <div class="bg-white p-4 rounded shadow-sm mt-3">
-                <h2 class="text-start"><%= username%></h2>
-                <p class="text-start text-muted"><%= nombre%></p>
-                <p class="text-start text-muted"><%= apellido%></p>
-                <p class="text-start text-muted"><%= email%></p>
+                <p class="text-center text-uppercase" id="NombreUser"><%= nombre%> <%= apellido%> - <%= rol%><p>
+                <p class="text-center text-muted"><%= username%></p>
+                <p class="text-center text-muted"><%= email%></p>
+                <img src="/imagenes/<%= imagen %>" alt="Foto de perfil">
             </div>
 
             <div class="align-items-center">

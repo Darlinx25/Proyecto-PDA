@@ -19,7 +19,7 @@
 
         <%
             String rol = (String) session.getAttribute("rol");
-            String username = (String) session.getAttribute("username");
+            String username = (String) session.getAttribute("nombre");
         %>
         <%
             if (rol == null) {
