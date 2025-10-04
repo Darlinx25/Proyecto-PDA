@@ -28,17 +28,21 @@
         </div>
         <% } else if (rol == "colaborador") {%>
 
-        <div class="container mt-3">
+        <div class="container mt-3 ">
 
-            <div class="bg-light p-3 rounded shadow-sm">
+            <div class="bg-light p-2 rounded shadow-sm border border-5 border-dark">
                 <h1 class=" text-center">  Tu Perfil  </h1>
             </div>
 
 
-            <div class="bg-white p-4 rounded shadow-sm mt-3">
-                <p class="text-center text-uppercase" id="NombreUser"><%= nombre%> <%= apellido%> - <%= rol%><p>
-                <p class="text-center text-muted"><%= username%></p>
-                <img height="200" width="200" class="rounded-circle border border-5 border-dark " height="200" width="200" src="/imagenes/<%= imagen%>" alt="Foto de perfil">
+            <div class="bg-white p-4 rounded shadow-sm mt-3 d-flex justify-content-center gap-3 border border-5 border-dark">
+                <div>
+                    <img height="200" width="200" class="rounded-circle border border-5 border-dark "src="/imagenes/<%= imagen%>" alt="Foto de perfil">
+                </div>
+                <div class="d-flex flex-column justify-content-center">
+                    <p class="text-start text-uppercase" id="NombreUser"><%= nombre%> <%= apellido%> - <%= rol%><p></p>
+                    <p class="text-start  "><%= username%></p>
+                </div>
             </div>
 
             <div class="align-items-center">
@@ -57,23 +61,23 @@
 
         <div class="container mt-3">
 
-            <div class="bg-light p-3 rounded shadow-sm">
+            <div class="bg-light p-2 rounded shadow-sm border border-5 border-dark">
                 <h1 class=" text-center">  Tu Perfil  </h1>
             </div>
 
 
-            <div class="bg-white p-4 rounded shadow-sm mt-3 ">
-                <div class="d-flex justify-content-between"> 
+            <div class="bg-white p-4 rounded shadow-sm mt-3 d-flex justify-content-center gap-3 border border-5 border-dark">
+                <div>
                     <img height="200" width="200" class="rounded-circle border border-5 border-dark "src="/imagenes/<%= imagen%>" alt="Foto de perfil">
-                    
-                    <p class="text-start text-uppercase mb-0" id="NombreUser"><%= nombre%> <%= apellido%> - <%= rol%><p></p>
                 </div>
-                <p class="text-center text-muted "><%= username%></p>
-                <p class="text-center text-muted"><%= web%></p>
-                <p class="text-center "><%= bio%></p>
-                
+                <div class="d-flex flex-column justify-content-center">
+                    <p class="text-start text-uppercase" id="NombreUser"><%= nombre%> <%= apellido%> - <%= rol%><p></p>
+                    <p class="text-start  "><%= username%></p>
+                    <p class="text-start  "><%= web%></p>
+                    <p class="text-start "><%= bio%></p>
+                </div>
             </div>
- 
+
             <div class="align-items-center">
                 <div class="d-flex justify-content-between  mt-3">
                     <form action="/index" method="get">
