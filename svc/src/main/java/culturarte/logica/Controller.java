@@ -896,6 +896,9 @@ public class Controller implements IController {
     }
     
     private String obtenerTipoImagen(byte[] bytesImagen) {
+        if (bytesImagen == null) {
+            return null;
+        }
         if (bytesImagen[0] == (byte) 0xFF && bytesImagen[1] == (byte) 0xD8 && bytesImagen[2] == (byte) 0xFF) {
             return "jpg";
         } else if (bytesImagen[0] == (byte) 0x89 && bytesImagen[1] == (byte) 0x50 && bytesImagen[2] == (byte) 0x4E &&

@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>culturarte</groupId>
-            <artifactId>estacion</artifactId>
+            <artifactId>svc</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
