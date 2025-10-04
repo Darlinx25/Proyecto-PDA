@@ -3,6 +3,7 @@ estacion/target/
 web/src/main/java/culturarte/excepciones
 web/src/main/java/culturarte/logica
 web/src/main/java/culturarte/utils
+svc/target/
 
 dependency-reduced-pom.xml
 
