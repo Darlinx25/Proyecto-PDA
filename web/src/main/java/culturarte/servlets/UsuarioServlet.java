@@ -105,7 +105,7 @@ public class UsuarioServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         if (session != null) {
             String user = (String) session.getAttribute("username");
-            String tipo = this.controller.obtenerTipoUser(user);
+            String tipo = (String) session.getAttribute("rol");
             if (tipo == "colaborador") {
                 DTColaborador colab = this.controller.obtenerDTColaborador(user);
                 String nom = colab.getNombre();
