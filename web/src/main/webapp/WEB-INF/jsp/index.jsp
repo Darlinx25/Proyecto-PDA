@@ -51,6 +51,7 @@
             <li><a href="/seguir-usuario">Seguir usuario</a></li>
             <li><a href="/crear-propuesta">Crear propuesta</a></li>
             <li><a href="/perfil">Ver perfil</a></li>
+            <li><a href="/registrar-colaboracion">Registrar colaboracion</a></li>
         </ul>
 
 
