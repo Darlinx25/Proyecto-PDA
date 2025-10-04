@@ -38,7 +38,7 @@
                 <p class="text-center text-uppercase" id="NombreUser"><%= nombre%> <%= apellido%> - <%= rol%><p>
                 <p class="text-center text-muted"><%= username%></p>
                 <p class="text-center text-muted"><%= email%></p>
-                <img src="/imagenes/<%= imagen %>" alt="Foto de perfil">
+                <img height="200" width="200" src="/imagenes/<%= imagen %>" alt="Foto de perfil">
             </div>
 
             <div class="align-items-center">
