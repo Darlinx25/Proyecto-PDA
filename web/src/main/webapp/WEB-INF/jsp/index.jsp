@@ -48,27 +48,27 @@
         <%
         } else {
         %>
-        <div class=" shadow p-1 bg-dark  text-white mb-1">
+        <div class=" shadow p-1 bg-dark text-white mb-1">
 
             <div class="d-flex justify-content-between m-1">
                 <div>
                     <h1  id="titulo">Culturarte</h1>
                 </div>
                 <div  >
-                    <div class="d-flex align-items-center">        
+                    <div class="d-flex align-items-center gap-2">        
                         <div>
                             <img height="100" width="100" class="rounded-circle border border-2 border-white "src="/imagenes/<%= imagen%>" alt="Foto de perfil">
                         </div>
                         <div>
                             <p class="text-uppercase"><%= nombre%> <%= apellido%></p>
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center mb-3 gap-2">
                                 <div>
-                                    <a href="/perfil" class="btn btn-link  p-1">Ver perfil  </a>
+                                    <a href="/perfil" class="btn btn-link p-1 ">Ver perfil  </a>
                                 </div>
                                 <div>
                                     <form action="/logout" method="post">
                                         <div>
-                                            <button type="submit" class="btn btn-link  p-1">Cerrar sesión</button>
+                                            <button type="submit" class="btn btn-link p-1 ">Cerrar sesión</button>
                                         </div>
                                     </form> 
                                 </div>
@@ -78,9 +78,9 @@
                 </div>
             </div>
             <div class="d-flex gap-2 mb-3">
-                <a href="/seguir-usuario" class="btn btn-success p-1">Seguir usuario</a>
-                <a href="/crear-propuesta" class="btn btn-success p-1">Crear propuesta</a>
-                <a href="/registrar-colaboracion" class="btn btn-success p-1">Registrar colaboracion</a>
+                <a href="/seguir-usuario" class="btn btn-danger p-1 ">Seguir usuario</a>
+                <a href="/crear-propuesta" class="btn btn-danger p-1 ">Crear propuesta</a>
+                <a href="/registrar-colaboracion" class="btn btn-danger p-1 ">Registrar colaboracion</a>
             </div>
 
         </div>
