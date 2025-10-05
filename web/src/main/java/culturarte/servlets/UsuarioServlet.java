@@ -109,28 +109,17 @@ public class UsuarioServlet extends HttpServlet {
             if (tipo == "colaborador") {
                 DTColaborador colab = this.controller.obtenerDTColaborador(user);
                 if (colab != null) {
-                    String nom = colab.getNombre();
-                    String apell = colab.getApellido();
                     String correo = colab.getEmail();
-                    String ubi = colab.getImagen();
-                    session.setAttribute("nombre", nom);
-                    session.setAttribute("apellido", apell);
                     session.setAttribute("email", correo);
-                    session.setAttribute("ubiImagen", ubi);
+                    
                 }
 
             } else if (tipo == "proponente") {
                 DTProponente prop = this.controller.obtenerDTProponente(user);
                 if (prop != null) {
-                    String nom = prop.getNombre();
-                    String apell = prop.getApellido();
                     String web = prop.getSitioWeb();
-                    String ubi = prop.getImagen();
                     String bio = prop.getBiografia();
-                    session.setAttribute("nombre", nom);
-                    session.setAttribute("apellido", apell);
                     session.setAttribute("biografia", bio);
-                    session.setAttribute("ubiImagen", ubi);
                     session.setAttribute("sitioWeb", web);
                 }
             }
@@ -152,13 +141,22 @@ public class UsuarioServlet extends HttpServlet {
             if (tipoUsuario == "colaborador") {
                 DTColaborador colab = this.controller.obtenerDTColaborador(nickname);
                 String nom = colab.getNombre();
+                String apell = colab.getApellido();
+                String ubi = colab.getImagen();
                 session.setAttribute("nombre", nom);
-
+                session.setAttribute("apellido", apell);
+                session.setAttribute("ubiImagen", ubi);
             } else if (tipoUsuario == "proponente") {
                 DTProponente prop = this.controller.obtenerDTProponente(nickname);
                 String nom = prop.getNombre();
+                String apell = prop.getApellido();
+                String ubi = prop.getImagen();
                 session.setAttribute("nombre", nom);
+                session.setAttribute("apellido", apell);
+                session.setAttribute("ubiImagen", ubi);
+                
             }
+            
         } else {
             request.setAttribute("mensajeError", "Usuario o contraseña incorrectos!");
             request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesion.jsp").forward(request, response);

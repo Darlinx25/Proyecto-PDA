@@ -15,48 +15,79 @@
               integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
         <link href="/resources/css/index.css" rel="stylesheet"
     </head>
-    <body>
+    <body class="bg-light"> 
 
         <%
             String rol = (String) session.getAttribute("rol");
-            String username = (String) session.getAttribute("nombre");
+            String nombre = (String) session.getAttribute("nombre");
+            String apellido = (String) session.getAttribute("apellido");
+            String imagen = (String) session.getAttribute("ubiImagen");
         %>
         <%
             if (rol == null) {
         %>
-        <div class="bg-primary text-white p-5 text-center">
-            <h1>Culturarte</h1>
-        </div>
+        <div class="d-flex justify-content-center align-items-center shadow text-center bg-dark text-white">
+            <div class="container m-3 bg-dark"> 
+                <div>
+                    <h1 class="text-center" id="titulo">Culturarte</h1><!--  NO LOGRO QUE ME TOME EL CSS TITULO-->
+                </div>
+
+            </div>
+        </div>    
         <h2>Bienvenido, visitante</h2>
         <ul>
             <li><a href="/login">Iniciar sesión</a></li>
             <li><a href="/crear-cuenta">Registrarse</a></li>
-            
         </ul>
         <%
         } else {
         %>
-        <div class="bg-primary text-white p-5 text-center">
-            <h1>Culturarte</h1>
-            
-            <div class="d-flex justify-content-end">
-                <form action="/logout" method="post">
-                    <button type="submit" class="btn btn-success w-100 mb-3" id="cerrar-sesion">Cerrar sesión</button>
-                </form>
-            </div>
+        <div class=" card p-1 shadow p-1 bg-dark  text-white mb-3">
+             
+                <div class="d-flex justify-content-between m-1">
+                    <div>
+                        <h1  id="titulo">Culturarte</h1>
+                    </div>
+                    <div  >
+                        <div class="d-flex align-items-center">        
+                            <div>
+                                <img height="100" width="100" class="rounded-circle border border-2 border-white "src="/imagenes/<%= imagen%>" alt="Foto de perfil">
+                            </div>
+                            <div>
+                                <p class="text-uppercase"><%= nombre%> <%= apellido%></p>
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <a href="/perfil" class="btn btn-link  p-1">Ver perfil  </a>
+                                    </div>
+                                    <div>
+                                        <form action="/logout" method="post">
+                                            <div>
+                                                <button type="submit" class="btn btn-link  p-1">Cerrar sesión</button>
+                                            </div>
+                                        </form> 
+                                    </div>
+                                </div> 
+                            </div>
+                        </div>       
+                    </div>
+                </div>
+           
         </div>
 
-        <h2>Bienvenido, <%= username%></h2>
-        <ul>
-            <li><a href="/seguir-usuario">Seguir usuario</a></li>
-            <li><a href="/crear-propuesta">Crear propuesta</a></li>
-            <li><a href="/perfil">Ver perfil</a></li>
-            <li><a href="/registrar-colaboracion">Registrar colaboracion</a></li>
-        </ul>
+
+
+   
+
+
+    <ul>
+        <li><a href="/seguir-usuario" class="btn btn-success  p-1 mb-3">Seguir usuario</a></li>
+        <li><a href="/crear-propuesta" class="btn btn-success p-1 mb-3">Crear propuesta</a></li>
+        <li><a href="/registrar-colaboracion" class="btn btn-success p-1 mb-3">Registrar colaboracion</a></li>
+    </ul>
 
 
 
-        <% }%>
+    <% }%>
 
-    </body>
+</body>
 </html>

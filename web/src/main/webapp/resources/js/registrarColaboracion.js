@@ -22,15 +22,13 @@ function propuestaElegida() {
                     return response.json();
                 })
                 .then(data => {
-                    // Borrar info anterior
+
                     document.getElementById("infoPropuesta")?.remove();
 
-                    // Crear nuevo contenedor con ancho limitado al formulario
                     const infoDiv = document.createElement("div");
                     infoDiv.id = "infoPropuesta";
-                    infoDiv.className = "mt-3 p-2 border rounded bg-light w-100"; // w-100 para ocupar ancho del formulario
+                    infoDiv.className = "mt-3 p-2 border rounded bg-light w-100";
 
-                    // Mostrar todos los datos
                     infoDiv.innerHTML = `
                     <p><strong>Título:</strong> ${data.titulo}</p>
                     <p><strong>Descripción:</strong> ${data.descripcion}</p>
@@ -46,9 +44,6 @@ function propuestaElegida() {
                     <p><strong>Tipos de retorno:</strong> ${data.tiposRetorno.join(", ")}</p>
                 `;
                     
-                   
-
-                    // Insertar dentro del formulario sin modificar su ancho
                     document.getElementById("formulario").appendChild(infoDiv);
                 })
                 .catch(error => console.error("Error:", error));

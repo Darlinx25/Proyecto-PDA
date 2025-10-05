@@ -10,3 +10,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 #cerrar-sesion {
     color: white;
 }
+
+#titulo {
+    
+     font-family: 'Comic Neue', cursive;
+}
