@@ -118,6 +118,13 @@ public class PropuestaServlet extends HttpServlet {
 
         switch (path) {
             case "/crear-propuesta":
+                HttpSession session = request.getSession();
+                String rol = (String) session.getAttribute("rol");
+                if (rol != "proponente") {
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+                    return;
+                }
+                
                 procesarCrearPropuesta(request, response);
                 response.sendRedirect("/index");
                 break;
