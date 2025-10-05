@@ -22,7 +22,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.InputStream;
-import static java.lang.System.console;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -56,6 +55,13 @@ public class PropuestaServlet extends HttpServlet {
 
         switch (path) {
             case "/crear-propuesta":
+                HttpSession session = request.getSession();
+                String rol = (String) session.getAttribute("rol");
+                if (rol != "proponente") {
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+                    return;
+                }
+                
                 ArrayList<String> categorias = this.controller.obtenerCategorias();
                 request.setAttribute("categorias", categorias);
                 request.getRequestDispatcher("/WEB-INF/jsp/crearPropuesta.jsp").forward(request, response);
