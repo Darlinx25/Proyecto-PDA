@@ -27,23 +27,28 @@
         <%
             if (rol == null) {
         %>
-        <div class="d-flex justify-content-center align-items-center shadow text-center bg-dark text-white">
-            <div class="container m-3 bg-dark"> 
-                <div>
-                    <h1 class="text-center" id="titulo">Culturarte</h1><!--  NO LOGRO QUE ME TOME EL CSS TITULO-->
+        <div class=" shadow p-1 bg-dark  text-white mb-1">
+            <div class="container m-1 bg-dark"> 
+                <div class="d-flex justify-content-between">
+                    <div >
+                        <h1 class="text-center" id="titulo">Culturarte</h1>
+                    </div>
+                    <div class="text-center">
+                        <h2>Bienvenido</h2>
+                        <ul>
+                            <a href="/login" class="btn btn-success p-1">Iniciar sesión</a></li>
+                            <a href="/crear-cuenta" class="btn btn-success p-1">Registrarse</a></li>
+                        </ul>
+                    </div>
                 </div>
 
             </div>
         </div>    
-        <h2>Bienvenido, visitante</h2>
-        <ul>
-            <li><a href="/login">Iniciar sesión</a></li>
-            <li><a href="/crear-cuenta">Registrarse</a></li>
-        </ul>
+
         <%
         } else {
         %>
-        <div class=" card p-1 shadow p-1 bg-dark  text-white mb-3">
+        <div class=" shadow p-1 bg-dark  text-white mb-1">
 
             <div class="d-flex justify-content-between m-1">
                 <div>
@@ -79,30 +84,30 @@
             </div>
 
         </div>
-
-                            
-                            <!-- ACA HACEMOS LAS TABS DINAMICAS --> 
-        <div class="container">
-    <ul class="nav nav-tabs">
-        <li><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#PCreadas">Propuestas Creadas</button></li>
-        <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PFinanciacíon">Propuestas en Financiación</button></li>
-        <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PFinanciadas">Propuestas Financiadas</button></li>
-        <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PNOFinanciadas">Propuestas NO Financiadas</button></li>
-        <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PCanceladas">Propuestas Canceladas</button></li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane fade show active" id="PCreadas">hola</div>
-        <div class="tab-pane fade" id="PFinanciacíon">hola</div>
-        <div class="tab-pane fade" id="PFinanciadas">hola</div>
-        <div class="tab-pane fade" id="PNOFinanciadas">hola</div>
-        <div class="tab-pane fade" id="PCanceladas">hola</div>
-    </div>
-</div>
-
-
-
-
         <% }%>
+
+        <!-- ACA HACEMOS LAS TABS DINAMICAS --> 
+        <div class="container">
+            <ul class="nav nav-tabs">
+                <li><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#PCreadas">Propuestas Creadas</button></li>
+                <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PFinanciacíon">Propuestas en Financiación</button></li>
+                <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PFinanciadas">Propuestas Financiadas</button></li>
+                <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PNOFinanciadas">Propuestas NO Financiadas</button></li>
+                <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PCanceladas">Propuestas Canceladas</button></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="PCreadas">hola</div>
+                <div class="tab-pane fade" id="PFinanciacíon">hola</div>
+                <div class="tab-pane fade" id="PFinanciadas">hola</div>
+                <div class="tab-pane fade" id="PNOFinanciadas">hola</div>
+                <div class="tab-pane fade" id="PCanceladas">hola</div>
+            </div>
+        </div>
+
+
+
+
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>
