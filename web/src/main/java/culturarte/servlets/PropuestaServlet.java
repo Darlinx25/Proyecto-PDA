@@ -22,6 +22,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.InputStream;
+import static java.lang.System.console;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -36,7 +37,7 @@ import java.util.logging.Logger;
  *
  * @author mark
  */
-@WebServlet(name = "PropuestaServlet", urlPatterns = {"/propuestas", "/crear-propuesta", "/obtener-propuesta"})
+@WebServlet(name = "PropuestaServlet", urlPatterns = {"/propuestas", "/crear-propuesta", "/obtener-propuesta", "/obtener-propuesta-por-estado"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, //1MB+ se escriben al disco
         maxFileSize = 1024 * 1024 * 5, //5MB máximo por archivo
@@ -65,40 +66,37 @@ public class PropuestaServlet extends HttpServlet {
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'titulo'");
                     return;
                 }
-
-                DTPropuesta prop = this.controller.obtenerDTPropuesta(titulo);
+                DTPropuesta prop = controller.obtenerDTPropuesta(titulo);
                 if (prop == null) {
                     response.sendError(HttpServletResponse.SC_NOT_FOUND, "Propuesta no encontrada");
                     return;
                 }
-
                 response.setContentType("application/json;charset=UTF-8");
                 try (PrintWriter out = response.getWriter()) {
-                    StringBuilder json = new StringBuilder();
-                    json.append("{");
-                    json.append("\"titulo\": \"").append(prop.getTitulo()).append("\",");
-                    json.append("\"descripcion\": \"").append(prop.getDescripcion()).append("\",");
-                    json.append("\"imagen\": \"").append(prop.getImagen()).append("\",");
-                    json.append("\"lugarRealizara\": \"").append(prop.getLugarRealizara()).append("\",");
-                    json.append("\"fechaPrevista\": \"").append(prop.getFechaRealizara() != null ? prop.getFechaRealizara().toString() : "N/A").append("\",");
-                    json.append("\"fechaPublicacion\": \"").append(prop.getFechaPublicacion() != null ? prop.getFechaPublicacion().toString() : "N/A").append("\",");
-                    json.append("\"precioEntrada\": ").append(prop.getPrecioEntrada()).append(",");
-                    json.append("\"montoAReunir\": ").append(prop.getMontoAReunir()).append(",");
-                    json.append("\"categoria\": \"").append(prop.getTipoPropuesta()).append("\",");
-                    json.append("\"nickProponedor\": \"").append(prop.getNickProponedor()).append("\",");
-                    json.append("\"estadoActual\": \"").append(prop.getEstadoActual() != null ? prop.getEstadoActual().getEstado().toString() : "N/A").append("\",");
-
-                    json.append("\"tiposRetorno\": [");
-                    List<TipoRetorno> tipos = prop.getTiposRetorno();
-                    for (int i = 0; i < tipos.size(); i++) {
-                        json.append("\"").append(tipos.get(i).toString()).append("\"");
-                        if (i < tipos.size() - 1) {
+                    out.print(obtenerPropuestaJSON(titulo));
+                }
+                break;
+            case "/obtener-propuesta-por-estado":
+                String estadoStr = request.getParameter("estado");    
+                if (estadoStr == null) {
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'estado'");
+                    return;
+                }
+                int estado = Integer.parseInt(estadoStr);
+                ArrayList<String> titulos = controller.listarPropuestasEstado(estado);
+                response.setContentType("application/json;charset=UTF-8");
+                try (PrintWriter out = response.getWriter()) {
+                    StringBuilder json = new StringBuilder("[");
+                    for (int i = 0; i < titulos.size(); i++) {
+                        DTPropuesta p = controller.obtenerDTPropuesta(titulos.get(i));
+                        if (p != null) {
+                            json.append(obtenerPropuestaJSON(p.getTitulo()));
+                        }
+                        if (i < titulos.size() - 1) {
                             json.append(",");
                         }
                     }
                     json.append("]");
-
-                    json.append("}");
                     out.print(json.toString());
                 }
                 break;
@@ -118,6 +116,36 @@ public class PropuestaServlet extends HttpServlet {
                 response.sendRedirect("/index");
                 break;
         }
+    }
+    private String obtenerPropuestaJSON(String titulo) {
+        DTPropuesta prop = this.controller.obtenerDTPropuesta(titulo);
+        if(prop == null){
+            return "{}";
+        }
+        StringBuilder json = new StringBuilder();
+        json.append("{");
+        json.append("\"titulo\": \"").append(prop.getTitulo()).append("\",");
+        json.append("\"descripcion\": \"").append(prop.getDescripcion()).append("\",");
+        json.append("\"imagen\": \"").append(prop.getImagen()).append("\",");
+        json.append("\"lugarRealizara\": \"").append(prop.getLugarRealizara()).append("\",");
+        json.append("\"fechaPrevista\": \"").append(prop.getFechaRealizara() != null ? prop.getFechaRealizara().toString() : "N/A").append("\",");
+        json.append("\"fechaPublicacion\": \"").append(prop.getFechaPublicacion() != null ? prop.getFechaPublicacion().toString() : "N/A").append("\",");
+        json.append("\"precioEntrada\": ").append(prop.getPrecioEntrada()).append(",");
+        json.append("\"montoAReunir\": ").append(prop.getMontoAReunir()).append(",");
+        json.append("\"categoria\": \"").append(prop.getTipoPropuesta()).append("\",");
+        json.append("\"nickProponedor\": \"").append(prop.getNickProponedor()).append("\",");
+        json.append("\"estadoActual\": \"").append(prop.getEstadoActual() != null ? prop.getEstadoActual().getEstado().toString() : "N/A").append("\",");
+        json.append("\"tiposRetorno\": [");
+        List<TipoRetorno> tipos = prop.getTiposRetorno();
+        for (int i = 0; i < tipos.size(); i++) {
+            json.append("\"").append(tipos.get(i).toString()).append("\"");
+            if (i < tipos.size() - 1) {
+                json.append(",");
+            }
+        }
+        json.append("]");
+        json.append("}");
+        return json.toString();
     }
 
     @Override

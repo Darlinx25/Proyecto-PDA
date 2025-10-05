@@ -16,7 +16,7 @@
         <link href="/resources/css/index.css" rel="stylesheet">
 
     </head>
-    <body class="bg-light"> 
+    <body class="bg-light" onload="propPorEstado(document.querySelector('.nav-tabs .nav-link.active'))"> 
 
         <%
             String rol = (String) session.getAttribute("rol");
@@ -27,9 +27,8 @@
         <%
             if (rol == null) {
         %>
-        <div class=" shadow p-1 bg-dark  text-white mb-1">
-            <div class="container m-1 bg-dark"> 
-                <div class="d-flex justify-content-between">
+        <div class=" shadow p-2 bg-dark  text-white mb-1">
+                <div class="d-flex justify-content-between gap-3">
                     <div >
                         <h1 class="text-center" id="titulo">Culturarte</h1>
                     </div>
@@ -41,8 +40,6 @@
                         </ul>
                     </div>
                 </div>
-
-            </div>
         </div>    
 
         <%
@@ -86,28 +83,27 @@
         </div>
         <% }%>
 
-        <!-- ACA HACEMOS LAS TABS DINAMICAS --> 
-        <div class="container">
-            <ul class="nav nav-tabs">
-                <li><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#PCreadas">Propuestas Creadas</button></li>
-                <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PFinanciacíon">Propuestas en Financiación</button></li>
-                <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PFinanciadas">Propuestas Financiadas</button></li>
-                <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PNOFinanciadas">Propuestas NO Financiadas</button></li>
-                <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PCanceladas">Propuestas Canceladas</button></li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane fade show active" id="PCreadas">hola</div>
-                <div class="tab-pane fade" id="PFinanciacíon">hola</div>
-                <div class="tab-pane fade" id="PFinanciadas">hola</div>
-                <div class="tab-pane fade" id="PNOFinanciadas">hola</div>
-                <div class="tab-pane fade" id="PCanceladas">hola</div>
-            </div>
-        </div>
+<div class="container" >
+    <ul class="nav nav-tabs">
+        <li><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#PCreadas" data-estado="0" onclick="propPorEstado(this)">Propuestas Creadas</button></li>
+        <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PFinanciacion" data-estado="2" onclick="propPorEstado(this)">Propuestas en Financiación</button></li>
+        <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PFinanciadas" data-estado="3" onclick="propPorEstado(this)">Propuestas Financiadas</button></li>
+        <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PNOFinanciadas" data-estado="4" onclick="propPorEstado(this)">Propuestas NO Financiadas</button></li>
+        <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PCanceladas" data-estado="5" onclick="propPorEstado(this)">Propuestas Canceladas</button></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="PCreadas"></div>
+        <div class="tab-pane fade" id="PFinanciacion"></div>
+        <div class="tab-pane fade" id="PFinanciadas"></div>
+        <div class="tab-pane fade" id="PNOFinanciadas"></div>
+        <div class="tab-pane fade" id="PCanceladas"></div>
+    </div>
+</div>
 
 
 
 
-
+        <script src="${pageContext.request.contextPath}/resources/js/propuestaPorEstado.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>

@@ -35,7 +35,7 @@
             </div>
 
 
-            <div class="bg-white p-4 rounded shadow-sm mt-1 d-flex justify-content-center gap-3 border border-5 border-dark">
+            <div class="bg-white p-4 rounded shadow-sm mt-3 d-flex justify-content-center gap-3 border border-5 border-dark">
                 <div>
                     <img height="200" width="200" class="rounded-circle border border-5 border-dark "src="/imagenes/<%= imagen%>" alt="Foto de perfil">
                 </div>
