@@ -28,6 +28,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,7 +36,7 @@ import java.util.logging.Logger;
  *
  * @author mark
  */
-@WebServlet(name = "PropuestaServlet", urlPatterns = {"/propuestas", "/crear-propuesta"})
+@WebServlet(name = "PropuestaServlet", urlPatterns = {"/propuestas", "/crear-propuesta", "/obtener-propuesta"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, //1MB+ se escriben al disco
         maxFileSize = 1024 * 1024 * 5, //5MB máximo por archivo
@@ -58,6 +59,51 @@ public class PropuestaServlet extends HttpServlet {
                 request.setAttribute("categorias", categorias);
                 request.getRequestDispatcher("/WEB-INF/jsp/crearPropuesta.jsp").forward(request, response);
                 break;
+            case "/obtener-propuesta":
+                String titulo = request.getParameter("titulo");
+                if (titulo == null || titulo.isEmpty()) {
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'titulo'");
+                    return;
+                }
+
+                DTPropuesta prop = this.controller.obtenerDTPropuesta(titulo);
+                if (prop == null) {
+                    response.sendError(HttpServletResponse.SC_NOT_FOUND, "Propuesta no encontrada");
+                    return;
+                }
+
+                response.setContentType("application/json;charset=UTF-8");
+                try (PrintWriter out = response.getWriter()) {
+                    StringBuilder json = new StringBuilder();
+                    json.append("{");
+                    json.append("\"titulo\": \"").append(prop.getTitulo()).append("\",");
+                    json.append("\"descripcion\": \"").append(prop.getDescripcion()).append("\",");
+                    json.append("\"imagen\": \"").append(prop.getImagen()).append("\",");
+                    json.append("\"lugarRealizara\": \"").append(prop.getLugarRealizara()).append("\",");
+                    json.append("\"fechaPrevista\": \"").append(prop.getFechaRealizara() != null ? prop.getFechaRealizara().toString() : "N/A").append("\",");
+                    json.append("\"fechaPublicacion\": \"").append(prop.getFechaPublicacion() != null ? prop.getFechaPublicacion() : "N/A").append("\",");
+                    json.append("\"precioEntrada\": ").append(prop.getPrecioEntrada()).append(",");
+                    json.append("\"montoAReunir\": ").append(prop.getMontoAReunir()).append(",");
+                    json.append("\"categoria\": \"").append(prop.getTipoPropuesta()).append("\",");
+                    json.append("\"nickProponedor\": \"").append(prop.getNickProponedor()).append("\",");
+                    json.append("\"estadoActual\": \"").append(prop.getEstadoActual() != null ? prop.getEstadoActual().getEstado().toString() : "N/A").append("\",");
+
+                    // Array de tipos de retorno
+                    json.append("\"tiposRetorno\": [");
+                    List<TipoRetorno> tipos = prop.getTiposRetorno();
+                    for (int i = 0; i < tipos.size(); i++) {
+                        json.append("\"").append(tipos.get(i).toString()).append("\"");
+                        if (i < tipos.size() - 1) {
+                            json.append(",");
+                        }
+                    }
+                    json.append("]");
+
+                    json.append("}");
+                    out.print(json.toString());
+                }
+                break;
+
         }
     }
 

@@ -4,6 +4,9 @@
  */
 package culturarte.servlets;
 
+import culturarte.logica.DTPropuesta;
+import culturarte.logica.IController;
+import culturarte.logica.IControllerFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,6 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,6 +22,8 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ColaboracionServelet", urlPatterns = {"/registrar-colaboracion"})
 public class ColaboracionServelet extends HttpServlet {
+
+    private IController controller = IControllerFactory.getInstance().getIController();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -57,17 +63,19 @@ public class ColaboracionServelet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         String path = request.getServletPath();
 
         switch (path) {
             case "/registrar-colaboracion":
+                ArrayList<String> propuestas = this.controller.listarPropuestasProponentes();
+                request.setAttribute("propuestas", propuestas);
                 request.getRequestDispatcher("/WEB-INF/jsp/registrarColaboracion.jsp").forward(request, response);
                 break;
             default:
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
-    
+
     }
 
     /**
@@ -93,5 +101,7 @@ public class ColaboracionServelet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    
 
 }

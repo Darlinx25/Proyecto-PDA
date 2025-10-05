@@ -10,3 +10,22 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     color: rgb(220,20,20);
     display: none;
 }
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* arriba de la pantalla */
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    overflow-x: hidden; /* evita scroll horizontal */
+}
+
+#formulario {
+    max-width: 500px; /* ancho fijo máximo del formulario */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+
