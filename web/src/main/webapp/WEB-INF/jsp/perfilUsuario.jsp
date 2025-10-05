@@ -59,16 +59,16 @@
 
         <% } else if ("proponente".equals(rol)) {%>
 
-        <div class="container mt-3 bg-">
+        <div class="container mt-3 ">
 
-            <div class="bg-dark p-2 text-white rounded shadow-sm border border-5 border-dark">
+            <div class="bg-dark p-1 text-white rounded shadow-sm ">
                 <h1 class=" text-center">  Tu Perfil  </h1>
             </div>
 
 
             <div class="bg-dark p-4 rounded  text-white shadow-sm mt-3 d-flex justify-content-center gap-3 border border-5 border-dark">
                 <div>
-                    <img height="200" width="200" class="rounded-circle border border-5 border-dark "src="/imagenes/<%= imagen%>" alt="Foto de perfil">
+                    <img height="200" width="200" class="rounded-circle border border-3 border-white "src="/imagenes/<%= imagen%>" alt="Foto de perfil">
                 </div>
                 <div class="d-flex flex-column justify-content-center">
                     <p class="text-start text-uppercase" id="NombreUser"><%= nombre%> <%= apellido%> - <%= rol%><p></p>
