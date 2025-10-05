@@ -736,13 +736,11 @@ public class Controller implements IController {
         aux.setDescripcion(prop.getDescripcion());
         if (prop.getImagen() != null) {
             aux.setImagen(prop.getImagen());
-        }
-        
+        }        
         if (aux.getEstadoActual().getEstado() != prop.getEstadoActual().getEstado()) {
             aux.agregarEstadoActualAlHistorial();
             aux.setEstadoActual(prop.getEstadoActual());
         }
-        
         aux.setLugarRealizara(prop.getLugarRealizara());
         aux.setFechaRealizara(prop.getFechaRealizara());
         aux.setPrecioEntrada(prop.getPrecioEntrada());

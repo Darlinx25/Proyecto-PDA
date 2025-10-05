@@ -8,7 +8,7 @@ function propPorEstado(btn) {
             .then(res => res.json())
             .then(data => {
                 const tabDiv = document.querySelector(tabId);
-                tabDiv.innerHTML = ""; // limpiar contenido previo
+                tabDiv.innerHTML = "";
 
                 data.forEach(prop => {
                     const div = document.createElement("div");
@@ -17,7 +17,9 @@ function propPorEstado(btn) {
                         <div class="d-flex align-items-center gap-5">
                             <div ">
                                 <p><strong>Título:</strong> ${prop.titulo}</p>
-                                <p><strong>${prop.imagen ? `<img src="/imagenes/${prop.imagen}" alt="${prop.titulo}" style="max-width:300px;border-radius:5px;">`: 'N/A'}</p>
+                                <p><strong>Proponedor:</strong> ${prop.nickProponedor}</p>
+                                <p>${prop.imagen ? `<img src="/imagenes/${prop.imagen}" alt="${prop.titulo}" style="max-width:300px;border-radius:5px;">`: 'N/A'}</p>
+                                
                             </div>
                             <div>
                                 <p><strong>Descripción:</strong> ${prop.descripcion}</p>
@@ -29,7 +31,7 @@ function propPorEstado(btn) {
                                 <p><strong>Precio de entrada:</strong> ${prop.precioEntrada}</p>
                                 <p><strong>Monto a reunir:</strong> ${prop.montoAReunir}</p>
                                 <p><strong>Tipos de retorno:</strong> ${prop.tiposRetorno}</p>
-                                <p><strong>Proponedor:</strong> ${prop.nickProponedor}</p>    
+                                    
                             </div>
                         </div>        
                             `;
