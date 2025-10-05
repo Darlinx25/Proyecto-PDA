@@ -57,7 +57,7 @@ public class PropuestaServlet extends HttpServlet {
             case "/crear-propuesta":
                 HttpSession session = request.getSession();
                 String rol = (String) session.getAttribute("rol");
-                if (rol != "proponente") {
+                if (rol != null && !rol.equals("proponente")) {
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST);
                     return;
                 }
@@ -120,7 +120,7 @@ public class PropuestaServlet extends HttpServlet {
             case "/crear-propuesta":
                 HttpSession session = request.getSession();
                 String rol = (String) session.getAttribute("rol");
-                if (rol != "proponente") {
+                if (rol != null && !rol.equals("proponente")) {
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST);
                     return;
                 }
