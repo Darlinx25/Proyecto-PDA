@@ -81,14 +81,13 @@ public class PropuestaServlet extends HttpServlet {
                     json.append("\"imagen\": \"").append(prop.getImagen()).append("\",");
                     json.append("\"lugarRealizara\": \"").append(prop.getLugarRealizara()).append("\",");
                     json.append("\"fechaPrevista\": \"").append(prop.getFechaRealizara() != null ? prop.getFechaRealizara().toString() : "N/A").append("\",");
-                    json.append("\"fechaPublicacion\": \"").append(prop.getFechaPublicacion() != null ? prop.getFechaPublicacion() : "N/A").append("\",");
+                    json.append("\"fechaPublicacion\": \"").append(prop.getFechaPublicacion() != null ? prop.getFechaPublicacion().toString() : "N/A").append("\",");
                     json.append("\"precioEntrada\": ").append(prop.getPrecioEntrada()).append(",");
                     json.append("\"montoAReunir\": ").append(prop.getMontoAReunir()).append(",");
                     json.append("\"categoria\": \"").append(prop.getTipoPropuesta()).append("\",");
                     json.append("\"nickProponedor\": \"").append(prop.getNickProponedor()).append("\",");
                     json.append("\"estadoActual\": \"").append(prop.getEstadoActual() != null ? prop.getEstadoActual().getEstado().toString() : "N/A").append("\",");
 
-                    // Array de tipos de retorno
                     json.append("\"tiposRetorno\": [");
                     List<TipoRetorno> tipos = prop.getTiposRetorno();
                     for (int i = 0; i < tipos.size(); i++) {
