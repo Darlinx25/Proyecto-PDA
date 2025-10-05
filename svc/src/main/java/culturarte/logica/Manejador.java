@@ -52,7 +52,11 @@ public class Manejador {
     }
 
     public <T, ID> T find(Class<T> clase, ID id) {
-        return em.find(clase, id);
+        T entidad = em.find(clase, id);
+        if (entidad != null) {
+            em.refresh(entidad);
+        }
+        return entidad;
     }
 
     public Long datoUsuarioRepetido(String campo, String valor) {

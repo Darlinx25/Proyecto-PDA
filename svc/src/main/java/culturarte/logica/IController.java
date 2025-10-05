@@ -54,6 +54,7 @@ public interface IController {
     public void cambiarEstadoPropuestaIngresada(String tituloProp, EstadoPropuesta estProp);
     public ArrayList<String> listarPropuestas();
     public void modPropuesta(DTPropuesta prop);
+    public void cambiarEstadoPropuesta(String tituloProp, EstadoPropuesta estProp);
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Funciones colaboraciones.">

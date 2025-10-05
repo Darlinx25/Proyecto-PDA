@@ -85,7 +85,7 @@
 
 <div class="container" >
     <ul class="nav nav-tabs">
-        <li><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#PCreadas" data-estado="0" onclick="propPorEstado(this)">Propuestas Creadas</button></li>
+        <li><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#PCreadas" data-estado="1" onclick="propPorEstado(this)">Propuestas Creadas</button></li>
         <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PFinanciacion" data-estado="2" onclick="propPorEstado(this)">Propuestas en Financiación</button></li>
         <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PFinanciadas" data-estado="3" onclick="propPorEstado(this)">Propuestas Financiadas</button></li>
         <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PNOFinanciadas" data-estado="4" onclick="propPorEstado(this)">Propuestas NO Financiadas</button></li>

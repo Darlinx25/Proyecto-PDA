@@ -697,6 +697,19 @@ public class Controller implements IController {
             emr.mod(prop);
         }
     }
+    @Override
+      public void cambiarEstadoPropuesta(String tituloProp, EstadoPropuesta estProp) {
+        Propuesta prop = emr.find(Propuesta.class, tituloProp);
+        if (prop != null){
+            Estado estadoNuevo = new Estado(estProp);
+            prop.agregarEstadoActualAlHistorial();
+            prop.setEstadoActual(estadoNuevo);
+            if (estProp == EstadoPropuesta.PUBLICADA) {
+                prop.setFechaPublicacion(estadoNuevo.getFechaEstado().toLocalDate());
+            }
+            emr.mod(prop);
+        }
+    }
     
     @Override
     public ArrayList<String> listarPropuestas() {
@@ -709,7 +722,9 @@ public class Controller implements IController {
         String titulo = prop.getTitulo();
 
         Propuesta aux = null;
+        Categoria cat = null;
         try {
+            cat = emr.find(Categoria.class, prop.getTipoPropuesta());
             aux = emr.find(Propuesta.class, titulo);
         } catch (NoResultException e) {
             return;
@@ -722,20 +737,19 @@ public class Controller implements IController {
         if (prop.getImagen() != null) {
             aux.setImagen(prop.getImagen());
         }
-
+        
         if (aux.getEstadoActual().getEstado() != prop.getEstadoActual().getEstado()) {
             aux.agregarEstadoActualAlHistorial();
             aux.setEstadoActual(prop.getEstadoActual());
         }
-
+        
         aux.setLugarRealizara(prop.getLugarRealizara());
         aux.setFechaRealizara(prop.getFechaRealizara());
         aux.setPrecioEntrada(prop.getPrecioEntrada());
         aux.setMontoAReunir(prop.getMontoAReunir());
         aux.setTiposRetorno(prop.getTiposRetorno());
-        Categoria cat = emr.find(Categoria.class, prop.getTipoPropuesta());
         aux.setTipoPropuesta(cat);
-
+        aux.setEstadoActual(prop.getEstadoActual());
         emr.mod(aux);
     }
     

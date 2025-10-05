@@ -15,14 +15,21 @@ function propPorEstado(btn) {
                     div.className = "mb-2 p-2 border rounded bg-light";
                     div.innerHTML = `
                         <div class="d-flex align-items-center gap-5">
-                            <div>
-                                <p><strong>Título:</strong> ${prop.titulo}</p>
-                                <p><strong>Descripción:</strong> ${prop.descripcion}</p>
-                                <p><strong>Precio entrada:</strong> $${prop.precioEntrada}</p>
-                                <p><strong>Categoria:</strong> ${prop.categoria}</p>
-                            </div>
                             <div ">
-                                <p><strong>${prop.imagen ? `<img src="/imagenes/${prop.imagen}" alt="${prop.titulo}" style="max-width:200px;border-radius:5px;">`: 'N/A'}</p>
+                                <p><strong>Título:</strong> ${prop.titulo}</p>
+                                <p><strong>${prop.imagen ? `<img src="/imagenes/${prop.imagen}" alt="${prop.titulo}" style="max-width:300px;border-radius:5px;">`: 'N/A'}</p>
+                            </div>
+                            <div>
+                                <p><strong>Descripción:</strong> ${prop.descripcion}</p>
+                                <p><strong>Precio entrada:</strong> ${prop.precioEntrada}</p>
+                                <p><strong>Categoria:</strong> ${prop.categoria}</p>
+                                <p><strong>Lugar:</strong> ${prop.lugarRealizara}</p>
+                                <p><strong>Fecha Prevista:</strong> ${prop.fechaPrevista}</p>
+                                <p><strong>Fecha de Publicacion:</strong> ${prop.fechaPublicacion}</p>
+                                <p><strong>Precio de entrada:</strong> ${prop.precioEntrada}</p>
+                                <p><strong>Monto a reunir:</strong> ${prop.montoAReunir}</p>
+                                <p><strong>Tipos de retorno:</strong> ${prop.tiposRetorno}</p>
+                                <p><strong>Proponedor:</strong> ${prop.nickProponedor}</p>    
                             </div>
                         </div>        
                             `;
