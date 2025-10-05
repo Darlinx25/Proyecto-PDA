@@ -58,7 +58,7 @@ public class PropuestaServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 String rol = (String) session.getAttribute("rol");
                 if (rol != null && !rol.equals("proponente")) {
-                    response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+                    response.sendError(HttpServletResponse.SC_FORBIDDEN);
                     return;
                 }
                 
@@ -121,7 +121,7 @@ public class PropuestaServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 String rol = (String) session.getAttribute("rol");
                 if (rol != null && !rol.equals("proponente")) {
-                    response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+                    response.sendError(HttpServletResponse.SC_FORBIDDEN);
                     return;
                 }
                 
