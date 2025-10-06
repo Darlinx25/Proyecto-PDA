@@ -79,6 +79,7 @@
                 <a href="/seguir-usuario" class="btn btn-danger p-1 ">Seguir usuario</a>
                 <a href="/crear-propuesta" class="btn btn-danger p-1 ">Crear propuesta</a>
                 <a href="/registrar-colaboracion" class="btn btn-danger p-1 ">Registrar colaboracion</a>
+                <a href="/consultar-perfil-usuario" class="btn btn-danger p-1 ">Consultar Perfiles</a>
             </div>
 
         </div>

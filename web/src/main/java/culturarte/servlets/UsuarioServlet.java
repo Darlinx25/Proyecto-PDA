@@ -28,13 +28,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
  * @author mark
  */
-@WebServlet(name = "UsuarioServlet", urlPatterns = {"/usuarios", "/crear-cuenta", "/perfil", "/login", "/logout", "/seguir-usuario"})
+@WebServlet(name = "UsuarioServlet", urlPatterns = {"/usuarios", "/crear-cuenta", "/perfil", "/login", "/logout", "/seguir-usuario", "/consultar-perfil-usuario"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, //1MB+ se escriben al disco
         maxFileSize = 1024 * 1024 * 5, //5MB máximo por archivo
@@ -72,6 +74,10 @@ public class UsuarioServlet extends HttpServlet {
             case "/perfil":
                 cargarDatosPerfil(request, response);
                 request.getRequestDispatcher("/WEB-INF/jsp/perfilUsuario.jsp").forward(request, response);
+                break;
+               case "/consultar-perfil-usuario":
+                listarUsuarios(request,response);
+                request.getRequestDispatcher("/WEB-INF/jsp/consultaPerfilUsuario.jsp").forward(request, response);
                 break;
             default:
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -263,6 +269,14 @@ public class UsuarioServlet extends HttpServlet {
         }
         return fecha;
     }
+    private void listarUsuarios(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    
+    ArrayList<String> usuarios = this.controller.listarUsuarios();
+    request.setAttribute("usuarios", usuarios);
+    request.getRequestDispatcher("/WEB-INF/jsp/consultaPerfilUsuario.jsp").forward(request, response);
+}
+    
     // </editor-fold>
 
 }
