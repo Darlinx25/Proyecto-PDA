@@ -128,6 +128,8 @@ public class PropuestaServlet extends HttpServlet {
                 procesarCrearPropuesta(request, response);
                 response.sendRedirect("/index");
                 break;
+            default:
+                response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         }
     }
     private String obtenerPropuestaJSON(String titulo) {

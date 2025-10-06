@@ -8,11 +8,11 @@ function validarCheckboxes() {
     const checkboxes = document.querySelectorAll('input[name="tipoRetorno"');
     for (let i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i].checked) {
-            return true; // Al menos uno seleccionado
+            return true; 
         }
     }
     const mensajeError = document.getElementById("mensaje-error");
     mensajeError.style.display = 'block';
 
-    return false; // No se envía el formulario
+    return false; 
 }

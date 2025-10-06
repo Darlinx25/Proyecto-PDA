@@ -13,7 +13,7 @@
     </head>
     <body class="bg-light d-flex justify-content-center align-items-center min-vh-100 py-2" id="cuerpo">
 
-        <form action="/registrar-colaboracion" method="post" enctype="multipart/form-data" class="card p-5 shadow" id="formulario">
+        <form action="/registrar-colaboracion" method="post" enctype="multipart/form-data" class="card p-5 shadow" id="formulario" onsubmit="return validarCheckboxes()">
 
             <h2 class="text-center mb-4">Registrar colaboracion</h2>
 
@@ -22,7 +22,7 @@
             %>
 
             <div class="mb-2">
-                <label for="propuesta" class="form-label">Propuestas</label>
+                <label for="propuesta" class="form-label"><strong>Propuestas</strong></label>
                 <select onchange="propuestaElegida()" id="propuesta" name="propuesta" class="form-select form-select-sm" required>
                     <option value="" selected disabled>-- Seleccione una propuesta  --</option>
                     <% if (propuestas != null) {
@@ -34,6 +34,7 @@
                     <% }%>
                     
                 </select>
+                
                     
             </div>
                     

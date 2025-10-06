@@ -19,7 +19,7 @@ function propuestaElegida() {
                 })
                 .then(data => {
 
-                
+
                     document.getElementById("retornosContainer").innerHTML = "";
                     if (Array.isArray(data.tiposRetorno) && data.tiposRetorno.length > 0) {
 
@@ -28,7 +28,7 @@ function propuestaElegida() {
 
 
                         retornoDiv.innerHTML = `
-                        <p><strong>Título:</strong> ${data.titulo}</p>
+                    <p><strong>Título:</strong> ${data.titulo}</p>
                     <p><strong>Descripción:</strong> ${data.descripcion}</p>
                     <p><strong>Imagen:</strong> ${data.imagen ? '<img src="/imagenes/' + data.imagen + '" alt="' + data.titulo + '" style="max-width:100%;border-radius:5px;">' : 'N/A'}</p>
                     <p><strong>Lugar de realización:</strong> ${data.lugarRealizara}</p>
@@ -39,26 +39,34 @@ function propuestaElegida() {
                     <p><strong>Categoría:</strong> ${data.categoria}</p>
                     <p><strong>Propuesta de:</strong> ${data.nickProponedor}</p>
                     <p><strong>Estado actual:</strong> ${data.estadoActual}</p> 
-                        <label class="form-label"><strong>Tipo de retorno:</strong></label>
-                        <div class="form-check-group mb-2">
-                            ${data.tiposRetorno.includes("ENTRADA_GRATIS") ? `
-                                <div class="form-check">
-                                    <input name="tipoRetorno" value="entradaGratis" type="checkbox" class="form-check-input me-2" id="tipo-retorno-check1">
-                                    <label class="form-check-label" for="tipo-retorno-check1">Entrada gratis</label>
-                                </div>` : ""}
-                            ${data.tiposRetorno.includes("PORCENTAJE_GANANCIAS") ? `
-                                <div class="form-check">
-                                    <input name="tipoRetorno" value="porcentajeGanancia" type="checkbox" class="form-check-input me-2" id="tipo-retorno-check2">
-                                    <label class="form-check-label" for="tipo-retorno-check2">Porcentaje de ganancia</label>
-                                </div>` : ""}
-                        </div>
-                        <p class="text-center mb-0 text-danger d-none" id="mensaje-error">
-                            Debe seleccionar al menos un tipo de retorno
-                        </p>
+                    <div class="mb-3">
+                    <label for="opcion" class="form-label"><strong>Tipo de retorno:</strong></label>
+                    <select class="form-select form-select-m" id="opcion" name="opcion" required>
+                    <option value="" selected disabled>-- Elege un tipo de retorno --</option>
+                    </select>
+                    </div>
+                    <div class="mb-2">
+                    <label for="colaboracion" class="form-label"><strong>Colaboracion a realizar</strong></label>
+                    <div class="input-group input-group-sm">
+                    <span class="input-group-text">$</span>
+                    <input type="text" id="colaboracion" name="colaboracion" class="form-control" required>
+                    <input type="hidden" name="tituloProp" value="${data.titulo}">
+                    </div>
+                    </div>
                     `;
 
 
+
                         document.getElementById("retornosContainer").appendChild(retornoDiv);
+                        const select = retornoDiv.querySelector("#opcion");
+                        if (Array.isArray(data.tiposRetorno)) {
+                            data.tiposRetorno.forEach(retorno => {
+                                const option = document.createElement("option");
+                                option.value = retorno;
+                                option.textContent = retorno;
+                                select.appendChild(option);
+                            });
+                        }
                     }
                 })
                 .catch(error => console.error("Error:", error));
@@ -67,8 +75,21 @@ function propuestaElegida() {
 
 
 
+function validarCheckboxes() {
+    const checkboxes = document.querySelectorAll('input[name="tipoRetorno"');
+    let seleccion = 0;
+    for (let i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            seleccion++;
 
+        }
+    }
+    if (seleccion === 1) {
+        return true;
+    }
+    const mensajeError = document.getElementById("mensaje-error");
+    mensajeError.style.display = 'block';
 
-
-
+    return false;
+}
 

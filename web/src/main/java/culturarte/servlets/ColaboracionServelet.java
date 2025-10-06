@@ -14,6 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 /**
@@ -89,7 +90,17 @@ public class ColaboracionServelet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        String path = request.getServletPath();
+
+        switch (path) {
+            case "/registrar-colaboracion":
+                response.sendRedirect("/index");
+                break;
+            default:
+                response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+        }
+        
     }
 
     /**
@@ -101,7 +112,5 @@ public class ColaboracionServelet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    
 
 }
