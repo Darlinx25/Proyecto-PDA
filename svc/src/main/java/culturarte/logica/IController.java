@@ -71,6 +71,7 @@ public interface IController {
     public boolean autenticarUsuario(String nickname, char[] password);
     public ArrayList<String> obtenerCategorias();
     public String guardarImagen(byte[] bytesImagen);//devuelve el nombre de la imagen luego de guardarla
+    public ArrayList<DTPropuesta> buscarPropuestasTDL(String patron);
     // </editor-fold>
     
 }

@@ -302,6 +302,25 @@ public class Manejador {
             e.printStackTrace();
         }
     }
+    
+    public ArrayList<String> obtenerTitulosPropPatron(String patron) {
+        List<String> aux;
+        String patronBusqueda = "%" + patron + "%";
+        EstadoPropuesta est = EstadoPropuesta.INGRESADA;
+        String query = "SELECT DISTINCT p.titulo FROM Propuesta p WHERE p.estadoActual.estado <> :est AND "
+                + "p.titulo LIKE :patronBusqueda OR p.descripcion LIKE :patronBusqueda OR p.lugarRealizara LIKE :patronBusqueda";
+        try {
+            aux = em.createQuery(query, String.class)
+                    .setParameter("est", est)
+                    .setParameter("patronBusqueda", patronBusqueda)
+                    .getResultList();
+        } catch (Exception e) {
+            aux = Collections.emptyList();
+            e.printStackTrace();
+        }
+        return new ArrayList<>(aux);
+    }
+
     /*public <T,V> T listarAtributoPorCondicion(
             Class <T> tipoResultado,
             String atributo,

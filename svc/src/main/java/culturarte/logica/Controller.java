@@ -863,6 +863,18 @@ public class Controller implements IController {
             return null;
         }
     }
+    // buscar por patrón en título, descripción y lugar
+    public ArrayList<DTPropuesta> buscarPropuestasTDL(String patron) {
+        ArrayList<String> titulosProps = emr.obtenerTitulosPropPatron(patron);
+        
+        ArrayList<DTPropuesta> propuestas = new ArrayList();
+        
+        for (String titulo : titulosProps) {
+            propuestas.add(obtenerDTPropuesta(titulo));
+        }
+        
+        return propuestas;
+    }
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Funciones auxiliares.">
