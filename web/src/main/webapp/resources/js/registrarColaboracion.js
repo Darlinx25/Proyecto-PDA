@@ -19,14 +19,8 @@ function propuestaElegida() {
                 })
                 .then(data => {
 
-                    document.getElementById("infoPropuesta")?.remove();
+                
                     document.getElementById("retornosContainer").innerHTML = "";
-
-                    const infoDiv = document.createElement("div");
-                    infoDiv.id = "infoPropuesta";
-                    infoDiv.className = "mt-3 p-2 border rounded bg-light w-100";
-
-                    document.getElementById("formulario").appendChild(infoDiv);
                     if (Array.isArray(data.tiposRetorno) && data.tiposRetorno.length > 0) {
 
                         const retornoDiv = document.createElement("div");
@@ -44,9 +38,8 @@ function propuestaElegida() {
                     <p><strong>Monto a reunir:</strong> $${data.montoAReunir}</p>
                     <p><strong>Categoría:</strong> ${data.categoria}</p>
                     <p><strong>Propuesta de:</strong> ${data.nickProponedor}</p>
-                    <p><strong>Estado actual:</strong> ${data.estadoActual}</p>
-                    <p><strong>Tipos de retorno:</strong> ${data.tiposRetorno.join(", ")}</p>
-                        <label class="form-label">Tipo de retorno:</label>
+                    <p><strong>Estado actual:</strong> ${data.estadoActual}</p> 
+                        <label class="form-label"><strong>Tipo de retorno:</strong></label>
                         <div class="form-check-group mb-2">
                             ${data.tiposRetorno.includes("ENTRADA_GRATIS") ? `
                                 <div class="form-check">
