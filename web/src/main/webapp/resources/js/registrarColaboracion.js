@@ -75,21 +75,3 @@ function propuestaElegida() {
 
 
 
-function validarCheckboxes() {
-    const checkboxes = document.querySelectorAll('input[name="tipoRetorno"');
-    let seleccion = 0;
-    for (let i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].checked) {
-            seleccion++;
-
-        }
-    }
-    if (seleccion === 1) {
-        return true;
-    }
-    const mensajeError = document.getElementById("mensaje-error");
-    mensajeError.style.display = 'block';
-
-    return false;
-}
-

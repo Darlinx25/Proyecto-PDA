@@ -4,6 +4,7 @@
  */
 package culturarte.servlets;
 
+import culturarte.excepciones.PropuestaYaColaboradaException;
 import culturarte.logica.DTPropuesta;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
@@ -91,16 +92,28 @@ public class ColaboracionServelet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession(false);
         String path = request.getServletPath();
 
         switch (path) {
             case "/registrar-colaboracion":
+                String nick = session.getAttribute("username").toString();
+                String titulo = request.getParameter("tituloProp");
+                String retorno = request.getParameter("opcion");
+                float monto = Float.parseFloat(request.getParameter("colaboracion"));
+
+                try {
+                    this.controller.realizarColaboracion(nick, titulo, monto, retorno);
+                } catch (PropuestaYaColaboradaException ex) {
+                    System.getLogger(ColaboracionServelet.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                }
                 response.sendRedirect("/index");
                 break;
+
             default:
                 response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         }
-        
+
     }
 
     /**
