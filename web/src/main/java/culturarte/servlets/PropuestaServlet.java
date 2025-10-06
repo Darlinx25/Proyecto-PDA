@@ -147,6 +147,7 @@ public class PropuestaServlet extends HttpServlet {
         json.append("\"montoAReunir\": ").append(prop.getMontoAReunir()).append(",");
         json.append("\"categoria\": \"").append(prop.getTipoPropuesta()).append("\",");
         json.append("\"nickProponedor\": \"").append(prop.getNickProponedor()).append("\",");
+        json.append("\"dineroRecaudado\": \"").append(this.controller.obtenerDineroRecaudado(prop.getTitulo())).append("\",");
         json.append("\"estadoActual\": \"").append(prop.getEstadoActual() != null ? prop.getEstadoActual().getEstado().toString() : "N/A").append("\",");
         json.append("\"tiposRetorno\": [");
         List<TipoRetorno> tipos = prop.getTiposRetorno();
