@@ -11,6 +11,8 @@ import culturarte.logica.EstadoPropuesta;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
 import culturarte.logica.TipoRetorno;
+import culturarte.wutils.SesionUtils;
+import static culturarte.wutils.SesionUtils.puedeCrearPropuesta;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -55,16 +57,13 @@ public class PropuestaServlet extends HttpServlet {
 
         switch (path) {
             case "/crear-propuesta":
-                HttpSession session = request.getSession();
-                String rol = (String) session.getAttribute("rol");
-                if (rol != null && !rol.equals("proponente")) {
+                if (puedeCrearPropuesta(request.getSession())) {
+                    ArrayList<String> categorias = this.controller.obtenerCategorias();
+                    request.setAttribute("categorias", categorias);
+                    request.getRequestDispatcher("/WEB-INF/jsp/crearPropuesta.jsp").forward(request, response);
+                } else {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN);
-                    return;
                 }
-                
-                ArrayList<String> categorias = this.controller.obtenerCategorias();
-                request.setAttribute("categorias", categorias);
-                request.getRequestDispatcher("/WEB-INF/jsp/crearPropuesta.jsp").forward(request, response);
                 break;
             case "/obtener-propuesta":
                 String titulo = request.getParameter("titulo");
@@ -118,15 +117,12 @@ public class PropuestaServlet extends HttpServlet {
 
         switch (path) {
             case "/crear-propuesta":
-                HttpSession session = request.getSession();
-                String rol = (String) session.getAttribute("rol");
-                if (rol != null && !rol.equals("proponente")) {
+                if (puedeCrearPropuesta(request.getSession())) {
+                    procesarCrearPropuesta(request, response);
+                    response.sendRedirect("/index");
+                } else {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN);
-                    return;
                 }
-                
-                procesarCrearPropuesta(request, response);
-                response.sendRedirect("/index");
                 break;
             default:
                 response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);

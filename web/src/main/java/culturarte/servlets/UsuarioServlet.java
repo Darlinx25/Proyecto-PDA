@@ -13,6 +13,7 @@ import culturarte.logica.DTProponente;
 import culturarte.logica.DTUsuario;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
+import static culturarte.wutils.SesionUtils.esVisitante;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -52,10 +53,18 @@ public class UsuarioServlet extends HttpServlet {
 
         switch (path) {
             case "/crear-cuenta":
-                request.getRequestDispatcher("/WEB-INF/jsp/crearCuenta.jsp").forward(request, response);
+                if (esVisitante(request.getSession())) {
+                    request.getRequestDispatcher("/WEB-INF/jsp/crearCuenta.jsp").forward(request, response);
+                } else {
+                    response.sendRedirect("/index");
+                }
                 break;
             case "/login":
-                request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesion.jsp").forward(request, response);
+                if (esVisitante(request.getSession())) {
+                    request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesion.jsp").forward(request, response);
+                } else {
+                    response.sendRedirect("/index");
+                }
                 break;
             case "/seguir-usuario":
                 request.getRequestDispatcher("/WEB-INF/jsp/seguirUsuario.jsp").forward(request, response);
@@ -77,14 +86,24 @@ public class UsuarioServlet extends HttpServlet {
 
         switch (path) {
             case "/crear-cuenta":
-                procesarCrearCuenta(request, response);
-                response.sendRedirect("/login");
+                if (esVisitante(request.getSession())) {
+                    procesarCrearCuenta(request, response);
+                    response.sendRedirect("/login");
+                } else {
+                    response.sendRedirect("/index");
+                } 
                 break;
             case "/login":
-                iniciarSesion(request, response);
+                if (esVisitante(request.getSession())) {
+                    iniciarSesion(request, response);
+                } else {
+                    response.sendRedirect("/index");
+                }
                 break;
             case "/logout":
-                cerrarSesion(request, response);
+                if (!esVisitante(request.getSession())) {
+                    cerrarSesion(request, response);
+                }
                 response.sendRedirect("/index");
                 break;
 
@@ -138,7 +157,7 @@ public class UsuarioServlet extends HttpServlet {
             session.setAttribute("rol", tipoUsuario);
             session.setAttribute("username", nickname);
             response.sendRedirect("/index");
-            if (tipoUsuario == "colaborador") {
+            if (tipoUsuario.equals("colaborador")) {
                 DTColaborador colab = this.controller.obtenerDTColaborador(nickname);
                 String nom = colab.getNombre();
                 String apell = colab.getApellido();
@@ -146,7 +165,7 @@ public class UsuarioServlet extends HttpServlet {
                 session.setAttribute("nombre", nom);
                 session.setAttribute("apellido", apell);
                 session.setAttribute("ubiImagen", ubi);
-            } else if (tipoUsuario == "proponente") {
+            } else if (tipoUsuario.equals("proponente")) {
                 DTProponente prop = this.controller.obtenerDTProponente(nickname);
                 String nom = prop.getNombre();
                 String apell = prop.getApellido();
