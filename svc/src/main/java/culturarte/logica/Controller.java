@@ -864,6 +864,7 @@ public class Controller implements IController {
         }
     }
     // buscar por patrón en título, descripción y lugar
+    @Override
     public ArrayList<DTPropuesta> buscarPropuestasTDL(String patron) {
         ArrayList<String> titulosProps = emr.obtenerTitulosPropPatron(patron);
         

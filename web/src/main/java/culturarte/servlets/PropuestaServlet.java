@@ -132,38 +132,7 @@ public class PropuestaServlet extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         }
     }
-    private String obtenerPropuestaJSON(String titulo) {
-        DTPropuesta prop = this.controller.obtenerDTPropuesta(titulo);
-        if(prop == null){
-            return "{}";
-        }
-        StringBuilder json = new StringBuilder();
-        json.append("{");
-        json.append("\"titulo\": \"").append(prop.getTitulo()).append("\",");
-        json.append("\"descripcion\": \"").append(prop.getDescripcion()).append("\",");
-        json.append("\"imagen\": \"").append(prop.getImagen()).append("\",");
-        json.append("\"lugarRealizara\": \"").append(prop.getLugarRealizara()).append("\",");
-        json.append("\"fechaPrevista\": \"").append(prop.getFechaRealizara() != null ? prop.getFechaRealizara().toString() : "N/A").append("\",");
-        json.append("\"fechaPublicacion\": \"").append(prop.getFechaPublicacion() != null ? prop.getFechaPublicacion().toString() : "N/A").append("\",");
-        json.append("\"precioEntrada\": ").append(prop.getPrecioEntrada()).append(",");
-        json.append("\"montoAReunir\": ").append(prop.getMontoAReunir()).append(",");
-        json.append("\"categoria\": \"").append(prop.getTipoPropuesta()).append("\",");
-        json.append("\"nickProponedor\": \"").append(prop.getNickProponedor()).append("\",");
-        json.append("\"dineroRecaudado\": \"").append(this.controller.obtenerDineroRecaudado(prop.getTitulo())).append("\",");
-        json.append("\"estadoActual\": \"").append(prop.getEstadoActual() != null ? prop.getEstadoActual().getEstado().toString() : "N/A").append("\",");
-        json.append("\"tiposRetorno\": [");
-        List<TipoRetorno> tipos = prop.getTiposRetorno();
-        for (int i = 0; i < tipos.size(); i++) {
-            json.append("\"").append(tipos.get(i).toString()).append("\"");
-            if (i < tipos.size() - 1) {
-                json.append(",");
-            }
-        }
-        json.append("]");
-        json.append("}");
-        return json.toString();
-    }
-
+    
     @Override
     public String getServletInfo() {
         return "Short description";
@@ -259,6 +228,38 @@ public class PropuestaServlet extends HttpServlet {
             }
         }
         return bytesArchivo;
+    }
+    
+    private String obtenerPropuestaJSON(String titulo) {
+        DTPropuesta prop = this.controller.obtenerDTPropuesta(titulo);
+        if(prop == null){
+            return "{}";
+        }
+        StringBuilder json = new StringBuilder();
+        json.append("{");
+        json.append("\"titulo\": \"").append(prop.getTitulo()).append("\",");
+        json.append("\"descripcion\": \"").append(prop.getDescripcion()).append("\",");
+        json.append("\"imagen\": \"").append(prop.getImagen()).append("\",");
+        json.append("\"lugarRealizara\": \"").append(prop.getLugarRealizara()).append("\",");
+        json.append("\"fechaPrevista\": \"").append(prop.getFechaRealizara() != null ? prop.getFechaRealizara().toString() : "N/A").append("\",");
+        json.append("\"fechaPublicacion\": \"").append(prop.getFechaPublicacion() != null ? prop.getFechaPublicacion().toString() : "N/A").append("\",");
+        json.append("\"precioEntrada\": ").append(prop.getPrecioEntrada()).append(",");
+        json.append("\"montoAReunir\": ").append(prop.getMontoAReunir()).append(",");
+        json.append("\"categoria\": \"").append(prop.getTipoPropuesta()).append("\",");
+        json.append("\"nickProponedor\": \"").append(prop.getNickProponedor()).append("\",");
+        json.append("\"dineroRecaudado\": \"").append(this.controller.obtenerDineroRecaudado(prop.getTitulo())).append("\",");
+        json.append("\"estadoActual\": \"").append(prop.getEstadoActual() != null ? prop.getEstadoActual().getEstado().toString() : "N/A").append("\",");
+        json.append("\"tiposRetorno\": [");
+        List<TipoRetorno> tipos = prop.getTiposRetorno();
+        for (int i = 0; i < tipos.size(); i++) {
+            json.append("\"").append(tipos.get(i).toString()).append("\"");
+            if (i < tipos.size() - 1) {
+                json.append(",");
+            }
+        }
+        json.append("]");
+        json.append("}");
+        return json.toString();
     }
     // </editor-fold>
 
