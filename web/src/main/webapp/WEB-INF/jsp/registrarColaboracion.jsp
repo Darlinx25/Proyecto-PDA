@@ -32,8 +32,12 @@
                     } else { %>
                     <option value="">No hay propuestas disponibles</option>
                     <% }%>
+                    
                 </select>
+                    
             </div>
+                    
+            <div id="retornosContainer"></div>
 
 
 
