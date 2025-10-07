@@ -131,7 +131,7 @@ public class UsuarioServlet extends HttpServlet {
         if (session != null) {
             String user = (String) session.getAttribute("username");
             String tipo = (String) session.getAttribute("rol");
-            if (tipo == "colaborador") {
+            if ("colaborador".equals(tipo)) {
                 DTColaborador colab = this.controller.obtenerDTColaborador(user);
                 if (colab != null) {
                     String correo = colab.getEmail();
@@ -139,7 +139,7 @@ public class UsuarioServlet extends HttpServlet {
                     
                 }
 
-            } else if (tipo == "proponente") {
+            } else if ("proponente".equals(tipo)) {
                 DTProponente prop = this.controller.obtenerDTProponente(user);
                 if (prop != null) {
                     String web = prop.getSitioWeb();
