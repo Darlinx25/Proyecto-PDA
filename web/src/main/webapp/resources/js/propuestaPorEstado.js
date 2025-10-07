@@ -19,7 +19,10 @@ function propPorEstado(btn) {
                                 <p><strong>Título:</strong> ${prop.titulo}</p>
                                 <p><strong>Proponedor:</strong> ${prop.nickProponedor}</p>
                                 <p>${prop.imagen ? `<img src="/imagenes/${prop.imagen}" onerror="this.src='/resources/images/propdefault.png';" alt="${prop.titulo}" style="max-width:300px;border-radius:5px;">`: 'N/A'}</p>
-                                <p><strong>Dinero recaudado:</strong> ${prop.dineroRecaudado}</p>
+                                <p class="text-center"><strong>Dinero recaudado:</strong></p>
+                                <div class="progress" style="height: 25px;">
+                                    <div class="progress-bar" style="width: ${(prop.dineroRecaudado / prop.montoAReunir) * 100}%">$${prop.dineroRecaudado}</div>
+                                </div>
                             </div>
                             <div>
                                 <p><strong>Descripción:</strong> ${prop.descripcion}</p>
@@ -29,8 +32,8 @@ function propPorEstado(btn) {
                                 <p><strong>Fecha Prevista:</strong> ${prop.fechaRealizara}</p>
                                 <p><strong>Fecha de Publicacion:</strong> ${prop.fechaPublicacion}</p>
                                 <p><strong>Precio de entrada:</strong> $${prop.precioEntrada}</p>
-                                <p><strong>Monto a reunir: </strong> $${prop.montoAReunir}</p>
                                 <p><strong>Tipos de retorno:</strong> ${prop.tiposRetorno}</p>
+                                <p><strong>Monto a reunir: </strong> $${prop.montoAReunir}</p>
                             </div>
                         </div>        
                             `;

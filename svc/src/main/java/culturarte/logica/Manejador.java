@@ -53,6 +53,9 @@ public class Manejador {
 
     public <T, ID> T find(Class<T> clase, ID id) {
         T entidad = em.find(clase, id);
+        if (entidad != null) {
+            em.refresh(entidad);
+        }
         return entidad;
     }
 
