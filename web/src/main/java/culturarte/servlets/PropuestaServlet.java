@@ -4,6 +4,9 @@
  */
 package culturarte.servlets;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import culturarte.excepciones.PropuestaDuplicadaException;
 import culturarte.logica.DTPropuesta;
 import culturarte.logica.Estado;
@@ -89,21 +92,19 @@ public class PropuestaServlet extends HttpServlet {
                 }
                 int estado = Integer.parseInt(estadoStr);
                 ArrayList<String> titulos = controller.listarPropuestasEstado(estado);
-                response.setContentType("application/json;charset=UTF-8");
-                try (PrintWriter out = response.getWriter()) {
-                    StringBuilder json = new StringBuilder("[");
-                    for (int i = 0; i < titulos.size(); i++) {
-                        DTPropuesta p = controller.obtenerDTPropuesta(titulos.get(i));
+                
+                List<DTPropuesta> propuestas = new ArrayList<>();
+                    for (String t : titulos) {
+                        DTPropuesta p = controller.obtenerDTPropuesta(t);
                         if (p != null) {
-                            json.append(obtenerPropuestaJSON(p.getTitulo()));
-                        }
-                        if (i < titulos.size() - 1) {
-                            json.append(",");
+                            propuestas.add(p);
                         }
                     }
-                    json.append("]");
-                    out.print(json.toString());
-                }
+
+                    response.setContentType("application/json;charset=UTF-8");
+                    ObjectMapper mapper = new ObjectMapper();
+                    mapper.registerModule(new JavaTimeModule());
+                    mapper.writeValue(response.getWriter(), propuestas);
                 break;
 
         }
@@ -231,31 +232,14 @@ public class PropuestaServlet extends HttpServlet {
         if(prop == null){
             return "{}";
         }
-        StringBuilder json = new StringBuilder();
-        json.append("{");
-        json.append("\"titulo\": \"").append(prop.getTitulo()).append("\",");
-        json.append("\"descripcion\": \"").append(prop.getDescripcion()).append("\",");
-        json.append("\"imagen\": \"").append(prop.getImagen()).append("\",");
-        json.append("\"lugarRealizara\": \"").append(prop.getLugarRealizara()).append("\",");
-        json.append("\"fechaPrevista\": \"").append(prop.getFechaRealizara() != null ? prop.getFechaRealizara().toString() : "N/A").append("\",");
-        json.append("\"fechaPublicacion\": \"").append(prop.getFechaPublicacion() != null ? prop.getFechaPublicacion().toString() : "N/A").append("\",");
-        json.append("\"precioEntrada\": ").append(prop.getPrecioEntrada()).append(",");
-        json.append("\"montoAReunir\": ").append(prop.getMontoAReunir()).append(",");
-        json.append("\"categoria\": \"").append(prop.getTipoPropuesta()).append("\",");
-        json.append("\"nickProponedor\": \"").append(prop.getNickProponedor()).append("\",");
-        json.append("\"dineroRecaudado\": \"").append(this.controller.obtenerDineroRecaudado(prop.getTitulo())).append("\",");
-        json.append("\"estadoActual\": \"").append(prop.getEstadoActual() != null ? prop.getEstadoActual().getEstado().toString() : "N/A").append("\",");
-        json.append("\"tiposRetorno\": [");
-        List<TipoRetorno> tipos = prop.getTiposRetorno();
-        for (int i = 0; i < tipos.size(); i++) {
-            json.append("\"").append(tipos.get(i).toString()).append("\"");
-            if (i < tipos.size() - 1) {
-                json.append(",");
-            }
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            return mapper.writeValueAsString(prop);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return "{}";
         }
-        json.append("]");
-        json.append("}");
-        return json.toString();
     }
     // </editor-fold>
 
