@@ -55,7 +55,7 @@
                 <div  >
                     <div class="d-flex align-items-center gap-2">        
                         <div>
-                            <img height="100" width="100" class="rounded-circle border border-2 border-white "src="/imagenes/<%= imagen%>" alt="Foto de perfil">
+                            <img height="100" width="100" class="rounded-circle border border-2 border-white " src="/imagenes/<%= imagen%>" onerror="this.src='/resources/images/userdefault.png';" alt="Foto de perfil">
                         </div>
                         <div>
                             <p class="text-uppercase"><%= nombre%> <%= apellido%></p>

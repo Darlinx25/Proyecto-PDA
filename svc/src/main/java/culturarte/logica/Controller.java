@@ -130,7 +130,7 @@ public class Controller implements IController {
         prop = new DTPropuesta("Cine en el Botánico",
                 "El 16 de Diciembre a la hora 20 se proyectará la película \"Clever\", en el Jardín Botánico (Av. 19 de Abril 1181) en el marco"
                 + " de las actividades realizadas por el ciclo Cultura al Aire Libre. El largometraje uruguayo de ficción Clever es dirigido por "
-                + "Federico Borgia y Guillermo Madeiro. Es apto para mayores de 15 años.", "../imagenesRespaldoBD/CEBimg.jpg", "Jardín Botánico",
+                + "Federico Borgia y Guillermo Madeiro. Es apto para mayores de 15 años.", "CEBimg.jpg", "Jardín Botánico",
                 LocalDate.of(2017, 9, 16), 200, 150000, "Cine al Aire Libre", "diegop", porcentaje, new Estado(EstadoPropuesta.CANCELADA, LocalDateTime.of(2017, 6, 15, 14, 50)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "Cine en el Botánico");
@@ -145,7 +145,7 @@ public class Controller implements IController {
                 "MOMOSAPIENS presenta \"Religiosamente\". Mediante dos parodias y un hilo conductor que aborda la temática de la "
                 + "religión Momosapiens, mediante el humor y la reflexión, hilvana una historia que muestra al hombre inmerso en el tema "
                 + "religioso. El libreto está escrito utilizando diferentes lenguajes de humor, dando una visión satírica y reflexiva desde "
-                + "distintos puntos de vista, logrando mediante situaciones paródicas armar una propuesta plena de arte carnavalero.", "../imagenesRespaldoBD/MOMimg.jpg", "Teatro de Verano",
+                + "distintos puntos de vista, logrando mediante situaciones paródicas armar una propuesta plena de arte carnavalero.", "MOMimg.jpg", "Teatro de Verano",
                 LocalDate.of(2017, 10, 7), 300, 300000, "Parodistas", "hrubino", entPor, new Estado(EstadoPropuesta.FINANCIADA, LocalDateTime.of(2017, 7, 15, 9, 45)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "Religiosamente");
@@ -159,7 +159,7 @@ public class Controller implements IController {
                 "El Pimiento Indomable, formación compuesta por Kiko Veneno y el uruguayo Martín Buscaglia, presentará este 19 de "
                 + "Octubre, su primer trabajo. Bajo un título homónimo al del grupo, es un disco que según los propios protagonistas “no se "
                 + "parece al de ninguno de los dos por separado. Entre los títulos que se podrán escuchar se encuentran “Nadador salvador”, "
-                + "“América es más grande”, “Pescaito Enroscado” o “La reina del placer”.", "../imagenesRespaldoBD/PIMimg.jpg", "Teatro Solís",
+                + "“América es más grande”, “Pescaito Enroscado” o “La reina del placer”.", "PIMimg.jpg", "Teatro Solís",
                 LocalDate.of(2017, 10, 19), 400, 400000, "Concierto", "mbusca", porcentaje, new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 8, 1, 7, 40)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "El Pimiento Indomable");
@@ -171,7 +171,7 @@ public class Controller implements IController {
         prop = new DTPropuesta("Pilsen Rock",
                 "La edición 2017 del Pilsen Rock se celebrará el 21 de Octubre en la Rural del Prado y contará con la participación de más "
                 + "de 15 bandas nacionales. Quienes no puedan trasladarse al lugar, tendrán la posibilidad de disfrutar los shows a través de "
-                + "Internet, así como entrevistas en vivo a los músicos una vez finalizados los conciertos.", "../imagenesRespaldoBD/PILimg.jpg", "Rural de Prado",
+                + "Internet, así como entrevistas en vivo a los músicos una vez finalizados los conciertos.", "PILimg.jpg", "Rural de Prado",
                 LocalDate.of(2017, 10, 21), 1000, 900000, "Festival", "kairoh", entPor, new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 8, 5, 16, 50)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "Pilsen Rock");
@@ -184,7 +184,7 @@ public class Controller implements IController {
                 "Romeo y Julieta de Kenneth MacMillan, uno de los ballets favoritos del director artístico Julio Bocca, se presentará "
                 + "nuevamente el 5 de Noviembre en el Auditorio Nacional del Sodre. Basada en la obra homónima de William Shakespeare, "
                 + "Romeo y Julieta es considerada la coreografía maestra del MacMillan. La producción de vestuario y escenografía se realizó "
-                + "en los Talleres del Auditorio Adela Reta, sobre los diseños originales.", "../imagenesRespaldoBD/RYJimg.jpg", "Auditorio Nacional del Sodre",
+                + "en los Talleres del Auditorio Adela Reta, sobre los diseños originales.", "RYJimg.jpg", "Auditorio Nacional del Sodre",
                 LocalDate.of(2017, 11, 5), 800, 750000, "Ballet", "juliob", porcentaje, new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 8, 5, 16, 50)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "Romeo y Julieta");
@@ -196,7 +196,7 @@ public class Controller implements IController {
         prop = new DTPropuesta("Un día de Julio",
                 "La Catalina presenta el espectáculo \"Un Día de Julio\" en Landia. Un hombre misterioso y solitario vive encerrado entre las "
                 + "cuatro paredes de su casa. Intenta, con sus teorías extravagantes, cambiar el mundo exterior que le resulta inhabitable. Un "
-                + "día de Julio sucederá algo que cambiará su vida y la de su entorno para siempre.", "../imagenesRespaldoBD/UDJimg.jpg", "Landia",
+                + "día de Julio sucederá algo que cambiará su vida y la de su entorno para siempre.", "UDJimg.jpg", "Landia",
                 LocalDate.of(2017, 11, 16), 650, 300000, "Murga", "tabarec", entPor, new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 8, 15, 4, 48)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "Un día de Julio");
@@ -209,7 +209,7 @@ public class Controller implements IController {
                 "Vuelve unas de las producciones de El Galpón más aclamadas de los últimos tiempos. Esta obra se ha presentado en "
                 + "Miami, Nueva York, Washington, México, Guadalajara, Río de Janeiro y La Habana. En nuestro país, El Lazarillo de "
                 + "Tormes fue nominado en los rubros mejor espectáculo y mejor dirección a los Premios Florencio 1995, obteniendo su "
-                + "protagonista Héctor Guido el Florencio a Mejor actor de ese año.", "../imagenesRespaldoBD/LDTimg.jpg", "Teatro el Galpón",
+                + "protagonista Héctor Guido el Florencio a Mejor actor de ese año.", "LDTimg.jpg", "Teatro el Galpón",
                 LocalDate.of(2017, 12, 3), 350, 175000, "Teatro Dramático", "hectorg", entrada, new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 20, 21, 58)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "El Lazarillo de Tormes");
@@ -221,7 +221,7 @@ public class Controller implements IController {
                 "El 10 de Diciembre se presentará Bardo Científico en la FING. El humor puede ser usado como una herramienta "
                 + "importante para el aprendizaje y la democratización de la ciencia, los monólogos científicos son una forma didáctica de "
                 + "apropiación del conocimiento científico y contribuyen a que el público aprenda ciencia de forma amena. Los invitamos a "
-                + "pasar un rato divertido, en un espacio en el cual aprenderán cosas de la ciencia que los sorprenderán. ¡Los esperamos!", "../imagenesRespaldoBD/BEFimg.jpg", "Anfiteatro Edificio \"José Luis Massera\"",
+                + "pasar un rato divertido, en un espacio en el cual aprenderán cosas de la ciencia que los sorprenderán. ¡Los esperamos!", "BEFimg.jpg", "Anfiteatro Edificio \"José Luis Massera\"",
                 LocalDate.of(2017, 12, 10), 200, 100000, "Stand-up", "losBardo", entrada, new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 8, 23, 2, 12)));
         addPropuesta(prop);
     }
@@ -336,7 +336,7 @@ public class Controller implements IController {
         usu.add(new DTProponente(new DTDireccion("Montevideo", " 18 de Julio", 1234), "Horacio Rubino Torres nace el 25 de febrero de 1962, es conductor, actor y libretista. Debuta en 1982 en carnaval\n"
                 + "en Los \"Klaper´s\", donde estuvo cuatro años, actuando y libretando. Luego para \"Gaby´s\" (6 años), escribió en\n"
                 + "categoría revistas y humoristas y desde el comienzo y hasta el presente en su propio conjunto Momosapiens.",
-                "https://twitter.com/horaciorubino", "hrubino", "Horacio", "Rubino", "12345678".toCharArray(), "12345678".toCharArray(), "horacio.rubino@guambia.com.uy", LocalDate.of(1980, 5, 20), "../imagenesRespaldoBD/HRimg.jpg"));
+                "https://twitter.com/horaciorubino", "hrubino", "Horacio", "Rubino", "12345678".toCharArray(), "12345678".toCharArray(), "horacio.rubino@guambia.com.uy", LocalDate.of(1980, 5, 20), "HRimg.jpg"));
 
         usu.add(new DTProponente(new DTDireccion("Montevideo", " Colonia", 4321), "Martín Buscaglia (Montevideo, 1972) es un artista, músico, compositor y productor uruguayo. Tanto con su banda"
                 + "(“Los Bochamakers”) como en su formato “Hombre orquesta”, o solo con su guitarra, ha recorrido el mundo"
@@ -344,7 +344,7 @@ public class Controller implements IController {
                 + "Chile, Paraguay, México y Uruguay. (Actualmente los Bochamakers son Matías Rada, Martín Ibarburu, Mateo"
                 + "Moreno, Herman Klang) Paralelamente, tiene proyectos a dúo con el español Kiko Veneno, la cubana Yusa, el"
                 + "argentino Lisandro Aristimuño, su compatriota Antolín, y a trío junto a los brasileros Os Mulheres Negras.",
-                "http://www.martinbuscaglia.com/", "mbusca", "Martín", "Buscaglia", "12345678".toCharArray(), "12345678".toCharArray(), "Martin.bus@agadu.org.uy", LocalDate.of(1972, 6, 14), "../imagenesRespaldoBD/MBimg.jpg"));
+                "http://www.martinbuscaglia.com/", "mbusca", "Martín", "Buscaglia", "12345678".toCharArray(), "12345678".toCharArray(), "Martin.bus@agadu.org.uy", LocalDate.of(1972, 6, 14), "MBimg.jpg"));
 
         usu.add(new DTProponente(new DTDireccion("Montevideo", " Gral. Flores", 5645), "En 1972 ingresó a la Escuela de Arte Dramático del teatro El Galpón. Participó en más de treinta obras teatrales y"
                 + "varios largometrajes. Integró el elenco estable de Radioteatro del Sodre, y en 2006 fue asesor de su Consejo"
@@ -354,60 +354,60 @@ public class Controller implements IController {
                 + "de Teatros Independientes (FUTI). Formó parte del equipo de gestión de la refacción de los teatros La Máscara,"
                 + "Astral y El Galpón, y del equipo de gestión en la construcción del teatro De la Candela y de la sala Atahualpa de El"
                 + "Galpón.",
-                "http://www.martinbuscaglia.com/", "hectorg", "Héctor", "Guido", "12345678".toCharArray(), "12345678".toCharArray(), "hector.gui@elgalpon.org.uy", LocalDate.of(1954, 1, 7), "../imagenesRespaldoBD/HGimg.jpg"));
+                "http://www.martinbuscaglia.com/", "hectorg", "Héctor", "Guido", "12345678".toCharArray(), "12345678".toCharArray(), "hector.gui@elgalpon.org.uy", LocalDate.of(1954, 1, 7), "HGimg.jpg"));
 
         usu.add(new DTProponente(new DTDireccion("Montevideo", " Santiago Rivas", 1212), "Tabaré Cardozo (Montevideo, 24 de julio de 1971) es un cantante, compositor y murguista uruguayo; conocido por"
                 + "su participación en la murga Agarrate Catalina, conjunto que fundó junto a su hermano Yamandú y Carlos"
                 + "Tanco en el año 2001.",
-                "https://www.facebook.com/Tabar%C3%A9-\nCardozo-55179094281/?ref=br_rs", "tabarec", "Tabaré", "Cardozo", "12345678".toCharArray(), "12345678".toCharArray(), "tabare.car@agadu.org.uy", LocalDate.of(1971, 7, 24), "../imagenesRespaldoBD/TCimg.jpg"));
+                "https://www.facebook.com/Tabar%C3%A9-\nCardozo-55179094281/?ref=br_rs", "tabarec", "Tabaré", "Cardozo", "12345678".toCharArray(), "12345678".toCharArray(), "tabare.car@agadu.org.uy", LocalDate.of(1971, 7, 24), "TCimg.jpg"));
 
         usu.add(new DTProponente(new DTDireccion("Montevideo", " Br. Artigas", 4567), "Nace en el año 1947 en el conventillo \"Medio Mundo\" ubicado en pleno Barrio Sur. Es heredero parcialmente-"
                 + "junto al resto de sus hermanos- de la Comparsa \"Morenada\" (inactiva desde el fallecimiento de Juan Ángel Silva),"
                 + "en 1999 forma su propia Comparsa de negros y lubolos \"Cuareim 1080\". Director responsable, compositor y"
                 + "cantante de la misma.",
-                "https://www.facebook.com/C1080?ref=br_rs", "cachilas", "Waldemar “Cachila”", "Silva", "12345678".toCharArray(), "12345678".toCharArray(), "Cachila.sil@c1080.org.uy", LocalDate.of(1947, 1, 1), "../imagenesRespaldoBD/CSimg.jpg"));
+                "https://www.facebook.com/C1080?ref=br_rs", "cachilas", "Waldemar “Cachila”", "Silva", "12345678".toCharArray(), "12345678".toCharArray(), "Cachila.sil@c1080.org.uy", LocalDate.of(1947, 1, 1), "CSimg.jpg"));
 
         usu.add(new DTProponente(new DTDireccion("Montevideo", " Benito Blanco", 4321), "",
-                "", "juliob", "Julio", "Bocca", "12345678".toCharArray(), "12345678".toCharArray(), "juliobocca@sodre.com.uy", LocalDate.of(1967, 3, 16), "../imagenesRespaldoBD/JBimg.jpg"));
+                "", "juliob", "Julio", "Bocca", "12345678".toCharArray(), "12345678".toCharArray(), "juliobocca@sodre.com.uy", LocalDate.of(1967, 3, 16), "JBimg.jpg"));
 
         usu.add(new DTProponente(new DTDireccion("Montevideo", " Emilio Frugoni Ap. 02", 1138), "",
-                "http://www.efectocine.com", "diegop", "Diego", "Parodi", "12345678".toCharArray(), "12345678".toCharArray(), "diego@efectocine.com", LocalDate.of(1975, 1, 1), "../imagenesRespaldoBD/DPimg.jpg"));
+                "http://www.efectocine.com", "diegop", "Diego", "Parodi", "12345678".toCharArray(), "12345678".toCharArray(), "diego@efectocine.com", LocalDate.of(1975, 1, 1), "DPimg.jpg"));
 
         usu.add(new DTProponente(new DTDireccion("Montevideo", " Paraguay", 1423), "",
-                "", "kairoh", "Kairo", "Herrera", "12345678".toCharArray(), "12345678".toCharArray(), "kairoher@pilsenrock.com.uy", LocalDate.of(1840, 4, 25), "../imagenesRespaldoBD/KHimg.jpg"));
+                "", "kairoh", "Kairo", "Herrera", "12345678".toCharArray(), "12345678".toCharArray(), "kairoher@pilsenrock.com.uy", LocalDate.of(1840, 4, 25), "KHimg.jpg"));
 
         usu.add(new DTProponente(new DTDireccion("Montevideo", " 8 de Octubre", 1429), "Queremos ser vistos y reconocidos como una organización: referente en divulgación científica con un fuerte"
                 + "espíritu didáctico y divertido, a través de acciones coordinadas con otros divulgadores científicos, que permitan"
                 + "establecer puentes de comunicación. Impulsora en la generación de espacios de democratización y apropiación"
                 + "social del conocimiento científico.",
-                "https://bardocientifico.com/", "losBardo", "Los", "Bardo", "12345678".toCharArray(), "12345678".toCharArray(), "losbardo@bardocientifico.com", LocalDate.of(1980, 10, 31), "../imagenesRespaldoBD/LBimg.jpg"));
+                "https://bardocientifico.com/", "losBardo", "Los", "Bardo", "12345678".toCharArray(), "12345678".toCharArray(), "losbardo@bardocientifico.com", LocalDate.of(1980, 10, 31), "LBimg.jpg"));
 
         return usu;
     }
 
     private List<DTUsuario> obtenerColaboradoresPrueba() {
         List<DTUsuario> usu = new ArrayList<>();
-        usu.add(new DTColaborador("robinh", "Robin", "Henderson", "12345678".toCharArray(), "12345678".toCharArray(), "Robin.h@tinglesa.com.uy", LocalDate.of(1940, 8, 3), "../imagenesRespaldoBD/RHimg.jpg"));
+        usu.add(new DTColaborador("robinh", "Robin", "Henderson", "12345678".toCharArray(), "12345678".toCharArray(), "Robin.h@tinglesa.com.uy", LocalDate.of(1940, 8, 3), "RHimg.jpg"));
 
-        usu.add(new DTColaborador("marcelot", "Marcelo", "Tinelli", "12345678".toCharArray(), "12345678".toCharArray(), "marcelot@ideasdelsur.com.ar", LocalDate.of(1960, 4, 1), "../imagenesRespaldoBD/MTimg.jpg"));
+        usu.add(new DTColaborador("marcelot", "Marcelo", "Tinelli", "12345678".toCharArray(), "12345678".toCharArray(), "marcelot@ideasdelsur.com.ar", LocalDate.of(1960, 4, 1), "MTimg.jpg"));
 
-        usu.add(new DTColaborador("novick", "Edgardo", "Novick", "12345678".toCharArray(), "12345678".toCharArray(), "edgardo@novick.com.uy", LocalDate.of(1952, 7, 17), "../imagenesRespaldoBD/ENimg.jpg"));
+        usu.add(new DTColaborador("novick", "Edgardo", "Novick", "12345678".toCharArray(), "12345678".toCharArray(), "edgardo@novick.com.uy", LocalDate.of(1952, 7, 17), "ENimg.jpg"));
 
-        usu.add(new DTColaborador("sergiop", "Sergio", "Puglia", "12345678".toCharArray(), "12345678".toCharArray(), "puglia@alpanpan.com.uy", LocalDate.of(1950, 1, 28), "../imagenesRespaldoBD/SPimg.jpg"));
+        usu.add(new DTColaborador("sergiop", "Sergio", "Puglia", "12345678".toCharArray(), "12345678".toCharArray(), "puglia@alpanpan.com.uy", LocalDate.of(1950, 1, 28), "SPimg.jpg"));
 
-        usu.add(new DTColaborador("chino", "Alvaro", "Recoba", "12345678".toCharArray(), "12345678".toCharArray(), "chino@trico.org.uy", LocalDate.of(1976, 3, 17), "../imagenesRespaldoBD/ARimg.jpg"));
+        usu.add(new DTColaborador("chino", "Alvaro", "Recoba", "12345678".toCharArray(), "12345678".toCharArray(), "chino@trico.org.uy", LocalDate.of(1976, 3, 17), "ARimg.jpg"));
 
-        usu.add(new DTColaborador("tonyp", "Antonio", "Pacheco", "12345678".toCharArray(), "12345678".toCharArray(), "eltony@manya.org.uy", LocalDate.of(1955, 2, 14), "../imagenesRespaldoBD/APimg.jpg"));
+        usu.add(new DTColaborador("tonyp", "Antonio", "Pacheco", "12345678".toCharArray(), "12345678".toCharArray(), "eltony@manya.org.uy", LocalDate.of(1955, 2, 14), "APimg.jpg"));
 
-        usu.add(new DTColaborador("nicoJ", "Nicolás", "Jodal", "12345678".toCharArray(), "12345678".toCharArray(), "jodal@artech.com.uy", LocalDate.of(1960, 8, 9), "../imagenesRespaldoBD/NJimg.jpg"));
+        usu.add(new DTColaborador("nicoJ", "Nicolás", "Jodal", "12345678".toCharArray(), "12345678".toCharArray(), "jodal@artech.com.uy", LocalDate.of(1960, 8, 9), "NJimg.jpg"));
 
-        usu.add(new DTColaborador("juanP", "Juan", "Perez", "12345678".toCharArray(), "12345678".toCharArray(), "juanp@elpueblo.com", LocalDate.of(1970, 1, 1), "../imagenesRespaldoBD/JPimg.jpg"));
+        usu.add(new DTColaborador("juanP", "Juan", "Perez", "12345678".toCharArray(), "12345678".toCharArray(), "juanp@elpueblo.com", LocalDate.of(1970, 1, 1), "JPimg.jpg"));
 
-        usu.add(new DTColaborador("Mengano", "Mengano", "Gómez", "12345678".toCharArray(), "12345678".toCharArray(), "menganog@elpueblo.com", LocalDate.of(1982, 2, 2), "../imagenesRespaldoBD/MGimg.jpg"));
+        usu.add(new DTColaborador("Mengano", "Mengano", "Gómez", "12345678".toCharArray(), "12345678".toCharArray(), "menganog@elpueblo.com", LocalDate.of(1982, 2, 2), "MGimg.jpg"));
 
-        usu.add(new DTColaborador("Perengano", "Perengano", "López", "12345678".toCharArray(), "12345678".toCharArray(), "pere@elpueblo.com", LocalDate.of(1985, 3, 3), "../imagenesRespaldoBD/PLimg.jpg"));
+        usu.add(new DTColaborador("Perengano", "Perengano", "López", "12345678".toCharArray(), "12345678".toCharArray(), "pere@elpueblo.com", LocalDate.of(1985, 3, 3), "PLimg.jpg"));
 
-        usu.add(new DTColaborador("Tiajaci", "Tía", "Jacinta", "12345678".toCharArray(), "12345678".toCharArray(), "jacinta@elpueblo.com", LocalDate.of(1990, 4, 4), "../imagenesRespaldoBD/TJimg.jpg"));
+        usu.add(new DTColaborador("Tiajaci", "Tía", "Jacinta", "12345678".toCharArray(), "12345678".toCharArray(), "jacinta@elpueblo.com", LocalDate.of(1990, 4, 4), "TJimg.jpg"));
 
         return usu;
     }
