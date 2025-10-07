@@ -65,7 +65,8 @@
         </div>
 
         
-            
+            <div class="table-responsive float-start" style="width: 20%;">
+            <table class="table table-striped table-bordered">
                 <thead class="table-light">
                     <tr>
                         <th>Usuario</th>
@@ -85,7 +86,8 @@
                     </td>
                 </tr>
    
-                
+                   </table>
+        </div>
                     
                     <script>
                     function obtenerUsuarioSeleccionado() {
