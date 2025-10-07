@@ -24,9 +24,9 @@ function propPorEstado(btn) {
                             <div>
                                 <p><strong>Descripción:</strong> ${prop.descripcion}</p>
                                 <p><strong>Precio entrada:</strong> ${prop.precioEntrada}</p>
-                                <p><strong>Categoria:</strong> ${prop.categoria}</p>
+                                <p><strong>Categoria:</strong> ${prop.tipoPropuesta}</p>
                                 <p><strong>Lugar:</strong> ${prop.lugarRealizara}</p>
-                                <p><strong>Fecha Prevista:</strong> ${prop.fechaPrevista}</p>
+                                <p><strong>Fecha Prevista:</strong> ${prop.fechaRealizara}</p>
                                 <p><strong>Fecha de Publicacion:</strong> ${prop.fechaPublicacion}</p>
                                 <p><strong>Precio de entrada:</strong> $${prop.precioEntrada}</p>
                                 <p><strong>Monto a reunir: </strong> $${prop.montoAReunir}</p>

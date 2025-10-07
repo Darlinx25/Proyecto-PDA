@@ -6,6 +6,7 @@ package culturarte.servlets;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import culturarte.excepciones.PropuestaDuplicadaException;
 import culturarte.logica.DTPropuesta;
@@ -104,6 +105,7 @@ public class PropuestaServlet extends HttpServlet {
                     response.setContentType("application/json;charset=UTF-8");
                     ObjectMapper mapper = new ObjectMapper();
                     mapper.registerModule(new JavaTimeModule());
+                    mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
                     mapper.writeValue(response.getWriter(), propuestas);
                 break;
 
@@ -235,6 +237,7 @@ public class PropuestaServlet extends HttpServlet {
         try {
             ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new JavaTimeModule());
+            mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
             return mapper.writeValueAsString(prop);
         } catch (JsonProcessingException e) {
             e.printStackTrace();

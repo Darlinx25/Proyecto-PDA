@@ -641,9 +641,10 @@ public class Controller implements IController {
         try {
             Propuesta p = emr.find(Propuesta.class, titulo);
             if (p != null) {
+                float dineroRecaudado = Float.parseFloat(this.obtenerDineroRecaudado(titulo));
                 return new DTPropuesta(
                         p.getTitulo(), p.getDescripcion(), p.getImagen(), p.getLugarRealizara(), p.getFechaRealizara(),
-                        p.getPrecioEntrada(), p.getMontoAReunir(), p.getFechaPublicacion(),
+                        p.getPrecioEntrada(), p.getMontoAReunir(), dineroRecaudado, p.getFechaPublicacion(),
                         p.getTipoPropuesta().getNombre(),
                         p.getProponedor().getNickname(),
                         p.getTiposRetorno(), p.getEstadoActual());

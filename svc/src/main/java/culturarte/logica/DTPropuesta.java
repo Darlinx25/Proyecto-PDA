@@ -18,11 +18,13 @@ public class DTPropuesta {
     private LocalDate fechaRealizara;
     private float precioEntrada;
     private float montoAReunir;
+    private float dineroRecaudado;
     private LocalDate fechaPublicacion;
     private String tipoPropuesta;
     private String nickProponedor;
     private List<TipoRetorno> tiposRetorno;
     private Estado estadoActual;
+    
     
     
     public DTPropuesta(){
@@ -31,7 +33,7 @@ public class DTPropuesta {
     
     //este para obtener los datos de una propuesta
     public DTPropuesta(String titulo, String descripcion, String imagen, String lugarRealizara, LocalDate fechaRealizara, 
-            float precioEntrada, float montoAReunir, LocalDate fechaPublicacion, String tipoPropuesta, String nickProponedor, List<TipoRetorno> tiposRetorno, Estado estadoActual) {
+            float precioEntrada, float montoAReunir, float dineroRecaudado, LocalDate fechaPublicacion, String tipoPropuesta, String nickProponedor, List<TipoRetorno> tiposRetorno, Estado estadoActual) {
         
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -40,6 +42,7 @@ public class DTPropuesta {
         this.fechaRealizara = fechaRealizara;
         this.precioEntrada = precioEntrada;
         this.montoAReunir = montoAReunir;
+        this.dineroRecaudado = dineroRecaudado;
         this.fechaPublicacion = fechaPublicacion;
         this.tipoPropuesta = tipoPropuesta;
         this.nickProponedor = nickProponedor;
@@ -91,6 +94,10 @@ public class DTPropuesta {
 
     public float getMontoAReunir() {
         return montoAReunir;
+    }
+
+    public float getDineroRecaudado() {
+        return dineroRecaudado;
     }
     
     public LocalDate getFechaPublicacion() {
