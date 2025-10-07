@@ -4,6 +4,7 @@
     Author     : alexi
 --%>
 
+<%@page import="culturarte.logica.Usuario"%>
 <%@page import="java.util.List"%>
 <%@ page import="java.util.*, culturarte.logica.DTUsuario" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -63,8 +64,8 @@
 
         </div>
 
-        <div class="table-responsive float-start" style="width: 20%;">
-            <table class="table table-striped table-bordered">
+        
+            
                 <thead class="table-light">
                     <tr>
                         <th>Usuario</th>
@@ -80,12 +81,25 @@
                 <tr>
                     <td><%= u%></td>
                     <td>
-                        <input type="radio" name="usuarioSeleccionado" value="<%= u%>" class="form-check-input">
+                        <input type="radio" name="usuarioSeleccionado" value="<%= u%>" class="form-check-input" onchange="obtenerUsuarioSeleccionado()"">
                     </td>
                 </tr>
-                <%
+   
+                
+                    
+                    <script>
+                    function obtenerUsuarioSeleccionado() {
+                        const radios = document.getElementsByName("usuarioSeleccionado");
+                        let usuarioSeleccionado = null;
+
+                        for (const radio of radios) {
+                            if (radio.checked) {
+                                usuarioSeleccionado = radio.value;
+                                break;
+                            }
+                        }
+
+                        return usuarioSeleccionado;
                     }
-                %>
-            </table>
-        </div>
+                </script> 
 </html>
