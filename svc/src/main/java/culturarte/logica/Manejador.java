@@ -15,18 +15,18 @@ import java.util.List;
  */
 public class Manejador {
 
-    private static Manejador instancia = null;
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("Proyecto_PDA");
-    private EntityManager em = emf.createEntityManager();
+    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("Proyecto_PDA");
+    private final EntityManager em = emf.createEntityManager();
 
     public static Manejador getInstance() {
 
-        if (instancia == null) {
-            instancia = new Manejador();
-        }
-        return instancia;
+        return new Manejador();
     }
 
+    public void close() {
+        if (em.isOpen()) em.close();
+    }
+    
     public void add(Object clase) {
         EntityTransaction t = em.getTransaction();
         try {
@@ -53,9 +53,6 @@ public class Manejador {
 
     public <T, ID> T find(Class<T> clase, ID id) {
         T entidad = em.find(clase, id);
-        if (entidad != null) {
-            em.refresh(entidad);
-        }
         return entidad;
     }
 
