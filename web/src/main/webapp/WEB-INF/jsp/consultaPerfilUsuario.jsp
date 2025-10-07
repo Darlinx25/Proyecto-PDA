@@ -87,6 +87,5 @@
                     }
                 %>
             </table>
-            <button type="submit" class="btn btn-primary mt-3">Ver Perfil</button>
         </div>
 </html>
