@@ -21,87 +21,37 @@
     </head>
     <body class="container mt-5">
         <%
-            String rol = (String) session.getAttribute("rol");
-            String nombre = (String) session.getAttribute("nombre");
-            String apellido = (String) session.getAttribute("apellido");
-            String imagen = (String) session.getAttribute("ubiImagen");
+            List<String> usuarios = (List<String>) request.getAttribute("usuarios");
         %>
-        <div class=" shadow p-1 bg-dark text-white mb-1">
+        <div class="mb-2">
+            <label for="Usuarios" class="form-label"><strong>Usuarios</strong></label>
+            <select onchange="obtenerUsuarioSeleccionado()" id="Usuario" name="Usuario" class="form-select form-select-sm" required>
+                <option value="" selected disabled>-- Seleccione una propuesta  --</option>
+                <% if (usuarios != null) {
+                        for (String cat : usuarios) {%>
+                <option value="<%= cat%>"><%= cat%></option>
+                <%   }
+                } else { %>
+                <option value="">No hay propuestas disponibles</option>
+                <% }%>
+            </select>
+        </div>                
+    </table>
+</div>
 
-            <div class="d-flex justify-content-between m-1">
-                <div>
-                    <h1  id="titulo">Culturarte</h1>
-                </div>
-                <div  >
-                    <div class="d-flex align-items-center gap-2">        
-                        <div>
-                            <img height="100" width="100" class="rounded-circle border border-2 border-white "src="/imagenes/<%= imagen%>" alt="Foto de perfil">
-                        </div>
-                        <div>
-                            <p class="text-uppercase"><%= nombre%> <%= apellido%></p>
-                            <div class="d-flex align-items-center mb-3 gap-2">
-                                <div>
-                                    <a href="/perfil" class="btn btn-link p-1 ">Ver perfil  </a>
-                                </div>
-                                <div>
-                                    <form action="/logout" method="post">
-                                        <div>
-                                            <button type="submit" class="btn btn-link p-1 ">Cerrar sesión</button>
-                                        </div>
-                                    </form> 
-                                </div>
-                            </div> 
-                        </div>
-                    </div>       
-                </div>
-            </div>
-            <div class="d-flex gap-2 mb-3">
-                <a href="/seguir-usuario" class="btn btn-danger p-1 ">Seguir usuario</a>
-                <a href="/crear-propuesta" class="btn btn-danger p-1 ">Crear propuesta</a>
-                <a href="/registrar-colaboracion" class="btn btn-danger p-1 ">Registrar colaboracion</a>
+<script>
+    function obtenerUsuarioSeleccionado() {
+        const radios = document.getElementsByName("usuarioSeleccionado");
+        let usuarioSeleccionado = null;
 
-            </div>
+        for (const radio of radios) {
+            if (radio.checked) {
+                usuarioSeleccionado = radio.value;
+                break;
+            }
+        }
 
-        </div>
-
-        
-            <div class="table-responsive float-start" style="width: 20%;">
-            <table class="table table-striped table-bordered">
-                <thead class="table-light">
-                    <tr>
-                        <th>Usuario</th>
-                        <th>Seleccionar</th>
-
-
-                    </tr>
-                </thead>
-                <%
-                    List<String> usuarios = (List<String>) request.getAttribute("usuarios");
-                    for (String u : usuarios) {
-                %>
-                <tr>
-                    <td><%= u%></td>
-                    <td>
-                        <input type="radio" name="usuarioSeleccionado" value="<%= u%>" class="form-check-input" onchange="obtenerUsuarioSeleccionado()"">
-                    </td>
-                </tr>
-   
-                   </table>
-        </div>
-                    
-                    <script>
-                    function obtenerUsuarioSeleccionado() {
-                        const radios = document.getElementsByName("usuarioSeleccionado");
-                        let usuarioSeleccionado = null;
-
-                        for (const radio of radios) {
-                            if (radio.checked) {
-                                usuarioSeleccionado = radio.value;
-                                break;
-                            }
-                        }
-
-                        return usuarioSeleccionado;
-                    }
-                </script> 
+        return usuarioSeleccionado;
+    }
+</script> 
 </html>

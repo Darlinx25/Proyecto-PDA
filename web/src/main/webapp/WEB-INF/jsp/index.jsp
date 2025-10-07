@@ -85,6 +85,7 @@
         </div>
         <% }%>
 
+        
 <div class="container" >
     <ul class="nav nav-tabs">
         <li><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#PCreadas" data-estado="1" onclick="propPorEstado(this)">Propuestas Creadas</button></li>
