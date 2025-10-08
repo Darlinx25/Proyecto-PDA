@@ -229,12 +229,13 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
         labelCategoria1 = new javax.swing.JLabel();
         campoFechaRealizar = new javax.swing.JFormattedTextField();
         comboEstado = new javax.swing.JComboBox<>();
-        arbolCategoria = new javax.swing.JTree(this.controller.listarCategorias());
         checkRetornoGanancia = new javax.swing.JCheckBox();
         labelRetorno = new javax.swing.JLabel();
         checkRetornoGratis = new javax.swing.JCheckBox();
         campoPrecioEntrada = new javax.swing.JFormattedTextField();
         campoMontoReunir = new javax.swing.JFormattedTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        arbolCategoria = new javax.swing.JTree(this.controller.listarCategorias());
 
         labelImagen.setText("jLabel2");
 
@@ -352,6 +353,8 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
             }
         });
 
+        jScrollPane3.setViewportView(arbolCategoria);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -373,7 +376,7 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(labelRetorno)
                         .addGap(65, 65, 65))
-                    .addComponent(arbolCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3))
                 .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(labelDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -426,7 +429,7 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(labelPrecio)
                                     .addComponent(campoPrecioEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(arbolCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -560,6 +563,7 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel labelCategoria;
     private javax.swing.JLabel labelCategoria1;
     private javax.swing.JLabel labelDescripcion;

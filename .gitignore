@@ -1,5 +1,6 @@
 # Maven
 estacion/target/
+estacion/src/main/java/culturarte/graficos/*.form
 web/src/main/java/culturarte/excepciones
 web/src/main/java/culturarte/logica
 web/src/main/java/culturarte/utils
