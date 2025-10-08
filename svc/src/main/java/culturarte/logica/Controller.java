@@ -22,6 +22,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
@@ -130,6 +131,7 @@ public class Controller implements IController {
         entPor.add(TipoRetorno.PORCENTAJE_GANANCIAS);
         entPor.add(TipoRetorno.ENTRADA_GRATIS);
         Propuesta aux;
+        Estado publicada;
         List<Estado> listAux;
         DTPropuesta prop;
         prop = new DTPropuesta("Cine en el Botánico",
@@ -141,10 +143,13 @@ public class Controller implements IController {
         aux = emr.find(Propuesta.class, "Cine en el Botánico");
         listAux = new ArrayList<>();
         listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 5, 15, 15, 30)));
-        listAux.add(new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 5, 17, 8, 30)));
+        publicada = new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 5, 17, 8, 30));
+        listAux.add(publicada);
+        aux.setFechaPublicacion(publicada.getFechaEstado().toLocalDate());
         listAux.add(new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 5, 20, 14, 30)));
         listAux.add(new Estado(EstadoPropuesta.FINANCIADA, LocalDateTime.of(2017, 5, 30, 18, 30)));
         aux.setHistorialEstados(listAux);
+        emr.mod(aux);
 
         prop = new DTPropuesta("Religiosamente",
                 "MOMOSAPIENS presenta \"Religiosamente\". Mediante dos parodias y un hilo conductor que aborda la temática de la "
@@ -156,9 +161,12 @@ public class Controller implements IController {
         aux = emr.find(Propuesta.class, "Religiosamente");
         listAux = new ArrayList<>();
         listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 6, 18, 4, 28)));
-        listAux.add(new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 6, 20, 4, 56)));
+        publicada = new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 6, 20, 4, 56));
+        listAux.add(publicada);
+        aux.setFechaPublicacion(publicada.getFechaEstado().toLocalDate());
         listAux.add(new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 6, 30, 14, 25)));
         aux.setHistorialEstados(listAux);
+        emr.mod(aux);
 
         prop = new DTPropuesta("El Pimiento Indomable",
                 "El Pimiento Indomable, formación compuesta por Kiko Veneno y el uruguayo Martín Buscaglia, presentará este 19 de "
@@ -170,8 +178,11 @@ public class Controller implements IController {
         aux = emr.find(Propuesta.class, "El Pimiento Indomable");
         listAux = new ArrayList<>();
         listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 7, 26, 15, 30)));
-        listAux.add(new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 7, 31, 8, 30)));
+        publicada = new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 7, 31, 8, 30));
+        listAux.add(publicada);
+        aux.setFechaPublicacion(publicada.getFechaEstado().toLocalDate());
         aux.setHistorialEstados(listAux);
+        emr.mod(aux);
 
         prop = new DTPropuesta("Pilsen Rock",
                 "La edición 2017 del Pilsen Rock se celebrará el 21 de Octubre en la Rural del Prado y contará con la participación de más "
@@ -182,8 +193,11 @@ public class Controller implements IController {
         aux = emr.find(Propuesta.class, "Pilsen Rock");
         listAux = new ArrayList<>();
         listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 7, 30, 15, 40)));
-        listAux.add(new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 1, 14, 30)));
+        publicada = new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 1, 14, 30));
+        listAux.add(publicada);
+        aux.setFechaPublicacion(publicada.getFechaEstado().toLocalDate());
         aux.setHistorialEstados(listAux);
+        emr.mod(aux);
 
         prop = new DTPropuesta("Romeo y Julieta",
                 "Romeo y Julieta de Kenneth MacMillan, uno de los ballets favoritos del director artístico Julio Bocca, se presentará "
@@ -195,8 +209,11 @@ public class Controller implements IController {
         aux = emr.find(Propuesta.class, "Romeo y Julieta");
         listAux = new ArrayList<>();
         listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 8, 4, 12, 20)));
-        listAux.add(new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 10, 10, 25)));
+        publicada = new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 10, 10, 25));
+        listAux.add(publicada);
+        aux.setFechaPublicacion(publicada.getFechaEstado().toLocalDate());
         aux.setHistorialEstados(listAux);
+        emr.mod(aux);
 
         prop = new DTPropuesta("Un día de Julio",
                 "La Catalina presenta el espectáculo \"Un Día de Julio\" en Landia. Un hombre misterioso y solitario vive encerrado entre las "
@@ -207,8 +224,11 @@ public class Controller implements IController {
         aux = emr.find(Propuesta.class, "Un día de Julio");
         listAux = new ArrayList<>();
         listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 8, 6, 2, 0)));
-        listAux.add(new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 12, 4, 50)));
+        publicada = new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 12, 4, 50));
+        listAux.add(publicada);
+        aux.setFechaPublicacion(publicada.getFechaEstado().toLocalDate());
         aux.setHistorialEstados(listAux);
+        emr.mod(aux);
 
         prop = new DTPropuesta("El Lazarillo de Tormes",
                 "Vuelve unas de las producciones de El Galpón más aclamadas de los últimos tiempos. Esta obra se ha presentado en "
@@ -220,7 +240,9 @@ public class Controller implements IController {
         aux = emr.find(Propuesta.class, "El Lazarillo de Tormes");
         listAux = new ArrayList<>();
         listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 8, 18, 2, 40)));
+        aux.setFechaPublicacion(LocalDate.of(2017, 8, 20));
         aux.setHistorialEstados(listAux);
+        emr.mod(aux);
 
         prop = new DTPropuesta("Bardo en la FING",
                 "El 10 de Diciembre se presentará Bardo Científico en la FING. El humor puede ser usado como una herramienta "
@@ -802,7 +824,7 @@ public class Controller implements IController {
             return;
         }
         EstadoPropuesta ese = prop.getEstadoActual().getEstado();
-        if (ese.ordinal() == 1) {
+        if (ese.ordinal() == 1 && aux.getFechaPublicacion() == null) {
             aux.setFechaPublicacion(LocalDate.now());
         }
         aux.setDescripcion(prop.getDescripcion());
