@@ -30,15 +30,15 @@ function propuestaElegida() {
                         retornoDiv.innerHTML = `
                     <p><strong>Título:</strong> ${data.titulo}</p>
                     <p><strong>Descripción:</strong> ${data.descripcion}</p>
-                    <p><strong>Imagen:</strong> ${data.imagen ? '<img src="/imagenes/' + data.imagen + '" alt="' + data.titulo + '" style="max-width:100%;border-radius:5px;">' : 'N/A'}</p>
+                    <p><strong>Imagen:</strong> <img src="/imagenes/${data.imagen}" onerror="this.src='/resources/images/propdefault.png';" alt="${data.titulo}" style="max-width:100%;border-radius:5px;"></p>
                     <p><strong>Lugar de realización:</strong> ${data.lugarRealizara}</p>
-                    <p><strong>Fecha prevista:</strong> ${data.fechaPrevista}</p>
+                    <p><strong>Fecha prevista:</strong> ${data.fechaRealizara}</p>
                     <p><strong>Fecha publicación:</strong> ${data.fechaPublicacion}</p>
                     <p><strong>Precio entrada:</strong> $${data.precioEntrada}</p>
                     <p><strong>Monto a reunir:</strong> $${data.montoAReunir}</p>
-                    <p><strong>Categoría:</strong> ${data.categoria}</p>
+                    <p><strong>Categoría:</strong> ${data.tipoPropuesta}</p>
                     <p><strong>Propuesta de:</strong> ${data.nickProponedor}</p>
-                    <p><strong>Estado actual:</strong> ${data.estadoActual}</p> 
+                    <p><strong>Estado actual:</strong> ${data.estadoActual.estado}</p> 
                     <div class="mb-3">
                     <label for="opcion" class="form-label"><strong>Tipo de retorno:</strong></label>
                     <select class="form-select form-select-m" id="opcion" name="opcion" required>
