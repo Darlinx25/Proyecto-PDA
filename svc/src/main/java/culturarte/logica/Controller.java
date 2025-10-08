@@ -146,6 +146,7 @@ public class Controller implements IController {
         publicada = new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 5, 17, 8, 30));
         listAux.add(publicada);
         aux.setFechaPublicacion(publicada.getFechaEstado().toLocalDate());
+        aux.setFechaFinanciacion(aux.getFechaPublicacion());
         listAux.add(new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 5, 20, 14, 30)));
         listAux.add(new Estado(EstadoPropuesta.FINANCIADA, LocalDateTime.of(2017, 5, 30, 18, 30)));
         aux.setHistorialEstados(listAux);
@@ -164,6 +165,7 @@ public class Controller implements IController {
         publicada = new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 6, 20, 4, 56));
         listAux.add(publicada);
         aux.setFechaPublicacion(publicada.getFechaEstado().toLocalDate());
+        aux.setFechaFinanciacion(aux.getFechaPublicacion());
         listAux.add(new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2017, 6, 30, 14, 25)));
         aux.setHistorialEstados(listAux);
         emr.mod(aux);
@@ -181,6 +183,7 @@ public class Controller implements IController {
         publicada = new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 7, 31, 8, 30));
         listAux.add(publicada);
         aux.setFechaPublicacion(publicada.getFechaEstado().toLocalDate());
+        aux.setFechaFinanciacion(aux.getFechaPublicacion());
         aux.setHistorialEstados(listAux);
         emr.mod(aux);
 
@@ -196,6 +199,7 @@ public class Controller implements IController {
         publicada = new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 1, 14, 30));
         listAux.add(publicada);
         aux.setFechaPublicacion(publicada.getFechaEstado().toLocalDate());
+        aux.setFechaFinanciacion(aux.getFechaPublicacion());
         aux.setHistorialEstados(listAux);
         emr.mod(aux);
 
@@ -212,6 +216,7 @@ public class Controller implements IController {
         publicada = new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 10, 10, 25));
         listAux.add(publicada);
         aux.setFechaPublicacion(publicada.getFechaEstado().toLocalDate());
+        aux.setFechaFinanciacion(aux.getFechaPublicacion());
         aux.setHistorialEstados(listAux);
         emr.mod(aux);
 
@@ -227,6 +232,7 @@ public class Controller implements IController {
         publicada = new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 12, 4, 50));
         listAux.add(publicada);
         aux.setFechaPublicacion(publicada.getFechaEstado().toLocalDate());
+        aux.setFechaFinanciacion(aux.getFechaPublicacion());
         aux.setHistorialEstados(listAux);
         emr.mod(aux);
 
@@ -241,6 +247,7 @@ public class Controller implements IController {
         listAux = new ArrayList<>();
         listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 8, 18, 2, 40)));
         aux.setFechaPublicacion(LocalDate.of(2017, 8, 20));
+        aux.setFechaFinanciacion(aux.getFechaPublicacion());
         aux.setHistorialEstados(listAux);
         emr.mod(aux);
 
@@ -720,7 +727,7 @@ public class Controller implements IController {
                         p.getPrecioEntrada(), p.getMontoAReunir(), dineroRecaudado, p.getFechaPublicacion(),
                         p.getTipoPropuesta().getNombre(),
                         p.getProponedor().getNickname(),
-                        p.getTiposRetorno(), p.getEstadoActual());
+                        p.getTiposRetorno(), p.getEstadoActual(),p.getFechaFinanciacion());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -780,6 +787,7 @@ public class Controller implements IController {
             prop.setEstadoActual(estadoNuevo);
             if (estProp == EstadoPropuesta.PUBLICADA) {
                 prop.setFechaPublicacion(estadoNuevo.getFechaEstado().toLocalDate());
+                prop.setFechaFinanciacion(prop.getFechaPublicacion());
             }
             emr.mod(prop);
         }
@@ -795,6 +803,7 @@ public class Controller implements IController {
             prop.setEstadoActual(estadoNuevo);
             if (estProp == EstadoPropuesta.PUBLICADA) {
                 prop.setFechaPublicacion(estadoNuevo.getFechaEstado().toLocalDate());
+                prop.setFechaFinanciacion(prop.getFechaPublicacion());
             }
             emr.mod(prop);
         }

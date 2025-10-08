@@ -29,6 +29,8 @@ public class Propuesta {
     private float precioEntrada;
     private float montoAReunir;
     private LocalDate fechaPublicacion;
+    private LocalDate fechaFinanciacion;
+   
     
     @ElementCollection
     private List<TipoRetorno> tiposRetorno;
@@ -44,6 +46,8 @@ public class Propuesta {
     @Embedded
     private Estado estadoActual;
     
+    
+    
     @ElementCollection
     private List<Estado> historialEstados;
     
@@ -55,7 +59,7 @@ public class Propuesta {
     }
     
     public Propuesta(String titulo, String descripcion, String imagen, String lugarRealizara, LocalDate fechaRealizara, float precioEntrada, 
-            float montoAReunir, List<TipoRetorno> tiposRetorno, Categoria tipoPropuesta, Proponente proponente,Estado estadoActual ) {
+            float montoAReunir, List<TipoRetorno> tiposRetorno, Categoria tipoPropuesta, Proponente proponente,Estado estadoActual) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.imagen = imagen;
@@ -70,6 +74,7 @@ public class Propuesta {
         this.estadoActual = estadoActual;
         this.historialEstados = new ArrayList<>();
         this.colaboraciones = new ArrayList<>();
+        this.fechaFinanciacion = null; //se cambia cuando el estado pasa a publicada y se consigue fecha de publicacion
     }
 
     
@@ -136,6 +141,14 @@ public class Propuesta {
 
     public void setFechaPublicacion(LocalDate fechaPublicacion) {
         this.fechaPublicacion = fechaPublicacion;
+    }
+    
+    public LocalDate getFechaFinanciacion(){
+        return fechaFinanciacion;
+    }
+    
+    public void setFechaFinanciacion(LocalDate fechaPublicacion){
+        this.fechaFinanciacion = fechaPublicacion.plusDays(30);
     }
 
     public List<TipoRetorno> getTiposRetorno() {

@@ -9,10 +9,14 @@ function propPorEstado(btn) {
             .then(data => {
                 const tabDiv = document.querySelector(tabId);
                 tabDiv.innerHTML = "";
+                
 
                 data.forEach(prop => {
                     const div = document.createElement("div");
                     div.className = "mb-2 p-2 border rounded bg-light";
+                    const fechaPublicacion = new Date(prop.fechaPublicacion);
+                    const fechaFinanciacion = new Date(prop.fechaFinanciacion);
+                    const diferenciaDias = Math.ceil((fechaFinanciacion - fechaPublicacion) / (1000 * 3600 * 24)); //  el calculo matematico es para transformarlo en dias
                     div.innerHTML = `
                         <div class="d-flex align-items-center gap-5">
                             <div ">
@@ -34,6 +38,7 @@ function propPorEstado(btn) {
                                 <p><strong>Precio de entrada:</strong> $${prop.precioEntrada}</p>
                                 <p><strong>Tipos de retorno:</strong> ${prop.tiposRetorno}</p>
                                 <p><strong>Monto a reunir: </strong> $${prop.montoAReunir}</p>
+                                <p><strong>Dias restantes para Financiación: </strong> ${diferenciaDias}</p>
                             </div>
                         </div>        
                             `;
