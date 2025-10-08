@@ -41,16 +41,17 @@ import javax.swing.tree.DefaultMutableTreeNode;
 public class Controller implements IController {
 
     private static Controller instancia;
-    private Manejador emr = Manejador.getInstance();
+    
 
     private Controller() {
-
+        Manejador emr = Manejador.getInstance();
         // Verificar si la raíz ya existe en la DB
         Categoria raiz = emr.find(Categoria.class, "Categorías");
         if (raiz == null) {
             raiz = new Categoria("Categorías");
             emr.add(raiz);
         }
+        emr.close();
     }
 
     public static Controller getInstance() {
@@ -100,6 +101,7 @@ public class Controller implements IController {
     }
 
     private void realizarColaboracionPaPrueba(String nickColab, String tituloProp, LocalDateTime fecha, float montoColab, String tipoRetorno) throws PropuestaYaColaboradaException {
+        Manejador emr = Manejador.getInstance();
         Colaborador colab = emr.find(Colaborador.class, nickColab);
         Propuesta prop = emr.find(Propuesta.class, tituloProp);
         List<String> aux = new ArrayList<>();
@@ -111,12 +113,15 @@ public class Controller implements IController {
             colaboracion.setFechaHora(fecha);
 
             emr.add(colaboracion);
+            emr.close();
         } else {
+            emr.close();
             throw new PropuestaYaColaboradaException(nickColab + " ya tiene una colaboración con " + tituloProp);
         }
     }
 
     private void cargarPropuestasPrueba() throws PropuestaDuplicadaException {
+        Manejador emr = Manejador.getInstance();
         List<TipoRetorno> porcentaje = new ArrayList<>();
         porcentaje.add(TipoRetorno.PORCENTAJE_GANANCIAS);
         List<TipoRetorno> entrada = new ArrayList<>();
@@ -130,7 +135,7 @@ public class Controller implements IController {
         prop = new DTPropuesta("Cine en el Botánico",
                 "El 16 de Diciembre a la hora 20 se proyectará la película \"Clever\", en el Jardín Botánico (Av. 19 de Abril 1181) en el marco"
                 + " de las actividades realizadas por el ciclo Cultura al Aire Libre. El largometraje uruguayo de ficción Clever es dirigido por "
-                + "Federico Borgia y Guillermo Madeiro. Es apto para mayores de 15 años.", "CEBimg.jpg", "Jardín Botánico",
+                + "Federico Borgia y Guillermo Madeiro. Es apto para mayores de 15 años.", null, "Jardín Botánico",
                 LocalDate.of(2017, 9, 16), 200, 150000, "Cine al Aire Libre", "diegop", porcentaje, new Estado(EstadoPropuesta.CANCELADA, LocalDateTime.of(2017, 6, 15, 14, 50)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "Cine en el Botánico");
@@ -209,7 +214,7 @@ public class Controller implements IController {
                 "Vuelve unas de las producciones de El Galpón más aclamadas de los últimos tiempos. Esta obra se ha presentado en "
                 + "Miami, Nueva York, Washington, México, Guadalajara, Río de Janeiro y La Habana. En nuestro país, El Lazarillo de "
                 + "Tormes fue nominado en los rubros mejor espectáculo y mejor dirección a los Premios Florencio 1995, obteniendo su "
-                + "protagonista Héctor Guido el Florencio a Mejor actor de ese año.", "LDTimg.jpg", "Teatro el Galpón",
+                + "protagonista Héctor Guido el Florencio a Mejor actor de ese año.", null, "Teatro el Galpón",
                 LocalDate.of(2017, 12, 3), 350, 175000, "Teatro Dramático", "hectorg", entrada, new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2017, 8, 20, 21, 58)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "El Lazarillo de Tormes");
@@ -221,9 +226,10 @@ public class Controller implements IController {
                 "El 10 de Diciembre se presentará Bardo Científico en la FING. El humor puede ser usado como una herramienta "
                 + "importante para el aprendizaje y la democratización de la ciencia, los monólogos científicos son una forma didáctica de "
                 + "apropiación del conocimiento científico y contribuyen a que el público aprenda ciencia de forma amena. Los invitamos a "
-                + "pasar un rato divertido, en un espacio en el cual aprenderán cosas de la ciencia que los sorprenderán. ¡Los esperamos!", "BEFimg.jpg", "Anfiteatro Edificio \"José Luis Massera\"",
+                + "pasar un rato divertido, en un espacio en el cual aprenderán cosas de la ciencia que los sorprenderán. ¡Los esperamos!", null, "Anfiteatro Edificio \"José Luis Massera\"",
                 LocalDate.of(2017, 12, 10), 200, 100000, "Stand-up", "losBardo", entrada, new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2017, 8, 23, 2, 12)));
         addPropuesta(prop);
+        emr.close();
     }
 
     private void cargarCategoriasPrueba() throws CategoriaDuplicadaException {
@@ -368,10 +374,10 @@ public class Controller implements IController {
                 "https://www.facebook.com/C1080?ref=br_rs", "cachilas", "Waldemar “Cachila”", "Silva", "12345678".toCharArray(), "12345678".toCharArray(), "Cachila.sil@c1080.org.uy", LocalDate.of(1947, 1, 1), "CSimg.jpg"));
 
         usu.add(new DTProponente(new DTDireccion("Montevideo", " Benito Blanco", 4321), "",
-                "", "juliob", "Julio", "Bocca", "12345678".toCharArray(), "12345678".toCharArray(), "juliobocca@sodre.com.uy", LocalDate.of(1967, 3, 16), "JBimg.jpg"));
+                "", "juliob", "Julio", "Bocca", "12345678".toCharArray(), "12345678".toCharArray(), "juliobocca@sodre.com.uy", LocalDate.of(1967, 3, 16), null));
 
         usu.add(new DTProponente(new DTDireccion("Montevideo", " Emilio Frugoni Ap. 02", 1138), "",
-                "http://www.efectocine.com", "diegop", "Diego", "Parodi", "12345678".toCharArray(), "12345678".toCharArray(), "diego@efectocine.com", LocalDate.of(1975, 1, 1), "DPimg.jpg"));
+                "http://www.efectocine.com", "diegop", "Diego", "Parodi", "12345678".toCharArray(), "12345678".toCharArray(), "diego@efectocine.com", LocalDate.of(1975, 1, 1), null));
 
         usu.add(new DTProponente(new DTDireccion("Montevideo", " Paraguay", 1423), "",
                 "", "kairoh", "Kairo", "Herrera", "12345678".toCharArray(), "12345678".toCharArray(), "kairoher@pilsenrock.com.uy", LocalDate.of(1840, 4, 25), "KHimg.jpg"));
@@ -387,7 +393,7 @@ public class Controller implements IController {
 
     private List<DTUsuario> obtenerColaboradoresPrueba() {
         List<DTUsuario> usu = new ArrayList<>();
-        usu.add(new DTColaborador("robinh", "Robin", "Henderson", "12345678".toCharArray(), "12345678".toCharArray(), "Robin.h@tinglesa.com.uy", LocalDate.of(1940, 8, 3), "RHimg.jpg"));
+        usu.add(new DTColaborador("robinh", "Robin", "Henderson", "12345678".toCharArray(), "12345678".toCharArray(), "Robin.h@tinglesa.com.uy", LocalDate.of(1940, 8, 3), null));
 
         usu.add(new DTColaborador("marcelot", "Marcelo", "Tinelli", "12345678".toCharArray(), "12345678".toCharArray(), "marcelot@ideasdelsur.com.ar", LocalDate.of(1960, 4, 1), "MTimg.jpg"));
 
@@ -395,19 +401,19 @@ public class Controller implements IController {
 
         usu.add(new DTColaborador("sergiop", "Sergio", "Puglia", "12345678".toCharArray(), "12345678".toCharArray(), "puglia@alpanpan.com.uy", LocalDate.of(1950, 1, 28), "SPimg.jpg"));
 
-        usu.add(new DTColaborador("chino", "Alvaro", "Recoba", "12345678".toCharArray(), "12345678".toCharArray(), "chino@trico.org.uy", LocalDate.of(1976, 3, 17), "ARimg.jpg"));
+        usu.add(new DTColaborador("chino", "Alvaro", "Recoba", "12345678".toCharArray(), "12345678".toCharArray(), "chino@trico.org.uy", LocalDate.of(1976, 3, 17), null));
 
         usu.add(new DTColaborador("tonyp", "Antonio", "Pacheco", "12345678".toCharArray(), "12345678".toCharArray(), "eltony@manya.org.uy", LocalDate.of(1955, 2, 14), "APimg.jpg"));
 
         usu.add(new DTColaborador("nicoJ", "Nicolás", "Jodal", "12345678".toCharArray(), "12345678".toCharArray(), "jodal@artech.com.uy", LocalDate.of(1960, 8, 9), "NJimg.jpg"));
 
-        usu.add(new DTColaborador("juanP", "Juan", "Perez", "12345678".toCharArray(), "12345678".toCharArray(), "juanp@elpueblo.com", LocalDate.of(1970, 1, 1), "JPimg.jpg"));
+        usu.add(new DTColaborador("juanP", "Juan", "Perez", "12345678".toCharArray(), "12345678".toCharArray(), "juanp@elpueblo.com", LocalDate.of(1970, 1, 1), null));
 
-        usu.add(new DTColaborador("Mengano", "Mengano", "Gómez", "12345678".toCharArray(), "12345678".toCharArray(), "menganog@elpueblo.com", LocalDate.of(1982, 2, 2), "MGimg.jpg"));
+        usu.add(new DTColaborador("Mengano", "Mengano", "Gómez", "12345678".toCharArray(), "12345678".toCharArray(), "menganog@elpueblo.com", LocalDate.of(1982, 2, 2), null));
 
-        usu.add(new DTColaborador("Perengano", "Perengano", "López", "12345678".toCharArray(), "12345678".toCharArray(), "pere@elpueblo.com", LocalDate.of(1985, 3, 3), "PLimg.jpg"));
+        usu.add(new DTColaborador("Perengano", "Perengano", "López", "12345678".toCharArray(), "12345678".toCharArray(), "pere@elpueblo.com", LocalDate.of(1985, 3, 3), null));
 
-        usu.add(new DTColaborador("Tiajaci", "Tía", "Jacinta", "12345678".toCharArray(), "12345678".toCharArray(), "jacinta@elpueblo.com", LocalDate.of(1990, 4, 4), "TJimg.jpg"));
+        usu.add(new DTColaborador("Tiajaci", "Tía", "Jacinta", "12345678".toCharArray(), "12345678".toCharArray(), "jacinta@elpueblo.com", LocalDate.of(1990, 4, 4), null));
 
         return usu;
     }
@@ -416,13 +422,16 @@ public class Controller implements IController {
     // <editor-fold defaultstate="collapsed" desc="Funciones usuarios.">
     @Override
     public void addUsuario(DTUsuario user) throws NickRepetidoException, EmailRepetidoException, BadPasswordException {
+        Manejador emr = Manejador.getInstance();
         String nick = user.getNickname();
         String email = user.getEmail();
 
         if (emr.datoUsuarioRepetido("nickname", nick) > 0) {
+            emr.close();
             throw new NickRepetidoException("Error al registrar usuario, Nick ya existente.");
         }
         if (emr.datoUsuarioRepetido("email", email) > 0) {
+            emr.close();
             throw new EmailRepetidoException("Error al registrar usuario, Email ya existente.");
         }
         validarPassword(user.getPassword(), user.getPasswordConfirm());
@@ -454,6 +463,7 @@ public class Controller implements IController {
         }
 
         emr.add(usu);
+        emr.close();
         
         Arrays.fill(user.getPassword(), 'x');
         Arrays.fill(user.getPasswordConfirm(), 'x');
@@ -461,12 +471,15 @@ public class Controller implements IController {
     
     @Override
     public ArrayList<String> listarColaboradores() {
+        Manejador emr = Manejador.getInstance();
         List<String> aux = emr.listarAtributo(String.class, "nickname", "Colaborador");
+        emr.close();
         return new ArrayList<>(aux);
     }
     
     @Override
     public DTColaborador obtenerDTColaborador(String nick) {
+        Manejador emr = Manejador.getInstance();
         try {
             Colaborador c = emr.find(Colaborador.class, nick);
             if (c != null) {
@@ -476,23 +489,31 @@ public class Controller implements IController {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            emr.close();
         }
         return null;
     }
     
     @Override
     public ArrayList<String> obtenerPropuestasColaboradas(String nick) {
-        return emr.propuestasColaboradas(nick);
+        Manejador emr = Manejador.getInstance();
+        ArrayList<String> aux = emr.propuestasColaboradas(nick);
+        emr.close();
+        return aux;
     }
     
     @Override
     public ArrayList<String> listarProponentes() {
+        Manejador emr = Manejador.getInstance();
         List<String> aux = emr.listarAtributo(String.class, "nickname", "Proponente");
+        emr.close();
         return new ArrayList<>(aux);
     }
     
     @Override
     public DTProponente obtenerDTProponente(String nick) {
+        Manejador emr = Manejador.getInstance();
         try {
             Proponente p = emr.find(Proponente.class, nick); // Buscar proponente por PK
             if (p != null) {
@@ -510,23 +531,31 @@ public class Controller implements IController {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            emr.close();
         }
         return null;
     }
     
     @Override
     public ArrayList<String> listarColaboracionesColaborador(String nickColab) {
-        return emr.colaboracionesColaborador(nickColab);
+        Manejador emr = Manejador.getInstance();
+        ArrayList<String> aux = emr.colaboracionesColaborador(nickColab);
+        emr.close();
+        return aux;
     }
     
     @Override
     public ArrayList<String> listarUsuarios() {
+        Manejador emr = Manejador.getInstance();
         List<String> aux = emr.listarAtributo(String.class, "nickname", "Usuario");
+        emr.close();
         return new ArrayList<>(aux);
     }
     
     @Override
     public ResultadoSeguirUsuario seguirUsuario(String nickSegui, String nickUsu) {
+        Manejador emr = Manejador.getInstance();
         List<Usuario> usu1 = emr.obtenerUsuario(nickSegui);
 
         List<Usuario> usu2 = emr.obtenerUsuario(nickUsu);
@@ -535,11 +564,13 @@ public class Controller implements IController {
         aux.add(usu2.get(0));
         usu1.get(0).setUsuariosSeguidos(aux);
         emr.add(usu1.get(0));
+        emr.close();
         return ResultadoSeguirUsuario.EXITO;
     }
     
     @Override
     public ResultadoSeguirUsuario dejarDeSeguirUsuario(String nickSegui, String nickSiguiendo) {
+        Manejador emr = Manejador.getInstance();
         List<Usuario> usu1 = emr.obtenerUsuario(nickSegui);
 
         List<Usuario> usu2 = emr.obtenerUsuario(nickSiguiendo);
@@ -548,22 +579,29 @@ public class Controller implements IController {
         aux.remove(usu2.get(0));
         usu1.get(0).setUsuariosSeguidos(aux);
         emr.add(usu1.get(0));
+        emr.close();
         return ResultadoSeguirUsuario.EXITO;
     }
     
     @Override
     public ArrayList<String> listaPropuestasUsu(String nick) {
-
-        return emr.listaPropuestasUsuario(nick);
+        Manejador emr = Manejador.getInstance();
+        ArrayList<String> aux = emr.listaPropuestasUsuario(nick);
+        emr.close();
+        return aux;
     }
     
     @Override
     public ArrayList<String> listarUsuariosSeguir(String nickname) {
-        return emr.obtenerUsuariosSeguir(nickname);
+        Manejador emr = Manejador.getInstance();
+        ArrayList<String> aux = emr.obtenerUsuariosSeguir(nickname);
+        emr.close();
+        return aux;
     }
     
     @Override
     public ArrayList<String> listarUsuariosSiguiendo(String nickname) {
+        Manejador emr = Manejador.getInstance();
         List<Usuario> aux;
         List<Usuario> aux2;
         List<String> aux3 = new ArrayList<>();
@@ -576,6 +614,8 @@ public class Controller implements IController {
         } catch (Exception e) {
             aux3 = Collections.emptyList();
             e.printStackTrace();
+        } finally {
+            emr.close();
         }
         return (ArrayList<String>) aux3;
     }
@@ -584,14 +624,19 @@ public class Controller implements IController {
     // <editor-fold defaultstate="collapsed" desc="Funciones categorías.">
     @Override
     public DefaultMutableTreeNode listarCategorias() {
+        Manejador emr = Manejador.getInstance();
         Categoria catRaiz = emr.find(Categoria.class, "Categorías");
-        return nodosArbolCategorias(catRaiz);
+        DefaultMutableTreeNode arbol = nodosArbolCategorias(catRaiz);
+        emr.close();
+        return arbol;
     }
     
     @Override
     public void addCategoria(String nombre, String nombrePadre) throws CategoriaDuplicadaException {
+        Manejador emr = Manejador.getInstance();
         Categoria existente = emr.find(Categoria.class, nombre);
         if (existente != null) {
+            emr.close();
             throw new CategoriaDuplicadaException("Ya existe una categoría con ese nombre");
         }
         Categoria cat = new Categoria(nombre);
@@ -607,14 +652,17 @@ public class Controller implements IController {
             cat.setPadre(raiz);
         }
         emr.add(cat);
+        emr.close();
     }
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Funciones propuestas.">
     @Override
     public void addPropuesta(DTPropuesta prop) throws PropuestaDuplicadaException {
+        Manejador emr = Manejador.getInstance();
         String titulo = prop.getTitulo();
         if (emr.find(Propuesta.class, titulo) != null) {
+            emr.close();
             throw new PropuestaDuplicadaException("Ya existe una propuesta con ese titulo.");
         }
         String descripcion = prop.getDescripcion();
@@ -634,13 +682,16 @@ public class Controller implements IController {
                 tipoPropuesta, proponedor, est);
 
         emr.add(propuesta);
+        emr.close();
     }
     
     @Override
     public DTPropuesta obtenerDTPropuesta(String titulo) {
+        Manejador emr = Manejador.getInstance();
         try {
             Propuesta p = emr.find(Propuesta.class, titulo);
             if (p != null) {
+                p.getTiposRetorno().size();//para que hibernate lo agarre antes de close porque es lazy
                 float dineroRecaudado = Float.parseFloat(this.obtenerDineroRecaudado(titulo));
                 return new DTPropuesta(
                         p.getTitulo(), p.getDescripcion(), p.getImagen(), p.getLugarRealizara(), p.getFechaRealizara(),
@@ -651,18 +702,25 @@ public class Controller implements IController {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            emr.close();
         }
         return null;
     }
     
     @Override
     public ArrayList<String> listarPropuestasEstado(int estado) {
-        return emr.obtenerPropuestasEstado(estado);
+        Manejador emr = Manejador.getInstance();
+        ArrayList<String> aux = emr.obtenerPropuestasEstado(estado);
+        emr.close();
+        return aux;
     }
     
     @Override
     public String obtenerDineroRecaudado(String tituloProp) {
+        Manejador emr = Manejador.getInstance();
         List<Float> aux = emr.obtenerDinero(tituloProp);
+        emr.close();
         float resultado = 0f;
         if (aux.isEmpty()) {
             return "0";
@@ -675,17 +733,23 @@ public class Controller implements IController {
     
     @Override
     public ArrayList<String> listarPropuestasProponentes() {
-
-        return emr.listPropuestasProponentes();
+        Manejador emr = Manejador.getInstance();
+        ArrayList<String> aux = emr.listPropuestasProponentes();
+        emr.close();
+        return aux;
     }
     
     @Override
     public ArrayList<String> listarPropuestasProponentesIngresadas() {
-        return emr.listPropuestasProponentesIngresadas();
+        Manejador emr = Manejador.getInstance();
+        ArrayList<String> aux = emr.listPropuestasProponentesIngresadas();
+        emr.close();
+        return aux;
     }
     
     @Override
     public void cambiarEstadoPropuestaIngresada(String tituloProp, EstadoPropuesta estProp) {
+        Manejador emr = Manejador.getInstance();
         Propuesta prop = emr.find(Propuesta.class, tituloProp);
         if (prop != null && prop.getEstadoActual().getEstado() == EstadoPropuesta.INGRESADA
                 && (estProp == EstadoPropuesta.PUBLICADA || estProp == EstadoPropuesta.CANCELADA)) {
@@ -697,9 +761,11 @@ public class Controller implements IController {
             }
             emr.mod(prop);
         }
+        emr.close();
     }
     @Override
       public void cambiarEstadoPropuesta(String tituloProp, EstadoPropuesta estProp) {
+        Manejador emr = Manejador.getInstance();
         Propuesta prop = emr.find(Propuesta.class, tituloProp);
         if (prop != null){
             Estado estadoNuevo = new Estado(estProp);
@@ -710,16 +776,20 @@ public class Controller implements IController {
             }
             emr.mod(prop);
         }
+        emr.close();
     }
     
     @Override
     public ArrayList<String> listarPropuestas() {
+        Manejador emr = Manejador.getInstance();
         List<String> aux = emr.listarAtributo(String.class, "titulo", "Propuesta");
+        emr.close();
         return new ArrayList<>(aux);
     }
     
     @Override
     public void modPropuesta(DTPropuesta prop) {
+        Manejador emr = Manejador.getInstance();
         String titulo = prop.getTitulo();
 
         Propuesta aux = null;
@@ -728,6 +798,7 @@ public class Controller implements IController {
             cat = emr.find(Categoria.class, prop.getTipoPropuesta());
             aux = emr.find(Propuesta.class, titulo);
         } catch (NoResultException e) {
+            emr.close();
             return;
         }
         EstadoPropuesta ese = prop.getEstadoActual().getEstado();
@@ -750,6 +821,7 @@ public class Controller implements IController {
         aux.setTipoPropuesta(cat);
         aux.setEstadoActual(prop.getEstadoActual());
         emr.mod(aux);
+        emr.close();
     }
     
     
@@ -758,6 +830,7 @@ public class Controller implements IController {
     // <editor-fold defaultstate="collapsed" desc="Funciones colaboraciones.">
     @Override
     public void realizarColaboracion(String nickColab, String tituloProp, float montoColab, String tipoRetorno) throws PropuestaYaColaboradaException {
+        Manejador emr = Manejador.getInstance();
         Colaborador colab = emr.find(Colaborador.class, nickColab);
         Propuesta prop = emr.find(Propuesta.class, tituloProp);
         List<String> aux = new ArrayList<>();
@@ -768,13 +841,16 @@ public class Controller implements IController {
             Colaboracion colaboracion = new Colaboracion(montoColab, tipoRetorno, colab, prop);
 
             emr.add(colaboracion);
+            emr.close();
         } else {
+            emr.close();
             throw new PropuestaYaColaboradaException(nickColab + " ya tiene una colaboración con " + tituloProp);
         }
     }
     
     @Override
     public DTColaboracion obtenerDTColaboracion(Long id) {
+        Manejador emr = Manejador.getInstance();
         try {
             Colaboracion c = emr.find(Colaboracion.class, id);
             if (c != null) {
@@ -784,30 +860,42 @@ public class Controller implements IController {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            emr.close();
         }
         return null;
     }
     
     @Override
     public ArrayList<String> listarColaboraciones() {
-        return emr.Colaboraciones();
+        Manejador emr = Manejador.getInstance();
+        ArrayList<String> aux = emr.Colaboraciones();
+        emr.close();
+        return aux;
     }
     
     @Override
     public void eliminarColaboracion(Long id) {
+        Manejador emr = Manejador.getInstance();
         emr.eliminarColab(id);
+        emr.close();
     }
     
     @Override
     public ArrayList<String> obtenerColaboradoresColaboracion(String tituloProp) {
-        return emr.colaboradoresColaboracion(tituloProp);
+        Manejador emr = Manejador.getInstance();
+        ArrayList<String> aux = emr.colaboradoresColaboracion(tituloProp);
+        emr.close();
+        return aux;
     }
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Funciones web.">
     @Override
     public String obtenerTipoUser(String nickname){
+        Manejador emr = Manejador.getInstance();
         Usuario usu =  emr.find(Usuario.class, nickname);
+        emr.close();
         if (usu == null){
             return null;
         }
@@ -820,7 +908,9 @@ public class Controller implements IController {
     
     @Override
     public boolean autenticarUsuario(String nickname, char[] password) {
+        Manejador emr = Manejador.getInstance();
         Usuario usu = emr.find(Usuario.class, nickname);
+        emr.close();
         if (usu == null) {
             return false;
         }
@@ -841,7 +931,10 @@ public class Controller implements IController {
     
     @Override
     public ArrayList<String> obtenerCategorias(){
-        return emr.darCategorias();
+        Manejador emr = Manejador.getInstance();
+        ArrayList<String> aux = emr.darCategorias();
+        emr.close();
+        return aux;
     }
 
     @Override
@@ -867,7 +960,9 @@ public class Controller implements IController {
     // buscar por patrón en título, descripción y lugar
     @Override
     public ArrayList<DTPropuesta> buscarPropuestasTDL(String patron) {
+        Manejador emr = Manejador.getInstance();
         ArrayList<String> titulosProps = emr.obtenerTitulosPropPatron(patron);
+        emr.close();
         
         ArrayList<DTPropuesta> propuestas = new ArrayList();
         

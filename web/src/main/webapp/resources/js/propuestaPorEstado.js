@@ -18,7 +18,7 @@ function propPorEstado(btn) {
                             <div ">
                                 <p><strong>Título:</strong> ${prop.titulo}</p>
                                 <p><strong>Proponedor:</strong> ${prop.nickProponedor}</p>
-                                <p>${prop.imagen ? `<img src="/imagenes/${prop.imagen}" onerror="this.src='/resources/images/propdefault.png';" alt="${prop.titulo}" style="max-width:300px;border-radius:5px;">`: 'N/A'}</p>
+                                <p><img src="/imagenes/${prop.imagen}" onerror="this.src='/resources/images/propdefault.png';" alt="${prop.titulo}" style="max-width:300px;border-radius:5px;"></p>
                                 <p class="text-center"><strong>Dinero recaudado:</strong></p>
                                 <div class="progress" style="height: 25px;">
                                     <div class="progress-bar" style="width: ${(prop.dineroRecaudado / prop.montoAReunir) * 100}%">$${prop.dineroRecaudado}</div>
