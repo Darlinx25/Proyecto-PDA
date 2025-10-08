@@ -857,12 +857,20 @@ public class Controller implements IController {
         Propuesta prop = emr.find(Propuesta.class, tituloProp);
         List<String> aux = new ArrayList<>();
 
-        emr.propuestaColaboradaPorUser(nickColab, tituloProp);
+        aux = emr.propuestaColaboradaPorUser(nickColab, tituloProp);
 
         if (colab != null && prop != null && aux.isEmpty()) {
+            float montoRecaudado = Float.parseFloat(obtenerDineroRecaudado(prop.getTitulo()));
             Colaboracion colaboracion = new Colaboracion(montoColab, tipoRetorno, colab, prop);
-
             emr.add(colaboracion);
+            
+            if (prop.getEstadoActual().getEstado() == EstadoPropuesta.PUBLICADA) {
+                cambiarEstadoPropuesta(prop.getTitulo(), EstadoPropuesta.EN_FINANCIACION);
+            }
+            if (montoRecaudado + montoColab >= prop.getMontoAReunir()) {
+                cambiarEstadoPropuesta(prop.getTitulo(), EstadoPropuesta.FINANCIADA);
+            }
+            emr.mod(prop);
             emr.close();
         } else {
             emr.close();
