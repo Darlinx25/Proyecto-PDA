@@ -835,6 +835,7 @@ public class Controller implements IController {
         EstadoPropuesta ese = prop.getEstadoActual().getEstado();
         if (ese.ordinal() == 1 && aux.getFechaPublicacion() == null) {
             aux.setFechaPublicacion(LocalDate.now());
+            aux.setFechaFinanciacion(aux.getFechaPublicacion());
         }
         aux.setDescripcion(prop.getDescripcion());
         if (prop.getImagen() != null) {
