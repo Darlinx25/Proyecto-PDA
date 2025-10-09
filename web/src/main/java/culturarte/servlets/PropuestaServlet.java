@@ -99,6 +99,7 @@ public class PropuestaServlet extends HttpServlet {
                         DTPropuesta p = controller.obtenerDTPropuesta(t);
                         if (p != null) {
                             propuestas.add(p);
+                            
                         }
                     }
 

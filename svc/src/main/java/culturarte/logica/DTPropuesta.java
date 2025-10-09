@@ -20,7 +20,7 @@ public class DTPropuesta {
     private float montoAReunir;
     private float dineroRecaudado;
     private LocalDate fechaPublicacion;
-    private LocalDate fechaFinanciacion;
+    private LocalDate plazoFinanciacion;
     private String tipoPropuesta;
     private String nickProponedor;
     private List<TipoRetorno> tiposRetorno;
@@ -49,7 +49,7 @@ public class DTPropuesta {
         this.nickProponedor = nickProponedor;
         this.tiposRetorno = tiposRetorno;
         this.estadoActual = estadoActual;
-        this.fechaFinanciacion = fechaFinanciacion;
+        this.plazoFinanciacion = fechaFinanciacion;
     }
     
     //este para crear la propuesta
@@ -68,7 +68,7 @@ public class DTPropuesta {
         this.nickProponedor = nickProponedor;
         this.tiposRetorno = tiposRetorno;
         this.estadoActual = estadoActual;
-        this.fechaFinanciacion = null;
+        this.plazoFinanciacion = null;
     }
 
     public String getTitulo() {
@@ -122,4 +122,9 @@ public class DTPropuesta {
     public Estado getEstadoActual(){
         return estadoActual;
     }
+    
+    public LocalDate getPlazoFinanciacion(){
+        return plazoFinanciacion;
+    }
+    
 }

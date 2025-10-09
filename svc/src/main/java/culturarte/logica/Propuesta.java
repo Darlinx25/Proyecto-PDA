@@ -143,11 +143,11 @@ public class Propuesta {
         this.fechaPublicacion = fechaPublicacion;
     }
     
-    public LocalDate getFechaFinanciacion(){
+    public LocalDate getPlazoFinanciacion(){
         return fechaFinanciacion;
     }
     
-    public void setFechaFinanciacion(LocalDate fechaPublicacion){
+    public void setPlazoFinanciacion(LocalDate fechaPublicacion){
         this.fechaFinanciacion = fechaPublicacion.plusDays(30);
     }
 

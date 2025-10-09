@@ -14,9 +14,9 @@ function propPorEstado(btn) {
                 data.forEach(prop => {
                     const div = document.createElement("div");
                     div.className = "mb-2 p-2 border rounded bg-light";
-                    const fechaPublicacion = new Date(prop.fechaPublicacion);
-                    const fechaFinanciacion = new Date(prop.fechaFinanciacion);
-                    const diferenciaDias = Math.ceil((fechaFinanciacion - fechaPublicacion) / (1000 * 3600 * 24)); //  el calculo matematico es para transformarlo en dias
+                    const fechahoy = new Date();
+                    const fechaFinanciacion = new Date(prop.plazoFinanciacion);
+                    const diferenciaDias = Math.ceil((fechaFinanciacion - fechahoy) / (1000 * 3600 * 24)); //  el calculo matematico es para transformarlo en dias
                     div.innerHTML = `
                         <div class="d-flex align-items-center gap-5">
                             <div ">
