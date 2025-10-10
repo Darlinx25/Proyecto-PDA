@@ -42,7 +42,7 @@ import java.util.logging.Logger;
  *
  * @author mark
  */
-@WebServlet(name = "PropuestaServlet", urlPatterns = {"/propuestas", "/crear-propuesta", "/obtener-propuesta", "/obtener-propuesta-por-estado"})
+@WebServlet(name = "PropuestaServlet", urlPatterns = {"/propuestas", "/crear-propuesta", "/obtener-propuesta", "/obtener-propuesta-por-estado", "/extender-financiacion"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, //1MB+ se escriben al disco
         maxFileSize = 1024 * 1024 * 5, //5MB máximo por archivo
@@ -109,7 +109,16 @@ public class PropuestaServlet extends HttpServlet {
                     mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
                     mapper.writeValue(response.getWriter(), propuestas);
                 break;
-
+            case "/extender-financiacion":
+                HttpSession session = request.getSession(false);
+                String nick = session.getAttribute("username").toString();
+                ArrayList<String> propuestaProp = this.controller.listaPropuestasUsu(nick);
+                request.setAttribute("propuestas", propuestaProp);
+                request.getRequestDispatcher("/WEB-INF/jsp/registrarColaboracion.jsp").forward(request, response);
+                break;
+            default:
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                break;
         }
     }
 
