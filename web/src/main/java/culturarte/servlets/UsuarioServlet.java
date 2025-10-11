@@ -115,25 +115,27 @@ public class UsuarioServlet extends HttpServlet {
                 break;
             case "/seguir-usuario":
                 String accion = request.getParameter("accion");
-                String u = (String) request.getAttribute("username");
-                seguirUser(request,response,u);
+                String usuario = request.getParameter("usuario");
+                if (usuario != null) {
+                    seguirUser(request, response, usuario, accion);
+                    
+                } else {
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Usuario no recibido");
+                }
                 break;
-                
-        
-        default:
+
+            default:
                 response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         }
     }
 
     @Override
-        public String getServletInfo
-        
-            () {
+    public String getServletInfo() {
         return "Short description";
-        }
-        // </editor-fold>
+    }
+    // </editor-fold>
 
-        // <editor-fold defaultstate="collapsed" desc="Procesamiento de requests.">
+    // <editor-fold defaultstate="collapsed" desc="Procesamiento de requests.">
     protected void cargarDatosPerfil(HttpServletRequest request, HttpServletResponse response, String u)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
@@ -141,6 +143,7 @@ public class UsuarioServlet extends HttpServlet {
         ArrayList<String> usuariosSeguidos = this.controller.listarUsuariosSiguiendo(u);
         request.setAttribute("rol", tipoUser);
         request.setAttribute("usuariosSeguidos", usuariosSeguidos);
+        
         if ("colaborador".equals(tipoUser)) {
             DTColaborador colab = this.controller.obtenerDTColaborador(u);
             if (colab != null) {
@@ -162,7 +165,14 @@ public class UsuarioServlet extends HttpServlet {
                 request.setAttribute("ubiImagen", prop.getImagen());
             }
         }
-
+        
+        
+        
+        if (session != null && session.getAttribute("username") != u){
+            ArrayList<String> usuariosSeguidosPorlog = this.controller.listarUsuariosSiguiendo((String) session.getAttribute("username"));
+            request.setAttribute("usuariosSeguidosLog", usuariosSeguidosPorlog);
+        }
+        
         if (session != null && session.getAttribute("username").equals(u)) {
             if ("colaborador".equals(tipoUser)) {
                 DTColaborador colab = this.controller.obtenerDTColaborador(u);
@@ -178,7 +188,21 @@ public class UsuarioServlet extends HttpServlet {
         }
 
     }
-
+    
+      private void seguirUser(HttpServletRequest request, HttpServletResponse response, String userAseguir,String accion)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            String user = (String) session.getAttribute("username");
+            if(accion.equals("seguir")){
+                ResultadoSeguirUsuario s = this.controller.seguirUsuario(user, userAseguir);
+            }else{
+                ResultadoSeguirUsuario s = this.controller.dejarDeSeguirUsuario(user, userAseguir);
+            }
+            
+        }
+    }
+      
     protected void iniciarSesion(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String nickname = request.getParameter("nickname");
@@ -282,17 +306,7 @@ public class UsuarioServlet extends HttpServlet {
         }
         return bytesArchivo;
     }
-    
-    
-    private void seguirUser(HttpServletRequest request, HttpServletResponse response, String userAseguir)
-            throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-                if (session != null) {
-                    String user = (String) session.getAttribute("username");
-                    ResultadoSeguirUsuario s = this.controller.seguirUsuario(user, userAseguir);
-                }  
-    }
-    
+
     private LocalDate parsearFecha(String fechaString) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date utilDate = null;
