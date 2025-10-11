@@ -10,7 +10,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="/resources/css/perfilUsuario.css" rel="stylesheet">
     </head>
-    <body class="bg-light">
+    <body class="bg-secondary">
 
         <%
             String rol = (String) request.getAttribute("rol");
@@ -22,20 +22,27 @@
             String web = (String) request.getAttribute("sitioWeb");
             List<String> usuariosSeguidos = (List<String>) request.getAttribute("usuariosSeguidos");
             List<String> usuariosSeguidosLog = (List<String>) request.getAttribute("usuariosSeguidosLog");
+            boolean miPerfil = false;
+            if(username.equals(session.getAttribute("username"))){
+                miPerfil = true;
+            }
         %>
 
         <%if ("colaborador".equals(rol)) {%>
         <div class="container mt-3 ">
-
-            <div class="bg-light p-2 rounded shadow-sm border border-5 border-dark">
-                <h1 class=" text-center">  Tu Perfil  </h1>
+            
+           
+            <div class="bg-success p-2 rounded shadow-sm border border-5 border-dark">
+                <h1 class=" text-center">  Perfil  </h1>
             </div>
+            
+            
 
 
-            <div class="bg-white p-4 rounded shadow-sm mt-3 d-flex justify-content-center gap-3 border border-5 border-dark">
+            <div class="bg-success p-4 rounded shadow-sm mt-3 d-flex justify-content-center gap-3 border border-5 border-dark">
                 <div>
                     <img height="200" width="200" class="rounded-circle border border-5 border-dark "src="/imagenes/<%= imagen%>" onerror="this.src='/resources/images/userdefault.png';" alt="Foto de perfil">
-
+                    
                     <%
                         boolean yaSigo = false;
                         if (usuariosSeguidosLog != null) {
@@ -48,11 +55,11 @@
                         }
                     %>
 
-                    <% if (yaSigo) { %>
+                    <% if (yaSigo && miPerfil==false) { %>
                     <div class="d-flex justify-content-center mt-3">
                         <button type="button" class="btn btn-secondary" id="follow" onclick="seguirUser()">Siguiendo</button>
                     </div>
-                    <% } else { %>
+                    <% } if(yaSigo == false && miPerfil==false){ %>
                     <div class="d-flex justify-content-center mt-3">
                         <button type="button" class="btn btn-danger" id="follow" onclick="seguirUser()">Seguir</button>
                     </div>
@@ -117,11 +124,11 @@
                         }
                     %>
 
-                    <% if (yaSigo) { %>
+                    <% if (yaSigo && miPerfil==false) { %>
                     <div class="d-flex justify-content-center mt-3">
                         <button type="button" class="btn btn-secondary" id="follow" onclick="seguirUser()">Siguiendo</button>
                     </div>
-                    <% } else { %>
+                    <% } if(yaSigo == false && miPerfil==false){ %>
                     <div class="d-flex justify-content-center mt-3">
                         <button type="button" class="btn btn-danger" id="follow" onclick="seguirUser()">Seguir</button>
                     </div>
