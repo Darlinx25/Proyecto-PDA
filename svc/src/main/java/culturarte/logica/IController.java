@@ -35,6 +35,7 @@ public interface IController {
     public ArrayList<String> listaPropuestasUsu(String nickname);//no devuelve las propuestas del usuario, devuelve todas
     public ArrayList<String> listarUsuariosSeguir(String nickname);
     public ArrayList<String> listarUsuariosSiguiendo(String nickname);
+    
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Funciones categorías.">
@@ -55,6 +56,7 @@ public interface IController {
     public ArrayList<String> listarPropuestas();
     public void modPropuesta(DTPropuesta prop);
     public void cambiarEstadoPropuesta(String tituloProp, EstadoPropuesta estProp);
+    public void hacerComentario(String comentario, String nombreColaborador, String tituloProp);
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Funciones colaboraciones.">

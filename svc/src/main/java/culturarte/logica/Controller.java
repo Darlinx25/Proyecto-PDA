@@ -727,7 +727,7 @@ public class Controller implements IController {
                         p.getPrecioEntrada(), p.getMontoAReunir(), dineroRecaudado, p.getFechaPublicacion(),
                         p.getTipoPropuesta().getNombre(),
                         p.getProponedor().getNickname(),
-                        p.getTiposRetorno(), p.getEstadoActual(),p.getPlazoFinanciacion());
+                        p.getTiposRetorno(), p.getEstadoActual(),p.getPlazoFinanciacion(),p.getComentario());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -856,6 +856,17 @@ public class Controller implements IController {
         emr.close();
     }
     
+    @Override
+    public void hacerComentario(String comentario, String nombreColaborador,String tituloProp){
+       Manejador emr = Manejador.getInstance();
+       Comentario aux = new Comentario(comentario, nombreColaborador);
+       Propuesta aux2 = emr.find(Propuesta.class, tituloProp);
+       List<Comentario> aux3 = aux2.getComentario();
+       aux3.add(aux);
+       aux2.setComentario(aux3);
+       emr.mod(aux2);
+        
+    }
     
     // </editor-fold>
     

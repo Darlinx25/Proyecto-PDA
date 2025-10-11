@@ -30,7 +30,7 @@ public class Propuesta {
     private float montoAReunir;
     private LocalDate fechaPublicacion;
     private LocalDate fechaFinanciacion;
-   
+    private List<Comentario> comentarios;
     
     @ElementCollection
     private List<TipoRetorno> tiposRetorno;
@@ -75,6 +75,7 @@ public class Propuesta {
         this.historialEstados = new ArrayList<>();
         this.colaboraciones = new ArrayList<>();
         this.fechaFinanciacion = null; //se cambia cuando el estado pasa a publicada y se consigue fecha de publicacion
+        this.comentarios = null; 
     }
 
     
@@ -205,5 +206,12 @@ public class Propuesta {
         
     }
     
+    public void setComentario(List<Comentario> comment){
+        this.comentarios = comment;
+    }
+    
+    public List<Comentario> getComentario(){
+        return comentarios;
+    }
     
 }
