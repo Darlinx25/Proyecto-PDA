@@ -26,7 +26,7 @@ estacion/docker/mysql/data/
 estacion/docker/mysql/data/
 
 #Ignorar carpeta de imagenes
-estacion/imagenesUsuarios/
+estacion/imagenesUsuarios/*
 
 
 # --- Build ---

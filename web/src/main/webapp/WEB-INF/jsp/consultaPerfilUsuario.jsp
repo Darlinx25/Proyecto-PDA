@@ -23,35 +23,14 @@
         <%
             List<String> usuarios = (List<String>) request.getAttribute("usuarios");
         %>
-        <div class="mb-2">
-            <label for="Usuarios" class="form-label"><strong>Usuarios</strong></label>
-            <select onchange="obtenerUsuarioSeleccionado()" id="Usuario" name="Usuario" class="form-select form-select-sm" required>
-                <option value="" selected disabled>-- Seleccione una propuesta  --</option>
+        <div>
+            <h2>Usuarios:</h2>
+            <div class="list-group">
                 <% if (usuarios != null) {
                         for (String cat : usuarios) {%>
-                <option value="<%= cat%>"><%= cat%></option>
-                <%   }
-                } else { %>
-                <option value="">No hay propuestas disponibles</option>
-                <% }%>
-            </select>
-        </div>                
-    </table>
-</div>
-
-<script>
-    function obtenerUsuarioSeleccionado() {
-        const radios = document.getElementsByName("usuarioSeleccionado");
-        let usuarioSeleccionado = null;
-
-        for (const radio of radios) {
-            if (radio.checked) {
-                usuarioSeleccionado = radio.value;
-                break;
-            }
-        }
-
-        return usuarioSeleccionado;
-    }
-</script> 
+                <a href="/perfil?user=<%= cat%>" class="list-group-item list-group-item-action"><%= cat%></a>
+                <%}
+                    }%>
+            </div 
+        </div>  
 </html>

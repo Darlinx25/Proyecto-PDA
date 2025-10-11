@@ -12,22 +12,17 @@
     <body class="bg-light">
 
         <%
-            String rol = (String) session.getAttribute("rol");
-            String username = (String) session.getAttribute("username");
-            String nombre = (String) session.getAttribute("nombre");
-            String apellido = (String) session.getAttribute("apellido");
-            String imagen = (String) session.getAttribute("ubiImagen");
-            String bio = (String) session.getAttribute("biografia");
-            String web = (String) session.getAttribute("sitioWeb");
+            String rol = (String) request.getAttribute("rol");
+            String username = (String) request.getAttribute("username");
+            String nombre = (String) request.getAttribute("nombre");
+            String apellido = (String) request.getAttribute("apellido");
+            String imagen = (String) request.getAttribute("ubiImagen");
+            String bio = (String) request.getAttribute("biografia");
+            String web = (String) request.getAttribute("sitioWeb");
 
         %>
 
-        <% if (rol == null) { %>
-        <div class="container text-center mt-5">
-            <h2>No has iniciado sesión</h2>
-            <a href="/login" class="btn btn-primary mt-3">Iniciar sesión</a>
-        </div>
-        <% } else if ("colaborador".equals(rol)) {%>
+        <%if ("colaborador".equals(rol)) {%>
 
         <div class="container mt-3 ">
 
@@ -38,7 +33,7 @@
 
             <div class="bg-white p-4 rounded shadow-sm mt-3 d-flex justify-content-center gap-3 border border-5 border-dark">
                 <div>
-                    <img height="200" width="200" class="rounded-circle border border-5 border-dark "src="/imagenes/<%= imagen%>" alt="Foto de perfil">
+                    <img height="200" width="200" class="rounded-circle border border-5 border-dark "src="/imagenes/<%= imagen%>" onerror="this.src='/resources/images/userdefault.png';" alt="Foto de perfil">
                 </div>
                 <div class="d-flex flex-column justify-content-center">
                     <p class="text-start text-uppercase" id="NombreUser"><%= nombre%> <%= apellido%> - <%= rol%><p></p>
@@ -69,7 +64,7 @@
 
             <div class="bg-dark p-4 rounded  text-white shadow-sm mt-3 d-flex justify-content-center gap-3 border border-5 border-dark">
                 <div>
-                    <img height="200" width="200" class="rounded-circle border border-3 border-white "src="/imagenes/<%= imagen%>" alt="Foto de perfil">
+                    <img height="200" width="200" class="rounded-circle border border-3 border-white "src="/imagenes/<%= imagen%>" onerror="this.src='/resources/images/userdefault.png';" alt="Foto de perfil">
                 </div>
                 <div class="d-flex flex-column justify-content-center">
                     <p class="text-start text-uppercase" id="NombreUser"><%= nombre%> <%= apellido%> - <%= rol%><p></p>

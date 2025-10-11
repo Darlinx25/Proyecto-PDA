@@ -72,11 +72,11 @@ public class UsuarioServlet extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/jsp/seguirUsuario.jsp").forward(request, response);
                 break;
             case "/perfil":
-                cargarDatosPerfil(request, response);
+                cargarDatosPerfil(request, response, request.getParameter("user"));
                 request.getRequestDispatcher("/WEB-INF/jsp/perfilUsuario.jsp").forward(request, response);
                 break;
-               case "/consultar-perfil-usuario":
-                listarUsuarios(request,response);
+            case "/consultar-perfil-usuario":
+                listarUsuarios(request, response);
                 request.getRequestDispatcher("/WEB-INF/jsp/consultaPerfilUsuario.jsp").forward(request, response);
                 break;
             default:
@@ -97,7 +97,7 @@ public class UsuarioServlet extends HttpServlet {
                     response.sendRedirect("/login");
                 } else {
                     response.sendRedirect("/index");
-                } 
+                }
                 break;
             case "/login":
                 if (esVisitante(request.getSession())) {
@@ -125,30 +125,51 @@ public class UsuarioServlet extends HttpServlet {
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Procesamiento de requests.">
-    protected void cargarDatosPerfil(HttpServletRequest request, HttpServletResponse response)
+    protected void cargarDatosPerfil(HttpServletRequest request, HttpServletResponse response, String u)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session != null) {
-            String user = (String) session.getAttribute("username");
-            String tipo = (String) session.getAttribute("rol");
-            if ("colaborador".equals(tipo)) {
-                DTColaborador colab = this.controller.obtenerDTColaborador(user);
+        String tipoUser = this.controller.obtenerTipoUser(u);
+        request.setAttribute("rol", tipoUser);
+        if (session.getAttribute("username").equals(u)) {
+            if ("colaborador".equals(tipoUser)) {
+                DTColaborador colab = this.controller.obtenerDTColaborador(u);
                 if (colab != null) {
-                    String correo = colab.getEmail();
-                    session.setAttribute("email", correo);
-                    
-                }
+                    request.setAttribute("username", u);
+                    request.setAttribute("nombre", colab.getNombre());
+                    request.setAttribute("apellido", colab.getApellido());
+                    request.setAttribute("email", colab.getEmail());
+                    request.setAttribute("ubiImagen", colab.getImagen());
 
-            } else if ("proponente".equals(tipo)) {
-                DTProponente prop = this.controller.obtenerDTProponente(user);
+                }
+            } else if ("proponente".equals(tipoUser)) {
+                DTProponente prop = this.controller.obtenerDTProponente(u);
                 if (prop != null) {
-                    String web = prop.getSitioWeb();
-                    String bio = prop.getBiografia();
-                    session.setAttribute("biografia", bio);
-                    session.setAttribute("sitioWeb", web);
+                    request.setAttribute("nombre", prop.getNombre());
+                    request.setAttribute("apellido", prop.getApellido());
+                    request.setAttribute("username", u);
+                    request.setAttribute("biografia", prop.getBiografia());
+                    request.setAttribute("sitioWeb", prop.getSitioWeb());
+                    request.setAttribute("ubiImagen", prop.getImagen());
                 }
             }
+        } else if ("colaborador".equals(tipoUser)) {
+            DTColaborador colab = this.controller.obtenerDTColaborador(u);
+            request.setAttribute("username", u);
+            request.setAttribute("nombre", colab.getNombre());
+            request.setAttribute("apellido", colab.getApellido());
+            request.setAttribute("email", colab.getEmail());
+            request.setAttribute("ubiImagen", colab.getImagen());
+
+        } else if ("proponente".equals(tipoUser)) {
+            DTProponente prop = this.controller.obtenerDTProponente(u);
+            request.setAttribute("username", u);
+            request.setAttribute("biografia", prop.getBiografia());
+            request.setAttribute("sitioWeb", prop.getSitioWeb());
+            request.setAttribute("nombre", prop.getNombre());
+            request.setAttribute("apellido", prop.getApellido());
+            request.setAttribute("ubiImagen", prop.getImagen());
         }
+
     }
 
     protected void iniciarSesion(HttpServletRequest request, HttpServletResponse response)
@@ -179,9 +200,9 @@ public class UsuarioServlet extends HttpServlet {
                 session.setAttribute("nombre", nom);
                 session.setAttribute("apellido", apell);
                 session.setAttribute("ubiImagen", ubi);
-                
+
             }
-            
+
         } else {
             request.setAttribute("mensajeError", "Usuario o contraseña incorrectos!");
             request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesion.jsp").forward(request, response);
@@ -269,14 +290,14 @@ public class UsuarioServlet extends HttpServlet {
         }
         return fecha;
     }
-    private void listarUsuarios(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    
-    ArrayList<String> usuarios = this.controller.listarUsuarios();
-    request.setAttribute("usuarios", usuarios);
-    request.getRequestDispatcher("/WEB-INF/jsp/consultaPerfilUsuario.jsp").forward(request, response);
-}
-    
-    // </editor-fold>
 
+    private void listarUsuarios(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        ArrayList<String> usuarios = this.controller.listarUsuarios();
+        request.setAttribute("usuarios", usuarios);
+        request.getRequestDispatcher("/WEB-INF/jsp/consultaPerfilUsuario.jsp").forward(request, response);
+    }
+
+    // </editor-fold>
 }

@@ -4,6 +4,7 @@
     Author     : mark
 --%>
 
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -24,6 +25,7 @@
             String nombre = (String) session.getAttribute("nombre");
             String apellido = (String) session.getAttribute("apellido");
             String imagen = (String) session.getAttribute("ubiImagen");
+            String usr = (String) session.getAttribute("username");
         %>
         <%
             if (rol == null) {
@@ -61,7 +63,7 @@
                             <p class="text-uppercase"><%= nombre%> <%= apellido%></p>
                             <div class="d-flex align-items-center mb-3 gap-2">
                                 <div>
-                                    <a href="/perfil" class="btn btn-link p-1 ">Ver perfil  </a>
+                                    <a href="/perfil?user=<%= usr%>" class="btn btn-link p-1 ">Ver perfil  </a>
                                 </div>
                                 <div>
                                     <form action="/logout" method="post">
@@ -80,7 +82,7 @@
                 <a href="/crear-propuesta" class="btn btn-danger p-1 ">Crear propuesta</a>
                 <a href="/registrar-colaboracion" class="btn btn-danger p-1 ">Registrar colaboracion</a>
                 <a href="/consultar-perfil-usuario" class="btn btn-danger p-1 ">Consultar Perfiles</a>
-                <a href="/extender-financiacion" class="btn btn-danger p-1 ">Extender financiacion</a>
+                <a href="/extender-financiacion" class="btn btn-danger p-1 ">Extender financiacion</a>   
             </div>
 
         </div>
