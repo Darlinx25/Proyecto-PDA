@@ -9,10 +9,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author alexi
- */
+
+
+@Embeddable
 public class Comentario {
    private String informacion;
    private String nombreColaborador;

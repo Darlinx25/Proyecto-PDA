@@ -30,6 +30,8 @@ public class Propuesta {
     private float montoAReunir;
     private LocalDate fechaPublicacion;
     private LocalDate fechaFinanciacion;
+    
+    @ElementCollection
     private List<Comentario> comentarios;
     
     @ElementCollection

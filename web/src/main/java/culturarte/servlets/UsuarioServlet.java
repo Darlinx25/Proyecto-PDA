@@ -182,7 +182,7 @@ public class UsuarioServlet extends HttpServlet {
             } else if ("proponente".equals(tipoUser)) {
                 DTProponente prop = this.controller.obtenerDTProponente(u);
                 if (prop != null) {
-
+                        
                 }
             }
         }
