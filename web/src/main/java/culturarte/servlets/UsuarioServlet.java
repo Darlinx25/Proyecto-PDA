@@ -130,44 +130,41 @@ public class UsuarioServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         String tipoUser = this.controller.obtenerTipoUser(u);
         request.setAttribute("rol", tipoUser);
+
+        if ("colaborador".equals(tipoUser)) {
+            DTColaborador colab = this.controller.obtenerDTColaborador(u);
+            if (colab != null) {
+                request.setAttribute("username", u);
+                request.setAttribute("nombre", colab.getNombre());
+                request.setAttribute("apellido", colab.getApellido());
+                request.setAttribute("email", colab.getEmail());
+                request.setAttribute("ubiImagen", colab.getImagen());
+            }
+
+        } else if ("proponente".equals(tipoUser)) {
+            DTProponente prop = this.controller.obtenerDTProponente(u);
+            if (prop != null) {
+                request.setAttribute("username", u);
+                request.setAttribute("biografia", prop.getBiografia());
+                request.setAttribute("sitioWeb", prop.getSitioWeb());
+                request.setAttribute("nombre", prop.getNombre());
+                request.setAttribute("apellido", prop.getApellido());
+                request.setAttribute("ubiImagen", prop.getImagen());
+            }
+        }
+
         if (session.getAttribute("username").equals(u)) {
             if ("colaborador".equals(tipoUser)) {
                 DTColaborador colab = this.controller.obtenerDTColaborador(u);
                 if (colab != null) {
-                    request.setAttribute("username", u);
-                    request.setAttribute("nombre", colab.getNombre());
-                    request.setAttribute("apellido", colab.getApellido());
-                    request.setAttribute("email", colab.getEmail());
-                    request.setAttribute("ubiImagen", colab.getImagen());
 
                 }
             } else if ("proponente".equals(tipoUser)) {
                 DTProponente prop = this.controller.obtenerDTProponente(u);
                 if (prop != null) {
-                    request.setAttribute("nombre", prop.getNombre());
-                    request.setAttribute("apellido", prop.getApellido());
-                    request.setAttribute("username", u);
-                    request.setAttribute("biografia", prop.getBiografia());
-                    request.setAttribute("sitioWeb", prop.getSitioWeb());
-                    request.setAttribute("ubiImagen", prop.getImagen());
+
                 }
             }
-        } else if ("colaborador".equals(tipoUser)) {
-            DTColaborador colab = this.controller.obtenerDTColaborador(u);
-            request.setAttribute("username", u);
-            request.setAttribute("nombre", colab.getNombre());
-            request.setAttribute("apellido", colab.getApellido());
-            request.setAttribute("email", colab.getEmail());
-            request.setAttribute("ubiImagen", colab.getImagen());
-
-        } else if ("proponente".equals(tipoUser)) {
-            DTProponente prop = this.controller.obtenerDTProponente(u);
-            request.setAttribute("username", u);
-            request.setAttribute("biografia", prop.getBiografia());
-            request.setAttribute("sitioWeb", prop.getSitioWeb());
-            request.setAttribute("nombre", prop.getNombre());
-            request.setAttribute("apellido", prop.getApellido());
-            request.setAttribute("ubiImagen", prop.getImagen());
         }
 
     }
