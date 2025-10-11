@@ -22,6 +22,7 @@
     <body class="container mt-5">
         <%
             List<String> usuarios = (List<String>) request.getAttribute("usuarios");
+            
         %>
         <div>
             <h2>Usuarios:</h2>

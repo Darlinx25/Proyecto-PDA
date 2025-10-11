@@ -1,3 +1,4 @@
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -19,7 +20,7 @@
             String imagen = (String) request.getAttribute("ubiImagen");
             String bio = (String) request.getAttribute("biografia");
             String web = (String) request.getAttribute("sitioWeb");
-
+            List<String> usuariosSeguidos = (List<String>) request.getAttribute("usuariosSeguidos");
         %>
 
         <%if ("colaborador".equals(rol)) {%>
@@ -38,7 +39,23 @@
                 <div class="d-flex flex-column justify-content-center">
                     <p class="text-start text-uppercase" id="NombreUser"><%= nombre%> <%= apellido%> - <%= rol%><p></p>
                     <p class="text-start  "><%= username%></p>
+                    <div class="mb-2">
+                        <label for="usuariosSeguidos" class="form-label"><strong>Usuarios Seguidos</strong></label>
+                        <select onchange="propuestaElegida()" id="usuariosSeguidos" name="usuariosSeguidos" class="form-select form-select-sm" required>
+                            <% if (usuariosSeguidos != null) {
+                                for (String cat : usuariosSeguidos) {%>
+                            <option value="<%= cat%>"><%= cat%></option>
+                            <%   }
+                        } else { %>
+                            <option value="">No hay seguidores</option>
+                            <% }%>
+
+                        </select>
+
+
+                    </div>
                 </div>
+               
             </div>
 
             <div class="align-items-center">
@@ -52,7 +69,6 @@
                 </div>
             </div>    
         </div>
-
         <% } else if ("proponente".equals(rol)) {%>
 
         <div class="container mt-3 ">
@@ -75,6 +91,21 @@
                         </a>
                     </p>
                     <p class="text-start "><%= bio%></p>
+                    <div class="mb-2">
+                        <label for="usuariosSeguidos" class="form-label"><strong>Usuarios Seguidos</strong></label>
+                        <select onchange="propuestaElegida()" id="usuariosSeguidos" name="usuariosSeguidos" class="form-select form-select-sm" required>
+                            <% if (usuariosSeguidos != null) {
+                                for (String cat : usuariosSeguidos) {%>
+                            <option value="<%= cat%>"><%= cat%></option>
+                            <%   }
+                        } else { %>
+                            <option value="">No hay seguidores</option>
+                            <% }%>
+
+                        </select>
+
+
+                    </div>
                 </div>
             </div>
 

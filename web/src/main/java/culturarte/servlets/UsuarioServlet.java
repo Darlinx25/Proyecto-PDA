@@ -129,8 +129,9 @@ public class UsuarioServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         String tipoUser = this.controller.obtenerTipoUser(u);
+        ArrayList<String> usuariosSeguidos = this.controller.listarUsuariosSiguiendo(u);
         request.setAttribute("rol", tipoUser);
-
+        request.setAttribute("usuariosSeguidos", usuariosSeguidos);
         if ("colaborador".equals(tipoUser)) {
             DTColaborador colab = this.controller.obtenerDTColaborador(u);
             if (colab != null) {
@@ -153,11 +154,11 @@ public class UsuarioServlet extends HttpServlet {
             }
         }
 
-        if (session.getAttribute("username").equals(u)) {
+        if (session != null && session.getAttribute("username").equals(u)) {
             if ("colaborador".equals(tipoUser)) {
                 DTColaborador colab = this.controller.obtenerDTColaborador(u);
                 if (colab != null) {
-
+                    
                 }
             } else if ("proponente".equals(tipoUser)) {
                 DTProponente prop = this.controller.obtenerDTProponente(u);
