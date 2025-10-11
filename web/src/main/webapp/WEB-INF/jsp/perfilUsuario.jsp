@@ -24,7 +24,6 @@
         %>
 
         <%if ("colaborador".equals(rol)) {%>
-
         <div class="container mt-3 ">
 
             <div class="bg-light p-2 rounded shadow-sm border border-5 border-dark">
@@ -35,18 +34,23 @@
             <div class="bg-white p-4 rounded shadow-sm mt-3 d-flex justify-content-center gap-3 border border-5 border-dark">
                 <div>
                     <img height="200" width="200" class="rounded-circle border border-5 border-dark "src="/imagenes/<%= imagen%>" onerror="this.src='/resources/images/userdefault.png';" alt="Foto de perfil">
+
+                    <div class="d-flex justify-content-center mt-3">
+                        <button type="button" class="btn btn-danger " id="follow" onclick="seguirUser()">Seguir</button>
+                    </div>
+
                 </div>
                 <div class="d-flex flex-column justify-content-center">
-                    <p class="text-start text-uppercase" id="NombreUser"><%= nombre%> <%= apellido%> - <%= rol%><p></p>
+                    <p class="text-start text-uppercase" id="NombreUser"><%= nombre%> <%= apellido%> - <%= rol%></p>
                     <p class="text-start  "><%= username%></p>
                     <div class="mb-2">
                         <label for="usuariosSeguidos" class="form-label"><strong>Usuarios Seguidos</strong></label>
                         <select onchange="propuestaElegida()" id="usuariosSeguidos" name="usuariosSeguidos" class="form-select form-select-sm" required>
                             <% if (usuariosSeguidos != null) {
-                                for (String cat : usuariosSeguidos) {%>
+                                    for (String cat : usuariosSeguidos) {%>
                             <option value="<%= cat%>"><%= cat%></option>
                             <%   }
-                        } else { %>
+                            } else { %>
                             <option value="">No hay seguidores</option>
                             <% }%>
 
@@ -55,7 +59,7 @@
 
                     </div>
                 </div>
-               
+
             </div>
 
             <div class="align-items-center">
@@ -67,7 +71,7 @@
                         <button type="submit" class="btn btn-danger">Cerrar sesión</button>
                     </form>
                 </div>
-            </div>    
+            </div>     
         </div>
         <% } else if ("proponente".equals(rol)) {%>
 
@@ -81,9 +85,14 @@
             <div class="bg-dark p-4 rounded  text-white shadow-sm mt-3 d-flex justify-content-center gap-3 border border-5 border-dark">
                 <div>
                     <img height="200" width="200" class="rounded-circle border border-3 border-white "src="/imagenes/<%= imagen%>" onerror="this.src='/resources/images/userdefault.png';" alt="Foto de perfil">
+
+                    <div class="d-flex justify-content-center mt-3">
+                        <button type="button" class="btn btn-danger " id="follow" onclick="seguirUser()">Seguir</button>
+                    </div>
+
                 </div>
                 <div class="d-flex flex-column justify-content-center">
-                    <p class="text-start text-uppercase" id="NombreUser"><%= nombre%> <%= apellido%> - <%= rol%><p></p>
+                    <p class="text-start text-uppercase" id="NombreUser"><%= nombre%> <%= apellido%> - <%= rol%></p>
                     <p class="text-start  "><%= username%></p>
                     <p class="text-start">
                         <a href="<%= web%>" target="_blank" class="text-decoration-none text-primary">
@@ -95,10 +104,10 @@
                         <label for="usuariosSeguidos" class="form-label"><strong>Usuarios Seguidos</strong></label>
                         <select onchange="propuestaElegida()" id="usuariosSeguidos" name="usuariosSeguidos" class="form-select form-select-sm" required>
                             <% if (usuariosSeguidos != null) {
-                                for (String cat : usuariosSeguidos) {%>
+                                    for (String cat : usuariosSeguidos) {%>
                             <option value="<%= cat%>"><%= cat%></option>
                             <%   }
-                        } else { %>
+                            } else { %>
                             <option value="">No hay seguidores</option>
                             <% }%>
 
@@ -122,5 +131,9 @@
         </div>
         <%}%>
 
+        <script>
+            const username = "<%= username%>"; // ahora JS conoce el usuario
+        </script>
+        <script src="${pageContext.request.contextPath}/resources/js/seguirUser.js"></script>
     </body>
 </html>

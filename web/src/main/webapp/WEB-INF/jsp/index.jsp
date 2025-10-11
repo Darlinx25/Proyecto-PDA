@@ -104,11 +104,8 @@
         <div class="tab-pane fade" id="PNOFinanciadas"></div>
         <div class="tab-pane fade" id="PCanceladas"></div>
     </div>
-</div>
-
-
-
-
+</div> 
+        
         <script src="${pageContext.request.contextPath}/resources/js/propuestaPorEstado.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     </body>

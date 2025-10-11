@@ -13,6 +13,7 @@ import culturarte.logica.DTProponente;
 import culturarte.logica.DTUsuario;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
+import culturarte.logica.ResultadoSeguirUsuario;
 import static culturarte.wutils.SesionUtils.esVisitante;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -112,19 +113,27 @@ public class UsuarioServlet extends HttpServlet {
                 }
                 response.sendRedirect("/index");
                 break;
-
-            default:
+            case "/seguir-usuario":
+                String accion = request.getParameter("accion");
+                String u = (String) request.getAttribute("username");
+                seguirUser(request,response,u);
+                break;
+                
+        
+        default:
                 response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         }
     }
 
     @Override
-    public String getServletInfo() {
+        public String getServletInfo
+        
+            () {
         return "Short description";
-    }
-    // </editor-fold>
+        }
+        // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Procesamiento de requests.">
+        // <editor-fold defaultstate="collapsed" desc="Procesamiento de requests.">
     protected void cargarDatosPerfil(HttpServletRequest request, HttpServletResponse response, String u)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
@@ -158,7 +167,7 @@ public class UsuarioServlet extends HttpServlet {
             if ("colaborador".equals(tipoUser)) {
                 DTColaborador colab = this.controller.obtenerDTColaborador(u);
                 if (colab != null) {
-                    
+
                 }
             } else if ("proponente".equals(tipoUser)) {
                 DTProponente prop = this.controller.obtenerDTProponente(u);
@@ -273,7 +282,17 @@ public class UsuarioServlet extends HttpServlet {
         }
         return bytesArchivo;
     }
-
+    
+    
+    private void seguirUser(HttpServletRequest request, HttpServletResponse response, String userAseguir)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+                if (session != null) {
+                    String user = (String) session.getAttribute("username");
+                    ResultadoSeguirUsuario s = this.controller.seguirUsuario(user, userAseguir);
+                }  
+    }
+    
     private LocalDate parsearFecha(String fechaString) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date utilDate = null;
