@@ -114,7 +114,7 @@ public class PropuestaServlet extends HttpServlet {
                 String nick = session.getAttribute("username").toString();
                 ArrayList<String> propuestaProp = this.controller.listaPropuestasUsu(nick);
                 request.setAttribute("propuestas", propuestaProp);
-                request.getRequestDispatcher("/WEB-INF/jsp/registrarColaboracion.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/jsp/extenderFinanciacion.jsp").forward(request, response);
                 break;
             default:
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -127,6 +127,7 @@ public class PropuestaServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String path = request.getServletPath();
+       
 
         switch (path) {
             case "/crear-propuesta":
@@ -137,6 +138,19 @@ public class PropuestaServlet extends HttpServlet {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN);
                 }
                 break;
+                case "/extender-financiacion":
+                String titulo = request.getParameter("tituloProp");
+            {
+                try {
+                    procesoExtenderFinanciacion(titulo);
+                } catch (Exception ex) {
+                    Logger.getLogger(PropuestaServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+               
+                response.sendRedirect("/index");
+                break;
+
             default:
                 response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         }
@@ -191,6 +205,8 @@ public class PropuestaServlet extends HttpServlet {
         }
 
     }
+    
+    
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -207,6 +223,18 @@ public class PropuestaServlet extends HttpServlet {
             out.println("</body>");
             out.println("</html>");
         }
+    }
+    
+    protected void procesoExtenderFinanciacion(String tituloProp){
+        DTPropuesta aux = this.controller.obtenerDTPropuesta(tituloProp);
+        LocalDate aux2 = LocalDate.now().plusDays(30);
+
+        /*Probe un par de cosas para pasarselo al controller para que modifique propuesta, no estaban funcionando asi que las quite
+          quedo esto de nomas porque es lo mas simple y deja en base lo que quiero hacer, probablemente sea otra pendejada basica que se me
+          esta olvidando, lo veo mañana cuando temos en llamada
+        */
+        
+        
     }
     // </editor-fold>
 

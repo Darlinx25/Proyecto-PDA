@@ -43,11 +43,11 @@
 
 
 
-            <button type="submit" class="btn btn-success w-100 mb-3">Registrar colaboración</button>
+            <button type="submit" class="btn btn-success w-100 mb-3">Extender financiación</button>
 
         </form>
 
-        <script src="${pageContext.request.contextPath}/resources/js/registrarColaboracion.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/extenderFinanciacion.js"></script>
 
     </body>
 </html>

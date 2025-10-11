@@ -23,8 +23,11 @@ function propuestaElegida() {
                     }
                     return response.json();
                 })
+                
                 .then(data => {
-
+                     const fechahoy = new Date();
+                    const fechaFinanciacion = new Date(data.plazoFinanciacion);
+                    const diferenciaDias = Math.ceil((fechaFinanciacion - fechahoy) / (1000 * 3600 * 24)); //  el calculo matematico es para transformarlo en dias
 
                     document.getElementById("retornosContainer").innerHTML = "";
                     if (Array.isArray(data.tiposRetorno) && data.tiposRetorno.length > 0) {
@@ -45,19 +48,8 @@ function propuestaElegida() {
                     <p><strong>Categoría:</strong> ${data.tipoPropuesta}</p>
                     <p><strong>Propuesta de:</strong> ${data.nickProponedor}</p>
                     <p><strong>Estado actual:</strong> ${data.estadoActual.estado}</p> 
-                    <div class="mb-3">
-                    <label for="opcion" class="form-label"><strong>Tipo de retorno:</strong></label>
-                    <select class="form-select form-select-m" id="opcion" name="opcion" required>
-                    <option value="" selected disabled>-- Elege un tipo de retorno --</option>
-                    </select>
-                    </div>
-                    <div class="mb-2">
-                    <label for="colaboracion" class="form-label"><strong>Colaboracion a realizar</strong></label>
-                    <div class="input-group input-group-sm">
-                    <span class="input-group-text">$</span>
-                    <input type="text" id="colaboracion" name="colaboracion" class="form-control" required>
-                    <input type="hidden" name="tituloProp" value="${data.titulo}">
-                    </div>
+                    <p><strong>Dias restantes para Financiación: </strong> ${diferenciaDias}</p>
+                
                     </div>
                     `;
 
