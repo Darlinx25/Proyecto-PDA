@@ -21,6 +21,7 @@
             String bio = (String) request.getAttribute("biografia");
             String web = (String) request.getAttribute("sitioWeb");
             List<String> usuariosSeguidos = (List<String>) request.getAttribute("usuariosSeguidos");
+            List<String> usuariosSeguidosLog = (List<String>) request.getAttribute("usuariosSeguidosLog");
         %>
 
         <%if ("colaborador".equals(rol)) {%>
@@ -35,9 +36,27 @@
                 <div>
                     <img height="200" width="200" class="rounded-circle border border-5 border-dark "src="/imagenes/<%= imagen%>" onerror="this.src='/resources/images/userdefault.png';" alt="Foto de perfil">
 
+                    <%
+                        boolean yaSigo = false;
+                        if (usuariosSeguidosLog != null) {
+                            for (String u : usuariosSeguidosLog) {
+                                if (u.equals(username)) {
+                                    yaSigo = true;
+                                    break;
+                                }
+                            }
+                        }
+                    %>
+
+                    <% if (yaSigo) { %>
                     <div class="d-flex justify-content-center mt-3">
-                        <button type="button" class="btn btn-danger " id="follow" onclick="seguirUser()">Seguir</button>
+                        <button type="button" class="btn btn-secondary" id="follow" onclick="seguirUser()">Siguiendo</button>
                     </div>
+                    <% } else { %>
+                    <div class="d-flex justify-content-center mt-3">
+                        <button type="button" class="btn btn-danger" id="follow" onclick="seguirUser()">Seguir</button>
+                    </div>
+                    <% }%>
 
                 </div>
                 <div class="d-flex flex-column justify-content-center">
@@ -86,9 +105,28 @@
                 <div>
                     <img height="200" width="200" class="rounded-circle border border-3 border-white "src="/imagenes/<%= imagen%>" onerror="this.src='/resources/images/userdefault.png';" alt="Foto de perfil">
 
+                    <%
+                        boolean yaSigo = false;
+                        if (usuariosSeguidosLog != null) {
+                            for (String u : usuariosSeguidosLog) {
+                                if (u.equals(username)) {
+                                    yaSigo = true;
+                                    break;
+                                }
+                            }
+                        }
+                    %>
+
+                    <% if (yaSigo) { %>
                     <div class="d-flex justify-content-center mt-3">
-                        <button type="button" class="btn btn-danger " id="follow" onclick="seguirUser()">Seguir</button>
+                        <button type="button" class="btn btn-secondary" id="follow" onclick="seguirUser()">Siguiendo</button>
                     </div>
+                    <% } else { %>
+                    <div class="d-flex justify-content-center mt-3">
+                        <button type="button" class="btn btn-danger" id="follow" onclick="seguirUser()">Seguir</button>
+                    </div>
+                    <% }%>
+
 
                 </div>
                 <div class="d-flex flex-column justify-content-center">
@@ -130,10 +168,10 @@
             </div>    
         </div>
         <%}%>
-
         <script>
-            const username = "<%= username%>"; // ahora JS conoce el usuario
+            const u = "<%= username%>";
         </script>
+
         <script src="${pageContext.request.contextPath}/resources/js/seguirUser.js"></script>
     </body>
 </html>
