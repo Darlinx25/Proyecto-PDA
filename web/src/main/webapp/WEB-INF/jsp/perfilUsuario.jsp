@@ -78,7 +78,7 @@
                         <div class="mb-2">
                             <label for="seguidores" class="form-label"><strong>Seguidores:</strong></label>
                             <select  id="seguidores" name="seguidores" class="form-select form-select-sm">
-                                <% if (seguidores != null) {
+                                <% if (seguidores != null && !seguidores.isEmpty()) {
                                         for (String cat : seguidores) {%>
                                 <option ><%= cat%></option>
                                 <%   }
@@ -92,12 +92,12 @@
                         <div class="mb-2">
                             <label for="usuariosSeguidos" class="form-label"><strong>Usuarios Seguidos:</strong></label>
                             <select  id="usuariosSeguidos" name="usuariosSeguidos" class="form-select form-select-sm" >
-                                <% if (usuariosSeguidos != null) {
+                                <% if (usuariosSeguidos != null && !usuariosSeguidos.isEmpty()) {
                                         for (String cat : usuariosSeguidos) {%>
                                 <option ><%= cat%></option>
                                 <%   }
                                 } else { %>
-                                <option value="">No hay seguidores</option>
+                                <option value="">No hay seguidos</option>
                                 <% }%>
 
                             </select>
@@ -169,7 +169,7 @@
                         <div class="mb-2">
                             <label for="seguidores" class="form-label"><strong>Seguidores:</strong></label>
                             <select  id="seguidores" name="seguidores" class="form-select form-select-sm">
-                                <% if (seguidores != null) {
+                                <% if (seguidores != null && !seguidores.isEmpty()) {
                                         for (String cat : seguidores) {%>
                                 <option ><%= cat%></option>
                                 <%   }
@@ -183,12 +183,12 @@
                         <div class="mb-2">
                             <label for="usuariosSeguidos" class="form-label"><strong>Usuarios Seguidos:</strong></label>
                             <select  id="usuariosSeguidos" name="usuariosSeguidos" class="form-select form-select-sm">
-                                <% if (usuariosSeguidos != null) {
+                                <% if (usuariosSeguidos != null && !usuariosSeguidos.isEmpty()) {
                                         for (String cat : usuariosSeguidos) {%>
                                 <option ><%= cat%></option>
                                 <%   }
                                 } else { %>
-                                <option value="">No hay seguidores</option>
+                                <option value="">No hay seguidos</option>
                                 <% }%>
 
                             </select>
