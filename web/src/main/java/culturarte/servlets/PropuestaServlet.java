@@ -100,8 +100,6 @@ public class PropuestaServlet extends HttpServlet {
                 for (String t : titulos) {
                     DTPropuesta p = controller.obtenerDTPropuesta(t);
                     if (p != null) {
-                        //propuestas.add(p);
-                        
                         if ("Todas".equals(cat)) {
                             propuestas.add(p);
                         } else if (cat.equals(p.getTipoPropuesta())) {

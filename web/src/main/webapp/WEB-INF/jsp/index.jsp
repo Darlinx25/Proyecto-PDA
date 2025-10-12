@@ -27,6 +27,8 @@
             String imagen = (String) session.getAttribute("ubiImagen");
             String usr = (String) session.getAttribute("username");
             List<String> categorias = (List<String>) request.getAttribute("categorias");
+            
+            
         %>
         <%
             if (rol == null) {

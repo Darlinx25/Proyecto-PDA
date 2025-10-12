@@ -191,6 +191,8 @@ public class UsuarioServlet extends HttpServlet {
         if ("colaborador".equals(tipoUser)) {
             DTColaborador colab = this.controller.obtenerDTColaborador(u);
             if (colab != null) {
+                ArrayList<String> propColaboradas = this.controller.obtenerPropuestasColaboradas(colab.getNickname());
+                request.setAttribute("propuestasColab",propColaboradas);
                 request.setAttribute("username", u);
                 request.setAttribute("nombre", colab.getNombre());
                 request.setAttribute("apellido", colab.getApellido());
