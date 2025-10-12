@@ -86,28 +86,36 @@ public class PropuestaServlet extends HttpServlet {
                 }
                 break;
             case "/obtener-propuesta-por-estado":
-                String estadoStr = request.getParameter("estado");    
+                String estadoStr = request.getParameter("estado");
                 if (estadoStr == null) {
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'estado'");
                     return;
                 }
+                String cat = request.getParameter("categoriaSelec");
+                System.out.println(cat);
                 int estado = Integer.parseInt(estadoStr);
                 ArrayList<String> titulos = controller.listarPropuestasEstado(estado);
-                
-                List<DTPropuesta> propuestas = new ArrayList<>();
-                    for (String t : titulos) {
-                        DTPropuesta p = controller.obtenerDTPropuesta(t);
-                        if (p != null) {
-                            propuestas.add(p);
-                            
-                        }
-                    }
 
-                    response.setContentType("application/json;charset=UTF-8");
-                    ObjectMapper mapper = new ObjectMapper();
-                    mapper.registerModule(new JavaTimeModule());
-                    mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-                    mapper.writeValue(response.getWriter(), propuestas);
+                List<DTPropuesta> propuestas = new ArrayList<>();
+                for (String t : titulos) {
+                    DTPropuesta p = controller.obtenerDTPropuesta(t);
+                    if (p != null) {
+                        //propuestas.add(p);
+                        
+                        if ("Todas".equals(cat)) {
+                            propuestas.add(p);
+                        } else if (cat.equals(p.getTipoPropuesta())) {
+                            propuestas.add(p);
+                        }
+                        
+                    }
+                }
+
+                response.setContentType("application/json;charset=UTF-8");
+                ObjectMapper mapper = new ObjectMapper();
+                mapper.registerModule(new JavaTimeModule());
+                mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+                mapper.writeValue(response.getWriter(), propuestas);
                 break;
             case "/extender-financiacion":
                 HttpSession session = request.getSession(false);
@@ -127,7 +135,6 @@ public class PropuestaServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String path = request.getServletPath();
-       
 
         switch (path) {
             case "/crear-propuesta":
@@ -138,16 +145,16 @@ public class PropuestaServlet extends HttpServlet {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN);
                 }
                 break;
-                case "/extender-financiacion":
+            case "/extender-financiacion":
                 String titulo = request.getParameter("tituloProp");
-            {
-                try {
-                    procesoExtenderFinanciacion(titulo);
-                } catch (Exception ex) {
-                    Logger.getLogger(PropuestaServlet.class.getName()).log(Level.SEVERE, null, ex);
+                 {
+                    try {
+                        procesoExtenderFinanciacion(titulo);
+                    } catch (Exception ex) {
+                        Logger.getLogger(PropuestaServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
-            }
-               
+
                 response.sendRedirect("/index");
                 break;
 
@@ -155,7 +162,7 @@ public class PropuestaServlet extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         }
     }
-    
+
     @Override
     public String getServletInfo() {
         return "Short description";
@@ -205,8 +212,6 @@ public class PropuestaServlet extends HttpServlet {
         }
 
     }
-    
-    
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -224,17 +229,15 @@ public class PropuestaServlet extends HttpServlet {
             out.println("</html>");
         }
     }
-    
-    protected void procesoExtenderFinanciacion(String tituloProp){
+
+    protected void procesoExtenderFinanciacion(String tituloProp) {
         DTPropuesta aux = this.controller.obtenerDTPropuesta(tituloProp);
         LocalDate aux2 = LocalDate.now().plusDays(30);
 
         /*Probe un par de cosas para pasarselo al controller para que modifique propuesta, no estaban funcionando asi que las quite
           quedo esto de nomas porque es lo mas simple y deja en base lo que quiero hacer, probablemente sea otra pendejada basica que se me
           esta olvidando, lo veo mañana cuando temos en llamada
-        */
-        
-        
+         */
     }
     // </editor-fold>
 
@@ -266,10 +269,10 @@ public class PropuestaServlet extends HttpServlet {
         }
         return bytesArchivo;
     }
-    
+
     private String obtenerPropuestaJSON(String titulo) {
         DTPropuesta prop = this.controller.obtenerDTPropuesta(titulo);
-        if(prop == null){
+        if (prop == null) {
             return "{}";
         }
         try {

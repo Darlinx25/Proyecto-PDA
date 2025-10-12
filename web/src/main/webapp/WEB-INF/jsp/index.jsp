@@ -26,23 +26,24 @@
             String apellido = (String) session.getAttribute("apellido");
             String imagen = (String) session.getAttribute("ubiImagen");
             String usr = (String) session.getAttribute("username");
+            List<String> categorias = (List<String>) request.getAttribute("categorias");
         %>
         <%
             if (rol == null) {
         %>
         <div class=" shadow p-2 bg-dark  text-white mb-1">
-                <div class="d-flex justify-content-between gap-3">
-                    <div >
-                        <h1 class="text-center" id="titulo">Culturarte</h1>
-                    </div>
-                    <div class="text-center">
-                        <h2>Bienvenido</h2>
-                        <ul>
-                            <a href="/login" class="btn btn-success p-1">Iniciar sesión</a></li>
-                            <a href="/crear-cuenta" class="btn btn-success p-1">Registrarse</a></li>
-                        </ul>
-                    </div>
+            <div class="d-flex justify-content-between gap-3">
+                <div >
+                    <h1 class="text-center" id="titulo">Culturarte</h1>
                 </div>
+                <div class="text-center">
+                    <h2>Bienvenido</h2>
+                    <ul>
+                        <a href="/login" class="btn btn-success p-1">Iniciar sesión</a></li>
+                        <a href="/crear-cuenta" class="btn btn-success p-1">Registrarse</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>    
 
         <%
@@ -87,24 +88,38 @@
         </div>
         <% }%>
 
-        
-<div class="container" >
-    <ul class="nav nav-tabs">
-        <li><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#PCreadas" data-estado="1" onclick="propPorEstado(this)">Propuestas Creadas</button></li>
-        <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PFinanciacion" data-estado="2" onclick="propPorEstado(this)">Propuestas en Financiación</button></li>
-        <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PFinanciadas" data-estado="3" onclick="propPorEstado(this)">Propuestas Financiadas</button></li>
-        <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PNOFinanciadas" data-estado="4" onclick="propPorEstado(this)">Propuestas NO Financiadas</button></li>
-        <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PCanceladas" data-estado="5" onclick="propPorEstado(this)">Propuestas Canceladas</button></li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane fade show active" id="PCreadas"></div>
-        <div class="tab-pane fade" id="PFinanciacion"></div>
-        <div class="tab-pane fade" id="PFinanciadas"></div>
-        <div class="tab-pane fade" id="PNOFinanciadas"></div>
-        <div class="tab-pane fade" id="PCanceladas"></div>
-    </div>
-</div> 
-        
+
+        <div class="d-flex justify-content-between gap-3">
+            <div class="ms-5 mt-5">
+                    <h3>Categorias:</h3>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="radio1" name="optradio" value="Todas" checked>
+                        <label class="form-check-label" for="radio1">Todas</label>
+                    </div>
+                    <%for(String cat : categorias){%>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="radio2" name="optradio" value="<%= cat%>">
+                        <label class="form-check-label" for="radio2"><%= cat%> </label>
+                    </div>
+                    <% } %>
+            </div>
+            <div class="container" >
+                <ul class="nav nav-tabs">
+                    <li><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#PCreadas" data-estado="1" onclick="propPorEstado(this)">Propuestas Creadas</button></li>
+                    <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PFinanciacion" data-estado="2" onclick="propPorEstado(this)">Propuestas en Financiación</button></li>
+                    <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PFinanciadas" data-estado="3" onclick="propPorEstado(this)">Propuestas Financiadas</button></li>
+                    <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PNOFinanciadas" data-estado="4" onclick="propPorEstado(this)">Propuestas NO Financiadas</button></li>
+                    <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PCanceladas" data-estado="5" onclick="propPorEstado(this)">Propuestas Canceladas</button></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="PCreadas"></div>
+                    <div class="tab-pane fade" id="PFinanciacion"></div>
+                    <div class="tab-pane fade" id="PFinanciadas"></div>
+                    <div class="tab-pane fade" id="PNOFinanciadas"></div>
+                    <div class="tab-pane fade" id="PCanceladas"></div>
+                </div>
+            </div> 
+        </div>    
         <script src="${pageContext.request.contextPath}/resources/js/propuestaPorEstado.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     </body>

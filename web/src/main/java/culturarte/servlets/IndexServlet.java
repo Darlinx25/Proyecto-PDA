@@ -4,6 +4,8 @@
  */
 package culturarte.servlets;
 
+import culturarte.logica.IController;
+import culturarte.logica.IControllerFactory;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -12,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,6 +22,8 @@ import jakarta.servlet.http.HttpSession;
  */
 @WebServlet(name = "IndexServlet", urlPatterns = {"/index"})
 public class IndexServlet extends HttpServlet {
+
+    private IController controller = IControllerFactory.getInstance().getIController();
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods.">
     @Override
@@ -38,7 +43,8 @@ public class IndexServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String rol = (String) session.getAttribute("rol");
-
+        ArrayList<String> cat = this.controller.obtenerCategorias();
+        request.setAttribute("categorias",cat);
         response.setContentType("text/html;charset=UTF-8");
         RequestDispatcher dispatcher = request.getRequestDispatcher(
                 "/WEB-INF/jsp/index.jsp");

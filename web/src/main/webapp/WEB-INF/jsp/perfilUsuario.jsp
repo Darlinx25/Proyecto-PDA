@@ -76,7 +76,7 @@
                             </select>
                         </div>
                         <div class="mb-2">
-                            <label for="usuariosSeguidos" class="form-label"><strong>Usuarios Seguidos:</strong></label>
+                            <label for="usuariosSeguidos" class="form-label"><strong>Seguidos:</strong></label>
                             <select  id="usuariosSeguidos" name="usuariosSeguidos" class="form-select form-select-sm" >
                                 <% if (usuariosSeguidos != null && !usuariosSeguidos.isEmpty()) {
                                         for (String cat : usuariosSeguidos) {%>
@@ -155,7 +155,7 @@
                             </select>
                         </div>
                         <div class="mb-3 me-3">
-                            <label for="usuariosSeguidos" class="form-label"><strong>Usuarios Seguidos:</strong></label>
+                            <label for="usuariosSeguidos" class="form-label"><strong>Seguidos:</strong></label>
                             <select  id="usuariosSeguidos" name="usuariosSeguidos" class="form-select form-select-sm">
                                 <% if (usuariosSeguidos != null && !usuariosSeguidos.isEmpty()) {
                                         for (String cat : usuariosSeguidos) {%>
