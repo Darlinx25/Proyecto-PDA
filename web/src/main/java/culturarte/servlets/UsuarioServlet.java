@@ -145,6 +145,8 @@ public class UsuarioServlet extends HttpServlet {
         ArrayList<String> seguidores = this.controller.ObtenerSeguidores(u);
         request.setAttribute("rol", tipoUser);
         ArrayList<String> usuariosSeguidos = new ArrayList<>();
+        
+        
         if (session != null && session.getAttribute("username") != u){
             ArrayList<String> usuariosSeguidosPorlog = this.controller.listarUsuariosSiguiendo((String) session.getAttribute("username"));
             request.setAttribute("usuariosSeguidosLog", usuariosSeguidosPorlog);
@@ -173,13 +175,16 @@ public class UsuarioServlet extends HttpServlet {
 
         } else if ("proponente".equals(tipoUser)) {
             DTProponente prop = this.controller.obtenerDTProponente(u);
+            
             if (prop != null) {
+                request.setAttribute("propuestasUsu",this.controller.listaPropuestasUsu(prop.getNickname()));
                 request.setAttribute("username", u);
                 request.setAttribute("biografia", prop.getBiografia());
                 request.setAttribute("sitioWeb", prop.getSitioWeb());
                 request.setAttribute("nombre", prop.getNombre());
                 request.setAttribute("apellido", prop.getApellido());
                 request.setAttribute("ubiImagen", prop.getImagen());
+                
             }
         }
         
@@ -316,7 +321,7 @@ public class UsuarioServlet extends HttpServlet {
         }
         return bytesArchivo;
     }
-
+    
     private LocalDate parsearFecha(String fechaString) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date utilDate = null;

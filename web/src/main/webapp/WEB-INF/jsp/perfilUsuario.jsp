@@ -11,7 +11,6 @@
         <link href="/resources/css/perfilUsuario.css" rel="stylesheet">
     </head>
     <body class="bg-secondary">
-
         <%
             String rol = (String) request.getAttribute("rol");
             String username = (String) request.getAttribute("username");
@@ -23,28 +22,21 @@
             List<String> usuariosSeguidos = (List<String>) request.getAttribute("usuariosSeguidos");
             List<String> seguidores = (List<String>) request.getAttribute("seguidores");
             List<String> usuariosSeguidosLog = (List<String>) request.getAttribute("usuariosSeguidosLog");
+            List<String> propuestasUsu = (List<String>) request.getAttribute("propuestasUsu");
             boolean miPerfil = false;
             if (username.equals(session.getAttribute("username"))) {
                 miPerfil = true;
             }
 
         %>
-
         <%if ("colaborador".equals(rol)) {%>
         <div class="container mt-3 ">
-
-
             <div class="bg-success p-2 rounded shadow-sm border border-5 border-dark">
                 <h1 class=" text-center">  Perfil  </h1>
             </div>
-
-
-
-
             <div class="bg-success p-4 rounded shadow-sm mt-3 d-flex justify-content-center gap-3 border border-5 border-dark">
                 <div>
                     <img height="200" width="200" class="rounded-circle border border-5 border-dark "src="/imagenes/<%= imagen%>" onerror="this.src='/resources/images/userdefault.png';" alt="Foto de perfil">
-
                     <%
                         boolean yaSigo = false;
                         if (usuariosSeguidosLog != null) {
@@ -56,24 +48,20 @@
                             }
                         }
                     %>
-
                     <% if (yaSigo && miPerfil == false) { %>
                     <div class="d-flex justify-content-center mt-3">
                         <button type="button" class="btn btn-secondary" id="follow" onclick="seguirUser()">Siguiendo</button>
                     </div>
                     <% }
-                    if (yaSigo == false && miPerfil == false) { %>
+                        if (yaSigo == false && miPerfil == false) { %>
                     <div class="d-flex justify-content-center mt-3">
                         <button type="button" class="btn btn-danger" id="follow" onclick="seguirUser()">Seguir</button>
                     </div>
                     <% }%>
-
                 </div>
                 <div class="d-flex flex-column justify-content-center">
                     <p class="text-start text-uppercase" id="NombreUser"><%= nombre%> <%= apellido%> - <%= rol%></p>
                     <p class="text-start  "><%= username%></p>
-
-
                     <div class="d-flex justify-content-between  mt-3">
                         <div class="mb-2">
                             <label for="seguidores" class="form-label"><strong>Seguidores:</strong></label>
@@ -85,10 +73,8 @@
                                 } else { %>
                                 <option value="">No hay seguidores</option>
                                 <% }%>
-
                             </select>
                         </div>
-
                         <div class="mb-2">
                             <label for="usuariosSeguidos" class="form-label"><strong>Usuarios Seguidos:</strong></label>
                             <select  id="usuariosSeguidos" name="usuariosSeguidos" class="form-select form-select-sm" >
@@ -101,12 +87,10 @@
                                 <% }%>
 
                             </select>
-                        </div>
+                        </div> 
                     </div>
                 </div>
-
             </div>
-
             <div class="align-items-center">
                 <div class="d-flex justify-content-between  mt-3">
                     <form action="/index" method="get">
@@ -119,18 +103,13 @@
             </div>     
         </div>
         <% } else if ("proponente".equals(rol)) {%>
-
         <div class="container mt-3 ">
-
             <div class="bg-dark p-1 text-white rounded shadow-sm ">
                 <h1 class=" text-center">  Tu Perfil  </h1>
             </div>
-
-
             <div class="bg-dark p-4 rounded  text-white shadow-sm mt-3 d-flex justify-content-center gap-3 border border-5 border-dark">
                 <div>
                     <img height="200" width="200" class="rounded-circle border border-3 border-white "src="/imagenes/<%= imagen%>" onerror="this.src='/resources/images/userdefault.png';" alt="Foto de perfil">
-
                     <%
                         boolean yaSigo = false;
                         if (usuariosSeguidosLog != null) {
@@ -142,7 +121,6 @@
                             }
                         }
                     %>
-
                     <% if (yaSigo && miPerfil == false) { %>
                     <div class="d-flex justify-content-center mt-3">
                         <button type="button" class="btn btn-secondary" id="follow" onclick="seguirUser()">Siguiendo</button>
@@ -153,8 +131,6 @@
                         <button type="button" class="btn btn-danger" id="follow" onclick="seguirUser()">Seguir</button>
                     </div>
                     <% }%>
-
-
                 </div>
                 <div class="d-flex flex-column justify-content-center">
                     <p class="text-start text-uppercase" id="NombreUser"><%= nombre%> <%= apellido%> - <%= rol%></p>
@@ -166,7 +142,7 @@
                     </p>
                     <p class="text-start "><%= bio%></p>
                     <div class="d-flex justify-content-between  mt-3">
-                        <div class="mb-2">
+                        <div class="mb-3 me-3">
                             <label for="seguidores" class="form-label"><strong>Seguidores:</strong></label>
                             <select  id="seguidores" name="seguidores" class="form-select form-select-sm">
                                 <% if (seguidores != null && !seguidores.isEmpty()) {
@@ -176,11 +152,9 @@
                                 } else { %>
                                 <option value="">No hay seguidores</option>
                                 <% }%>
-
                             </select>
                         </div>
-
-                        <div class="mb-2">
+                        <div class="mb-3 me-3">
                             <label for="usuariosSeguidos" class="form-label"><strong>Usuarios Seguidos:</strong></label>
                             <select  id="usuariosSeguidos" name="usuariosSeguidos" class="form-select form-select-sm">
                                 <% if (usuariosSeguidos != null && !usuariosSeguidos.isEmpty()) {
@@ -190,13 +164,24 @@
                                 } else { %>
                                 <option value="">No hay seguidos</option>
                                 <% }%>
-
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="propuesta" class="form-label"><strong>Propuestas:</strong></label>
+                            <select onchange="cargarPropuesta()" id="propuestaSeguidos" name="propuesta" class="form-select form-select-sm" required>
+                                <option value="" selected disabled>-- Seleccione una propuesta  --</option>
+                                <% if (propuestasUsu != null) {
+                                        for (String cat : propuestasUsu) {%>
+                                <option value="<%= cat%>"><%= cat%></option>
+                                <%   }
+                                } else { %>
+                                <option value="">No hay propuestas disponibles</option>
+                                <% }%>
                             </select>
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="align-items-center">
                 <div class="d-flex justify-content-between  mt-3">
                     <form action="/index" method="get">
@@ -206,13 +191,17 @@
                         <button type="submit" class="btn btn-danger">Cerrar sesión</button>
                     </form>
                 </div>
-            </div>    
+            </div>
+            <div class="bg-dark p-4 rounded text-white mb-3 mt-3">
+                <div id="contenedorPropuestaSeguidos"></div>   
+            </div> 
         </div>
+
         <%}%>
         <script>
             const u = "<%= username%>";
         </script>
-
+        <script src="${pageContext.request.contextPath}/resources/js/propuestaDetalle.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/seguirUser.js"></script>
     </body>
 </html>
