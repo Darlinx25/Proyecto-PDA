@@ -25,7 +25,7 @@ public class DTPropuesta {
     private String nickProponedor;
     private List<TipoRetorno> tiposRetorno;
     private Estado estadoActual;
-    private List<Comentario> comentarios;
+    //private List<Comentario> comentarios;
     
     
     public DTPropuesta(){
@@ -34,7 +34,7 @@ public class DTPropuesta {
     
     //este para obtener los datos de una propuesta
     public DTPropuesta(String titulo, String descripcion, String imagen, String lugarRealizara, LocalDate fechaRealizara, 
-            float precioEntrada, float montoAReunir, float dineroRecaudado, LocalDate fechaPublicacion, String tipoPropuesta, String nickProponedor, List<TipoRetorno> tiposRetorno, Estado estadoActual, LocalDate fechaFinanciacion, List<Comentario> comentarios) {
+            float precioEntrada, float montoAReunir, float dineroRecaudado, LocalDate fechaPublicacion, String tipoPropuesta, String nickProponedor, List<TipoRetorno> tiposRetorno, Estado estadoActual, LocalDate fechaFinanciacion /*,List<Comentario> comentarios*/) {
         
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -50,7 +50,7 @@ public class DTPropuesta {
         this.tiposRetorno = tiposRetorno;
         this.estadoActual = estadoActual;
         this.plazoFinanciacion = fechaFinanciacion;
-        this.comentarios = comentarios;
+        //this.comentarios = comentarios;
     }
     
     //este para crear la propuesta
@@ -70,7 +70,7 @@ public class DTPropuesta {
         this.tiposRetorno = tiposRetorno;
         this.estadoActual = estadoActual;
         this.plazoFinanciacion = null;
-        this.comentarios = null;
+        //this.comentarios = null;
     }
 
     public String getTitulo() {
@@ -129,8 +129,8 @@ public class DTPropuesta {
         return plazoFinanciacion;
     }
     
-    public List<Comentario> getComentarios(){
+    /*public List<Comentario> getComentarios(){
         return this.comentarios;
-    }
+    }*/
     
 }

@@ -11,14 +11,14 @@ import java.util.List;
 
 
 
-@Embeddable
+/*@Embeddable
 public class Comentario {
    private String informacion;
    private String nombreColaborador;
    
    protected Comentario(){
 
-}
+    }
 
    protected Comentario(String informacion,String nombreCol){
        this.informacion = informacion;
@@ -41,3 +41,4 @@ public class Comentario {
     }
 }
 
+*/
