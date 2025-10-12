@@ -20,6 +20,7 @@ function cargarPropuesta() {
                      onerror="this.src='/resources/images/propdefault.png';"
                      alt="${data.titulo}" 
                      style="max-width:300px;border-radius:6px;">
+                <p><strong></strong></p>     
                 <p><strong>Lugar de realización:</strong> ${data.lugarRealizara}</p>
                 <p><strong>Fecha prevista:</strong> ${data.fechaRealizara}</p>
                 <p><strong>Fecha de publicación:</strong> ${data.fechaPublicacion}</p>
@@ -27,6 +28,7 @@ function cargarPropuesta() {
                 <p><strong>Monto a reunir:</strong> $${data.montoAReunir}</p>
                 <p><strong>Categoría:</strong> ${data.tipoPropuesta}</p>
                 <p><strong>Estado actual:</strong> ${data.estadoActual.estado}</p>
+                <p><strong>Tipos de retorno:</strong> ${data.tiposRetorno}</p>
             `;
         
         })

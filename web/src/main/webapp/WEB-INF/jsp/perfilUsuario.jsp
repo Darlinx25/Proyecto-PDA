@@ -193,6 +193,7 @@
                 </div>
             </div>
             <div class="bg-dark p-4 rounded text-white mb-3 mt-3">
+                <h3 class=" text-center">  Datos de propuesta:  </h3>
                 <div id="contenedorPropuestaSeguidos"></div>   
             </div> 
         </div>

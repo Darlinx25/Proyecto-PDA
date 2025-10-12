@@ -10,7 +10,10 @@ import culturarte.excepciones.NickRepetidoException;
 import culturarte.logica.DTColaborador;
 import culturarte.logica.DTDireccion;
 import culturarte.logica.DTProponente;
+import culturarte.logica.DTPropuesta;
 import culturarte.logica.DTUsuario;
+import culturarte.logica.Estado;
+import culturarte.logica.EstadoPropuesta;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
 import culturarte.logica.ResultadoSeguirUsuario;
@@ -177,7 +180,7 @@ public class UsuarioServlet extends HttpServlet {
             DTProponente prop = this.controller.obtenerDTProponente(u);
             
             if (prop != null) {
-                request.setAttribute("propuestasUsu",this.controller.listaPropuestasUsu(prop.getNickname()));
+                request.setAttribute("propuestasUsu",listaPropuestasPropPublicadas(prop.getNickname()));
                 request.setAttribute("username", u);
                 request.setAttribute("biografia", prop.getBiografia());
                 request.setAttribute("sitioWeb", prop.getSitioWeb());
@@ -321,6 +324,22 @@ public class UsuarioServlet extends HttpServlet {
         }
         return bytesArchivo;
     }
+    
+    
+    private ArrayList<String> listaPropuestasPropPublicadas(String nick){
+        ArrayList<String> aux = this.controller.listaPropuestasUsu(nick);
+        ArrayList<String> propuestasPubli = new ArrayList<>();
+        for(String p : aux){
+            DTPropuesta prop = this.controller.obtenerDTPropuesta(p);
+            Estado est = prop.getEstadoActual();
+            if(est.getEstado() != EstadoPropuesta.INGRESADA){
+                propuestasPubli.add(p);
+            }
+        }
+        
+        return propuestasPubli;
+    }
+    
     
     private LocalDate parsearFecha(String fechaString) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
