@@ -105,7 +105,7 @@
         <% } else if ("proponente".equals(rol)) {%>
         <div class="container mt-3 ">
             <div class="bg-dark p-1 text-white rounded shadow-sm ">
-                <h1 class=" text-center">  Tu Perfil  </h1>
+                <h1 class=" text-center">  Perfil  </h1>
             </div>
             <div class="bg-dark p-4 rounded  text-white shadow-sm mt-3 d-flex justify-content-center gap-3 border border-5 border-dark">
                 <div>
