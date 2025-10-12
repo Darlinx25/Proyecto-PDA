@@ -39,6 +39,8 @@ public abstract class Usuario {
     inverseJoinColumns = @JoinColumn(name = "seguido_id"))
     private List<Usuario> usuariosSeguidos = new ArrayList<>();
     
+    @ManyToMany(mappedBy = "usuariosSeguidos")
+    private List<Usuario> seguidores = new ArrayList<>();
     
     @ManyToMany
     @JoinTable(
@@ -143,5 +145,8 @@ public abstract class Usuario {
         this.propuestasFavoritas = propuestasFavoritas;
     }
     
+    public List<Usuario> getSeguidores(){
+        return this.seguidores;
+    }  
     
 }

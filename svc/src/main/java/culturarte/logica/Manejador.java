@@ -95,6 +95,9 @@ public class Manejador {
                 .setParameter("nickname", nickname).getResultList();
     }
 
+    
+
+    
     public ArrayList<String> obtenerUsuariosSeguir(String nickname) {
         List<String> aux;
         String query = """

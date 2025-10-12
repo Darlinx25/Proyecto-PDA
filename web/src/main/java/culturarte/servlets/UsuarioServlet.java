@@ -140,9 +140,21 @@ public class UsuarioServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         String tipoUser = this.controller.obtenerTipoUser(u);
-        ArrayList<String> usuariosSeguidos = this.controller.listarUsuariosSiguiendo(u);
+        ArrayList<String> usuariosSeguidosSinRol = this.controller.listarUsuariosSiguiendo(u);
+        ArrayList<String> seguidores = this.controller.ObtenerSeguidores(u);
         request.setAttribute("rol", tipoUser);
+        ArrayList<String> usuariosSeguidos = new ArrayList<>();
+        for (String cat : usuariosSeguidosSinRol ){
+            String tipoU = this.controller.obtenerTipoUser(cat);
+            usuariosSeguidos.add(cat + " - " + tipoU);
+        }
+        ArrayList<String> seguidoresConRol = new ArrayList<>();
+        for (String cat : seguidores){
+            String tipoUs = this.controller.obtenerTipoUser(cat);
+            seguidoresConRol.add(cat + " - " + tipoUs);
+        }
         request.setAttribute("usuariosSeguidos", usuariosSeguidos);
+        request.setAttribute("seguidores", seguidoresConRol);
         
         if ("colaborador".equals(tipoUser)) {
             DTColaborador colab = this.controller.obtenerDTColaborador(u);

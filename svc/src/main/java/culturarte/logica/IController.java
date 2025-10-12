@@ -35,6 +35,7 @@ public interface IController {
     public ArrayList<String> listaPropuestasUsu(String nickname);//no devuelve las propuestas del usuario, devuelve todas
     public ArrayList<String> listarUsuariosSeguir(String nickname);
     public ArrayList<String> listarUsuariosSiguiendo(String nickname);
+    public ArrayList<String> ObtenerSeguidores(String nickname);
     
     // </editor-fold>
     

@@ -21,28 +21,30 @@
             String bio = (String) request.getAttribute("biografia");
             String web = (String) request.getAttribute("sitioWeb");
             List<String> usuariosSeguidos = (List<String>) request.getAttribute("usuariosSeguidos");
+            List<String> seguidores = (List<String>) request.getAttribute("seguidores");
             List<String> usuariosSeguidosLog = (List<String>) request.getAttribute("usuariosSeguidosLog");
             boolean miPerfil = false;
-            if(username.equals(session.getAttribute("username"))){
+            if (username.equals(session.getAttribute("username"))) {
                 miPerfil = true;
             }
+
         %>
 
         <%if ("colaborador".equals(rol)) {%>
         <div class="container mt-3 ">
-            
-           
+
+
             <div class="bg-success p-2 rounded shadow-sm border border-5 border-dark">
                 <h1 class=" text-center">  Perfil  </h1>
             </div>
-            
-            
+
+
 
 
             <div class="bg-success p-4 rounded shadow-sm mt-3 d-flex justify-content-center gap-3 border border-5 border-dark">
                 <div>
                     <img height="200" width="200" class="rounded-circle border border-5 border-dark "src="/imagenes/<%= imagen%>" onerror="this.src='/resources/images/userdefault.png';" alt="Foto de perfil">
-                    
+
                     <%
                         boolean yaSigo = false;
                         if (usuariosSeguidosLog != null) {
@@ -55,11 +57,12 @@
                         }
                     %>
 
-                    <% if (yaSigo && miPerfil==false) { %>
+                    <% if (yaSigo && miPerfil == false) { %>
                     <div class="d-flex justify-content-center mt-3">
                         <button type="button" class="btn btn-secondary" id="follow" onclick="seguirUser()">Siguiendo</button>
                     </div>
-                    <% } if(yaSigo == false && miPerfil==false){ %>
+                    <% }
+                        if (yaSigo == false && miPerfil == false) { %>
                     <div class="d-flex justify-content-center mt-3">
                         <button type="button" class="btn btn-danger" id="follow" onclick="seguirUser()">Seguir</button>
                     </div>
@@ -69,20 +72,36 @@
                 <div class="d-flex flex-column justify-content-center">
                     <p class="text-start text-uppercase" id="NombreUser"><%= nombre%> <%= apellido%> - <%= rol%></p>
                     <p class="text-start  "><%= username%></p>
-                    <div class="mb-2">
-                        <label for="usuariosSeguidos" class="form-label"><strong>Usuarios Seguidos</strong></label>
-                        <select onchange="propuestaElegida()" id="usuariosSeguidos" name="usuariosSeguidos" class="form-select form-select-sm" required>
-                            <% if (usuariosSeguidos != null) {
-                                    for (String cat : usuariosSeguidos) {%>
-                            <option value="<%= cat%>"><%= cat%></option>
-                            <%   }
-                            } else { %>
-                            <option value="">No hay seguidores</option>
-                            <% }%>
-
-                        </select>
 
 
+                    <div class="d-flex justify-content-between  mt-3">
+                        <div class="mb-2">
+                            <label for="seguidores" class="form-label"><strong>Seguidores:</strong></label>
+                            <select  id="seguidores" name="seguidores" class="form-select form-select-sm">
+                                <% if (seguidores != null) {
+                                        for (String cat : seguidores) {%>
+                                <option ><%= cat%></option>
+                                <%   }
+                                } else { %>
+                                <option value="">No hay seguidores</option>
+                                <% }%>
+
+                            </select>
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="usuariosSeguidos" class="form-label"><strong>Usuarios Seguidos:</strong></label>
+                            <select  id="usuariosSeguidos" name="usuariosSeguidos" class="form-select form-select-sm" >
+                                <% if (usuariosSeguidos != null) {
+                                        for (String cat : usuariosSeguidos) {%>
+                                <option ><%= cat%></option>
+                                <%   }
+                                } else { %>
+                                <option value="">No hay seguidores</option>
+                                <% }%>
+
+                            </select>
+                        </div>
                     </div>
                 </div>
 
@@ -124,11 +143,12 @@
                         }
                     %>
 
-                    <% if (yaSigo && miPerfil==false) { %>
+                    <% if (yaSigo && miPerfil == false) { %>
                     <div class="d-flex justify-content-center mt-3">
                         <button type="button" class="btn btn-secondary" id="follow" onclick="seguirUser()">Siguiendo</button>
                     </div>
-                    <% } if(yaSigo == false && miPerfil==false){ %>
+                    <% }
+                        if (yaSigo == false && miPerfil == false) { %>
                     <div class="d-flex justify-content-center mt-3">
                         <button type="button" class="btn btn-danger" id="follow" onclick="seguirUser()">Seguir</button>
                     </div>
@@ -145,20 +165,34 @@
                         </a>
                     </p>
                     <p class="text-start "><%= bio%></p>
-                    <div class="mb-2">
-                        <label for="usuariosSeguidos" class="form-label"><strong>Usuarios Seguidos</strong></label>
-                        <select onchange="propuestaElegida()" id="usuariosSeguidos" name="usuariosSeguidos" class="form-select form-select-sm" required>
-                            <% if (usuariosSeguidos != null) {
-                                    for (String cat : usuariosSeguidos) {%>
-                            <option value="<%= cat%>"><%= cat%></option>
-                            <%   }
-                            } else { %>
-                            <option value="">No hay seguidores</option>
-                            <% }%>
+                    <div class="d-flex justify-content-between  mt-3">
+                        <div class="mb-2">
+                            <label for="seguidores" class="form-label"><strong>Seguidores:</strong></label>
+                            <select  id="seguidores" name="seguidores" class="form-select form-select-sm">
+                                <% if (seguidores != null) {
+                                        for (String cat : seguidores) {%>
+                                <option ><%= cat%></option>
+                                <%   }
+                                } else { %>
+                                <option value="">No hay seguidores</option>
+                                <% }%>
 
-                        </select>
+                            </select>
+                        </div>
 
+                        <div class="mb-2">
+                            <label for="usuariosSeguidos" class="form-label"><strong>Usuarios Seguidos:</strong></label>
+                            <select  id="usuariosSeguidos" name="usuariosSeguidos" class="form-select form-select-sm">
+                                <% if (usuariosSeguidos != null) {
+                                        for (String cat : usuariosSeguidos) {%>
+                                <option ><%= cat%></option>
+                                <%   }
+                                } else { %>
+                                <option value="">No hay seguidores</option>
+                                <% }%>
 
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>

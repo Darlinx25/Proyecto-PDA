@@ -598,6 +598,26 @@ public class Controller implements IController {
     }
     
     @Override
+    public ArrayList<String> ObtenerSeguidores(String nickname){
+        Manejador emr = Manejador.getInstance();
+        Usuario seguido = emr.find(Usuario.class, nickname);
+        if (seguido == null) {
+            return new ArrayList<>();
+        }
+
+        List<Usuario> seguidores = seguido.getSeguidores();
+        ArrayList<String> nicks = new ArrayList<>();
+
+        for (Usuario u : seguidores) {
+            nicks.add(u.getNickname());
+        }
+        emr.close();
+        
+        
+        return nicks;
+    }
+    
+    @Override
     public ResultadoSeguirUsuario dejarDeSeguirUsuario(String nickSegui, String nickSiguiendo) {
         Manejador emr = Manejador.getInstance();
         List<Usuario> usu1 = emr.obtenerUsuario(nickSegui);
