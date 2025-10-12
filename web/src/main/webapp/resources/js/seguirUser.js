@@ -10,7 +10,7 @@ function seguirUser(){
     btn.classList.replace("btn-danger", "btn-secondary");
   } else {
     btn.textContent = "Seguir";
-    btn.classList.replace("btn-secondary", "btn-    danger");
+    btn.classList.replace("btn-secondary", "btn-danger");
   }
 
   fetch("/seguir-usuario", {

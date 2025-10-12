@@ -25,6 +25,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.InputStream;
+import static java.lang.System.console;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -144,6 +145,10 @@ public class UsuarioServlet extends HttpServlet {
         ArrayList<String> seguidores = this.controller.ObtenerSeguidores(u);
         request.setAttribute("rol", tipoUser);
         ArrayList<String> usuariosSeguidos = new ArrayList<>();
+        if (session != null && session.getAttribute("username") != u){
+            ArrayList<String> usuariosSeguidosPorlog = this.controller.listarUsuariosSiguiendo((String) session.getAttribute("username"));
+            request.setAttribute("usuariosSeguidosLog", usuariosSeguidosPorlog);
+        }
         for (String cat : usuariosSeguidosSinRol ){
             String tipoU = this.controller.obtenerTipoUser(cat);
             usuariosSeguidos.add(cat + " - " + tipoU);

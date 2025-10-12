@@ -62,7 +62,7 @@
                         <button type="button" class="btn btn-secondary" id="follow" onclick="seguirUser()">Siguiendo</button>
                     </div>
                     <% }
-                        if (yaSigo == false && miPerfil == false) { %>
+                    if (yaSigo == false && miPerfil == false) { %>
                     <div class="d-flex justify-content-center mt-3">
                         <button type="button" class="btn btn-danger" id="follow" onclick="seguirUser()">Seguir</button>
                     </div>
