@@ -122,7 +122,7 @@ public class UsuarioServlet extends HttpServlet {
                 String usuario = request.getParameter("usuario");
                 if (usuario != null) {
                     seguirUser(request, response, usuario, accion);
-                    
+
                 } else {
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Usuario no recibido");
                 }
@@ -143,29 +143,51 @@ public class UsuarioServlet extends HttpServlet {
     protected void cargarDatosPerfil(HttpServletRequest request, HttpServletResponse response, String u)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
+
         String tipoUser = this.controller.obtenerTipoUser(u);
-        ArrayList<String> usuariosSeguidosSinRol = this.controller.listarUsuariosSiguiendo(u);
+
+        List<String> usuariosSeguidosSinRol = this.controller.listarUsuariosSiguiendo(u);
+
         ArrayList<String> seguidores = this.controller.ObtenerSeguidores(u);
+
         request.setAttribute("rol", tipoUser);
+
         ArrayList<String> usuariosSeguidos = new ArrayList<>();
-        
-        
-        if (session != null && session.getAttribute("username") != u){
-            ArrayList<String> usuariosSeguidosPorlog = this.controller.listarUsuariosSiguiendo((String) session.getAttribute("username"));
-            request.setAttribute("usuariosSeguidosLog", usuariosSeguidosPorlog);
+
+        if (session.equals(null)) {
+
+            if (session.getAttribute("username") != u) {
+                List<String> usuariosSeguidosPorlog = this.controller.listarUsuariosSiguiendo((String) session.getAttribute("username"));
+                request.setAttribute("usuariosSeguidosLog", usuariosSeguidosPorlog);
+            }
+
+            if (session.getAttribute("username").equals(u)) {
+                if ("colaborador".equals(tipoUser)) {
+                    DTColaborador colab = this.controller.obtenerDTColaborador(u);
+                    if (colab != null) {
+
+                    }
+                } else if ("proponente".equals(tipoUser)) {
+                    DTProponente prop = this.controller.obtenerDTProponente(u);
+                    if (prop != null) {
+
+                    }
+                }
+            }
+
         }
-        for (String cat : usuariosSeguidosSinRol ){
+        for (String cat : usuariosSeguidosSinRol) {
             String tipoU = this.controller.obtenerTipoUser(cat);
             usuariosSeguidos.add(cat + " - " + tipoU);
         }
         ArrayList<String> seguidoresConRol = new ArrayList<>();
-        for (String cat : seguidores){
+        for (String cat : seguidores) {
             String tipoUs = this.controller.obtenerTipoUser(cat);
             seguidoresConRol.add(cat + " - " + tipoUs);
         }
         request.setAttribute("usuariosSeguidos", usuariosSeguidos);
         request.setAttribute("seguidores", seguidoresConRol);
-        
+
         if ("colaborador".equals(tipoUser)) {
             DTColaborador colab = this.controller.obtenerDTColaborador(u);
             if (colab != null) {
@@ -178,49 +200,34 @@ public class UsuarioServlet extends HttpServlet {
 
         } else if ("proponente".equals(tipoUser)) {
             DTProponente prop = this.controller.obtenerDTProponente(u);
-            
+
             if (prop != null) {
-                request.setAttribute("propuestasUsu",listaPropuestasPropPublicadas(prop.getNickname()));
+                request.setAttribute("propuestasUsu", listaPropuestasPropPublicadas(prop.getNickname()));
                 request.setAttribute("username", u);
                 request.setAttribute("biografia", prop.getBiografia());
                 request.setAttribute("sitioWeb", prop.getSitioWeb());
                 request.setAttribute("nombre", prop.getNombre());
                 request.setAttribute("apellido", prop.getApellido());
                 request.setAttribute("ubiImagen", prop.getImagen());
-                
+
             }
         }
-        
-        if (session != null && session.getAttribute("username").equals(u)) {
-            if ("colaborador".equals(tipoUser)) {
-                DTColaborador colab = this.controller.obtenerDTColaborador(u);
-                if (colab != null) {
-
-                }
-            } else if ("proponente".equals(tipoUser)) {
-                DTProponente prop = this.controller.obtenerDTProponente(u);
-                if (prop != null) {
-                        
-                }
-            }
-        }
-
     }
-    
-      private void seguirUser(HttpServletRequest request, HttpServletResponse response, String userAseguir,String accion)
+
+    private void seguirUser(HttpServletRequest request, HttpServletResponse response, String userAseguir, String accion)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         if (session != null) {
             String user = (String) session.getAttribute("username");
-            if(accion.equals("seguir")){
+            if (accion.equals("seguir")) {
                 ResultadoSeguirUsuario s = this.controller.seguirUsuario(user, userAseguir);
-            }else{
+            } else {
                 ResultadoSeguirUsuario s = this.controller.dejarDeSeguirUsuario(user, userAseguir);
             }
-            
+
         }
     }
-      
+
     protected void iniciarSesion(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String nickname = request.getParameter("nickname");
@@ -324,23 +331,21 @@ public class UsuarioServlet extends HttpServlet {
         }
         return bytesArchivo;
     }
-    
-    
-    private ArrayList<String> listaPropuestasPropPublicadas(String nick){
+
+    private ArrayList<String> listaPropuestasPropPublicadas(String nick) {
         ArrayList<String> aux = this.controller.listaPropuestasUsu(nick);
         ArrayList<String> propuestasPubli = new ArrayList<>();
-        for(String p : aux){
+        for (String p : aux) {
             DTPropuesta prop = this.controller.obtenerDTPropuesta(p);
             Estado est = prop.getEstadoActual();
-            if(est.getEstado() != EstadoPropuesta.INGRESADA){
+            if (est.getEstado() != EstadoPropuesta.INGRESADA) {
                 propuestasPubli.add(p);
             }
         }
-        
+
         return propuestasPubli;
     }
-    
-    
+
     private LocalDate parsearFecha(String fechaString) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date utilDate = null;

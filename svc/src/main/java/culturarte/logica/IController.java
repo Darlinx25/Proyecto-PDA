@@ -11,6 +11,7 @@ import culturarte.excepciones.NickRepetidoException;
 import culturarte.excepciones.PropuestaDuplicadaException;
 import culturarte.excepciones.PropuestaYaColaboradaException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
@@ -34,7 +35,7 @@ public interface IController {
     public ResultadoSeguirUsuario dejarDeSeguirUsuario(String nickSegui, String nickSiguiendo);
     public ArrayList<String> listaPropuestasUsu(String nickname);//no devuelve las propuestas del usuario, devuelve todas
     public ArrayList<String> listarUsuariosSeguir(String nickname);
-    public ArrayList<String> listarUsuariosSiguiendo(String nickname);
+    public List<String> listarUsuariosSiguiendo(String nickname);
     public ArrayList<String> ObtenerSeguidores(String nickname);
     
     // </editor-fold>

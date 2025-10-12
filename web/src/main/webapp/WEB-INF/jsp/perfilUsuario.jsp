@@ -13,6 +13,7 @@
     <body class="bg-secondary">
         <%
             String rol = (String) request.getAttribute("rol");
+            String rolSesion = (String) session.getAttribute("rol");
             String username = (String) request.getAttribute("username");
             String nombre = (String) request.getAttribute("nombre");
             String apellido = (String) request.getAttribute("apellido");
@@ -48,12 +49,11 @@
                             }
                         }
                     %>
-                    <% if (yaSigo && miPerfil == false) { %>
+                    <% if (yaSigo && miPerfil == false && rolSesion != null) { %>
                     <div class="d-flex justify-content-center mt-3">
                         <button type="button" class="btn btn-secondary" id="follow" onclick="seguirUser()">Siguiendo</button>
                     </div>
-                    <% }
-                        if (yaSigo == false && miPerfil == false) { %>
+                    <% }if (yaSigo == false && miPerfil == false && rolSesion != null) { %>
                     <div class="d-flex justify-content-center mt-3">
                         <button type="button" class="btn btn-danger" id="follow" onclick="seguirUser()">Seguir</button>
                     </div>
@@ -96,9 +96,11 @@
                     <form action="/index" method="get">
                         <button type="submit" class="btn btn-danger">Inicio</button>
                     </form>
+                    <% if (rolSesion != null) { %>
                     <form action="/logout" method="post">
                         <button type="submit" class="btn btn-danger">Cerrar sesión</button>
                     </form>
+                    <% }%>
                 </div>
             </div>     
         </div>
@@ -121,12 +123,12 @@
                             }
                         }
                     %>
-                    <% if (yaSigo && miPerfil == false) { %>
+                    <% if (yaSigo && miPerfil == false && rolSesion != null) { %>
                     <div class="d-flex justify-content-center mt-3">
                         <button type="button" class="btn btn-secondary" id="follow" onclick="seguirUser()">Siguiendo</button>
                     </div>
                     <% }
-                        if (yaSigo == false && miPerfil == false) { %>
+                        if (yaSigo == false && miPerfil == false && rolSesion != null) { %>
                     <div class="d-flex justify-content-center mt-3">
                         <button type="button" class="btn btn-danger" id="follow" onclick="seguirUser()">Seguir</button>
                     </div>
@@ -187,9 +189,11 @@
                     <form action="/index" method="get">
                         <button type="submit" class="btn btn-danger">Inicio</button>
                     </form>
+                     <% if (rolSesion != null) { %>
                     <form action="/logout" method="post">
                         <button type="submit" class="btn btn-danger">Cerrar sesión</button>
                     </form>
+                    <% }%>
                 </div>
             </div>
             <div class="bg-dark p-4 rounded text-white mb-3 mt-3">

@@ -42,7 +42,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 public class Controller implements IController {
 
     private static Controller instancia;
-    
 
     private Controller() {
         Manejador emr = Manejador.getInstance();
@@ -447,7 +446,7 @@ public class Controller implements IController {
         return usu;
     }
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="Funciones usuarios.">
     @Override
     public void addUsuario(DTUsuario user) throws NickRepetidoException, EmailRepetidoException, BadPasswordException {
@@ -464,7 +463,7 @@ public class Controller implements IController {
             throw new EmailRepetidoException("Error al registrar usuario, Email ya existente.");
         }
         validarPassword(user.getPassword(), user.getPasswordConfirm());
-        
+
         String passwordSalt = crearPasswordSalt();
         String passwordHash;
         try {
@@ -475,7 +474,7 @@ public class Controller implements IController {
             Arrays.fill(user.getPasswordConfirm(), 'x');
             return;
         }
-        
+
         String nombre = user.getNombre();
         String apellido = user.getApellido();
         LocalDate fechaNac = user.getFechaNacimiento();
@@ -493,11 +492,11 @@ public class Controller implements IController {
 
         emr.add(usu);
         emr.close();
-        
+
         Arrays.fill(user.getPassword(), 'x');
         Arrays.fill(user.getPasswordConfirm(), 'x');
     }
-    
+
     @Override
     public ArrayList<String> listarColaboradores() {
         Manejador emr = Manejador.getInstance();
@@ -505,7 +504,7 @@ public class Controller implements IController {
         emr.close();
         return new ArrayList<>(aux);
     }
-    
+
     @Override
     public DTColaborador obtenerDTColaborador(String nick) {
         Manejador emr = Manejador.getInstance();
@@ -523,7 +522,7 @@ public class Controller implements IController {
         }
         return null;
     }
-    
+
     @Override
     public ArrayList<String> obtenerPropuestasColaboradas(String nick) {
         Manejador emr = Manejador.getInstance();
@@ -531,7 +530,7 @@ public class Controller implements IController {
         emr.close();
         return aux;
     }
-    
+
     @Override
     public ArrayList<String> listarProponentes() {
         Manejador emr = Manejador.getInstance();
@@ -539,7 +538,7 @@ public class Controller implements IController {
         emr.close();
         return new ArrayList<>(aux);
     }
-    
+
     @Override
     public DTProponente obtenerDTProponente(String nick) {
         Manejador emr = Manejador.getInstance();
@@ -565,7 +564,7 @@ public class Controller implements IController {
         }
         return null;
     }
-    
+
     @Override
     public ArrayList<String> listarColaboracionesColaborador(String nickColab) {
         Manejador emr = Manejador.getInstance();
@@ -573,7 +572,7 @@ public class Controller implements IController {
         emr.close();
         return aux;
     }
-    
+
     @Override
     public ArrayList<String> listarUsuarios() {
         Manejador emr = Manejador.getInstance();
@@ -581,7 +580,7 @@ public class Controller implements IController {
         emr.close();
         return new ArrayList<>(aux);
     }
-    
+
     @Override
     public ResultadoSeguirUsuario seguirUsuario(String nickSegui, String nickUsu) {
         Manejador emr = Manejador.getInstance();
@@ -596,9 +595,9 @@ public class Controller implements IController {
         emr.close();
         return ResultadoSeguirUsuario.EXITO;
     }
-    
+
     @Override
-    public ArrayList<String> ObtenerSeguidores(String nickname){
+    public ArrayList<String> ObtenerSeguidores(String nickname) {
         Manejador emr = Manejador.getInstance();
         Usuario seguido = emr.find(Usuario.class, nickname);
         if (seguido == null) {
@@ -612,11 +611,10 @@ public class Controller implements IController {
             nicks.add(u.getNickname());
         }
         emr.close();
-        
-        
+
         return nicks;
     }
-    
+
     @Override
     public ResultadoSeguirUsuario dejarDeSeguirUsuario(String nickSegui, String nickSiguiendo) {
         Manejador emr = Manejador.getInstance();
@@ -631,7 +629,7 @@ public class Controller implements IController {
         emr.close();
         return ResultadoSeguirUsuario.EXITO;
     }
-    
+
     @Override
     public ArrayList<String> listaPropuestasUsu(String nick) {
         Manejador emr = Manejador.getInstance();
@@ -639,7 +637,7 @@ public class Controller implements IController {
         emr.close();
         return aux;
     }
-    
+
     @Override
     public ArrayList<String> listarUsuariosSeguir(String nickname) {
         Manejador emr = Manejador.getInstance();
@@ -647,9 +645,9 @@ public class Controller implements IController {
         emr.close();
         return aux;
     }
-    
+
     @Override
-    public ArrayList<String> listarUsuariosSiguiendo(String nickname) {
+    public List<String> listarUsuariosSiguiendo(String nickname) {
         Manejador emr = Manejador.getInstance();
         List<Usuario> aux;
         List<Usuario> aux2;
@@ -666,10 +664,10 @@ public class Controller implements IController {
         } finally {
             emr.close();
         }
-        return (ArrayList<String>) aux3;
+        return aux3;
     }
+
     // </editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="Funciones categorías.">
     @Override
     public DefaultMutableTreeNode listarCategorias() {
@@ -679,7 +677,7 @@ public class Controller implements IController {
         emr.close();
         return arbol;
     }
-    
+
     @Override
     public void addCategoria(String nombre, String nombrePadre) throws CategoriaDuplicadaException {
         Manejador emr = Manejador.getInstance();
@@ -704,7 +702,7 @@ public class Controller implements IController {
         emr.close();
     }
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="Funciones propuestas.">
     @Override
     public void addPropuesta(DTPropuesta prop) throws PropuestaDuplicadaException {
@@ -733,7 +731,7 @@ public class Controller implements IController {
         emr.add(propuesta);
         emr.close();
     }
-    
+
     @Override
     public DTPropuesta obtenerDTPropuesta(String titulo) {
         Manejador emr = Manejador.getInstance();
@@ -747,7 +745,7 @@ public class Controller implements IController {
                         p.getPrecioEntrada(), p.getMontoAReunir(), dineroRecaudado, p.getFechaPublicacion(),
                         p.getTipoPropuesta().getNombre(),
                         p.getProponedor().getNickname(),
-                        p.getTiposRetorno(), p.getEstadoActual(),p.getPlazoFinanciacion()/*,p.getComentario()*/);
+                        p.getTiposRetorno(), p.getEstadoActual(), p.getPlazoFinanciacion()/*,p.getComentario()*/);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -756,7 +754,7 @@ public class Controller implements IController {
         }
         return null;
     }
-    
+
     @Override
     public ArrayList<String> listarPropuestasEstado(int estado) {
         Manejador emr = Manejador.getInstance();
@@ -764,7 +762,7 @@ public class Controller implements IController {
         emr.close();
         return aux;
     }
-    
+
     @Override
     public String obtenerDineroRecaudado(String tituloProp) {
         Manejador emr = Manejador.getInstance();
@@ -779,7 +777,7 @@ public class Controller implements IController {
         }
         return String.valueOf(resultado);
     }
-    
+
     @Override
     public ArrayList<String> listarPropuestasProponentes() {
         Manejador emr = Manejador.getInstance();
@@ -787,7 +785,7 @@ public class Controller implements IController {
         emr.close();
         return aux;
     }
-    
+
     @Override
     public ArrayList<String> listarPropuestasProponentesIngresadas() {
         Manejador emr = Manejador.getInstance();
@@ -795,7 +793,7 @@ public class Controller implements IController {
         emr.close();
         return aux;
     }
-    
+
     @Override
     public void cambiarEstadoPropuestaIngresada(String tituloProp, EstadoPropuesta estProp) {
         Manejador emr = Manejador.getInstance();
@@ -813,11 +811,12 @@ public class Controller implements IController {
         }
         emr.close();
     }
+
     @Override
-      public void cambiarEstadoPropuesta(String tituloProp, EstadoPropuesta estProp) {
+    public void cambiarEstadoPropuesta(String tituloProp, EstadoPropuesta estProp) {
         Manejador emr = Manejador.getInstance();
         Propuesta prop = emr.find(Propuesta.class, tituloProp);
-        if (prop != null){
+        if (prop != null) {
             Estado estadoNuevo = new Estado(estProp);
             prop.agregarEstadoActualAlHistorial();
             prop.setEstadoActual(estadoNuevo);
@@ -829,7 +828,7 @@ public class Controller implements IController {
         }
         emr.close();
     }
-    
+
     @Override
     public ArrayList<String> listarPropuestas() {
         Manejador emr = Manejador.getInstance();
@@ -837,7 +836,7 @@ public class Controller implements IController {
         emr.close();
         return new ArrayList<>(aux);
     }
-    
+
     @Override
     public void modPropuesta(DTPropuesta prop) {
         Manejador emr = Manejador.getInstance();
@@ -860,7 +859,7 @@ public class Controller implements IController {
         aux.setDescripcion(prop.getDescripcion());
         if (prop.getImagen() != null) {
             aux.setImagen(prop.getImagen());
-        }        
+        }
         if (aux.getEstadoActual().getEstado() != prop.getEstadoActual().getEstado()) {
             aux.agregarEstadoActualAlHistorial();
             aux.setEstadoActual(prop.getEstadoActual());
@@ -875,15 +874,13 @@ public class Controller implements IController {
         emr.mod(aux);
         emr.close();
     }
-    
+
     @Override
-    public void hacerComentario(String comentario, String nombreColaborador,String tituloProp){
-       
-        
+    public void hacerComentario(String comentario, String nombreColaborador, String tituloProp) {
+
     }
-    
+
     // </editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="Funciones colaboraciones.">
     @Override
     public void realizarColaboracion(String nickColab, String tituloProp, float montoColab, String tipoRetorno) throws PropuestaYaColaboradaException {
@@ -898,7 +895,7 @@ public class Controller implements IController {
             float montoRecaudado = Float.parseFloat(obtenerDineroRecaudado(prop.getTitulo()));
             Colaboracion colaboracion = new Colaboracion(montoColab, tipoRetorno, colab, prop);
             emr.add(colaboracion);
-            
+
             if (prop.getEstadoActual().getEstado() == EstadoPropuesta.PUBLICADA) {
                 cambiarEstadoPropuesta(prop.getTitulo(), EstadoPropuesta.EN_FINANCIACION);
             }
@@ -912,7 +909,7 @@ public class Controller implements IController {
             throw new PropuestaYaColaboradaException(nickColab + " ya tiene una colaboración con " + tituloProp);
         }
     }
-    
+
     @Override
     public DTColaboracion obtenerDTColaboracion(Long id) {
         Manejador emr = Manejador.getInstance();
@@ -930,7 +927,7 @@ public class Controller implements IController {
         }
         return null;
     }
-    
+
     @Override
     public ArrayList<String> listarColaboraciones() {
         Manejador emr = Manejador.getInstance();
@@ -938,14 +935,14 @@ public class Controller implements IController {
         emr.close();
         return aux;
     }
-    
+
     @Override
     public void eliminarColaboracion(Long id) {
         Manejador emr = Manejador.getInstance();
         emr.eliminarColab(id);
         emr.close();
     }
-    
+
     @Override
     public ArrayList<String> obtenerColaboradoresColaboracion(String tituloProp) {
         Manejador emr = Manejador.getInstance();
@@ -954,14 +951,14 @@ public class Controller implements IController {
         return aux;
     }
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="Funciones web.">
     @Override
-    public String obtenerTipoUser(String nickname){
+    public String obtenerTipoUser(String nickname) {
         Manejador emr = Manejador.getInstance();
-        Usuario usu =  emr.find(Usuario.class, nickname);
+        Usuario usu = emr.find(Usuario.class, nickname);
         emr.close();
-        if (usu == null){
+        if (usu == null) {
             return null;
         }
         if (usu instanceof Colaborador) {
@@ -970,7 +967,7 @@ public class Controller implements IController {
             return "proponente";
         }
     }
-    
+
     @Override
     public boolean autenticarUsuario(String nickname, char[] password) {
         Manejador emr = Manejador.getInstance();
@@ -981,7 +978,7 @@ public class Controller implements IController {
         }
         String b64Hash = usu.getPasswordHash();
         String b64Salt = usu.getPasswordSalt();
-        
+
         String passwordHash;
         try {
             passwordHash = crearPasswordHash(b64Salt, password);
@@ -993,9 +990,9 @@ public class Controller implements IController {
         Arrays.fill(password, 'x');
         return passwordHash != null && passwordHash.equals(b64Hash);
     }
-    
+
     @Override
-    public ArrayList<String> obtenerCategorias(){
+    public ArrayList<String> obtenerCategorias() {
         Manejador emr = Manejador.getInstance();
         ArrayList<String> aux = emr.darCategorias();
         emr.close();
@@ -1009,10 +1006,10 @@ public class Controller implements IController {
             return null;
         }
         String nombreArchivo = System.currentTimeMillis() + "." + tipoImagen;
-        
+
         //porque si no tomcat mete el archivo a otra carpeta, en docker luego lo podemos cambiar más fácil
         Path pathImagen = Paths.get(System.getProperty("user.home"), "Documents", "NetBeansProjects", "Proyecto-PDA", "estacion", "imagenesUsuarios", nombreArchivo);
-        
+
         try {
             Files.createDirectories(pathImagen.getParent());
             Files.write(pathImagen, bytesImagen, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
@@ -1022,41 +1019,42 @@ public class Controller implements IController {
             return null;
         }
     }
+
     // buscar por patrón en título, descripción y lugar
     @Override
     public ArrayList<DTPropuesta> buscarPropuestasTDL(String patron) {
         Manejador emr = Manejador.getInstance();
         ArrayList<String> titulosProps = emr.obtenerTitulosPropPatron(patron);
         emr.close();
-        
+
         ArrayList<DTPropuesta> propuestas = new ArrayList();
-        
+
         for (String titulo : titulosProps) {
             propuestas.add(obtenerDTPropuesta(titulo));
         }
-        
+
         return propuestas;
     }
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="Funciones auxiliares.">
     private String crearPasswordHash(String passwordSalt, char[] password) throws NoSuchAlgorithmException, InvalidKeySpecException {
         byte[] salt = Base64.getDecoder().decode(passwordSalt);
         KeySpec spec = new PBEKeySpec(password, salt, 65536, 128);
         SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
         byte[] hash = factory.generateSecret(spec).getEncoded();
-        
+
         return Base64.getEncoder().encodeToString(hash);
     }
-    
+
     private String crearPasswordSalt() {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[16];
         random.nextBytes(salt);
-        
+
         return Base64.getEncoder().encodeToString(salt);
     }
-    
+
     private void validarPassword(char[] pass, char[] passConfirm) throws BadPasswordException {
         if (pass.length < 8 || pass.length > 24) {
             throw new BadPasswordException("La contraseña tiene que tener de 8 a 24 caracteres de largo");
@@ -1068,7 +1066,7 @@ public class Controller implements IController {
             throw new BadPasswordException("La contraseña y la confirmación no coinciden");
         }
     }
-    
+
     private DefaultMutableTreeNode nodosArbolCategorias(Categoria cat) {
         if (cat == null) {
             return null;
@@ -1082,20 +1080,20 @@ public class Controller implements IController {
         }
         return nodito;
     }
-    
+
     private String obtenerTipoImagen(byte[] bytesImagen) {
         if (bytesImagen == null) {
             return null;
         }
         if (bytesImagen[0] == (byte) 0xFF && bytesImagen[1] == (byte) 0xD8 && bytesImagen[2] == (byte) 0xFF) {
             return "jpg";
-        } else if (bytesImagen[0] == (byte) 0x89 && bytesImagen[1] == (byte) 0x50 && bytesImagen[2] == (byte) 0x4E &&
-                 bytesImagen[3] == (byte) 0x47 && bytesImagen[4] == (byte) 0x0D && bytesImagen[5] == (byte) 0x0A &&
-                 bytesImagen[6] == (byte) 0x1A && bytesImagen[7] == (byte) 0x0A) {
+        } else if (bytesImagen[0] == (byte) 0x89 && bytesImagen[1] == (byte) 0x50 && bytesImagen[2] == (byte) 0x4E
+                && bytesImagen[3] == (byte) 0x47 && bytesImagen[4] == (byte) 0x0D && bytesImagen[5] == (byte) 0x0A
+                && bytesImagen[6] == (byte) 0x1A && bytesImagen[7] == (byte) 0x0A) {
             return "png";
         }
         return null;
     }
     // </editor-fold>
-    
+
 }

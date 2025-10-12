@@ -41,6 +41,8 @@
                     <ul>
                         <a href="/login" class="btn btn-success p-1">Iniciar sesión</a></li>
                         <a href="/crear-cuenta" class="btn btn-success p-1">Registrarse</a></li>
+                        <a href="/consultar-perfil-usuario" class="btn btn-success p-1 ">Consultar Perfiles</a>
+                        
                     </ul>
                 </div>
             </div>
