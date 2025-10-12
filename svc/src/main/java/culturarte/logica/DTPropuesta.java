@@ -5,6 +5,7 @@
 package culturarte.logica;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,7 +51,7 @@ public class DTPropuesta {
         this.tiposRetorno = tiposRetorno;
         this.estadoActual = estadoActual;
         this.plazoFinanciacion = fechaFinanciacion;
-        //this.comentarios = comentarios;
+       // this.comentarios = comentarios;
     }
     
     //este para crear la propuesta
@@ -70,7 +71,7 @@ public class DTPropuesta {
         this.tiposRetorno = tiposRetorno;
         this.estadoActual = estadoActual;
         this.plazoFinanciacion = null;
-        //this.comentarios = null;
+        //this.comentarios = new ArrayList<>();
     }
 
     public String getTitulo() {
@@ -131,6 +132,6 @@ public class DTPropuesta {
     
     /*public List<Comentario> getComentarios(){
         return this.comentarios;
-    }*/
-    
+    }
+    */
 }

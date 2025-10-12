@@ -4,25 +4,35 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package culturarte.logica;
+
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "comentarios")
 
-
-/*@Embeddable
 public class Comentario {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    private Long id;
+
    private String informacion;
    private String nombreColaborador;
+    
+   @ManyToOne
+    private Propuesta propuestaComentada;
+ 
    
-   protected Comentario(){
+protected Comentario(){
 
     }
 
-   protected Comentario(String informacion,String nombreCol){
+   protected Comentario(String informacion,String nombreCol,Propuesta propuestaComentada){
        this.informacion = informacion;
        this.nombreColaborador = nombreCol;
+       this.propuestaComentada = propuestaComentada;
    }
     public String getInformacion() {
         return informacion;
@@ -39,6 +49,13 @@ public class Comentario {
     public void setNombreColaborador(String nombreCol){
         this.nombreColaborador = nombreCol;
     }
-}
 
-*/
+     public Long getId() {
+        return id;
+    }
+
+    public Propuesta getPropuestaComentada(){
+        return propuestaComentada;
+    }
+}
+ 
