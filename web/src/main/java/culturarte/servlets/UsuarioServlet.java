@@ -183,13 +183,6 @@ public class UsuarioServlet extends HttpServlet {
             }
         }
         
-        
-        
-        if (session != null && session.getAttribute("username") != u){
-            ArrayList<String> usuariosSeguidosPorlog = this.controller.listarUsuariosSiguiendo((String) session.getAttribute("username"));
-            request.setAttribute("usuariosSeguidosLog", usuariosSeguidosPorlog);
-        }
-        
         if (session != null && session.getAttribute("username").equals(u)) {
             if ("colaborador".equals(tipoUser)) {
                 DTColaborador colab = this.controller.obtenerDTColaborador(u);
