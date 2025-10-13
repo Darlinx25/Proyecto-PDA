@@ -43,7 +43,7 @@ function propuestaElegida() {
                     <p><strong>Categoría:</strong> ${data.tipoPropuesta}</p>
                     <p><strong>Propuesta de:</strong> ${data.nickProponedor}</p>
                     <div class="form-floating">
-                    <textarea class="form-control" id="comment" name="comentario" placeholder="Comment goes here"></textarea>
+                    <textarea class="form-control" id="comment" name="comentario" placeholder="Escriba su comentario aqui" required></textarea>
                     <label for="comment">Comments</label>
                     </div>
                     </div>

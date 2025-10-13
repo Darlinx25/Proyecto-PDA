@@ -42,7 +42,7 @@ import java.util.logging.Logger;
  *
  * @author mark
  */
-@WebServlet(name = "PropuestaServlet", urlPatterns = {"/propuestas", "/crear-propuesta", "/obtener-propuesta", "/obtener-propuesta-por-estado", "/extender-financiacion","/hacer-comentario"})
+@WebServlet(name = "PropuestaServlet", urlPatterns = {"/propuestas", "/crear-propuesta", "/obtener-propuesta", "/obtener-propuesta-por-estado", "/extender-financiacion"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, //1MB+ se escriben al disco
         maxFileSize = 1024 * 1024 * 5, //5MB máximo por archivo
@@ -123,13 +123,7 @@ public class PropuestaServlet extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/jsp/extenderFinanciacion.jsp").forward(request, response);
                 break;
                 
-            case "/hacer-comentario":
-                session = request.getSession(false);
-                nick = session.getAttribute("username").toString();
-                ArrayList<String> propuestaColaborada = this.controller.listarColaboracionesColaborador(nick);
-                request.setAttribute("propuestas", propuestaColaborada);
-                request.getRequestDispatcher("WEB-INF/jsp/hacerComentario.jsp").forward(request, response);
-                break;
+          
                 
             default:
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -165,22 +159,7 @@ public class PropuestaServlet extends HttpServlet {
 
                 response.sendRedirect("/index");
                 break;
-            case "/hacer-comentario":
-                titulo = request.getParameter("tituloProp");
-                HttpSession session = request.getSession(false);
-                String nick = session.getAttribute("username").toString();
-                String comentario = request.getParameter("comentario");
-                System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
-                {
-                    try {
-                        System.out.println("BBBBBBBBBBBBBBBBBBBBBB");
-                        this.controller.hacerComentario(comentario, nick, titulo);
-                    } catch(Exception ex){
-                        Logger.getLogger(PropuestaServlet.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-                response.sendRedirect("/index");
-                break;
+            
             default:
                 response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         }
