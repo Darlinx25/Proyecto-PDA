@@ -170,9 +170,10 @@ public class PropuestaServlet extends HttpServlet {
                 HttpSession session = request.getSession(false);
                 String nick = session.getAttribute("username").toString();
                 String comentario = request.getParameter("comentario");
-                
+                System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
                 {
                     try {
+                        System.out.println("BBBBBBBBBBBBBBBBBBBBBB");
                         this.controller.hacerComentario(comentario, nick, titulo);
                     } catch(Exception ex){
                         Logger.getLogger(PropuestaServlet.class.getName()).log(Level.SEVERE, null, ex);

@@ -25,11 +25,11 @@ public class Comentario {
     @ManyToOne
     private Propuesta propuestaComentada;
 
-    protected Comentario() {
+    public Comentario() {
 
     }
 
-    protected Comentario(String informacion, String nombreCol, Propuesta propuestaComentada) {
+    public Comentario(String informacion, String nombreCol, Propuesta propuestaComentada) {
         this.informacion = informacion;
         this.nombreColaborador = nombreCol;
         this.propuestaComentada = propuestaComentada;

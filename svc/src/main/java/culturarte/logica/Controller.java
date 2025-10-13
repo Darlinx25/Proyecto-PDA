@@ -883,6 +883,8 @@ public class Controller implements IController {
        Comentario comentarioNuevo = new Comentario(comentario,nombreColaborador,prop);
        emr.add(comentarioNuevo);
         System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa");
+        emr.mod(prop);
+        emr.close();
         
     }
 
