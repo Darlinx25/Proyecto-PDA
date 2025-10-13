@@ -876,8 +876,14 @@ public class Controller implements IController {
     }
 
     @Override
-    public void hacerComentario(String comentario, String nombreColaborador, String tituloProp) {
-
+    public void hacerComentario(String comentario, String nombreColaborador,String tituloProp){
+       
+        Manejador emr = Manejador.getInstance();
+       Propuesta prop = emr.find(Propuesta.class, tituloProp);
+       Comentario comentarioNuevo = new Comentario(comentario,nombreColaborador,prop);
+       emr.add(comentarioNuevo);
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa");
+        
     }
 
     // </editor-fold>

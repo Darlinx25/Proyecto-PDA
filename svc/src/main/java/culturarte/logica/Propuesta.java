@@ -31,8 +31,8 @@ public class Propuesta {
     private LocalDate fechaPublicacion;
     private LocalDate fechaFinanciacion;
     
-    /*@ElementCollection
-    private List<Comentario> comentarios;*/
+    @OneToMany(mappedBy = "propuestaComentada", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comentario> comentarios;
     
     @ElementCollection
     private List<TipoRetorno> tiposRetorno;
@@ -77,7 +77,7 @@ public class Propuesta {
         this.historialEstados = new ArrayList<>();
         this.colaboraciones = new ArrayList<>();
         this.fechaFinanciacion = null; //se cambia cuando el estado pasa a publicada y se consigue fecha de publicacion
-        //this.comentarios = null; 
+        this.comentarios = new ArrayList<>(); 
     }
 
     
@@ -208,12 +208,12 @@ public class Propuesta {
         
     }
     
-    /*public void setComentario(List<Comentario> comment){
+    public void setComentario(List<Comentario> comment){
         this.comentarios = comment;
     }
     
     public List<Comentario> getComentario(){
         return comentarios;
     }
-    */
+    
 }
