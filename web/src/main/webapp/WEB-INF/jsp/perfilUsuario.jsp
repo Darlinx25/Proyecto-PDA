@@ -13,6 +13,7 @@
     <body class="bg-secondary">
         <%
             String rol = (String) request.getAttribute("rol");
+            String rolSesion = (String) session.getAttribute("rol");
             String username = (String) request.getAttribute("username");
             String nombre = (String) request.getAttribute("nombre");
             String apellido = (String) request.getAttribute("apellido");
@@ -27,6 +28,7 @@
             if (username.equals(session.getAttribute("username"))) {
                 miPerfil = true;
             }
+            List<String> propuestasColaboradas = (List<String>) request.getAttribute("propuestasColab");
 
         %>
         <%if ("colaborador".equals(rol)) {%>
@@ -48,12 +50,12 @@
                             }
                         }
                     %>
-                    <% if (yaSigo && miPerfil == false) { %>
+                    <% if (yaSigo && miPerfil == false && rolSesion != null) { %>
                     <div class="d-flex justify-content-center mt-3">
                         <button type="button" class="btn btn-secondary" id="follow" onclick="seguirUser()">Siguiendo</button>
                     </div>
                     <% }
-                        if (yaSigo == false && miPerfil == false) { %>
+                        if (yaSigo == false && miPerfil == false && rolSesion != null) { %>
                     <div class="d-flex justify-content-center mt-3">
                         <button type="button" class="btn btn-danger" id="follow" onclick="seguirUser()">Seguir</button>
                     </div>
@@ -62,7 +64,7 @@
                 <div class="d-flex flex-column justify-content-center">
                     <p class="text-start text-uppercase" id="NombreUser"><%= nombre%> <%= apellido%> - <%= rol%></p>
                     <p class="text-start  "><%= username%></p>
-                    <div class="d-flex justify-content-between  mt-3">
+                    <div class="d-flex justify-content-between  mt-3 gap-4">
                         <div class="mb-2">
                             <label for="seguidores" class="form-label"><strong>Seguidores:</strong></label>
                             <select  id="seguidores" name="seguidores" class="form-select form-select-sm">
@@ -88,6 +90,19 @@
 
                             </select>
                         </div> 
+                        <div class="mb-3">
+                            <label for="propuesta" class="form-label"><strong>Propuestas colaboradas:</strong></label>
+                            <select onchange="cargarPropuestaColab()" id="propuestaColaboradas" name="propuestaColab" class="form-select form-select-sm" required>
+                                <option value="" selected disabled>-- Seleccione una propuesta  --</option>
+                                <% if (propuestasColaboradas != null) {
+                                        for (String cat : propuestasColaboradas) {%>
+                                <option value="<%= cat%>"><%= cat%></option>
+                                <%   }
+                                } else { %>
+                                <option value="">No hay propuestas disponibles</option>
+                                <% }%>
+                            </select>
+                        </div>       
                     </div>
                 </div>
             </div>
@@ -96,10 +111,16 @@
                     <form action="/index" method="get">
                         <button type="submit" class="btn btn-danger">Inicio</button>
                     </form>
+                    <% if (rolSesion != null) { %>
                     <form action="/logout" method="post">
                         <button type="submit" class="btn btn-danger">Cerrar sesión</button>
                     </form>
+                    <% }%>
                 </div>
+                <div class="bg-success p-2 rounded shadow-sm border border-5 border-dark mb-3 mt-3">
+                    <h3 class=" text-center">  Datos de propuesta:  </h3>
+                    <div id="contenedorPropuestaColaboradas"></div>   
+                </div> 
             </div>     
         </div>
         <% } else if ("proponente".equals(rol)) {%>
@@ -121,12 +142,12 @@
                             }
                         }
                     %>
-                    <% if (yaSigo && miPerfil == false) { %>
+                    <% if (yaSigo && miPerfil == false && rolSesion != null) { %>
                     <div class="d-flex justify-content-center mt-3">
                         <button type="button" class="btn btn-secondary" id="follow" onclick="seguirUser()">Siguiendo</button>
                     </div>
                     <% }
-                        if (yaSigo == false && miPerfil == false) { %>
+                        if (yaSigo == false && miPerfil == false && rolSesion != null) { %>
                     <div class="d-flex justify-content-center mt-3">
                         <button type="button" class="btn btn-danger" id="follow" onclick="seguirUser()">Seguir</button>
                     </div>
@@ -187,9 +208,11 @@
                     <form action="/index" method="get">
                         <button type="submit" class="btn btn-danger">Inicio</button>
                     </form>
+                    <% if (rolSesion != null) { %>
                     <form action="/logout" method="post">
                         <button type="submit" class="btn btn-danger">Cerrar sesión</button>
                     </form>
+                    <% }%>
                 </div>
             </div>
             <div class="bg-dark p-4 rounded text-white mb-3 mt-3">
@@ -202,6 +225,7 @@
         <script>
             const u = "<%= username%>";
         </script>
+        <script src="${pageContext.request.contextPath}/resources/js/propuestaColabDetalle.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/propuestaDetalle.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/seguirUser.js"></script>
     </body>
