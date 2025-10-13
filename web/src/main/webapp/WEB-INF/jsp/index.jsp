@@ -27,6 +27,8 @@
             String imagen = (String) session.getAttribute("ubiImagen");
             String usr = (String) session.getAttribute("username");
             List<String> categorias = (List<String>) request.getAttribute("categorias");
+            
+            
         %>
         <%
             if (rol == null) {
@@ -85,6 +87,7 @@
                 <a href="/registrar-colaboracion" class="btn btn-danger p-1 ">Registrar colaboracion</a>
                 <a href="/consultar-perfil-usuario" class="btn btn-danger p-1 ">Consultar Perfiles</a>
                 <a href="/extender-financiacion" class="btn btn-danger p-1 ">Extender financiacion</a>   
+                <a href="/hacer-comentario" class ="btn btn-danger p-1">Comentar<a/>
             </div>
 
         </div>

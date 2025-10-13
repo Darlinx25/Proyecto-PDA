@@ -180,7 +180,7 @@ public class PropuestaServlet extends HttpServlet {
                 controller.extenderFinanciacion(tituloProp);
                 response.sendRedirect("/index");
                 break;
-
+            
             default:
                 response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         }

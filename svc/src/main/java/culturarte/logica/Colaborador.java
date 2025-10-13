@@ -19,6 +19,7 @@ public class Colaborador extends Usuario {
     @OneToMany(mappedBy = "colaborador", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Colaboracion> colaboraciones = new ArrayList<>();
     
+    
     public Colaborador(){
         
     }

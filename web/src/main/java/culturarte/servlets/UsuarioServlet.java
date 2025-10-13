@@ -7,6 +7,7 @@ package culturarte.servlets;
 import culturarte.excepciones.BadPasswordException;
 import culturarte.excepciones.EmailRepetidoException;
 import culturarte.excepciones.NickRepetidoException;
+import culturarte.logica.DTColaboracion;
 import culturarte.logica.DTColaborador;
 import culturarte.logica.DTDireccion;
 import culturarte.logica.DTProponente;
@@ -153,19 +154,25 @@ public class UsuarioServlet extends HttpServlet {
         request.setAttribute("rol", tipoUser);
 
         ArrayList<String> usuariosSeguidos = new ArrayList<>();
-
-        if (session.equals(null)) {
-
-            if (session.getAttribute("username") != u) {
+        if (session.getAttribute("username") != u) {
                 List<String> usuariosSeguidosPorlog = this.controller.listarUsuariosSiguiendo((String) session.getAttribute("username"));
                 request.setAttribute("usuariosSeguidosLog", usuariosSeguidosPorlog);
-            }
+        }
+
+        if (session != null && session.getAttribute("usuario") != null) {
+
+            
 
             if (session.getAttribute("username").equals(u)) {
                 if ("colaborador".equals(tipoUser)) {
                     DTColaborador colab = this.controller.obtenerDTColaborador(u);
                     if (colab != null) {
+                        
+                        List<String> propuestasColaboradas = (List<String>) request.getAttribute("propuestasColab");
+                        //Long id = Long.valueOf(request.propuestasColaboradas);
 
+                        //DTColaboracion colaboracion = this.controller.obtenerDTColaboracion(id);
+                        //SEGUIR VIENDO AGREGAR DATOS DE COLABORACION AL CONSULTAR COLABS EN PERFIL COLAB
                     }
                 } else if ("proponente".equals(tipoUser)) {
                     DTProponente prop = this.controller.obtenerDTProponente(u);
@@ -191,6 +198,8 @@ public class UsuarioServlet extends HttpServlet {
         if ("colaborador".equals(tipoUser)) {
             DTColaborador colab = this.controller.obtenerDTColaborador(u);
             if (colab != null) {
+                ArrayList<String> propColaboradas = this.controller.obtenerPropuestasColaboradas(colab.getNickname());
+                request.setAttribute("propuestasColab", propColaboradas);
                 request.setAttribute("username", u);
                 request.setAttribute("nombre", colab.getNombre());
                 request.setAttribute("apellido", colab.getApellido());
