@@ -89,6 +89,18 @@ public class Manejador {
         }
         return new ArrayList<>(aux);
     }
+        public ArrayList<String> obtenerPropuestasEstadoUsu(int estado, String nick) {
+        List<String> aux;
+        EstadoPropuesta est = EstadoPropuesta.values()[estado];
+        String query = "SELECT p.titulo FROM Propuesta p WHERE p.estadoActual.estado = :est AND p.proponente.nickname = :nick";
+        try {
+            aux = em.createQuery(query, String.class).setParameter("est", est).setParameter("nick", nick).getResultList();
+        } catch (Exception e) {
+            aux = Collections.emptyList();
+            e.printStackTrace();
+        }
+        return new ArrayList<>(aux);
+    }
 
     public List<Usuario> obtenerUsuario(String nickname) {
         return em.createQuery("SELECT u FROM Usuario u WHERE u.nickname = :nickname", Usuario.class)

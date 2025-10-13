@@ -42,7 +42,7 @@ import java.util.logging.Logger;
  *
  * @author mark
  */
-@WebServlet(name = "PropuestaServlet", urlPatterns = {"/propuestas", "/crear-propuesta", "/obtener-propuesta", "/obtener-propuesta-por-estado", "/extender-financiacion"})
+@WebServlet(name = "PropuestaServlet", urlPatterns = {"/propuestas", "/crear-propuesta", "/obtener-propuesta", "/obtener-propuesta-por-estado", "/extender-financiacion", "/propuestas-por-estado-usu"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, //1MB+ se escriben al disco
         maxFileSize = 1024 * 1024 * 5, //5MB máximo por archivo
@@ -101,13 +101,13 @@ public class PropuestaServlet extends HttpServlet {
                     DTPropuesta p = controller.obtenerDTPropuesta(t);
                     if (p != null) {
                         //propuestas.add(p);
-                        
+
                         if ("Todas".equals(cat)) {
                             propuestas.add(p);
                         } else if (cat.equals(p.getTipoPropuesta())) {
                             propuestas.add(p);
                         }
-                        
+
                     }
                 }
 
@@ -118,15 +118,41 @@ public class PropuestaServlet extends HttpServlet {
                 mapper.writeValue(response.getWriter(), propuestas);
                 break;
             case "/extender-financiacion":
-                HttpSession session = request.getSession(false);
-                String nick = session.getAttribute("username").toString();
-                ArrayList<String> propuestaProp = this.controller.listaPropuestasUsu(nick);
-                request.setAttribute("propuestas", propuestaProp);
                 request.getRequestDispatcher("/WEB-INF/jsp/extenderFinanciacion.jsp").forward(request, response);
+
                 break;
-            default:
-                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            case "/propuestas-por-estado-usu":
+                HttpSession session = request.getSession(false);
+                String estadoParamExt = request.getParameter("estado");
+                if (estadoParamExt == null) {
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'estado'");
+                    return;
+                }
+
+                
+                String nick = session.getAttribute("username").toString();
+
+                int estadoIntExt = Integer.parseInt(estadoParamExt);
+                ArrayList<String> titulosExt = controller.listarPropuestasEstadoUsu(estadoIntExt, nick);
+
+                LocalDate hoy = LocalDate.now();
+                List<DTPropuesta> propuestasExt = new ArrayList<>();
+
+                for (String tituloExt : titulosExt) {
+                    DTPropuesta propuestaExt = controller.obtenerDTPropuesta(tituloExt);
+                    if (propuestaExt != null && !hoy.isAfter(propuestaExt.getFechaPublicacion().plusDays(30))) {
+
+                        propuestasExt.add(propuestaExt);
+                    }
+                }
+
+                response.setContentType("application/json;charset=UTF-8");
+                ObjectMapper mapperExt = new ObjectMapper();
+                mapperExt.registerModule(new JavaTimeModule());
+                mapperExt.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+                mapperExt.writeValue(response.getWriter(), propuestasExt);
                 break;
+
         }
     }
 
@@ -146,15 +172,12 @@ public class PropuestaServlet extends HttpServlet {
                 }
                 break;
             case "/extender-financiacion":
-                String titulo = request.getParameter("tituloProp");
-                 {
-                    try {
-                        procesoExtenderFinanciacion(titulo);
-                    } catch (Exception ex) {
-                        Logger.getLogger(PropuestaServlet.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                String tituloProp = request.getParameter("titulo");
+                if (tituloProp == null || tituloProp.isEmpty()) {
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'titulo'");
+                    return;
                 }
-
+                controller.extenderFinanciacion(tituloProp);
                 response.sendRedirect("/index");
                 break;
 
@@ -230,17 +253,7 @@ public class PropuestaServlet extends HttpServlet {
         }
     }
 
-    protected void procesoExtenderFinanciacion(String tituloProp) {
-        DTPropuesta aux = this.controller.obtenerDTPropuesta(tituloProp);
-        LocalDate aux2 = LocalDate.now().plusDays(30);
-
-        /*Probe un par de cosas para pasarselo al controller para que modifique propuesta, no estaban funcionando asi que las quite
-          quedo esto de nomas porque es lo mas simple y deja en base lo que quiero hacer, probablemente sea otra pendejada basica que se me
-          esta olvidando, lo veo mañana cuando temos en llamada
-         */
-    }
     // </editor-fold>
-
     // <editor-fold defaultstate="collapsed" desc="Funciones auxiliares.">
     private LocalDate parsearFecha(String fechaString) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
