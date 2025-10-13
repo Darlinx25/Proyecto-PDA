@@ -1,53 +1,40 @@
+<%@page import="culturarte.logica.DTPropuesta"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="java.time.LocalDate" %>
-<%@ page import="java.util.*" %>
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Extender financiacion</title>
-        <link rel="icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico?v=1" type="image/x-icon">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-        <link href="/resources/css/extenderFinanciacion.css" rel="stylesheet">
-    </head>
-    <body class="bg-light d-flex justify-content-center align-items-center min-vh-100 py-2" id="cuerpo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extender financiación</title>
+    <link rel="icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico?v=1" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/extenderFinanciacion.css" rel="stylesheet">
+</head>
+<body class="bg-light" onload="propPorEstado(document.querySelector('.nav-tabs .nav-link.active'))"> 
+<div class="container mt-4">
 
-        <form action="/extender-financiacion" method="post" class="card p-5 shadow" id="formulario">
+    <h2 class="text-center mb-4">Extender financiación</h2>
 
-            <h2 class="text-center mb-4">Extender financiacion</h2>
+    <div class="d-flex justify-content-center mb-3">
+        <ul class="nav nav-tabs" id="propuestaTabs" role="tablist">
+           
+             <li><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#PCreadas" data-estado="1" onclick="propPorEstado(this)">Propuestas Publicadas</button></li>
+             <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PFinanciacion" data-estado="2" onclick="propPorEstado(this)">Propuestas en Financiación</button></li>
+        </ul>
+    </div>
 
-            <%
-                List<String> propuestas = (List<String>) request.getAttribute("propuestas");
-            %>
+    <div class="tab-content text-center" id="propuestaTabContent">
+        <div class="tab-pane fade show active" id="PCreadas" role="tabpanel" aria-labelledby="creadas-tab"></div>
+        <div class="tab-pane fade" id="PFinanciacion" role="tabpanel" aria-labelledby="financiacion-tab"></div>
+    </div>
 
-            <div class="mb-2">
-                <label for="propuesta" class="form-label"><strong>Propuestas</strong></label>
-                <select onchange="propuestaElegida()" id="propuesta" name="propuesta" class="form-select form-select-sm" required>
-                    <option value="" selected disabled>-- Seleccione una propuesta  --</option>
-                    <% if (propuestas != null) {
-                            for (String cat : propuestas) {%>
-                    <option value="<%= cat%>"><%= cat%></option>
-                    <%   }
-                    } else { %>
-                    <option value="">No hay propuestas disponibles</option>
-                    <% }%>
-                    
-                </select>
-                
-                    
-            </div>
-                    
-            <div id="retornosContainer"></div>
+</div>
+<script src="${pageContext.request.contextPath}/resources/js/extenderFinanciacion.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 
 
-            <button type="submit" class="btn btn-success w-100 mb-3">Extender financiación</button>
 
-        </form>
-
-        <script src="${pageContext.request.contextPath}/resources/js/extenderFinanciacion.js"></script>
-
-    </body>
+</body>
 </html>

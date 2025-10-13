@@ -764,6 +764,14 @@ public class Controller implements IController {
     }
 
     @Override
+    public ArrayList<String> listarPropuestasEstadoUsu(int estado, String nick) {
+        Manejador emr = Manejador.getInstance();
+        ArrayList<String> aux = emr.obtenerPropuestasEstadoUsu(estado, nick);
+        emr.close();
+        return aux;
+    }
+
+    @Override
     public String obtenerDineroRecaudado(String tituloProp) {
         Manejador emr = Manejador.getInstance();
         List<Float> aux = emr.obtenerDinero(tituloProp);
@@ -792,6 +800,27 @@ public class Controller implements IController {
         ArrayList<String> aux = emr.listPropuestasProponentesIngresadas();
         emr.close();
         return aux;
+    }
+
+    @Override
+    public void extenderFinanciacion(String tituloProp) {
+        Manejador emr = Manejador.getInstance();
+        Propuesta prop = emr.find(Propuesta.class, tituloProp);
+
+        if (prop != null) {
+            EstadoPropuesta estado = prop.getEstadoActual().getEstado();
+            LocalDate hoy = LocalDate.now();
+
+           
+            if ((estado == EstadoPropuesta.PUBLICADA || estado == EstadoPropuesta.EN_FINANCIACION)
+                    && !hoy.isAfter(prop.getPlazoFinanciacion())) {
+
+                prop.setPlazoFinanciacion(hoy.plusDays(30));
+                emr.mod(prop);
+            }
+        }
+
+        emr.close();
     }
 
     @Override

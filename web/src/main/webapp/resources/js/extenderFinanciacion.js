@@ -1,75 +1,71 @@
-/* 
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
- */
+function propPorEstado(btn) {
+    const ESTADO = btn.getAttribute("data-estado");
 
+    const catSeleccionada = document.querySelector('input[name="optradio"]:checked');
+    const categoriaSelec = catSeleccionada ? catSeleccionada.value : 'Todas';
+    const tabId = btn.getAttribute("data-bs-target");
 
+    fetch(`/propuestas-por-estado-usu?estado=${encodeURIComponent(ESTADO)}&categoriaSelec=${encodeURIComponent(categoriaSelec)}`)
+        .then(res => res.json())
+        .then(data => {
+            const tabDiv = document.querySelector(tabId);
+            tabDiv.innerHTML = "";
 
+            data.forEach(prop => {
+                const div = document.createElement("div");
+                div.className = "mb-2 p-2 border rounded bg-light";
 
-function propuestaElegida() {
-    const select = document.getElementById("propuesta");
+                const fechahoy = new Date();
+                const fechaFinanciacion = new Date(prop.plazoFinanciacion);
+                const diferenciaDias = Math.ceil((fechaFinanciacion - fechahoy) / (1000 * 3600 * 24));
 
-    if (select.value && select.value !== "") {
-        let valor = select.value;
-        const indiceGuion = valor.indexOf(" - ");
-        if (indiceGuion !== -1) {
-            valor = valor.substring(0, indiceGuion);
-        }
-
-        fetch(`/obtener-propuesta?titulo=${encodeURIComponent(valor)}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error("Error al obtener la propuesta");
-                    }
-                    return response.json();
-                })
-                
-                .then(data => {
-                     const fechahoy = new Date();
-                    const fechaFinanciacion = new Date(data.plazoFinanciacion);
-                    const diferenciaDias = Math.ceil((fechaFinanciacion - fechahoy) / (1000 * 3600 * 24)); //  el calculo matematico es para transformarlo en dias
-
-                    document.getElementById("retornosContainer").innerHTML = "";
-                    if (Array.isArray(data.tiposRetorno) && data.tiposRetorno.length > 0) {
-
-                        const retornoDiv = document.createElement("div");
-                        retornoDiv.className = "mt-3 mb-2";
-
-
-                        retornoDiv.innerHTML = `
-                    <p><strong>Título:</strong> ${data.titulo}</p>
-                    <p><strong>Descripción:</strong> ${data.descripcion}</p>
-                    <p><strong>Imagen:</strong> <img src="/imagenes/${data.imagen}" onerror="this.src='/resources/images/propdefault.png';" alt="${data.titulo}" style="max-width:100%;border-radius:5px;"></p>
-                    <p><strong>Lugar de realización:</strong> ${data.lugarRealizara}</p>
-                    <p><strong>Fecha prevista:</strong> ${data.fechaRealizara}</p>
-                    <p><strong>Fecha publicación:</strong> ${data.fechaPublicacion}</p>
-                    <p><strong>Precio entrada:</strong> $${data.precioEntrada}</p>
-                    <p><strong>Monto a reunir:</strong> $${data.montoAReunir}</p>
-                    <p><strong>Categoría:</strong> ${data.tipoPropuesta}</p>
-                    <p><strong>Propuesta de:</strong> ${data.nickProponedor}</p>
-                    <p><strong>Estado actual:</strong> ${data.estadoActual.estado}</p> 
-                    <p><strong>Dias restantes para Financiación: </strong> ${diferenciaDias}</p>
-                
+                div.innerHTML = `
+                    <div class="d-flex align-items-center gap-5">
+                        <div>
+                            <p><strong>Título:</strong> ${prop.titulo}</p>
+                            <p><strong>Proponedor:</strong> ${prop.nickProponedor}</p>
+                            <p><img src="/imagenes/${prop.imagen}" onerror="this.src='/resources/images/propdefault.png';" alt="${prop.titulo}" style="max-width:300px;border-radius:5px;"></p>
+                            <p class="text-center"><strong>Dinero recaudado:</strong></p>
+                            <div class="progress" style="height: 25px;">
+                                <div class="progress-bar" style="width: ${(prop.dineroRecaudado / prop.montoAReunir) * 100}%">$${prop.dineroRecaudado}</div>
+                            </div>
+                        </div>
+                        <div>
+                            <p><strong>Descripción:</strong> ${prop.descripcion}</p>
+                            <p><strong>Precio entrada:</strong> $${prop.precioEntrada}</p>
+                            <p><strong>Categoria:</strong> ${prop.tipoPropuesta}</p>
+                            <p><strong>Lugar de realización:</strong> ${prop.lugarRealizara}</p>
+                            <p><strong>Fecha Prevista:</strong> ${prop.fechaRealizara}</p>
+                            <p><strong>Fecha de Publicacion:</strong> ${prop.fechaPublicacion}</p>
+                            <p><strong>Tipos de retorno:</strong> ${prop.tiposRetorno}</p>
+                            <p><strong>Monto a reunir: </strong> $${prop.montoAReunir}</p>
+                            <p><strong>Dias restantes para Financiación: </strong> ${diferenciaDias}</p>
+                        </div>
+                            
                     </div>
-                    `;
-
-
-
-                        document.getElementById("retornosContainer").appendChild(retornoDiv);
-                        const select = retornoDiv.querySelector("#opcion");
-                        if (Array.isArray(data.tiposRetorno)) {
-                            data.tiposRetorno.forEach(retorno => {
-                                const option = document.createElement("option");
-                                option.value = retorno;
-                                option.textContent = retorno;
-                                select.appendChild(option);
-                            });
-                        }
-                    }
-                })
-                .catch(error => console.error("Error:", error));
-    }
+                    <form method="POST" action="/extender-financiacion" class="mt-3">
+                        <input type="hidden" name="titulo" value="${prop.titulo}">
+                        <button type="submit" class="btn btn-success w-25 mb-3">Extender financiación</button>
+                    </form>`;
+                tabDiv.appendChild(div);
+            });
+        })
+        .catch(e => console.error("Error:", e));
 }
 
 
+document.querySelectorAll('input[name="optradio"]').forEach(radio => { 
+    radio.addEventListener('change', () => {
+        const tabActivo = document.querySelector('.nav-tabs .nav-link.active');
+        if (tabActivo) {
+            propPorEstado(tabActivo);
+        }
+    });
+});
 
+function extenderFinanciacion(titulo) {
+    fetch(`/extender-financiacion?titulo=${encodeURIComponent(titulo)}`, {
+        method: 'POST'
+    })
+    .catch(err => console.error(err));
+}

@@ -11,21 +11,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     display: none;
 }
 
-body {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; 
-    min-height: 100vh;
-    margin: 0;
-    padding: 20px;
-    overflow-x: hidden; 
-}
 
-#formulario {
-    max-width: 500px; 
-    width: 100%;
-    box-sizing: border-box;
-}
 
 
 
