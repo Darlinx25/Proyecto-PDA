@@ -14,48 +14,48 @@ import java.util.List;
 @Table(name = "comentarios")
 
 public class Comentario {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-   private String informacion;
-   private String nombreColaborador;
-    
-   @ManyToOne
+    private String informacion;
+    private String nombreColaborador;
+
+    @ManyToOne
     private Propuesta propuestaComentada;
- 
-   
-protected Comentario(){
+
+    protected Comentario() {
 
     }
 
-   protected Comentario(String informacion,String nombreCol,Propuesta propuestaComentada){
-       this.informacion = informacion;
-       this.nombreColaborador = nombreCol;
-       this.propuestaComentada = propuestaComentada;
-   }
+    protected Comentario(String informacion, String nombreCol, Propuesta propuestaComentada) {
+        this.informacion = informacion;
+        this.nombreColaborador = nombreCol;
+        this.propuestaComentada = propuestaComentada;
+    }
+
     public String getInformacion() {
         return informacion;
     }
-    
-    public void setInformacion(String info){
+
+    public void setInformacion(String info) {
         this.informacion = info;
     }
-    
-    public String getNombreColaborador(){
+
+    public String getNombreColaborador() {
         return nombreColaborador;
     }
-    
-    public void setNombreColaborador(String nombreCol){
+
+    public void setNombreColaborador(String nombreCol) {
         this.nombreColaborador = nombreCol;
     }
 
-     public Long getId() {
+    public Long getId() {
         return id;
     }
 
-    public Propuesta getPropuestaComentada(){
+    public Propuesta getPropuestaComentada() {
         return propuestaComentada;
     }
 }
- 
