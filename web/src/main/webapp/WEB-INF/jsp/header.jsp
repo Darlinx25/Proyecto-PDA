@@ -13,9 +13,9 @@
               <a class="nav-link active" aria-current="page" href="/">Home</a>
             </li>
           </ul>
-          <form class="d-flex" method="get">
+          <form class="d-flex" action="/buscar-propuestas" method="get">
             <input class="form-control me-2" type="search" name="busq" placeholder="Título, descripción, lugar" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+            <button class="btn btn-outline-success" type="submit">Buscar</button>
           </form>
         </div>
       </div>

@@ -42,7 +42,9 @@ import java.util.logging.Logger;
  *
  * @author mark
  */
-@WebServlet(name = "PropuestaServlet", urlPatterns = {"/propuestas", "/crear-propuesta", "/obtener-propuesta", "/obtener-propuesta-por-estado", "/extender-financiacion", "/propuestas-por-estado-usu"})
+@WebServlet(name = "PropuestaServlet", urlPatterns = {"/propuestas", "/crear-propuesta",
+    "/obtener-propuesta", "/obtener-propuesta-por-estado", "/extender-financiacion",
+    "/propuestas-por-estado-usu", "/buscar-propuestas"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, //1MB+ se escriben al disco
         maxFileSize = 1024 * 1024 * 5, //5MB máximo por archivo
@@ -152,7 +154,13 @@ public class PropuestaServlet extends HttpServlet {
                 mapperExt.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
                 mapperExt.writeValue(response.getWriter(), propuestasExt);
                 break;
-
+            
+            case "/buscar-propuestas":
+                String patron = request.getParameter("busq");
+                List<DTPropuesta> aux = controller.buscarPropuestasTDL(patron);
+                request.setAttribute("propuestas", aux);
+                request.getRequestDispatcher("/WEB-INF/jsp/resultadosBusqueda.jsp").forward(request, response);
+                break;
         }
     }
 
