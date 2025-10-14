@@ -13,7 +13,8 @@
         <link href="/resources/css/registrarColaboracion.css" rel="stylesheet">
     </head>
     <body class="bg-light d-flex justify-content-center align-items-center min-vh-100 py-2" id="cuerpo">
-
+        <jsp:include page="header.jsp"/>
+        
         <form action="/registrar-colaboracion" method="post" class="card p-5 shadow" id="formulario">
 
             <h2 class="text-center mb-4">Registrar colaboración</h2>

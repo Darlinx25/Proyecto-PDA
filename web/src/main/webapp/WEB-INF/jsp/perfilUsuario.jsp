@@ -11,6 +11,7 @@
         <link href="/resources/css/perfilUsuario.css" rel="stylesheet">
     </head>
     <body class="bg-secondary">
+        <jsp:include page="header.jsp"/>
         <%
             String rol = (String) request.getAttribute("rol");
             String rolSesion = (String) session.getAttribute("rol");

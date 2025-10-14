@@ -12,6 +12,7 @@
     <link href="${pageContext.request.contextPath}/resources/css/extenderFinanciacion.css" rel="stylesheet">
 </head>
 <body class="bg-light" onload="propPorEstado(document.querySelector('.nav-tabs .nav-link.active'))"> 
+    <jsp:include page="header.jsp"/>
 <div class="container mt-4">
 
     <h2 class="text-center mb-4">Extender financiación</h2>

@@ -20,6 +20,7 @@
         <link href="/resources/css/consultarPerfilUsuario.css" rel="stylesheet">
     </head>
     <body class="container mt-5">
+        <jsp:include page="header.jsp"/>
         <%
             List<String> usuarios = (List<String>) request.getAttribute("usuarios");
             

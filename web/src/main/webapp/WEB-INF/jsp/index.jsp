@@ -19,7 +19,7 @@
 
     </head>
     <body class="bg-light" onload="propPorEstado(document.querySelector('.nav-tabs .nav-link.active'))"> 
-
+        <jsp:include page="header.jsp"/>
         <%
             String rol = (String) session.getAttribute("rol");
             String nombre = (String) session.getAttribute("nombre");
