@@ -21,7 +21,7 @@
             <% } %>
             
             <div class="mb-3">
-                <label for="nombre" class="form-label">Usuario</label>
+                <label for="nombre" class="form-label">Usuario/email</label>
                 <input type="text" id="nombre" name="nickname" class="form-control" required>
             </div>
 

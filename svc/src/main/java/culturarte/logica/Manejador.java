@@ -350,4 +350,17 @@ public class Manejador {
     } No anda ni se usa esto de momento
      */
 
+    Usuario findUserPorEmail(String email) {
+        Usuario aux;
+        String query = "SELECT u FROM Usuario u WHERE u.email = :email";
+        try {
+            aux = em.createQuery(query, Usuario.class)
+                    .setParameter("email", email).getSingleResult();
+        } catch (Exception e) {
+            aux = null;
+            e.printStackTrace();
+        }
+        return aux;
+    }
+
 }

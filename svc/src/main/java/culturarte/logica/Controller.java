@@ -510,6 +510,9 @@ public class Controller implements IController {
         Manejador emr = Manejador.getInstance();
         try {
             Colaborador c = emr.find(Colaborador.class, nick);
+            if (c == null) {
+                c = (Colaborador) emr.findUserPorEmail(nick);
+            }
             if (c != null) {
                 return new DTColaborador(
                         c.getNickname(), c.getNombre(), c.getApellido(),
@@ -544,6 +547,9 @@ public class Controller implements IController {
         Manejador emr = Manejador.getInstance();
         try {
             Proponente p = emr.find(Proponente.class, nick); // Buscar proponente por PK
+            if (p == null) {
+                p = (Proponente) emr.findUserPorEmail(nick);
+            }
             if (p != null) {
                 return new DTProponente(
                         p.getDireccion(),
@@ -1020,6 +1026,9 @@ public class Controller implements IController {
     public String obtenerTipoUser(String nickname) {
         Manejador emr = Manejador.getInstance();
         Usuario usu = emr.find(Usuario.class, nickname);
+        if (usu == null) {
+            usu = emr.findUserPorEmail(nickname);
+        }
         emr.close();
         if (usu == null) {
             return null;
@@ -1035,6 +1044,9 @@ public class Controller implements IController {
     public boolean autenticarUsuario(String nickname, char[] password) {
         Manejador emr = Manejador.getInstance();
         Usuario usu = emr.find(Usuario.class, nickname);
+        if (usu == null) {
+            usu = emr.findUserPorEmail(nickname);
+        }
         emr.close();
         if (usu == null) {
             return false;
