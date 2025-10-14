@@ -811,7 +811,6 @@ public class Controller implements IController {
             EstadoPropuesta estado = prop.getEstadoActual().getEstado();
             LocalDate hoy = LocalDate.now();
 
-           
             if ((estado == EstadoPropuesta.PUBLICADA || estado == EstadoPropuesta.EN_FINANCIACION)
                     && !hoy.isAfter(prop.getPlazoFinanciacion())) {
 
@@ -905,28 +904,43 @@ public class Controller implements IController {
     }
 
     @Override
-    public void hacerComentario(String comentario, String nombreColaborador,String tituloProp){
-       
+    public void hacerComentario(String comentario, String nombreColaborador, String tituloProp) {
+
         Manejador emr = Manejador.getInstance();
         int aux3 = 0;
-       
-       Propuesta prop = emr.find(Propuesta.class, tituloProp);
-       List<Comentario> aux = prop.getComentario();
-       for(Comentario aux2 : aux){
-           if(aux2.getNombreColaborador() == null ? nombreColaborador == null : aux2.getNombreColaborador().equals(nombreColaborador)){
-               aux3 = 1;
-           }
-       }
-       if(aux3 != 1){
-       Comentario comentarioNuevo = new Comentario(comentario,nombreColaborador,prop);
-       emr.add(comentarioNuevo);
-        emr.mod(prop);
-        emr.close();
-       } else {
-           System.out.println("Colaborador ya a comentado esta propuesta");
-           
-       }
-        
+
+        Propuesta prop = emr.find(Propuesta.class, tituloProp);
+        List<Comentario> aux = prop.getComentario();
+        for (Comentario aux2 : aux) {
+            if (aux2.getNombreColaborador() == null ? nombreColaborador == null : aux2.getNombreColaborador().equals(nombreColaborador)) {
+                aux3 = 1;
+            }
+        }
+        if (aux3 != 1) {
+            Comentario comentarioNuevo = new Comentario(comentario, nombreColaborador, prop);
+            emr.add(comentarioNuevo);
+            emr.mod(prop);
+            emr.close();
+        } else {
+            System.out.println("Colaborador ya a comentado esta propuesta");
+
+        }
+
+    }
+
+    @Override
+    public Boolean comentarioExiste(String titulo, String nombreColaborador) {
+        Manejador emr = Manejador.getInstance();
+
+        Propuesta prop = emr.find(Propuesta.class, titulo);
+        List<Comentario> aux = prop.getComentario();
+        for (Comentario aux2 : aux) {
+            if (aux2.getNombreColaborador() == null ? nombreColaborador == null : aux2.getNombreColaborador().equals(nombreColaborador)) {
+                return true;
+            }
+
+        }
+        return false;
     }
 
     // </editor-fold>

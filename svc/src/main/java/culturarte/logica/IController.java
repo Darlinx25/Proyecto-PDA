@@ -59,6 +59,7 @@ public interface IController {
     public void modPropuesta(DTPropuesta prop);
     public void cambiarEstadoPropuesta(String tituloProp, EstadoPropuesta estProp);
     public void hacerComentario(String comentario, String nombreColaborador, String tituloProp);
+    public Boolean comentarioExiste(String titulo, String nombreColaborador);
     public ArrayList<String> listarPropuestasEstadoUsu(int estado, String nick);
     public void extenderFinanciacion(String tituloProp);
     // </editor-fold>

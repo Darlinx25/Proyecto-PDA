@@ -139,7 +139,8 @@ public class ComentarioServlet extends HttpServlet {
         for(String prop : aux){
             DTPropuesta aux3 = this.controller.obtenerDTPropuesta(prop);
             Estado aux4 = aux3.getEstadoActual();
-            if(aux4.getEstado() == EstadoPropuesta.FINANCIADA ){
+            Boolean comentarioExiste = this.controller.comentarioExiste(prop, nickCol);
+            if(aux4.getEstado() == EstadoPropuesta.FINANCIADA && !comentarioExiste){
                 aux2.add(prop);
             }
         }
