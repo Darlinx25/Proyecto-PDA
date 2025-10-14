@@ -5,6 +5,8 @@
 package culturarte.servlets;
 
 import culturarte.logica.DTPropuesta;
+import culturarte.logica.Estado;
+import culturarte.logica.EstadoPropuesta;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
 import java.io.IOException;
@@ -73,7 +75,7 @@ public class ComentarioServlet extends HttpServlet {
           case "/hacer-comentario":
                 HttpSession session = request.getSession(false);
                 String nick = session.getAttribute("username").toString();
-                ArrayList<String> propuestaColaborada = this.controller.listarColaboracionesColaborador(nick);
+                ArrayList<String> propuestaColaborada = recibirPropuestas(nick);
                 request.setAttribute("propuestas", propuestaColaborada);
                 request.getRequestDispatcher("WEB-INF/jsp/hacerComentario.jsp").forward(request, response);
                 break;
@@ -97,15 +99,16 @@ public class ComentarioServlet extends HttpServlet {
 
         switch (path) {
            case "/hacer-comentario":
-                String titulo = request.getParameter("tituloProp");
+                String titulo = request.getParameter("propuesta");
+                String[] partes = titulo.split(" - ");
+                String texto = partes[0];
                 HttpSession session = request.getSession(false);
                 String nick = session.getAttribute("username").toString();
                 String comentario = request.getParameter("comentario");
-                System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
+                
                 {
                     try {
-                        System.out.println("BBBBBBBBBBBBBBBBBBBBBB");
-                        this.controller.hacerComentario(comentario, nick, titulo);
+                        this.controller.hacerComentario(comentario, nick, texto);
                     } catch(Exception ex){
                         Logger.getLogger(PropuestaServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -127,5 +130,20 @@ public class ComentarioServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    
+    private ArrayList<String> recibirPropuestas(String nickCol){
+        
+        ArrayList<String> aux = this.controller.obtenerPropuestasColaboradas(nickCol);
+        ArrayList<String> aux2 = new ArrayList<>();
+        
+        for(String prop : aux){
+            DTPropuesta aux3 = this.controller.obtenerDTPropuesta(prop);
+            Estado aux4 = aux3.getEstadoActual();
+            if(aux4.getEstado() == EstadoPropuesta.FINANCIADA ){
+                aux2.add(prop);
+            }
+        }
+        return aux2;
+    }
 }
+    
