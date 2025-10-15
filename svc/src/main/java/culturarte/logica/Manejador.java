@@ -15,11 +15,26 @@ import java.util.List;
  */
 public class Manejador {
 
-    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("Proyecto_PDA");
-    private final EntityManager em = emf.createEntityManager();
+    private static EntityManagerFactory emf;
+    private final EntityManager em;
 
+    /*SOLAMENTE para los tests unitarios nomás*/
+    public static void setEmfPrueba() {
+        if (emf != null && emf.isOpen()) {
+            emf.close();
+        }
+        emf = Persistence.createEntityManagerFactory("Proyecto_PDA_Test");
+    }
+
+    
+    private Manejador() {
+        if (emf == null) {
+            emf = Persistence.createEntityManagerFactory("Proyecto_PDA");
+        }
+        em = emf.createEntityManager();
+    }
+    
     public static Manejador getInstance() {
-
         return new Manejador();
     }
 

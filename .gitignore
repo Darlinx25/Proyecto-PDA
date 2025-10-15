@@ -47,3 +47,4 @@ target/
 docker/mysql/data/
 
 docker/
+/svc/nbproject/
