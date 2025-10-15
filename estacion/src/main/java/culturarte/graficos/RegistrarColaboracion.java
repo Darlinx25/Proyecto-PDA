@@ -5,7 +5,7 @@
 package culturarte.graficos;
 
 import culturarte.excepciones.PropuestaYaColaboradaException;
-import culturarte.logica.DTPropuesta;
+import culturarte.datatypes.DTPropuesta;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
 import culturarte.logica.TipoRetorno;

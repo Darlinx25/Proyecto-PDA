@@ -4,7 +4,7 @@
  */
 package culturarte.graficos;
 
-import culturarte.logica.DTColaboracion;
+import culturarte.datatypes.DTColaboracion;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
 import java.time.format.DateTimeFormatter;

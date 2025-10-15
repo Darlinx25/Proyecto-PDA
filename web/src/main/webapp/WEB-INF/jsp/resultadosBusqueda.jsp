@@ -1,7 +1,7 @@
 <%@page import="java.time.LocalDate"%>
 <%@page import="java.time.temporal.ChronoUnit"%>
 <%@page import="java.util.Date"%>
-<%@page import="culturarte.logica.DTPropuesta"%>
+<%@page import="culturarte.datatypes.DTPropuesta"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

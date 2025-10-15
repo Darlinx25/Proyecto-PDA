@@ -4,6 +4,11 @@
  */
 package culturarte.logica;
 
+import culturarte.datatypes.DTUsuario;
+import culturarte.datatypes.DTPropuesta;
+import culturarte.datatypes.DTColaborador;
+import culturarte.datatypes.DTProponente;
+import culturarte.datatypes.DTColaboracion;
 import culturarte.excepciones.BadPasswordException;
 import culturarte.excepciones.CategoriaDuplicadaException;
 import culturarte.excepciones.EmailRepetidoException;

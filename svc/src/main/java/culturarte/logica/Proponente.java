@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package culturarte.logica;
+import culturarte.datatypes.DTDireccion;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;

@@ -4,7 +4,7 @@
  */
 package culturarte.graficos;
 
-import culturarte.logica.DTPropuesta;
+import culturarte.datatypes.DTPropuesta;
 import culturarte.logica.EstadoPropuesta;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;

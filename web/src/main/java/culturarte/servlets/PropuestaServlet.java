@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import culturarte.excepciones.PropuestaDuplicadaException;
-import culturarte.logica.DTPropuesta;
+import culturarte.datatypes.DTPropuesta;
 import culturarte.logica.Estado;
 import culturarte.logica.EstadoPropuesta;
 import culturarte.logica.IController;

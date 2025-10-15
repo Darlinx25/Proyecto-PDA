@@ -5,7 +5,7 @@
 package culturarte.graficos;
 
 import culturarte.excepciones.PropuestaDuplicadaException;
-import culturarte.logica.DTPropuesta;
+import culturarte.datatypes.DTPropuesta;
 import culturarte.logica.Estado;
 import culturarte.logica.EstadoPropuesta;
 import culturarte.logica.IControllerFactory;

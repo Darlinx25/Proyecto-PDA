@@ -4,8 +4,8 @@
  */
 package culturarte.graficos;
 
-import culturarte.logica.DTColaborador;
-import culturarte.logica.DTPropuesta;
+import culturarte.datatypes.DTColaborador;
+import culturarte.datatypes.DTPropuesta;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
 import java.awt.Image;

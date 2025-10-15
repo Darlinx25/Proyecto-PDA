@@ -6,7 +6,7 @@
 
 <%@page import="culturarte.logica.Usuario"%>
 <%@page import="java.util.List"%>
-<%@ page import="java.util.*, culturarte.logica.DTUsuario" %>
+<%@ page import="java.util.*, culturarte.datatypes.DTUsuario" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
