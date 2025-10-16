@@ -23,7 +23,7 @@ function cargarPropuesta() {
                 <p><strong></strong></p>     
                 <p><strong>Lugar de realización:</strong> ${data.lugarRealizara}</p>
                 <p><strong>Fecha prevista:</strong> ${data.fechaRealizara}</p>
-                <p><strong>Fecha de publicación:</strong> ${data.fechaPublicacion}</p>
+                <p><strong>Fecha de publicación:</strong> ${data.fechaPublicacion ? data.fechaPublicacion : 'No publicada aún'}</p>
                 <p><strong>Precio de entrada:</strong> $${data.precioEntrada}</p>
                 <p><strong>Monto a reunir:</strong> $${data.montoAReunir}</p>
                 <p><strong>Categoría:</strong> ${data.tipoPropuesta}</p>

@@ -7,7 +7,7 @@ function cargarPropuestaColab() {
 
     const titulo = valor.split(" - ")[0];
     const container = document.getElementById("contenedorPropuestaColaboradas");
-
+    console.log(titulo);
     fetch(`/obtener-propuesta?titulo=${encodeURIComponent(titulo)}`)
             .then(resp => {
                 if (!resp.ok)
