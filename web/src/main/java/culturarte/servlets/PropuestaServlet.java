@@ -45,7 +45,7 @@ import java.util.logging.Logger;
  */
 @WebServlet(name = "PropuestaServlet", urlPatterns = {"/propuestas", "/crear-propuesta",
     "/obtener-propuesta", "/obtener-propuesta-por-estado", "/extender-financiacion",
-    "/propuestas-por-estado-usu", "/buscar-propuestas", "/obtener-colaboracion"})
+    "/propuestas-por-estado-usu", "/buscar-propuestas", "/marcar-propuesta-favorita", "/obtener-colaboracion"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, //1MB+ se escriben al disco
         maxFileSize = 1024 * 1024 * 5, //5MB máximo por archivo
@@ -161,6 +161,13 @@ public class PropuestaServlet extends HttpServlet {
                 request.setAttribute("propuestas", aux);
                 request.getRequestDispatcher("/WEB-INF/jsp/resultadosBusqueda.jsp").forward(request, response);
                 break;
+            case "/marcar-propuesta-favorita":
+                session = request.getSession(false);
+                String nick2 = session.getAttribute("username").toString();
+                List<String> aux2 = recibirPropuestas(nick2);
+                request.setAttribute("propuestas", aux2);
+                request.getRequestDispatcher("/WEB-INF/jsp/marcarPropuestaFavorita.jsp").forward(request, response);
+                break;
             case "/obtener-colaboracion":
                 String id = request.getParameter("id");
                 
@@ -211,7 +218,19 @@ public class PropuestaServlet extends HttpServlet {
                 controller.extenderFinanciacion(tituloProp);
                 response.sendRedirect("/index");
                 break;
-
+             case "/marcar-propuesta-favorita":
+                String titulo = request.getParameter("propuesta");
+                HttpSession session = request.getSession(false);
+                String nick = session.getAttribute("username").toString();
+                {
+                    try {
+                       this.controller.favoritarPropuesta(nick, titulo);
+                    } catch(Exception ex){
+                        Logger.getLogger(PropuestaServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                response.sendRedirect("/index");
+                break;
             default:
                 response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         }
@@ -266,7 +285,8 @@ public class PropuestaServlet extends HttpServlet {
         }
 
     }
-
+    
+   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -330,6 +350,20 @@ public class PropuestaServlet extends HttpServlet {
         }
     }
     
+     private ArrayList<String> recibirPropuestas(String nick){
+        
+        ArrayList<String> aux = this.controller.listarPropuestas();
+        ArrayList<String> aux2 = new ArrayList<>();
+        
+        for(String prop : aux){
+            DTPropuesta aux3 = this.controller.obtenerDTPropuesta(prop);
+            Boolean propuestaYaFavorita = this.controller.propuestaYaFavorita(prop, nick);
+            if(!propuestaYaFavorita){
+                aux2.add(prop);
+            }
+        }
+        return aux2;
+    }
         private String obtenerColaboracionJSON(Long id) {
         DTColaboracion colab = this.controller.obtenerDTColaboracion(id);
         if (colab == null) {

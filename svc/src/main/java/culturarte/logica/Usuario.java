@@ -25,6 +25,7 @@ public abstract class Usuario {
     private String passwordSalt;
     private String passwordHash;
     
+    
     @Column(nullable  = false, unique = true)
     private String email;
     

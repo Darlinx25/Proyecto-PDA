@@ -919,16 +919,16 @@ public class Controller implements IController {
     public void hacerComentario(String comentario, String nombreColaborador, String tituloProp) {
 
         Manejador emr = Manejador.getInstance();
-        int aux3 = 0;
+        Boolean aux3 = false;
 
         Propuesta prop = emr.find(Propuesta.class, tituloProp);
         List<Comentario> aux = prop.getComentario();
         for (Comentario aux2 : aux) {
             if (aux2.getNombreColaborador() == null ? nombreColaborador == null : aux2.getNombreColaborador().equals(nombreColaborador)) {
-                aux3 = 1;
+                aux3 = true;
             }
         }
-        if (aux3 != 1) {
+        if (!aux3) {
             Comentario comentarioNuevo = new Comentario(comentario, nombreColaborador, prop);
             emr.add(comentarioNuevo);
             emr.mod(prop);
@@ -951,6 +951,32 @@ public class Controller implements IController {
                 return true;
             }
 
+        }
+        return false;
+    }
+    
+    @Override
+    public void favoritarPropuesta(String nick, String titulo){
+        Manejador emr = Manejador.getInstance();
+        Propuesta prop = emr.find(Propuesta.class, titulo);
+        Usuario user = emr.find(Usuario.class, nick);
+        if(!propuestaYaFavorita(prop.getTitulo(),user.getNickname())){
+        List<Propuesta> aux = user.getPropuestasFavoritas();
+        aux.add(prop);
+        user.setPropuestasFavoritas(aux);
+        emr.mod(user);
+        }
+    }
+    
+    @Override
+    public Boolean propuestaYaFavorita(String titulo, String nick){
+        Manejador emr = Manejador.getInstance();
+        Usuario user = emr.find(Usuario.class, nick);
+        List<Propuesta> aux = user.getPropuestasFavoritas();
+        for(Propuesta aux2: aux){
+            if(aux2.getTitulo() == null ? titulo == null : aux2.getTitulo().equals(titulo)){
+                return true;
+            }
         }
         return false;
     }

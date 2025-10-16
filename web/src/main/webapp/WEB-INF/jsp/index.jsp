@@ -88,6 +88,7 @@
                 <a href="/consultar-perfil-usuario" class="btn btn-danger p-1 ">Consultar Perfiles</a>
                 <a href="/extender-financiacion" class="btn btn-danger p-1 ">Extender financiacion</a>   
                 <a href="/hacer-comentario" class ="btn btn-danger p-1">Comentar<a/>
+                <a href="/marcar-propuesta-favorita" class ="btn btn-danger p-1">Favoritos<a/>
             </div>
 
         </div>
