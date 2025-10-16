@@ -25,6 +25,7 @@
             List<String> seguidores = (List<String>) request.getAttribute("seguidores");
             List<String> usuariosSeguidosLog = (List<String>) request.getAttribute("usuariosSeguidosLog");
             List<String> propuestasUsu = (List<String>) request.getAttribute("propuestasUsu");
+            List<String> propuestasUsuPropias = (List<String>) request.getAttribute("propuestasPropias");
             boolean miPerfil = false;
             if (username.equals(session.getAttribute("username"))) {
                 miPerfil = true;
@@ -93,6 +94,20 @@
                         </div> 
                         <div class="mb-3">
                             <label for="propuesta" class="form-label"><strong>Propuestas colaboradas:</strong></label>
+                            
+                            <%if (miPerfil) {%>
+                            <select onchange="cargarPropuestaColab();cargarColabPropia()" id="propuestaColaboradas" name="propuestaColab" class="form-select form-select-sm" required>
+                                <option value="" selected disabled>-- Seleccione una propuesta  --</option>
+                                <% if (propuestasColaboradas != null) {
+                                        for (String cat : propuestasColaboradas) {%>
+                                <option value="<%= cat%>"><%= cat%></option>
+                                <%   }
+                                } else { %>
+                                <option value="">No hay propuestas disponibles</option>
+                                <% }%>
+                            </select>
+   
+                            <% } else {%>
                             <select onchange="cargarPropuestaColab()" id="propuestaColaboradas" name="propuestaColab" class="form-select form-select-sm" required>
                                 <option value="" selected disabled>-- Seleccione una propuesta  --</option>
                                 <% if (propuestasColaboradas != null) {
@@ -103,6 +118,15 @@
                                 <option value="">No hay propuestas disponibles</option>
                                 <% }%>
                             </select>
+                            
+                            <%}%>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
                         </div>       
                     </div>
                 </div>
@@ -120,7 +144,9 @@
                 </div>
                 <div class="bg-secondary p-2 rounded shadow-sm border border-5 border-dark mb-3 mt-3">
                     <h3 class=" text-center">  Datos de propuesta:  </h3>
-                    <div id="contenedorPropuestaColaboradas"></div>   
+                    <div id="contenedorPropuestaColaboradas"></div>
+                    <div id="contenedorPropuestaColaboradasPropias"></div>
+                   
                 </div> 
             </div>     
         </div>
@@ -190,6 +216,20 @@
                         </div>
                         <div class="mb-3">
                             <label for="propuesta" class="form-label"><strong>Propuestas:</strong></label>
+                            
+                             <%if (miPerfil) {%>
+                            <select onchange="cargarPropuesta()" id="propuestaSeguidos" name="propuesta" class="form-select form-select-sm" required>
+                                <option value="" selected disabled>-- Seleccione una propuesta  --</option>
+                                <% if (propuestasUsuPropias != null) {
+                                        for (String cat : propuestasUsuPropias) {%>
+                                <option value="<%= cat%>"><%= cat%></option>
+                                <%   }
+                                } else { %>
+                                <option value="">No hay propuestas disponibles</option>
+                                <% }%>
+                            </select>
+                            
+                            <% } else {%>
                             <select onchange="cargarPropuesta()" id="propuestaSeguidos" name="propuesta" class="form-select form-select-sm" required>
                                 <option value="" selected disabled>-- Seleccione una propuesta  --</option>
                                 <% if (propuestasUsu != null) {
@@ -200,6 +240,10 @@
                                 <option value="">No hay propuestas disponibles</option>
                                 <% }%>
                             </select>
+                            <%}%>
+                            
+                            
+                            
                         </div>
                     </div>
                 </div>
@@ -218,7 +262,7 @@
             </div>
             <div class="bg-dark p-4 rounded text-white mb-3 mt-3">
                 <h3 class=" text-center">  Datos de propuesta:  </h3>
-                <div id="contenedorPropuestaSeguidos"></div>   
+                <div id="contenedorPropuestaSeguidos"></div> 
             </div> 
         </div>
 
@@ -226,6 +270,7 @@
         <script>
             const u = "<%= username%>";
         </script>
+        <script src="${pageContext.request.contextPath}/resources/js/colaboracion.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/propuestaColabDetalle.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/propuestaDetalle.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/seguirUser.js"></script>
