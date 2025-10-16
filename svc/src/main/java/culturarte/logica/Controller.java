@@ -824,9 +824,9 @@ public class Controller implements IController {
             LocalDate hoy = LocalDate.now();
 
             if ((estado == EstadoPropuesta.PUBLICADA || estado == EstadoPropuesta.EN_FINANCIACION)
-                    && !hoy.isAfter(prop.getPlazoFinanciacion())) {
+                    && !hoy.isAfter(prop.getFechaPublicacion().plusDays(30))) {
 
-                prop.setPlazoFinanciacion(hoy.plusDays(30));
+                prop.setPlazoFinanciacion(hoy);
                 emr.mod(prop);
             }
         }
