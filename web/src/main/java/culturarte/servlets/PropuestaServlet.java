@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import culturarte.datatypes.DTColaboracion;
 import culturarte.excepciones.PropuestaDuplicadaException;
 import culturarte.datatypes.DTPropuesta;
 import culturarte.logica.Estado;
@@ -44,7 +45,7 @@ import java.util.logging.Logger;
  */
 @WebServlet(name = "PropuestaServlet", urlPatterns = {"/propuestas", "/crear-propuesta",
     "/obtener-propuesta", "/obtener-propuesta-por-estado", "/extender-financiacion",
-    "/propuestas-por-estado-usu", "/buscar-propuestas"})
+    "/propuestas-por-estado-usu", "/buscar-propuestas", "/obtener-colaboracion"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, //1MB+ se escriben al disco
         maxFileSize = 1024 * 1024 * 5, //5MB máximo por archivo
@@ -131,7 +132,6 @@ public class PropuestaServlet extends HttpServlet {
                     return;
                 }
 
-                
                 String nick = session.getAttribute("username").toString();
 
                 int estadoIntExt = Integer.parseInt(estadoParamExt);
@@ -154,13 +154,36 @@ public class PropuestaServlet extends HttpServlet {
                 mapperExt.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
                 mapperExt.writeValue(response.getWriter(), propuestasExt);
                 break;
-            
+
             case "/buscar-propuestas":
                 String patron = request.getParameter("busq");
                 List<DTPropuesta> aux = controller.buscarPropuestasTDL(patron);
                 request.setAttribute("propuestas", aux);
                 request.getRequestDispatcher("/WEB-INF/jsp/resultadosBusqueda.jsp").forward(request, response);
                 break;
+            case "/obtener-colaboracion":
+                String id = request.getParameter("id");
+                
+                if (id == null || id.isEmpty()) {
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'id Colaboracion'");
+                    return;
+                }
+                Long idColab = Long.valueOf(id);
+                DTColaboracion colaboracion = this.controller.obtenerDTColaboracion(idColab);
+                System.out.println(idColab);
+                System.out.println(id);
+                System.out.println(colaboracion.getColaborador());
+                System.out.println("ACAAAAAAAAAAAAAAAAA");
+                if (colaboracion == null) {
+                    response.sendError(HttpServletResponse.SC_NOT_FOUND, "Colaboracion no encontrada");
+                    return;
+                }
+                response.setContentType("application/json;charset=UTF-8");
+                try (PrintWriter out = response.getWriter()) {
+                    out.print(obtenerColaboracionJSON(idColab));
+                }
+                break;
+
         }
     }
 
@@ -188,7 +211,7 @@ public class PropuestaServlet extends HttpServlet {
                 controller.extenderFinanciacion(tituloProp);
                 response.sendRedirect("/index");
                 break;
-            
+
             default:
                 response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         }
@@ -306,6 +329,24 @@ public class PropuestaServlet extends HttpServlet {
             return "{}";
         }
     }
+    
+        private String obtenerColaboracionJSON(Long id) {
+        DTColaboracion colab = this.controller.obtenerDTColaboracion(id);
+        if (colab == null) {
+            return "{}";
+        }
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+            return mapper.writeValueAsString(colab);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return "{}";
+        }
+    }
+    
+    
     // </editor-fold>
 
 }

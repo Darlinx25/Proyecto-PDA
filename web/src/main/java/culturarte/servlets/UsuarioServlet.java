@@ -159,30 +159,6 @@ public class UsuarioServlet extends HttpServlet {
                 request.setAttribute("usuariosSeguidosLog", usuariosSeguidosPorlog);
         }
 
-        if (session != null && session.getAttribute("usuario") != null) {
-
-            
-
-            if (session.getAttribute("username").equals(u)) {
-                if ("colaborador".equals(tipoUser)) {
-                    DTColaborador colab = this.controller.obtenerDTColaborador(u);
-                    if (colab != null) {
-                        
-                        List<String> propuestasColaboradas = (List<String>) request.getAttribute("propuestasColab");
-                        //Long id = Long.valueOf(request.propuestasColaboradas);
-
-                        //DTColaboracion colaboracion = this.controller.obtenerDTColaboracion(id);
-                        //SEGUIR VIENDO AGREGAR DATOS DE COLABORACION AL CONSULTAR COLABS EN PERFIL COLAB
-                    }
-                } else if ("proponente".equals(tipoUser)) {
-                    DTProponente prop = this.controller.obtenerDTProponente(u);
-                    if (prop != null) {
-
-                    }
-                }
-            }
-
-        }
         for (String cat : usuariosSeguidosSinRol) {
             String tipoU = this.controller.obtenerTipoUser(cat);
             usuariosSeguidos.add(cat + " - " + tipoU);
@@ -198,7 +174,7 @@ public class UsuarioServlet extends HttpServlet {
         if ("colaborador".equals(tipoUser)) {
             DTColaborador colab = this.controller.obtenerDTColaborador(u);
             if (colab != null) {
-                ArrayList<String> propColaboradas = this.controller.obtenerPropuestasColaboradas(colab.getNickname());
+                ArrayList<String> propColaboradas = this.controller.listarColaboracionesColaborador(colab.getNickname());
                 request.setAttribute("propuestasColab", propColaboradas);
                 request.setAttribute("username", u);
                 request.setAttribute("nombre", colab.getNombre());
@@ -211,6 +187,7 @@ public class UsuarioServlet extends HttpServlet {
             DTProponente prop = this.controller.obtenerDTProponente(u);
 
             if (prop != null) {
+                request.setAttribute("propuestasPropias", this.controller.listaPropuestasUsu(prop.getNickname()));
                 request.setAttribute("propuestasUsu", listaPropuestasPropPublicadas(prop.getNickname()));
                 request.setAttribute("username", u);
                 request.setAttribute("biografia", prop.getBiografia());
@@ -354,6 +331,11 @@ public class UsuarioServlet extends HttpServlet {
 
         return propuestasPubli;
     }
+    
+    
+    
+ 
+    
 
     private LocalDate parsearFecha(String fechaString) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
