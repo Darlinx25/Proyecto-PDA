@@ -67,6 +67,8 @@ public interface IController {
     public Boolean comentarioExiste(String titulo, String nombreColaborador);
     public ArrayList<String> listarPropuestasEstadoUsu(int estado, String nick);
     public void extenderFinanciacion(String tituloProp);
+    public void favoritarPropuesta(String nick, String titulo);
+    public Boolean propuestaYaFavorita(String titulo,String nick);
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Funciones colaboraciones.">
