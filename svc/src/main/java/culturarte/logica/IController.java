@@ -69,6 +69,7 @@ public interface IController {
     public void extenderFinanciacion(String tituloProp);
     public void favoritarPropuesta(String nick, String titulo);
     public Boolean propuestaYaFavorita(String titulo,String nick);
+    public void actualizarEstado();
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Funciones colaboraciones.">

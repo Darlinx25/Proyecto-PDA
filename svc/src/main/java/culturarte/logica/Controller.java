@@ -29,6 +29,7 @@ import java.security.spec.KeySpec;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
@@ -966,6 +967,7 @@ public class Controller implements IController {
         user.setPropuestasFavoritas(aux);
         emr.mod(user);
         }
+        emr.close();
     }
     
     @Override
@@ -979,6 +981,29 @@ public class Controller implements IController {
             }
         }
         return false;
+    }
+    
+    @Override
+    public void actualizarEstado(){
+        Manejador emr = Manejador.getInstance();
+        LocalDate fechaActual = LocalDate.now();
+        List<String> aux = listarPropuestas();
+        for(String aux2: aux){
+            Propuesta aux3 = emr.find(Propuesta.class, aux2);
+            if(aux3!=null && aux3.getEstadoActual().getEstado()!=EstadoPropuesta.INGRESADA){
+                LocalDate fechaFinancia = aux3.getPlazoFinanciacion();
+                long diasDiferencia = ChronoUnit.DAYS.between(fechaActual,fechaFinancia);
+                if(diasDiferencia <=0){
+                    EstadoPropuesta estadoAux = EstadoPropuesta.NO_FINANCIADA;
+                    Estado estadoNuevo = new Estado(estadoAux);
+                    aux3.setEstadoActual(estadoNuevo);
+                    emr.mod(aux3);
+                }
+                
+            }
+            
+        }
+        emr.close();
     }
 
     // </editor-fold>

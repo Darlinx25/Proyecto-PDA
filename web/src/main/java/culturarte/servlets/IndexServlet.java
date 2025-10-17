@@ -44,6 +44,7 @@ public class IndexServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String rol = (String) session.getAttribute("rol");
         ArrayList<String> cat = this.controller.obtenerCategorias();
+        this.controller.actualizarEstado();
         request.setAttribute("categorias",cat);
         response.setContentType("text/html;charset=UTF-8");
         RequestDispatcher dispatcher = request.getRequestDispatcher(
