@@ -1,9 +1,3 @@
-<%-- 
-    Document   : index
-    Created on : 29 Sept 2025, 00:39:04
-    Author     : mark
---%>
-
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
