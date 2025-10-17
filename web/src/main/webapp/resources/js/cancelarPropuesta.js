@@ -60,7 +60,7 @@ document.querySelectorAll('input[name="optradio"]').forEach(radio => {
     });
 });
 
-function extenderFinanciacion(titulo) {
+function cancelarPropuesta(titulo) {
     fetch(`/cancelar-propuesta?titulo=${encodeURIComponent(titulo)}`, {
         method: 'POST'
     })
