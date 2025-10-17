@@ -83,6 +83,7 @@
                 <a href="/extender-financiacion" class="btn btn-danger p-1 ">Extender financiacion</a>   
                 <a href="/hacer-comentario" class ="btn btn-danger p-1">Comentar<a/>
                 <a href="/marcar-propuesta-favorita" class ="btn btn-danger p-1">Favoritos<a/>
+                <a href="/cancelar-propuesta" class ="btn btn-danger p-1">cancelar Propuesta<a/>
             </div>
 
         </div>

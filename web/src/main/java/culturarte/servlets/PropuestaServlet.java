@@ -45,7 +45,7 @@ import java.util.logging.Logger;
  */
 @WebServlet(name = "PropuestaServlet", urlPatterns = {"/propuestas", "/crear-propuesta",
     "/obtener-propuesta", "/obtener-propuesta-por-estado", "/extender-financiacion",
-    "/propuestas-por-estado-usu", "/buscar-propuestas", "/marcar-propuesta-favorita", "/obtener-colaboracion"})
+    "/propuestas-por-estado-usu", "/buscar-propuestas", "/marcar-propuesta-favorita", "/obtener-colaboracion", "/cancelar-propuesta"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, //1MB+ se escriben al disco
         maxFileSize = 1024 * 1024 * 5, //5MB máximo por archivo
@@ -170,7 +170,7 @@ public class PropuestaServlet extends HttpServlet {
                 break;
             case "/obtener-colaboracion":
                 String id = request.getParameter("id");
-                
+
                 if (id == null || id.isEmpty()) {
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'id Colaboracion'");
                     return;
@@ -189,6 +189,9 @@ public class PropuestaServlet extends HttpServlet {
                 try (PrintWriter out = response.getWriter()) {
                     out.print(obtenerColaboracionJSON(idColab));
                 }
+                break;
+            case "/cancelar-propuesta":
+                request.getRequestDispatcher("/WEB-INF/jsp/cancelarPropuesta.jsp").forward(request, response);
                 break;
 
         }
@@ -218,14 +221,14 @@ public class PropuestaServlet extends HttpServlet {
                 controller.extenderFinanciacion(tituloProp);
                 response.sendRedirect("/index");
                 break;
-             case "/marcar-propuesta-favorita":
+            case "/marcar-propuesta-favorita":
                 String titulo = request.getParameter("propuesta");
                 HttpSession session = request.getSession(false);
                 String nick = session.getAttribute("username").toString();
-                {
+                 {
                     try {
-                       this.controller.favoritarPropuesta(nick, titulo);
-                    } catch(Exception ex){
+                        this.controller.favoritarPropuesta(nick, titulo);
+                    } catch (Exception ex) {
                         Logger.getLogger(PropuestaServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
@@ -233,6 +236,22 @@ public class PropuestaServlet extends HttpServlet {
                 break;
             default:
                 response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+            case "/cancelar-propuesta":
+                String tituloCancelar = request.getParameter("titulo");
+                if (tituloCancelar == null || tituloCancelar.isEmpty()) {
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'titulo'");
+                    return;
+                }
+
+                try {
+                    controller.cambiarEstadoPropuesta(tituloCancelar, EstadoPropuesta.CANCELADA);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error al cancelar la propuesta");
+                    return;
+                }
+                response.sendRedirect("/index");
+                break;
         }
     }
 
@@ -285,8 +304,7 @@ public class PropuestaServlet extends HttpServlet {
         }
 
     }
-    
-   
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -349,23 +367,24 @@ public class PropuestaServlet extends HttpServlet {
             return "{}";
         }
     }
-    
-     private ArrayList<String> recibirPropuestas(String nick){
-        
+
+    private ArrayList<String> recibirPropuestas(String nick) {
+
         ArrayList<String> aux = this.controller.listarPropuestas();
         ArrayList<String> aux2 = new ArrayList<>();
-        
-        for(String prop : aux){
+
+        for (String prop : aux) {
             DTPropuesta aux3 = this.controller.obtenerDTPropuesta(prop);
             Estado aux4 = aux3.getEstadoActual();
             Boolean propuestaYaFavorita = this.controller.propuestaYaFavorita(prop, nick);
-            if(!propuestaYaFavorita && aux4.getEstado() != EstadoPropuesta.INGRESADA){
+            if (!propuestaYaFavorita && aux4.getEstado() != EstadoPropuesta.INGRESADA) {
                 aux2.add(prop);
             }
         }
         return aux2;
     }
-        private String obtenerColaboracionJSON(Long id) {
+
+    private String obtenerColaboracionJSON(Long id) {
         DTColaboracion colab = this.controller.obtenerDTColaboracion(id);
         if (colab == null) {
             return "{}";
@@ -380,8 +399,6 @@ public class PropuestaServlet extends HttpServlet {
             return "{}";
         }
     }
-    
-    
-    // </editor-fold>
 
+    // </editor-fold>
 }

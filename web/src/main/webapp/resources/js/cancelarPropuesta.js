@@ -1,7 +1,5 @@
 function propPorEstado(btn) {
     const ESTADO = btn.getAttribute("data-estado");
-
-    
     const tabId = btn.getAttribute("data-bs-target");
 
     fetch(`/propuestas-por-estado-usu?estado=${encodeURIComponent(ESTADO)}`)
@@ -42,9 +40,9 @@ function propPorEstado(btn) {
                         </div>
                             
                     </div>
-                    <form method="POST" action="/extender-financiacion" class="mt-3">
+                    <form method="POST" action="/cancelar-propuesta" class="mt-3">
                         <input type="hidden" name="titulo" value="${prop.titulo}">
-                        <button type="submit" class="btn btn-success w-25 mb-3">Extender financiación</button>
+                        <button type="submit" class="btn btn-success w-25 mb-3">Cancelar propuesta</button>
                     </form>`;
                 tabDiv.appendChild(div);
             });
@@ -63,8 +61,9 @@ document.querySelectorAll('input[name="optradio"]').forEach(radio => {
 });
 
 function extenderFinanciacion(titulo) {
-    fetch(`/extender-financiacion?titulo=${encodeURIComponent(titulo)}`, {
+    fetch(`/cancelar-propuesta?titulo=${encodeURIComponent(titulo)}`, {
         method: 'POST'
     })
     .catch(err => console.error(err));
 }
+
