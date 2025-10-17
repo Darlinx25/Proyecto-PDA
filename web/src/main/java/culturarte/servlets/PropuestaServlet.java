@@ -357,8 +357,9 @@ public class PropuestaServlet extends HttpServlet {
         
         for(String prop : aux){
             DTPropuesta aux3 = this.controller.obtenerDTPropuesta(prop);
+            Estado aux4 = aux3.getEstadoActual();
             Boolean propuestaYaFavorita = this.controller.propuestaYaFavorita(prop, nick);
-            if(!propuestaYaFavorita){
+            if(!propuestaYaFavorita && aux4.getEstado() != EstadoPropuesta.INGRESADA){
                 aux2.add(prop);
             }
         }
