@@ -990,7 +990,7 @@ public class Controller implements IController {
         List<String> aux = listarPropuestas();
         for(String aux2: aux){
             Propuesta aux3 = emr.find(Propuesta.class, aux2);
-            if(aux3!=null && aux3.getEstadoActual().getEstado()!=EstadoPropuesta.INGRESADA){
+            if(aux3!=null && aux3.getEstadoActual().getEstado()!=EstadoPropuesta.INGRESADA || aux3.getEstadoActual().getEstado()!=EstadoPropuesta.FINANCIADA){
                 LocalDate fechaFinancia = aux3.getPlazoFinanciacion();
                 long diasDiferencia = ChronoUnit.DAYS.between(fechaActual,fechaFinancia);
                 if(diasDiferencia <=0){
