@@ -213,7 +213,7 @@ public class Controller implements IController {
                 + "nuevamente el 5 de Noviembre en el Auditorio Nacional del Sodre. Basada en la obra homónima de William Shakespeare, "
                 + "Romeo y Julieta es considerada la coreografía maestra del MacMillan. La producción de vestuario y escenografía se realizó "
                 + "en los Talleres del Auditorio Adela Reta, sobre los diseños originales.", "RYJimg.jpg", "Auditorio Nacional del Sodre",
-                LocalDate.of(2025, 11, 5), 800, 750000, "Ballet", "juliob", porcentaje, new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 8, 5, 16, 50)));
+                LocalDate.of(2025, 11, 5), 800, 750000, "Ballet", "juliob", porcentaje, new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 8, 13, 16, 50)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "Romeo y Julieta");
         listAux = new ArrayList<>();
