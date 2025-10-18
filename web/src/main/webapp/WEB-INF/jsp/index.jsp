@@ -47,6 +47,10 @@
         <%
         } else {
         %>
+        <form action="/marcar-propuesta-favorita" class="p-3" method="post" style="display: none;" id="add-favorito">
+            <input type="hidden" name="propuesta" value="">
+            <button type="submit" class="btn btn-primary mb-3">Agregar a favoritos</button>
+        </form>
         <div class=" shadow p-1 bg-dark text-white mb-1">
 
             <div class="d-flex justify-content-between m-1">

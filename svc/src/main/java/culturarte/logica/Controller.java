@@ -965,6 +965,7 @@ public class Controller implements IController {
         aux.add(prop);
         user.setPropuestasFavoritas(aux);
         emr.mod(user);
+        emr.mod(prop);
         }
         emr.close();
     }
@@ -973,7 +974,14 @@ public class Controller implements IController {
     public Boolean propuestaYaFavorita(String titulo, String nick){
         Manejador emr = Manejador.getInstance();
         Usuario user = emr.find(Usuario.class, nick);
+        
+        if (user == null) {
+            emr.close();
+            return false;
+        }
+        user.getPropuestasFavoritas().size();
         List<Propuesta> aux = user.getPropuestasFavoritas();
+        emr.close();
         for(Propuesta aux2: aux){
             if(aux2.getTitulo() == null ? titulo == null : aux2.getTitulo().equals(titulo)){
                 return true;

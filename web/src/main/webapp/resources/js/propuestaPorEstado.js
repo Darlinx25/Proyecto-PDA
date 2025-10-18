@@ -10,8 +10,10 @@ function propPorEstado(btn) {
         .then(data => {
             const tabDiv = document.querySelector(tabId);
             tabDiv.innerHTML = "";
-
-            data.forEach(prop => {
+            
+            const plantillaFav = document.getElementById("add-favorito");
+            
+            data[0].forEach(prop => {
                 const div = document.createElement("div");
                 div.className = "mb-2 p-2 border rounded bg-light";
 
@@ -42,6 +44,44 @@ function propPorEstado(btn) {
                             <p><strong>Dias restantes para Financiación: </strong> ${diferenciaDias}</p>
                         </div>
                     </div>`;
+                const estaEnFav = data[1].includes(prop.titulo);
+                if (plantillaFav !== null) {
+                    if (!estaEnFav) {
+                        const clonFav = plantillaFav.cloneNode(true);
+                        clonFav.removeAttribute("id");
+                        clonFav.onsubmit = function(event) {
+                            const botonFav = this.children[1];
+                            botonFav.type = "button";
+                            botonFav.textContent = "Ya en favoritos";
+                            botonFav.className = "btn btn-secondary mb-3";
+                            event.preventDefault();
+                            const formData = new FormData(event.currentTarget);
+                            fetch(event.currentTarget.action, {
+                                method: event.currentTarget.method,
+                                body: formData
+                            });
+                        };
+                        const hInput = clonFav.children[0];
+                        hInput.value = prop.titulo;
+                        const botonFav = clonFav.children[1];
+                        clonFav.style.display = "block";
+                        div.appendChild(clonFav);
+                    } else {
+                        const clonFav = plantillaFav.cloneNode(true);
+                        clonFav.removeAttribute("id");
+                        clonFav.removeAttribute("action");
+                        clonFav.removeAttribute("method");
+                        const hInput = clonFav.children[0];
+                        const botonFav = clonFav.children[1];
+                        hInput.remove();
+                        botonFav.type = "button";
+                        botonFav.textContent = "Ya en favoritos";
+                        botonFav.className = "btn btn-secondary mb-3";
+                        clonFav.style.display = "block";
+                        div.appendChild(clonFav);
+                    }
+                    
+                }
                 tabDiv.appendChild(div);
             });
         })

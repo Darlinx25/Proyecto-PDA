@@ -114,11 +114,17 @@ public class PropuestaServlet extends HttpServlet {
                     }
                 }
 
+                String nick3 = (String) request.getSession().getAttribute("username");
+                List<String> propuestasFav = recibirPropuestasFavoritas(nick3);
+                List<Object> respuesta = new ArrayList<>();
+                respuesta.add(propuestas);
+                respuesta.add(propuestasFav);
+                
                 response.setContentType("application/json;charset=UTF-8");
                 ObjectMapper mapper = new ObjectMapper();
                 mapper.registerModule(new JavaTimeModule());
                 mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-                mapper.writeValue(response.getWriter(), propuestas);
+                mapper.writeValue(response.getWriter(), respuesta);
                 break;
             case "/extender-financiacion":
                 request.getRequestDispatcher("/WEB-INF/jsp/extenderFinanciacion.jsp").forward(request, response);
@@ -232,7 +238,6 @@ public class PropuestaServlet extends HttpServlet {
                         Logger.getLogger(PropuestaServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                response.sendRedirect("/index");
                 break;
             default:
                 response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
@@ -368,11 +373,31 @@ public class PropuestaServlet extends HttpServlet {
         }
     }
 
+    private ArrayList<String> recibirPropuestasFavoritas(String nick) {
+
+        ArrayList<String> aux = this.controller.listarPropuestas();
+        ArrayList<String> aux2 = new ArrayList<>();
+        if (nick == null) {
+            return aux2;
+        }
+        
+        for (String prop : aux) {
+            Boolean propuestaYaFavorita = this.controller.propuestaYaFavorita(prop, nick);
+            if (propuestaYaFavorita) {
+                aux2.add(prop);
+            }
+        }
+        return aux2;
+    }
+    
     private ArrayList<String> recibirPropuestas(String nick) {
 
         ArrayList<String> aux = this.controller.listarPropuestas();
         ArrayList<String> aux2 = new ArrayList<>();
-
+        if (nick == null) {
+            return aux2;
+        }
+        
         for (String prop : aux) {
             DTPropuesta aux3 = this.controller.obtenerDTPropuesta(prop);
             Estado aux4 = aux3.getEstadoActual();
