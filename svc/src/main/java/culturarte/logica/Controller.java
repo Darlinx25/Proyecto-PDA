@@ -782,7 +782,16 @@ public class Controller implements IController {
         emr.close();
         return aux;
     }
-
+    
+    @Override
+    public ArrayList<String> listarPropuestasFavoritas(String nick) {
+        Manejador emr = Manejador.getInstance();
+        ArrayList<String> aux = emr.listarPropuestasFavoritas(nick);
+        emr.close();
+        return aux;
+    }
+    
+    
     @Override
     public String obtenerDineroRecaudado(String tituloProp) {
         Manejador emr = Manejador.getInstance();

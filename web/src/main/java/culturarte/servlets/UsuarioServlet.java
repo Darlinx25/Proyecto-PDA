@@ -150,9 +150,9 @@ public class UsuarioServlet extends HttpServlet {
         List<String> usuariosSeguidosSinRol = this.controller.listarUsuariosSiguiendo(u);
 
         ArrayList<String> seguidores = this.controller.ObtenerSeguidores(u);
-
+        ArrayList<String> propsFav=this.controller.listarPropuestasFavoritas(u);
+        request.setAttribute("propuestasFav", propsFav);
         request.setAttribute("rol", tipoUser);
-
         ArrayList<String> usuariosSeguidos = new ArrayList<>();
         if (session.getAttribute("username") != u) {
                 List<String> usuariosSeguidosPorlog = this.controller.listarUsuariosSiguiendo((String) session.getAttribute("username"));

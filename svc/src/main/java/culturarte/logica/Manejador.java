@@ -71,7 +71,23 @@ public class Manejador {
 
         return entidad;
     }
+    
+    
+    public ArrayList<String> listarPropuestasFavoritas(String usuario) {
+        List<String> aux;
+        String query = "SELECT propuesta_id FROM usuario_favoritas WHERE usuario_nick = :usuario";
+        try {
+            aux = em.createNativeQuery(query)
+                    .setParameter("usuario", usuario)
+                    .getResultList();
+        } catch (Exception e) {
+            aux = Collections.emptyList();
+            e.printStackTrace();
+        }
+        return new ArrayList<>(aux);
+    }
 
+    
     public Long datoUsuarioRepetido(String campo, String valor) {
         if (!campo.equals("nickname") && !campo.equals("email")) {
             throw new IllegalArgumentException("Campo no permitido: " + campo);

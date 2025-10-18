@@ -31,6 +31,7 @@
                 miPerfil = true;
             }
             List<String> propuestasColaboradas = (List<String>) request.getAttribute("propuestasColab");
+            List<String> propuestasfavoritas = (List<String>) request.getAttribute("propuestasFav");
 
         %>
         <%if ("colaborador".equals(rol)) {%>
@@ -94,7 +95,7 @@
                         </div> 
                         <div class="mb-3">
                             <label for="propuesta" class="form-label"><strong>Propuestas colaboradas:</strong></label>
-                            
+
                             <%if (miPerfil) {%>
                             <select onchange="cargarPropuestaColab();cargarColabPropia()" id="propuestaColaboradas" name="propuestaColab" class="form-select form-select-sm" required>
                                 <option value="" selected disabled>-- Seleccione una propuesta  --</option>
@@ -106,7 +107,7 @@
                                 <option value="">No hay propuestas disponibles</option>
                                 <% }%>
                             </select>
-   
+
                             <% } else {%>
                             <select onchange="cargarPropuestaColab()" id="propuestaColaboradas" name="propuestaColab" class="form-select form-select-sm" required>
                                 <option value="" selected disabled>-- Seleccione una propuesta  --</option>
@@ -118,20 +119,41 @@
                                 <option value="">No hay propuestas disponibles</option>
                                 <% }%>
                             </select>
-                            
-                            <%}%>        
-                        </div>       
+                            <%}%>  
+                        </div>  
+                        <div>
+                            <label for="propuesta" class="form-label"><strong>Propuestas favoritas:</strong></label>
+                            <select onchange="cargarPropuestaFavorita()" id="propuestaFavoritas" name="propuestaFav" class="form-select form-select-sm" required>
+                                <option value="" selected disabled>-- Seleccione una propuesta  --</option>
+                                <% if (propuestasfavoritas != null) {
+                                        for (String cat : propuestasfavoritas) {%>
+                                <option value="<%= cat%>"><%= cat%></option>
+                                <%   }
+                                } else { %>
+                                <option value="">No hay propuestas disponibles</option>
+                                <% }%>
+                            </select>
+                        </div> 
+                        
+                        
+                        
                     </div>
+           
                 </div>
             </div>
             <div class="align-items-center">
                 <div class="bg-secondary p-2 rounded shadow-sm border border-5 border-dark mb-3 mt-3">
-                    <h3 class=" text-center">  Datos de propuesta:  </h3>
+                    <h3 class=" text-center">  Datos de propuesta colaborada:  </h3>
                     <div id="contenedorPropuestaColaboradas"></div>
                     <div id="contenedorPropuestaColaboradasPropias"></div>
-                   
                 </div> 
-            </div>     
+            </div>    
+            <div class="align-items-center">
+                <div class="bg-secondary p-2 rounded shadow-sm border border-5 border-dark mb-3 mt-3">
+                    <h3 class=" text-center">  Datos de propuesta favorita:  </h3>
+                    <div id="contenedorPropuestaFavoritas"></div>
+                </div> 
+            </div>                 
         </div>
         <% } else if ("proponente".equals(rol)) {%>
         <div class="container mt-3 ">
@@ -199,8 +221,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="propuesta" class="form-label"><strong>Propuestas:</strong></label>
-                            
-                             <%if (miPerfil) {%>
+
+                            <%if (miPerfil) {%>
                             <select onchange="cargarPropuesta()" id="propuestaSeguidos" name="propuesta" class="form-select form-select-sm" required>
                                 <option value="" selected disabled>-- Seleccione una propuesta  --</option>
                                 <% if (propuestasUsuPropias != null) {
@@ -211,7 +233,7 @@
                                 <option value="">No hay propuestas disponibles</option>
                                 <% }%>
                             </select>
-                            
+
                             <% } else {%>
                             <select onchange="cargarPropuesta()" id="propuestaSeguidos" name="propuesta" class="form-select form-select-sm" required>
                                 <option value="" selected disabled>-- Seleccione una propuesta  --</option>
@@ -224,10 +246,23 @@
                                 <% }%>
                             </select>
                             <%}%>
-                            
-                            
-                            
+
+
+
                         </div>
+                            <div>
+                            <label for="propuesta" class="form-label"><strong>Propuestas favoritas:</strong></label>
+                            <select onchange="cargarPropuestaFavorita()" id="propuestaFavoritas" name="propuestaFav" class="form-select form-select-sm" required>
+                                <option value="" selected disabled>-- Seleccione una propuesta  --</option>
+                                <% if (propuestasfavoritas != null) {
+                                        for (String cat : propuestasfavoritas) {%>
+                                <option value="<%= cat%>"><%= cat%></option>
+                                <%   }
+                                } else { %>
+                                <option value="">No hay propuestas disponibles</option>
+                                <% }%>
+                            </select>
+                        </div> 
                     </div>
                 </div>
             </div>
@@ -236,7 +271,13 @@
             <div class="bg-dark p-4 rounded text-white mb-3 mt-3">
                 <h3 class=" text-center">  Datos de propuesta:  </h3>
                 <div id="contenedorPropuestaSeguidos"></div> 
-            </div> 
+            </div>
+            <div class="align-items-center">
+                <div class="bg-dark p-2 rounded shadow-sm border border-5 border-dark mb-3 mt-3 text-white">
+                    <h3 class=" text-center">  Datos de propuesta favorita:  </h3>
+                    <div id="contenedorPropuestaFavoritas"></div>
+                </div> 
+            </div>                      
         </div>
 
         <%}%>

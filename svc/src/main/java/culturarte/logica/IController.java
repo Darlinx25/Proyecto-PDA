@@ -70,6 +70,7 @@ public interface IController {
     public void favoritarPropuesta(String nick, String titulo);
     public Boolean propuestaYaFavorita(String titulo,String nick);
     public void actualizarEstado();
+    public ArrayList<String> listarPropuestasFavoritas(String nick);
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Funciones colaboraciones.">

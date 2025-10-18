@@ -71,3 +71,5 @@ function cargarColabPropia() {
             })
             .catch(err => console.error("Error:", err));
 }
+
+
