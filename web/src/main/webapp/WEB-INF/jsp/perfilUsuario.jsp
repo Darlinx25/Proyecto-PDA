@@ -54,7 +54,7 @@
                     %>
                     <% if (yaSigo && miPerfil == false && rolSesion != null) { %>
                     <div class="d-flex justify-content-center mt-3">
-                        <button type="button" class="btn btn-secondary" id="follow" onclick="seguirUser()">Siguiendo</button>
+                        <button type="button" class="btn btn-success" id="follow" onclick="seguirUser()">Siguiendo</button>
                     </div>
                     <% }
                         if (yaSigo == false && miPerfil == false && rolSesion != null) { %>
@@ -119,14 +119,7 @@
                                 <% }%>
                             </select>
                             
-                            <%}%>
-                            
-                            
-                            
-                            
-                            
-                            
-                            
+                            <%}%>        
                         </div>       
                     </div>
                 </div>
@@ -171,7 +164,7 @@
                     %>
                     <% if (yaSigo && miPerfil == false && rolSesion != null) { %>
                     <div class="d-flex justify-content-center mt-3">
-                        <button type="button" class="btn btn-secondary" id="follow" onclick="seguirUser()">Siguiendo</button>
+                        <button type="button" class="btn btn-success" id="follow" onclick="seguirUser()">Siguiendo</button>
                     </div>
                     <% }
                         if (yaSigo == false && miPerfil == false && rolSesion != null) { %>
