@@ -991,7 +991,8 @@ public class Controller implements IController {
         for(String aux2: aux){
             Propuesta aux3 = emr.find(Propuesta.class, aux2);
             if(aux3!=null && aux3.getEstadoActual().getEstado()!=EstadoPropuesta.INGRESADA || aux3.getEstadoActual().getEstado()!=EstadoPropuesta.FINANCIADA){
-                LocalDate fechaFinancia = aux3.getPlazoFinanciacion();
+                if(aux3.getPlazoFinanciacion()!=null){
+                 LocalDate fechaFinancia = aux3.getPlazoFinanciacion();
                 long diasDiferencia = ChronoUnit.DAYS.between(fechaActual,fechaFinancia);
                 if(diasDiferencia <=0){
                     EstadoPropuesta estadoAux = EstadoPropuesta.NO_FINANCIADA;
@@ -999,6 +1000,8 @@ public class Controller implements IController {
                     aux3.setEstadoActual(estadoNuevo);
                     emr.mod(aux3);
                 }
+                }
+                
                 
             }
             
