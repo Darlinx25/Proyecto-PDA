@@ -18,12 +18,6 @@
              <li class="nav-item">
               <a href="/consultar-perfil-usuario" class="nav-link active ">Consultar Perfiles</a>  
              </li>
-             <li class="nav-item">
-               <a href="/hacer-comentario" class ="nav-link active">Comentar<a/>
-             </li>
-             <li class="nav-item">
-              <a href="/marcar-propuesta-favorita" class ="nav-link active">Favoritos<a/>
-             </li>
           </ul>
           <form class="d-flex" action="/buscar-propuestas" method="get">
             <input class="form-control me-2" type="search" name="busq" placeholder="Título, descripción, lugar" aria-label="Search">

@@ -73,10 +73,8 @@ public class ComentarioServlet extends HttpServlet {
 
         switch (path) {
           case "/hacer-comentario":
-                HttpSession session = request.getSession(false);
-                String nick = session.getAttribute("username").toString();
-                ArrayList<String> propuestaColaborada = recibirPropuestas(nick);
-                request.setAttribute("propuestas", propuestaColaborada);
+                String propuestaColaborada = (String) request.getParameter("tituloProp");
+                request.setAttribute("propuesta", propuestaColaborada);
                 request.getRequestDispatcher("WEB-INF/jsp/hacerComentario.jsp").forward(request, response);
                 break;
     }
@@ -99,16 +97,14 @@ public class ComentarioServlet extends HttpServlet {
 
         switch (path) {
            case "/hacer-comentario":
-                String titulo = request.getParameter("propuesta");
-                String[] partes = titulo.split(" - ");
-                String texto = partes[0];
+                String titulo = request.getParameter("propuesta").trim();
+                System.out.println("");
                 HttpSession session = request.getSession(false);
                 String nick = session.getAttribute("username").toString();
-                String comentario = request.getParameter("comentario");
-                
+                String comentario = request.getParameter("comentario");     
                 {
                     try {
-                        this.controller.hacerComentario(comentario, nick, texto);
+                        this.controller.hacerComentario(comentario, nick, titulo);
                     } catch(Exception ex){
                         Logger.getLogger(PropuestaServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }

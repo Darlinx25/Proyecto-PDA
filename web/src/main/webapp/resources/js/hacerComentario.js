@@ -8,12 +8,9 @@ function propuestaElegida() {
     const select = document.getElementById("propuesta");
 
     if (select.value && select.value !== "") {
-        let valor = select.value;
-        const indiceGuion = valor.indexOf(" - ");
-        if (indiceGuion !== -1) {
-            valor = valor.substring(0, indiceGuion);
-        }
-
+        let valor = select.value.trim();
+        
+        console.log(valor);
         fetch(`/obtener-propuesta?titulo=${encodeURIComponent(valor)}`)
                 .then(response => {
                     if (!response.ok) {
@@ -51,16 +48,7 @@ function propuestaElegida() {
 
 
 
-                        document.getElementById("retornosContainer").appendChild(retornoDiv);
-                        const select = retornoDiv.querySelector("#opcion");
-                        if (Array.isArray(data.tiposRetorno)) {
-                            data.tiposRetorno.forEach(retorno => {
-                                const option = document.createElement("option");
-                                option.value = retorno;
-                                option.textContent = retorno;
-                                select.appendChild(option);
-                            });
-                        }
+                    document.getElementById("retornosContainer").appendChild(retornoDiv);
                     }
                 })
                 .catch(error => console.error("Error:", error));

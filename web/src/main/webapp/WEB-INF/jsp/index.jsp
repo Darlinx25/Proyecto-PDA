@@ -58,14 +58,38 @@
             <input type="hidden" name="propuesta" value="">
             <button type="submit" class="btn btn-primary mb-3">Colaborar</button>
         </form>  
+        
+        
+            <form action="/hacer-comentario" class="p-3" method="get" style="display: none;" id="comentar-prop">
+            <input type="hidden" name="tituloProp" value="">
+            <button type="submit" class="btn btn-primary mb-3">Comentar</button>
+        </form> 
+      
+        
+        
+        
+        
         <%} else if (rol == "proponente") {
         %>
         <div>
             <form action="/extender-financiacion" class="p-3" method="get" style="display: none;" id="extender-prop">
-            <input type="hidden" name="propuesta" value="">
+            <input type="hidden" name="titulo" value="">
             <button type="submit" class="btn btn-primary mb-3">Extender Financiacion</button>
         </form> 
-        </div>  
+        </div>
+        
+        <div>
+            <form action="/cancelar-propuesta" class="p-3" method="post" style="display: none;" id="cancelar-prop">
+            <input type="hidden" name="titulo" value="">
+            <button type="submit" class="btn btn-primary mb-3">Cancelar Propuesta</button>
+        </form> 
+        </div> 
+        
+
+        
+        
+        
+        
         <%}%>
         
         

@@ -17,7 +17,8 @@
               integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
         <link href="/resources/css/registrarColaboracion.css" rel="stylesheet">
     </head>
-    <body class="bg-light d-flex justify-content-center align-items-center min-vh-100 py-2" id="cuerpo">
+    <body class="bg-light d-flex justify-content-center align-items-center min-vh-100 py-2" id="cuerpo" 
+          onload="propuestaElegida(document.getElementById('propuesta').value)">
         <jsp:include page="header.jsp"/>
         
         <form action="/hacer-comentario" method="post" class="card p-5 shadow" id="formulario">
@@ -25,20 +26,14 @@
             <h2 class="text-center mb-4">Comentar:</h2>
 
             <%
-                List<String> propuestas = (List<String>) request.getAttribute("propuestas");
+                
+                String propuesta = (String) request.getAttribute("propuesta");
             %>
 
             <div class="mb-2">
                 <label for="propuesta" class="form-label"><strong>Propuestas</strong></label>
-                <select onchange="propuestaElegida()" id="propuesta" name="propuesta" class="form-select form-select-sm" required>
-                    <option value="" selected disabled>-- Seleccione una propuesta  --</option>
-                    <% if (propuestas != null) {
-                            for (String cat : propuestas) {%>
-                    <option value="<%= cat%>"><%= cat%></option>
-                    <%   }
-                    } else { %>
-                    <option value="">No hay propuestas disponibles</option>
-                    <% }%>
+                <select onchange="propuestaElegida()" id="propuesta" name="propuesta" class="form-select form-select-sm" >
+                    <option value=" <%= propuesta%>"><%= propuesta%> </option>
                     
                 </select>
                 

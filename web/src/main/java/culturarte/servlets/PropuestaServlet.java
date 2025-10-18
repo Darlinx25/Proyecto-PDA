@@ -116,14 +116,21 @@ public class PropuestaServlet extends HttpServlet {
                 String nick3 = (String) request.getSession().getAttribute("username");
                 List<String> propuestasFav = recibirPropuestasFavoritas(nick3);
                 List<String> propuestasColab = this.controller.obtenerPropuestasColaboradas(nick3);
-                List<String> propsParaColab = propuestasParaColab();
+                List<String> propsParaColab = propuestasPubliYenFina();
                 List<String> propuestasProp = this.controller.listaPropuestasUsu(nick3);
+                List<String> propuestasFinanciadas = propuestasFinanciadas();
+                List<String> propuestasComentables = propuestasComentables(nick3);
+                List<String> propuestasComentadas = propuestasComentadas(nick3);
                 List<Object> respuesta = new ArrayList<>();
+                
                 respuesta.add(propuestas);
                 respuesta.add(propuestasFav);
                 respuesta.add(propuestasColab);
                 respuesta.add(propsParaColab);
                 respuesta.add(propuestasProp);
+                respuesta.add(propuestasFinanciadas);
+                respuesta.add(propuestasComentables);
+                respuesta.add(propuestasComentadas);
                 
                 response.setContentType("application/json;charset=UTF-8");
                 ObjectMapper mapper = new ObjectMapper();
@@ -188,10 +195,6 @@ public class PropuestaServlet extends HttpServlet {
                 }
                 Long idColab = Long.valueOf(id);
                 DTColaboracion colaboracion = this.controller.obtenerDTColaboracion(idColab);
-                System.out.println(idColab);
-                System.out.println(id);
-                System.out.println(colaboracion.getColaborador());
-                System.out.println("ACAAAAAAAAAAAAAAAAA");
                 if (colaboracion == null) {
                     response.sendError(HttpServletResponse.SC_NOT_FOUND, "Colaboracion no encontrada");
                     return;
@@ -402,7 +405,6 @@ public class PropuestaServlet extends HttpServlet {
         if (nick == null) {
             return aux2;
         }
-        
         for (String prop : aux) {
             DTPropuesta aux3 = this.controller.obtenerDTPropuesta(prop);
             Estado aux4 = aux3.getEstadoActual();
@@ -414,7 +416,7 @@ public class PropuestaServlet extends HttpServlet {
         return aux2;
     }
     
-    private ArrayList<String> propuestasParaColab() {
+    private ArrayList<String> propuestasPubliYenFina() {
 
         ArrayList<String> aux = this.controller.listarPropuestas();
         ArrayList<String> aux2 = new ArrayList<>();
@@ -422,6 +424,52 @@ public class PropuestaServlet extends HttpServlet {
         for (String prop : aux) {
             DTPropuesta propuestaAux = this.controller.obtenerDTPropuesta(prop);
             if (propuestaAux.getEstadoActual().getEstado() == EstadoPropuesta.PUBLICADA || propuestaAux.getEstadoActual().getEstado() == EstadoPropuesta.EN_FINANCIACION ) {
+                aux2.add(prop);
+            }
+        }
+        return aux2;
+    }
+    
+    private ArrayList<String> propuestasFinanciadas() {
+
+        ArrayList<String> aux = this.controller.listarPropuestas();
+        ArrayList<String> aux2 = new ArrayList<>();
+
+        for (String prop : aux) {
+            DTPropuesta propuestaAux = this.controller.obtenerDTPropuesta(prop);
+            if (propuestaAux.getEstadoActual().getEstado() == EstadoPropuesta.FINANCIADA) {
+                aux2.add(prop);
+            }
+        }
+        return aux2;
+    }
+    
+    private ArrayList<String> propuestasComentables(String nickCol){
+        
+        ArrayList<String> aux = this.controller.obtenerPropuestasColaboradas(nickCol);
+        ArrayList<String> aux2 = new ArrayList<>();
+        
+        for(String prop : aux){
+            DTPropuesta aux3 = this.controller.obtenerDTPropuesta(prop);
+            Estado aux4 = aux3.getEstadoActual();
+            Boolean comentarioExiste = this.controller.comentarioExiste(prop, nickCol);
+            if(aux4.getEstado() == EstadoPropuesta.FINANCIADA && !comentarioExiste){
+                aux2.add(prop);
+            }
+        }
+        return aux2;
+    }
+    
+    private ArrayList<String> propuestasComentadas(String nickCol) {
+
+        ArrayList<String> aux = this.controller.obtenerPropuestasColaboradas(nickCol);
+        ArrayList<String> aux2 = new ArrayList<>();
+
+        for (String prop : aux) {
+            DTPropuesta aux3 = this.controller.obtenerDTPropuesta(prop);
+            Estado aux4 = aux3.getEstadoActual();
+            Boolean comentarioExiste = this.controller.comentarioExiste(prop, nickCol);
+            if (aux4.getEstado() == EstadoPropuesta.FINANCIADA && comentarioExiste) {
                 aux2.add(prop);
             }
         }
@@ -444,6 +492,9 @@ public class PropuestaServlet extends HttpServlet {
             return "{}";
         }
     }
-
+    
+    
+    
+    
     // </editor-fold>
 }
