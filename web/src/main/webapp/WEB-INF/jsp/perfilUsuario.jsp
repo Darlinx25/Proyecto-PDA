@@ -125,16 +125,6 @@
                 </div>
             </div>
             <div class="align-items-center">
-                <div class="d-flex justify-content-between  mt-3">
-                    <form action="/index" method="get">
-                        <button type="submit" class="btn btn-danger">Inicio</button>
-                    </form>
-                    <% if (rolSesion != null) { %>
-                    <form action="/logout" method="post">
-                        <button type="submit" class="btn btn-danger">Cerrar sesión</button>
-                    </form>
-                    <% }%>
-                </div>
                 <div class="bg-secondary p-2 rounded shadow-sm border border-5 border-dark mb-3 mt-3">
                     <h3 class=" text-center">  Datos de propuesta:  </h3>
                     <div id="contenedorPropuestaColaboradas"></div>
@@ -242,16 +232,6 @@
                 </div>
             </div>
             <div class="align-items-center">
-                <div class="d-flex justify-content-between  mt-3">
-                    <form action="/index" method="get">
-                        <button type="submit" class="btn btn-danger">Inicio</button>
-                    </form>
-                    <% if (rolSesion != null) { %>
-                    <form action="/logout" method="post">
-                        <button type="submit" class="btn btn-danger">Cerrar sesión</button>
-                    </form>
-                    <% }%>
-                </div>
             </div>
             <div class="bg-dark p-4 rounded text-white mb-3 mt-3">
                 <h3 class=" text-center">  Datos de propuesta:  </h3>

@@ -13,6 +13,7 @@ function propPorEstado(btn) {
 
                 const plantillaFav = document.getElementById("add-favorito");
                 const plantillaColab = document.getElementById("registrar-colab");
+                const plantillaExtend = document.getElementById("extender-prop");
 
                 data[0].forEach(prop => {
                     const div = document.createElement("div");
@@ -111,6 +112,27 @@ function propPorEstado(btn) {
                         
                         div.appendChild(clonColab);
                     }
+                    const esPropia = data[4].includes(prop.titulo);
+                    const sePuedeExtender = data[3].includes(prop.titulo);
+                    if (plantillaExtend !== null) {
+                        const clonExtender = plantillaExtend.cloneNode(true);
+                        clonExtender.removeAttribute("id");
+                        clonExtender.style.display = "block";
+                        const hInput = clonExtender.querySelector("input");
+                        const botonExt = clonExtender.querySelector("button");
+                        if (esPropia && sePuedeExtender) {
+                            hInput.value = prop.titulo;
+                            clonExtender.method = "get";
+                            clonExtender.action = "/extender-financiacion";
+                        
+                        }else{
+                            botonExt.remove();
+                            if (hInput){
+                                hInput.remove();
+                            }
+                        }
+                        div.appendChild(clonExtender);
+                    } 
                     tabDiv.appendChild(div);
                 });
             })

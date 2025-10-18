@@ -61,7 +61,10 @@
         <%} else if (rol == "proponente") {
         %>
         <div>
-            <h1>ArrrrrrRRRRRRRRRRRO</h1>
+            <form action="/extender-financiacion" class="p-3" method="get" style="display: none;" id="extender-prop">
+            <input type="hidden" name="propuesta" value="">
+            <button type="submit" class="btn btn-primary mb-3">Extender Financiacion</button>
+        </form> 
         </div>  
         <%}%>
         
@@ -95,14 +98,7 @@
                     </div>       
                 </div>
             </div>
-            <div class="d-flex gap-2 mb-3">
-                <a href="/crear-propuesta" class="btn btn-danger p-1 ">Crear propuesta</a>
-                <a href="/consultar-perfil-usuario" class="btn btn-danger p-1 ">Consultar Perfiles</a>
-                <a href="/extender-financiacion" class="btn btn-danger p-1 ">Extender financiacion</a>   
-                <a href="/hacer-comentario" class ="btn btn-danger p-1">Comentar<a/>
-                    <a href="/marcar-propuesta-favorita" class ="btn btn-danger p-1">Favoritos<a/>
-                        <a href="/cancelar-propuesta" class ="btn btn-danger p-1">cancelar Propuesta<a/>
-                            </div>
+           
 
                             </div>
                             <% }%>

@@ -117,12 +117,13 @@ public class PropuestaServlet extends HttpServlet {
                 List<String> propuestasFav = recibirPropuestasFavoritas(nick3);
                 List<String> propuestasColab = this.controller.obtenerPropuestasColaboradas(nick3);
                 List<String> propsParaColab = propuestasParaColab();
+                List<String> propuestasProp = this.controller.listaPropuestasUsu(nick3);
                 List<Object> respuesta = new ArrayList<>();
                 respuesta.add(propuestas);
                 respuesta.add(propuestasFav);
                 respuesta.add(propuestasColab);
                 respuesta.add(propsParaColab);
-                
+                respuesta.add(propuestasProp);
                 
                 response.setContentType("application/json;charset=UTF-8");
                 ObjectMapper mapper = new ObjectMapper();
