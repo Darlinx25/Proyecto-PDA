@@ -185,7 +185,7 @@ public class Controller implements IController {
         aux = emr.find(Propuesta.class, "El Pimiento Indomable");
         listAux = new ArrayList<>();
         listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2025, 9, 26, 15, 30)));
-        publicada = new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 9, 31, 8, 30));
+        publicada = new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 9, 30, 8, 30));
         listAux.add(publicada);
         aux.setFechaPublicacion(publicada.getFechaEstado().toLocalDate());
         aux.setPlazoFinanciacion(aux.getFechaPublicacion());
