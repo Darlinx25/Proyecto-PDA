@@ -79,28 +79,28 @@ public class Controller implements IController {
 
     private void cargarColaboracionesPrueba() {
         try {
-            realizarColaboracionPaPrueba("novick", "Cine en el Botánico", LocalDateTime.of(2025, 5, 20, 14, 30), 50000, "Porcentaje de ganancias");
-            realizarColaboracionPaPrueba("robinh", "Cine en el Botánico", LocalDateTime.of(2025, 5, 24, 17, 25), 50000, "Porcentaje de ganancias");
-            realizarColaboracionPaPrueba("nicoJ", "Cine en el Botánico", LocalDateTime.of(2025, 5, 30, 18, 30), 50000, "Porcentaje de ganancias");
+            realizarColaboracionPaPrueba("novick", "Cine en el Botánico", LocalDateTime.of(2025, 7, 20, 14, 30), 50000, "Porcentaje de ganancias");
+            realizarColaboracionPaPrueba("robinh", "Cine en el Botánico", LocalDateTime.of(2025, 7, 24, 17, 25), 50000, "Porcentaje de ganancias");
+            realizarColaboracionPaPrueba("nicoJ", "Cine en el Botánico", LocalDateTime.of(2025, 7, 30, 18, 30), 50000, "Porcentaje de ganancias");
 
-            realizarColaboracionPaPrueba("marcelot", "Religiosamente", LocalDateTime.of(2025, 6, 30, 14, 25), 200000, "Porcentaje de ganancias");
-            realizarColaboracionPaPrueba("Tiajaci", "Religiosamente", LocalDateTime.of(2025, 7, 1, 18, 5), 500, "Entradas gratis");
-            realizarColaboracionPaPrueba("Mengano", "Religiosamente", LocalDateTime.of(2025, 7, 7, 17, 45), 600, "Entradas gratis");
-            realizarColaboracionPaPrueba("novick", "Religiosamente", LocalDateTime.of(2025, 7, 10, 14, 35), 50000, "Porcentaje de ganancias");
-            realizarColaboracionPaPrueba("sergiop", "Religiosamente", LocalDateTime.of(2025, 7, 15, 9, 45), 50000, "Porcentaje de ganancias");
+            realizarColaboracionPaPrueba("marcelot", "Religiosamente", LocalDateTime.of(2025, 8, 30, 14, 25), 200000, "Porcentaje de ganancias");
+            realizarColaboracionPaPrueba("Tiajaci", "Religiosamente", LocalDateTime.of(2025, 9, 1, 18, 5), 500, "Entradas gratis");
+            realizarColaboracionPaPrueba("Mengano", "Religiosamente", LocalDateTime.of(2025, 9, 7, 17, 45), 600, "Entradas gratis");
+            realizarColaboracionPaPrueba("novick", "Religiosamente", LocalDateTime.of(2025, 9, 10, 14, 35), 50000, "Porcentaje de ganancias");
+            realizarColaboracionPaPrueba("sergiop", "Religiosamente", LocalDateTime.of(2025, 9, 15, 9, 45), 50000, "Porcentaje de ganancias");
 
-            realizarColaboracionPaPrueba("marcelot", "El Pimiento Indomable", LocalDateTime.of(2025, 8, 1, 7, 40), 200000, "Porcentaje de ganancias");
-            realizarColaboracionPaPrueba("sergiop", "El Pimiento Indomable", LocalDateTime.of(2025, 8, 3, 9, 25), 80000, "Porcentaje de ganancias");
+            realizarColaboracionPaPrueba("marcelot", "El Pimiento Indomable", LocalDateTime.of(2025, 10, 1, 7, 40), 200000, "Porcentaje de ganancias");
+            realizarColaboracionPaPrueba("sergiop", "El Pimiento Indomable", LocalDateTime.of(2025, 10, 3, 9, 25), 80000, "Porcentaje de ganancias");
 
-            realizarColaboracionPaPrueba("chino", "Pilsen Rock", LocalDateTime.of(2025, 8, 5, 16, 50), 50000, "Entradas gratis");
-            realizarColaboracionPaPrueba("novick", "Pilsen Rock", LocalDateTime.of(2025, 8, 10, 15, 50), 120000, "Porcentaje de ganancias");
-            realizarColaboracionPaPrueba("tonyp", "Pilsen Rock", LocalDateTime.of(2025, 8, 15, 19, 30), 120000, "Entradas gratis");
+            realizarColaboracionPaPrueba("chino", "Pilsen Rock", LocalDateTime.of(2025, 10, 5, 16, 50), 50000, "Entradas gratis");
+            realizarColaboracionPaPrueba("novick", "Pilsen Rock", LocalDateTime.of(2025, 10, 10, 15, 50), 120000, "Porcentaje de ganancias");
+            realizarColaboracionPaPrueba("tonyp", "Pilsen Rock", LocalDateTime.of(2025, 10, 15, 19, 30), 120000, "Entradas gratis");
 
-            realizarColaboracionPaPrueba("sergiop", "Romeo y Julieta", LocalDateTime.of(2025, 8, 13, 4, 58), 100000, "Porcentaje de ganancias");
-            realizarColaboracionPaPrueba("marcelot", "Romeo y Julieta", LocalDateTime.of(2025, 8, 14, 11, 25), 200000, "Porcentaje de ganancias");
+            realizarColaboracionPaPrueba("sergiop", "Romeo y Julieta", LocalDateTime.of(2025, 10, 13, 4, 58), 100000, "Porcentaje de ganancias");
+            realizarColaboracionPaPrueba("marcelot", "Romeo y Julieta", LocalDateTime.of(2025, 10, 14, 11, 25), 200000, "Porcentaje de ganancias");
 
-            realizarColaboracionPaPrueba("tonyp", "Un día de Julio", LocalDateTime.of(2025, 8, 15, 4, 48), 30000, "Entradas gratis");
-            realizarColaboracionPaPrueba("marcelot", "Un día de Julio", LocalDateTime.of(2025, 8, 17, 15, 30), 150000, "Porcentaje de ganancias");
+            realizarColaboracionPaPrueba("tonyp", "Un día de Julio", LocalDateTime.of(2025, 10, 15, 4, 48), 30000, "Entradas gratis");
+            realizarColaboracionPaPrueba("marcelot", "Un día de Julio", LocalDateTime.of(2025, 10, 17, 15, 30), 150000, "Porcentaje de ganancias");
         } catch (PropuestaYaColaboradaException ex) {
             System.getLogger(Controller.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
@@ -143,17 +143,17 @@ public class Controller implements IController {
                 "El 16 de Diciembre a la hora 20 se proyectará la película \"Clever\", en el Jardín Botánico (Av. 19 de Abril 1181) en el marco"
                 + " de las actividades realizadas por el ciclo Cultura al Aire Libre. El largometraje uruguayo de ficción Clever es dirigido por "
                 + "Federico Borgia y Guillermo Madeiro. Es apto para mayores de 15 años.", null, "Jardín Botánico",
-                LocalDate.of(2025, 9, 16), 200, 150000, "Cine al Aire Libre", "diegop", porcentaje, new Estado(EstadoPropuesta.CANCELADA, LocalDateTime.of(2025, 6, 15, 14, 50)));
+                LocalDate.of(2025, 11, 16), 200, 150000, "Cine al Aire Libre", "diegop", porcentaje, new Estado(EstadoPropuesta.CANCELADA, LocalDateTime.of(2025, 8, 15, 14, 50)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "Cine en el Botánico");
         listAux = new ArrayList<>();
-        listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2025, 5, 15, 15, 30)));
-        publicada = new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 5, 17, 8, 30));
+        listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2025, 7, 15, 15, 30)));
+        publicada = new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 7, 17, 8, 30));
         listAux.add(publicada);
         aux.setFechaPublicacion(publicada.getFechaEstado().toLocalDate());
         aux.setPlazoFinanciacion(aux.getFechaPublicacion());
-        listAux.add(new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 5, 20, 14, 30)));
-        listAux.add(new Estado(EstadoPropuesta.FINANCIADA, LocalDateTime.of(2025, 5, 30, 18, 30)));
+        listAux.add(new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 7, 20, 14, 30)));
+        listAux.add(new Estado(EstadoPropuesta.FINANCIADA, LocalDateTime.of(2025, 7, 30, 18, 30)));
         aux.setHistorialEstados(listAux);
         emr.mod(aux);
 
@@ -162,16 +162,16 @@ public class Controller implements IController {
                 + "religión Momosapiens, mediante el humor y la reflexión, hilvana una historia que muestra al hombre inmerso en el tema "
                 + "religioso. El libreto está escrito utilizando diferentes lenguajes de humor, dando una visión satírica y reflexiva desde "
                 + "distintos puntos de vista, logrando mediante situaciones paródicas armar una propuesta plena de arte carnavalero.", "MOMimg.jpg", "Teatro de Verano",
-                LocalDate.of(2025, 10, 7), 300, 300000, "Parodistas", "hrubino", entPor, new Estado(EstadoPropuesta.FINANCIADA, LocalDateTime.of(2025, 7, 15, 9, 45)));
+                LocalDate.of(2025, 12, 7), 300, 300000, "Parodistas", "hrubino", entPor, new Estado(EstadoPropuesta.FINANCIADA, LocalDateTime.of(2025, 9, 15, 9, 45)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "Religiosamente");
         listAux = new ArrayList<>();
-        listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2025, 6, 18, 4, 28)));
-        publicada = new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 6, 20, 4, 56));
+        listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2025, 8, 18, 4, 28)));
+        publicada = new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 8, 20, 4, 56));
         listAux.add(publicada);
         aux.setFechaPublicacion(publicada.getFechaEstado().toLocalDate());
         aux.setPlazoFinanciacion(aux.getFechaPublicacion());
-        listAux.add(new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 6, 30, 14, 25)));
+        listAux.add(new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 8, 30, 14, 25)));
         aux.setHistorialEstados(listAux);
         emr.mod(aux);
 
@@ -180,12 +180,12 @@ public class Controller implements IController {
                 + "Octubre, su primer trabajo. Bajo un título homónimo al del grupo, es un disco que según los propios protagonistas “no se "
                 + "parece al de ninguno de los dos por separado. Entre los títulos que se podrán escuchar se encuentran “Nadador salvador”, "
                 + "“América es más grande”, “Pescaito Enroscado” o “La reina del placer”.", "PIMimg.jpg", "Teatro Solís",
-                LocalDate.of(2025, 10, 19), 400, 400000, "Concierto", "mbusca", porcentaje, new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 8, 1, 7, 40)));
+                LocalDate.of(2025, 12, 19), 400, 400000, "Concierto", "mbusca", porcentaje, new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 10, 1, 7, 40)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "El Pimiento Indomable");
         listAux = new ArrayList<>();
-        listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2025, 7, 26, 15, 30)));
-        publicada = new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 7, 31, 8, 30));
+        listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2025, 9, 26, 15, 30)));
+        publicada = new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 9, 31, 8, 30));
         listAux.add(publicada);
         aux.setFechaPublicacion(publicada.getFechaEstado().toLocalDate());
         aux.setPlazoFinanciacion(aux.getFechaPublicacion());
@@ -196,12 +196,12 @@ public class Controller implements IController {
                 "La edición 2017 del Pilsen Rock se celebrará el 21 de Octubre en la Rural del Prado y contará con la participación de más "
                 + "de 15 bandas nacionales. Quienes no puedan trasladarse al lugar, tendrán la posibilidad de disfrutar los shows a través de "
                 + "Internet, así como entrevistas en vivo a los músicos una vez finalizados los conciertos.", "PILimg.jpg", "Rural de Prado",
-                LocalDate.of(2025, 10, 21), 1000, 900000, "Festival", "kairoh", entPor, new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 8, 5, 16, 50)));
+                LocalDate.of(2025, 12, 21), 1000, 900000, "Festival", "kairoh", entPor, new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 10, 5, 16, 50)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "Pilsen Rock");
         listAux = new ArrayList<>();
-        listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2025, 7, 30, 15, 40)));
-        publicada = new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 8, 1, 14, 30));
+        listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2025, 9, 30, 15, 40)));
+        publicada = new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 10, 1, 14, 30));
         listAux.add(publicada);
         aux.setFechaPublicacion(publicada.getFechaEstado().toLocalDate());
         aux.setPlazoFinanciacion(aux.getFechaPublicacion());
@@ -213,12 +213,12 @@ public class Controller implements IController {
                 + "nuevamente el 5 de Noviembre en el Auditorio Nacional del Sodre. Basada en la obra homónima de William Shakespeare, "
                 + "Romeo y Julieta es considerada la coreografía maestra del MacMillan. La producción de vestuario y escenografía se realizó "
                 + "en los Talleres del Auditorio Adela Reta, sobre los diseños originales.", "RYJimg.jpg", "Auditorio Nacional del Sodre",
-                LocalDate.of(2025, 11, 5), 800, 750000, "Ballet", "juliob", porcentaje, new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 8, 13, 16, 50)));
+                LocalDate.of(2025, 11, 5), 800, 750000, "Ballet", "juliob", porcentaje, new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 10, 13, 16, 50)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "Romeo y Julieta");
         listAux = new ArrayList<>();
-        listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2025, 8, 4, 12, 20)));
-        publicada = new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 8, 10, 10, 25));
+        listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2025, 10, 4, 12, 20)));
+        publicada = new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 10, 10, 10, 25));
         listAux.add(publicada);
         aux.setFechaPublicacion(publicada.getFechaEstado().toLocalDate());
         aux.setPlazoFinanciacion(aux.getFechaPublicacion());
@@ -229,12 +229,12 @@ public class Controller implements IController {
                 "La Catalina presenta el espectáculo \"Un Día de Julio\" en Landia. Un hombre misterioso y solitario vive encerrado entre las "
                 + "cuatro paredes de su casa. Intenta, con sus teorías extravagantes, cambiar el mundo exterior que le resulta inhabitable. Un "
                 + "día de Julio sucederá algo que cambiará su vida y la de su entorno para siempre.", "UDJimg.jpg", "Landia",
-                LocalDate.of(2025, 11, 16), 650, 300000, "Murga", "tabarec", entPor, new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 8, 15, 4, 48)));
+                LocalDate.of(2025, 12, 16), 650, 300000, "Murga", "tabarec", entPor, new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 10, 15, 4, 48)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "Un día de Julio");
         listAux = new ArrayList<>();
-        listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2025, 8, 6, 2, 0)));
-        publicada = new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 8, 12, 4, 50));
+        listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2025, 10, 6, 2, 0)));
+        publicada = new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 10, 12, 4, 50));
         listAux.add(publicada);
         aux.setFechaPublicacion(publicada.getFechaEstado().toLocalDate());
         aux.setPlazoFinanciacion(aux.getFechaPublicacion());
@@ -246,11 +246,11 @@ public class Controller implements IController {
                 + "Miami, Nueva York, Washington, México, Guadalajara, Río de Janeiro y La Habana. En nuestro país, El Lazarillo de "
                 + "Tormes fue nominado en los rubros mejor espectáculo y mejor dirección a los Premios Florencio 1995, obteniendo su "
                 + "protagonista Héctor Guido el Florencio a Mejor actor de ese año.", null, "Teatro el Galpón",
-                LocalDate.of(2025, 12, 3), 350, 175000, "Teatro Dramático", "hectorg", entrada, new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 8, 20, 21, 58)));
+                LocalDate.of(2025, 12, 3), 350, 175000, "Teatro Dramático", "hectorg", entrada, new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 10, 15, 21, 58)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "El Lazarillo de Tormes");
         listAux = new ArrayList<>();
-        listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2025, 8, 18, 2, 40)));
+        listAux.add(new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2025, 10, 13, 2, 40)));
         aux.setFechaPublicacion(LocalDate.of(2025, 8, 20));
         aux.setPlazoFinanciacion(aux.getFechaPublicacion());
         aux.setHistorialEstados(listAux);
@@ -261,7 +261,7 @@ public class Controller implements IController {
                 + "importante para el aprendizaje y la democratización de la ciencia, los monólogos científicos son una forma didáctica de "
                 + "apropiación del conocimiento científico y contribuyen a que el público aprenda ciencia de forma amena. Los invitamos a "
                 + "pasar un rato divertido, en un espacio en el cual aprenderán cosas de la ciencia que los sorprenderán. ¡Los esperamos!", null, "Anfiteatro Edificio \"José Luis Massera\"",
-                LocalDate.of(2025, 12, 10), 200, 100000, "Stand-up", "losBardo", entrada, new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2025, 8, 23, 2, 12)));
+                LocalDate.of(2025, 12, 10), 200, 100000, "Stand-up", "losBardo", entrada, new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2025, 10, 16, 2, 12)));
         addPropuesta(prop);
         emr.close();
     }
