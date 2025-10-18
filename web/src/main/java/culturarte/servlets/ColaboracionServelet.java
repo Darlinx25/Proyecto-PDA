@@ -70,8 +70,8 @@ public class ColaboracionServelet extends HttpServlet {
 
         switch (path) {
             case "/registrar-colaboracion":
-                ArrayList<String> propuestas = this.controller.listarPropuestasProponentes();
-                request.setAttribute("propuestas", propuestas);
+                String titulo = (String) request.getParameter("propuesta");
+                request.setAttribute("propuestaC", titulo);
                 request.getRequestDispatcher("/WEB-INF/jsp/registrarColaboracion.jsp").forward(request, response);
                 break;
             default:
@@ -98,7 +98,7 @@ public class ColaboracionServelet extends HttpServlet {
         switch (path) {
             case "/registrar-colaboracion":
                 String nick = session.getAttribute("username").toString();
-                String titulo = request.getParameter("tituloProp");
+                String titulo = request.getParameter("propuesta");
                 String retorno = request.getParameter("opcion");
                 float monto = Float.parseFloat(request.getParameter("colaboracion"));
 

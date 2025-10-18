@@ -12,7 +12,7 @@
               integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
         <link href="/resources/css/registrarColaboracion.css" rel="stylesheet">
     </head>
-    <body class="bg-light d-flex justify-content-center align-items-center min-vh-100 py-2" id="cuerpo">
+    <body class="bg-light d-flex justify-content-center align-items-center min-vh-100 py-2" id="cuerpo" onload="propuestaElegida(document.getElementById('propuesta').value)">
         <jsp:include page="header.jsp"/>
         
         <form action="/registrar-colaboracion" method="post" class="card p-5 shadow" id="formulario">
@@ -21,25 +21,15 @@
 
             <%
                 List<String> propuestas = (List<String>) request.getAttribute("propuestas");
+                String propuestaC = (String) request.getAttribute("propuestaC");
             %>
 
             <div class="mb-2">
-                <label for="propuesta" class="form-label"><strong>Propuestas</strong></label>
-                <select onchange="propuestaElegida()" id="propuesta" name="propuesta" class="form-select form-select-sm" required>
-                    <option value="" selected disabled>-- Seleccione una propuesta  --</option>
-                    <% if (propuestas != null) {
-                            for (String cat : propuestas) {%>
-                    <option value="<%= cat%>"><%= cat%></option>
-                    <%   }
-                    } else { %>
-                    <option value="">No hay propuestas disponibles</option>
-                    <% }%>
-                    
-                </select>
-                
-                    
-            </div>
-                    
+                <label for="propuesta" class="form-label"><strong>Propuesta:</strong></label>
+                <select oninput="propuestaElegida()" id="propuesta" name="propuesta" class="form-select form-select-sm">
+                    <option value="<%= propuestaC%>" selected ><%= propuestaC%></option>
+                </select>   
+            </div>   
             <div id="retornosContainer"></div>
 
 

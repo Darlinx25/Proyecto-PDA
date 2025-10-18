@@ -113,12 +113,16 @@ public class PropuestaServlet extends HttpServlet {
 
                     }
                 }
-
                 String nick3 = (String) request.getSession().getAttribute("username");
                 List<String> propuestasFav = recibirPropuestasFavoritas(nick3);
+                List<String> propuestasColab = this.controller.obtenerPropuestasColaboradas(nick3);
+                List<String> propsParaColab = propuestasParaColab();
                 List<Object> respuesta = new ArrayList<>();
                 respuesta.add(propuestas);
                 respuesta.add(propuestasFav);
+                respuesta.add(propuestasColab);
+                respuesta.add(propsParaColab);
+                
                 
                 response.setContentType("application/json;charset=UTF-8");
                 ObjectMapper mapper = new ObjectMapper();
@@ -408,7 +412,22 @@ public class PropuestaServlet extends HttpServlet {
         }
         return aux2;
     }
+    
+    private ArrayList<String> propuestasParaColab() {
 
+        ArrayList<String> aux = this.controller.listarPropuestas();
+        ArrayList<String> aux2 = new ArrayList<>();
+
+        for (String prop : aux) {
+            DTPropuesta propuestaAux = this.controller.obtenerDTPropuesta(prop);
+            if (propuestaAux.getEstadoActual().getEstado() == EstadoPropuesta.PUBLICADA || propuestaAux.getEstadoActual().getEstado() == EstadoPropuesta.EN_FINANCIACION ) {
+                aux2.add(prop);
+            }
+        }
+        return aux2;
+    }
+    
+    
     private String obtenerColaboracionJSON(Long id) {
         DTColaboracion colab = this.controller.obtenerDTColaboracion(id);
         if (colab == null) {
