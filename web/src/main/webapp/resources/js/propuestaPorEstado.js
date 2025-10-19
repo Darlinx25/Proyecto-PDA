@@ -46,6 +46,8 @@ function propPorEstado(btn) {
                             <p><strong>Dias restantes para Financiación: </strong> ${diferenciaDias}</p>
                         </div>
                     </div>`;
+                    
+                    
                 //Favoritas
                 const estaEnFav = data[1].includes(prop.titulo);
                 if (plantillaFav !== null) {
@@ -183,6 +185,23 @@ function propPorEstado(btn) {
                     }
                 div.appendChild(clonComent);
                 }
+                //ver colaboradores
+                const divColabs = document.createElement("form");
+                    divColabs.className = "p-3";
+                    divColabs.style.display = "block";
+                    divColabs.innerHTML = `
+                        <select class="form-select form-select-sm mb-3">
+                            <option selected >--Colaboradores--</option>
+                        </select>`;
+                    for (const i of prop.nicksColabs) {
+                        const selectColabs = divColabs.children[0];
+                        const opcion = document.createElement("option");
+                        opcion.textContent = i;
+                        opcion.disabled = true;
+                        selectColabs.appendChild(opcion);
+                    }
+                    div.appendChild(divColabs);
+                    
                     //para q no queden todos los botones amontonados
                     const contenedorBotones = document.createElement("div");
                     contenedorBotones.style.display = "flex";
