@@ -786,7 +786,7 @@ public class Controller implements IController {
         emr.close();
         return aux;
     }
-    
+
     @Override
     public ArrayList<String> listarPropuestasFavoritas(String nick) {
         Manejador emr = Manejador.getInstance();
@@ -794,8 +794,7 @@ public class Controller implements IController {
         emr.close();
         return aux;
     }
-    
-    
+
     @Override
     public String obtenerDineroRecaudado(String tituloProp) {
         Manejador emr = Manejador.getInstance();
@@ -967,27 +966,27 @@ public class Controller implements IController {
         }
         return false;
     }
-    
+
     @Override
-    public void favoritarPropuesta(String nick, String titulo){
+    public void favoritarPropuesta(String nick, String titulo) {
         Manejador emr = Manejador.getInstance();
         Propuesta prop = emr.find(Propuesta.class, titulo);
         Usuario user = emr.find(Usuario.class, nick);
-        if(!propuestaYaFavorita(prop.getTitulo(),user.getNickname())){
-        List<Propuesta> aux = user.getPropuestasFavoritas();
-        aux.add(prop);
-        user.setPropuestasFavoritas(aux);
-        emr.mod(user);
-        emr.mod(prop);
+        if (!propuestaYaFavorita(prop.getTitulo(), user.getNickname())) {
+            List<Propuesta> aux = user.getPropuestasFavoritas();
+            aux.add(prop);
+            user.setPropuestasFavoritas(aux);
+            emr.mod(user);
+            emr.mod(prop);
         }
         emr.close();
     }
-    
+
     @Override
-    public Boolean propuestaYaFavorita(String titulo, String nick){
+    public Boolean propuestaYaFavorita(String titulo, String nick) {
         Manejador emr = Manejador.getInstance();
         Usuario user = emr.find(Usuario.class, nick);
-        
+
         if (user == null) {
             emr.close();
             return false;
@@ -995,32 +994,41 @@ public class Controller implements IController {
         user.getPropuestasFavoritas().size();
         List<Propuesta> aux = user.getPropuestasFavoritas();
         emr.close();
-        for(Propuesta aux2: aux){
-            if(aux2.getTitulo() == null ? titulo == null : aux2.getTitulo().equals(titulo)){
+        for (Propuesta aux2 : aux) {
+            if (aux2.getTitulo() == null ? titulo == null : aux2.getTitulo().equals(titulo)) {
                 return true;
             }
         }
         return false;
     }
-    
+
     @Override
-    public void actualizarEstado(){
+    public void actualizarEstado() {
         Manejador emr = Manejador.getInstance();
         LocalDate fechaActual = LocalDate.now();
         List<String> aux = listarPropuestas();
-        for(String aux2: aux){
+        for (String aux2 : aux) {
             Propuesta aux3 = emr.find(Propuesta.class, aux2);
-            if(aux3!=null && (aux3.getEstadoActual().getEstado()==EstadoPropuesta.EN_FINANCIACION || aux3.getEstadoActual().getEstado()==EstadoPropuesta.PUBLICADA)){
-                if(aux3.getPlazoFinanciacion()!=null){
+            if (aux3 != null && (aux3.getEstadoActual().getEstado() == EstadoPropuesta.EN_FINANCIACION || aux3.getEstadoActual().getEstado() == EstadoPropuesta.PUBLICADA)) {
+                if (aux3.getPlazoFinanciacion() != null) {
                     LocalDate fechaFinancia = aux3.getPlazoFinanciacion();
-                long diasDiferencia = ChronoUnit.DAYS.between(fechaActual,fechaFinancia);
-                if(diasDiferencia <=0){
-                    EstadoPropuesta estadoAux = EstadoPropuesta.NO_FINANCIADA;
-                    Estado estadoNuevo = new Estado(estadoAux);
-                    aux3.setEstadoActual(estadoNuevo);
-                    emr.mod(aux3);
+                    long diasDiferencia = ChronoUnit.DAYS.between(fechaActual, fechaFinancia);
+                    if (diasDiferencia <= 0) {
+                        if (aux3.getMontoAReunir() > Float.parseFloat(this.obtenerDineroRecaudado(aux3.getTitulo()))) {
+                            EstadoPropuesta estadoAux = EstadoPropuesta.NO_FINANCIADA;
+                            Estado estadoNuevo = new Estado(estadoAux);
+                            aux3.setEstadoActual(estadoNuevo);
+                            emr.mod(aux3);
+                        } else {
+                            if (aux3.getMontoAReunir() <= Float.parseFloat(this.obtenerDineroRecaudado(aux3.getTitulo()))) {
+                                EstadoPropuesta estadoAux = EstadoPropuesta.FINANCIADA;
+                                Estado estadoNuevo = new Estado(estadoAux);
+                                aux3.setEstadoActual(estadoNuevo);
+                                emr.mod(aux3);
+                            }
+                        }
+                    }
                 }
-                }   
             }
         }
         emr.close();
