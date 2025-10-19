@@ -15,7 +15,7 @@
         
         <div class="d-flex justify-content-center align-items-center min-vh-100">
             <form action="/crear-cuenta" method="post" enctype="multipart/form-data"
-                onsubmit="return coincidenPasswords()" class="card p-5 shadow" id="formulario">
+                style="margin-top: 120px;" onsubmit="return coincidenPasswords()" class="card p-5 shadow" id="formulario">
 
                 <h2 class="text-center mb-4">Crear una cuenta</h2>
 

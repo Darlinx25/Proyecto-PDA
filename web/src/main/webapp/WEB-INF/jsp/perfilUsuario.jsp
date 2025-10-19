@@ -121,7 +121,7 @@
                             </select>
                             <%}%>  
                         </div>  
-                        <div>
+                        <div class="gap-4">
                             <label for="propuesta" class="form-label"><strong>Propuestas favoritas:</strong></label>
                             <select onchange="cargarPropuestaFavorita()" id="propuestaFavoritas" name="propuestaFav" class="form-select form-select-sm" required>
                                 <option value="" selected disabled>-- Seleccione una propuesta  --</option>
@@ -185,7 +185,7 @@
                     </div>
                     <% }%>
                 </div>
-                <div class="d-flex flex-column justify-content-center">
+                <div class="d-flex flex-column justify-content-center ">
                     <p class="text-start text-uppercase" id="NombreUser"><%= nombre%> <%= apellido%> - <%= rol%></p>
                     <p class="text-start  "><%= username%></p>
                     <p class="text-start">
@@ -194,7 +194,7 @@
                         </a>
                     </p>
                     <p class="text-start "><%= bio%></p>
-                    <div class="d-flex justify-content-between  mt-3">
+                    <div class="d-flex justify-content-between  mt-3 gap-4">
                         <div class="mb-3 me-3">
                             <label for="seguidores" class="form-label"><strong>Seguidores:</strong></label>
                             <select  id="seguidores" name="seguidores" class="form-select form-select-sm">
@@ -249,8 +249,8 @@
 
 
 
-                        </div>
-                            <div>
+                        </div >
+                            <div class="mb-3">
                             <label for="propuesta" class="form-label"><strong>Propuestas favoritas:</strong></label>
                             <select onchange="cargarPropuestaFavorita()" id="propuestaFavoritas" name="propuestaFav" class="form-select form-select-sm" required>
                                 <option value="" selected disabled>-- Seleccione una propuesta  --</option>

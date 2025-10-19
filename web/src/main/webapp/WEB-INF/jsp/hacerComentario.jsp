@@ -21,7 +21,7 @@
           onload="propuestaElegida(document.getElementById('propuesta').value)">
         <jsp:include page="header.jsp"/>
         
-        <form action="/hacer-comentario" method="post" class="card p-5 shadow" id="formulario">
+        <form action="/hacer-comentario" method="post" class="card p-5 shadow" style="margin-top: 120px;" id="formulario" >
 
             <h2 class="text-center mb-4">Comentar:</h2>
 

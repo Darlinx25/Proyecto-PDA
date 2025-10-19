@@ -26,22 +26,7 @@
         %>
         <%            if (rol == null) {
         %>
-        <div class=" shadow p-2 bg-dark  text-white mb-1">
-            <div class="d-flex justify-content-between gap-3">
-                <div >
-                    <h1 class="text-center" id="titulo">Culturarte</h1>
-                </div>
-                <div class="text-center">
-                    <h2>Bienvenido</h2>
-                    <ul>
-                        <a href="/login" class="btn btn-success p-1">Iniciar sesión</a></li>
-                        <a href="/crear-cuenta" class="btn btn-success p-1">Registrarse</a></li>
-                        <a href="/consultar-perfil-usuario" class="btn btn-success p-1 ">Consultar Perfiles</a>
 
-                    </ul>
-                </div>
-            </div>
-        </div>    
 
         <%
         } else {
@@ -50,7 +35,7 @@
             <input type="hidden" name="propuesta" value="">
             <button type="submit" class="btn btn-primary mb-3">Agregar a favoritos</button>
         </form>
-        
+
         <%
             if (rol == "colaborador") {
         %>
@@ -58,108 +43,71 @@
             <input type="hidden" name="propuesta" value="">
             <button type="submit" class="btn btn-primary mb-3">Colaborar</button>
         </form>  
-        
-        
-            <form action="/hacer-comentario" class="p-3" method="get" style="display: none;" id="comentar-prop">
+
+
+        <form action="/hacer-comentario" class="p-3" method="get" style="display: none;" id="comentar-prop">
             <input type="hidden" name="tituloProp" value="">
             <button type="submit" class="btn btn-primary mb-3">Comentar</button>
         </form> 
-      
-        
-        
-        
-        
+
+
+
+
+
         <%} else if (rol == "proponente") {
         %>
         <div>
             <form action="/extender-financiacion" class="p-3" method="get" style="display: none;" id="extender-prop">
-            <input type="hidden" name="titulo" value="">
-            <button type="submit" class="btn btn-primary mb-3">Extender Financiacion</button>
-        </form> 
+                <input type="hidden" name="titulo" value="">
+                <button type="submit" class="btn btn-primary mb-3">Extender Financiacion</button>
+            </form> 
         </div>
-        
+
         <div>
             <form action="/cancelar-propuesta" class="p-3" method="post" style="display: none;" id="cancelar-prop">
-            <input type="hidden" name="titulo" value="">
-            <button type="submit" class="btn btn-primary mb-3">Cancelar Propuesta</button>
-        </form> 
+                <input type="hidden" name="titulo" value="">
+                <button type="submit" class="btn btn-primary mb-3">Cancelar Propuesta</button>
+            </form> 
         </div> 
-        
 
-        
-        
-        
-        
+
         <%}%>
-        
-        
-        <div class=" shadow p-1 bg-dark text-white mb-1">
 
-            <div class="d-flex justify-content-between m-1">
-                <div>
-                    <h1  id="titulo">Culturarte</h1>
+        <% }%>
+
+
+        <div class="d-flex justify-content-between gap-3">
+            <div class="ms-5 mt-5">
+                <h3>Categorias:</h3>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="radio1" name="optradio" value="Todas" checked>
+                    <label class="form-check-label" for="radio1">Todas</label>
                 </div>
-                <div  >
-                    <div class="d-flex align-items-center gap-2">        
-                        <div>
-                            <img height="100" width="100" class="rounded-circle border border-2 border-white " src="/imagenes/<%= imagen%>" onerror="this.src='/resources/images/userdefault.png';" alt="Foto de perfil">
-                        </div>
-                        <div>
-                            <p class="text-uppercase"><%= nombre%> <%= apellido%></p>
-                            <div class="d-flex align-items-center mb-3 gap-2">
-                                <div>
-                                    <a href="/perfil?user=<%= usr%>" class="btn btn-link p-1 ">Ver perfil  </a>
-                                </div>
-                                <div>
-                                    <form action="/logout" method="post">
-                                        <div>
-                                            <button type="submit" class="btn btn-link p-1 ">Cerrar sesión</button>
-                                        </div>
-                                    </form> 
-                                </div>
-                            </div> 
-                        </div>
-                    </div>       
+                <%for (String cat : categorias) {%>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="radio2" name="optradio" value="<%= cat%>">
+                    <label class="form-check-label" for="radio2"><%= cat%> </label>
                 </div>
+                <% }%>
             </div>
-           
-
-                            </div>
-                            <% }%>
-
-
-                            <div class="d-flex justify-content-between gap-3">
-                                <div class="ms-5 mt-5">
-                                    <h3>Categorias:</h3>
-                                    <div class="form-check">
-                                        <input type="radio" class="form-check-input" id="radio1" name="optradio" value="Todas" checked>
-                                        <label class="form-check-label" for="radio1">Todas</label>
-                                    </div>
-                                    <%for (String cat : categorias) {%>
-                                    <div class="form-check">
-                                        <input type="radio" class="form-check-input" id="radio2" name="optradio" value="<%= cat%>">
-                                        <label class="form-check-label" for="radio2"><%= cat%> </label>
-                                    </div>
-                                    <% }%>
-                                </div>
-                                <div class="container" >
-                                    <ul class="nav nav-tabs">
-                                        <li><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#PCreadas" data-estado="1" onclick="propPorEstado(this)">Propuestas Creadas</button></li>
-                                        <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PFinanciacion" data-estado="2" onclick="propPorEstado(this)">Propuestas en Financiación</button></li>
-                                        <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PFinanciadas" data-estado="3" onclick="propPorEstado(this)">Propuestas Financiadas</button></li>
-                                        <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PNOFinanciadas" data-estado="4" onclick="propPorEstado(this)">Propuestas NO Financiadas</button></li>
-                                        <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PCanceladas" data-estado="5" onclick="propPorEstado(this)">Propuestas Canceladas</button></li>
-                                    </ul>
-                                    <div class="tab-content">
-                                        <div class="tab-pane fade show active" id="PCreadas"></div>
-                                        <div class="tab-pane fade" id="PFinanciacion"></div>
-                                        <div class="tab-pane fade" id="PFinanciadas"></div>
-                                        <div class="tab-pane fade" id="PNOFinanciadas"></div>
-                                        <div class="tab-pane fade" id="PCanceladas"></div>
-                                    </div>
-                                </div> 
-                            </div>    
-                            <script src="${pageContext.request.contextPath}/resources/js/propuestaPorEstado.js"></script>
-                            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-                            </body>
-                            </html>
+            <div class="container" >
+                <ul class="nav nav-tabs">
+                    <li><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#PCreadas" data-estado="1" onclick="propPorEstado(this)">Propuestas Creadas</button></li>
+                    <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PFinanciacion" data-estado="2" onclick="propPorEstado(this)">Propuestas en Financiación</button></li>
+                    <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PFinanciadas" data-estado="3" onclick="propPorEstado(this)">Propuestas Financiadas</button></li>
+                    <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PNOFinanciadas" data-estado="4" onclick="propPorEstado(this)">Propuestas NO Financiadas</button></li>
+                    <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PCanceladas" data-estado="5" onclick="propPorEstado(this)">Propuestas Canceladas</button></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="PCreadas"></div>
+                    <div class="tab-pane fade" id="PFinanciacion"></div>
+                    <div class="tab-pane fade" id="PFinanciadas"></div>
+                    <div class="tab-pane fade" id="PNOFinanciadas"></div>
+                    <div class="tab-pane fade" id="PCanceladas"></div>
+                </div>
+            </div> 
+        </div>    
+        <script src="${pageContext.request.contextPath}/resources/js/propuestaPorEstado.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>

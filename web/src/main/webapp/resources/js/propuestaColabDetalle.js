@@ -65,7 +65,7 @@ function cargarColabPropia() {
                 const fechaFormateada = `${dia}/${mes}/${anio} ${horas}:${minutos}`;
                 container.innerHTML = `
                 <p><strong>Monto colaborado:</strong> $${data.monto}</p>
-                <p><strong>Fecha colaboracion:</strong> $${fechaFormateada}</p>
+                <p><strong>Fecha colaboracion:</strong> ${fechaFormateada}</p>
             `;
 
             })

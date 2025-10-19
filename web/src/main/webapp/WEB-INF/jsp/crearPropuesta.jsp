@@ -15,7 +15,7 @@
     <body class="bg-light d-flex justify-content-center align-items-center min-vh-100 py-2">
         <jsp:include page="header.jsp"/>
         
-        <form action="/crear-propuesta" method="post" enctype="multipart/form-data" class="card p-5 shadow" id="formulario" onsubmit="return validarCheckboxes()">
+        <form action="/crear-propuesta" method="post" enctype="multipart/form-data" class="card p-5 shadow" id="formulario" style="margin-top: 120px;" onsubmit="return validarCheckboxes()">
 
             <h2 class="text-center mb-4">Crear propuesta</h2>
 
