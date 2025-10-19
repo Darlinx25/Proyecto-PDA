@@ -20,6 +20,7 @@ function propPorEstado(btn) {
                 data[0].forEach(prop => {
                 const div = document.createElement("div");
                         div.className = "mb-2 p-2 border rounded bg-light";
+                        div.setAttribute("data-grupo", "propuestas");
                         const fechahoy = new Date();
                         const fechaFinanciacion = new Date(prop.plazoFinanciacion);
                         const diferenciaDias = Math.ceil((fechaFinanciacion - fechahoy) / (1000 * 3600 * 24));

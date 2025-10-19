@@ -14,6 +14,16 @@
     </head>
     <body class="bg-light" onload="propPorEstado(document.querySelector('.nav-tabs .nav-link.active'))"> 
         <jsp:include page="header.jsp"/>
+        
+        <form class="p-3" id="filtros">
+            <label for="combo-filtros" id="label-ordenar" class="form-label">Ordenar por:</label>
+            <select oninput="filtrarPropuestas()" class="form-select form-select-sm mb-3" id="select-filtros">
+                <option selected >-</option>
+                <option value="alfabet">Alfabéticamente AZ-az</option>
+                <option value="fecha">Fecha creación (descendente)</option>
+            </select>
+        </form>
+        
         <%
             String rol = (String) session.getAttribute("rol");
             String nombre = (String) session.getAttribute("nombre");
@@ -108,6 +118,7 @@
             </div> 
         </div>    
         <script src="${pageContext.request.contextPath}/resources/js/propuestaPorEstado.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/filtrarPropuestas.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>

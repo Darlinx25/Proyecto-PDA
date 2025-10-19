@@ -15,3 +15,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     
      font-family: 'Comic Neue', cursive;
 }
+
+#filtros {
+    display: none;
+    max-width: 20%;
+    margin: 0 auto;
+}

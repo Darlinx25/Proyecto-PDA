@@ -53,9 +53,9 @@
                         </li>
                         <%}%>
                     </ul>
-                    <form class="d-flex" action="/buscar-propuestas" method="get">
-                        <input class="form-control me-2" type="search" name="busq" placeholder="Título, descripción, lugar" aria-label="Search" style="height: 40px;">
-                        <button class="btn btn-outline-success"  style="height: 40px;" type="submit" >Buscar</button>
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" id="input-busq" name="busq" placeholder="Título, descripción, lugar" aria-label="Search" style="height: 40px;" >
+                        <button class="btn btn-outline-success" id="boton-busq" style="height: 40px;" type="button" >Buscar</button>
                     </form>
                 </div>
 
