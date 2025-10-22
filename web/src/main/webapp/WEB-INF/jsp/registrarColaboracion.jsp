@@ -24,7 +24,7 @@
                 String propuestaC = (String) request.getAttribute("propuestaC");
             %>
 
-            <div class="mb-2">
+            <div class="mb-2" style="display: none;">
                 <label for="propuesta" class="form-label"><strong>Propuesta:</strong></label>
                 <select oninput="propuestaElegida()" id="propuesta" name="propuesta" class="form-select form-select-sm">
                     <option value="<%= propuestaC%>" selected ><%= propuestaC%></option>
