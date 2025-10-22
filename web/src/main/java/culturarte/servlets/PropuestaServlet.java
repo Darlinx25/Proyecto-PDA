@@ -220,8 +220,15 @@ public class PropuestaServlet extends HttpServlet {
         switch (path) {
             case "/crear-propuesta":
                 if (puedeCrearPropuesta(request.getSession())) {
+                    try{
                     procesarCrearPropuesta(request, response);
                     response.sendRedirect("/index");
+                    }catch(PropuestaDuplicadaException ex){
+                    ArrayList<String> categorias = this.controller.obtenerCategorias();
+                    request.setAttribute("categorias", categorias);
+                    request.setAttribute("error", "Ya existe una propuesta con ese nombre.");
+                    request.getRequestDispatcher("/WEB-INF/jsp/crearPropuesta.jsp").forward(request, response);
+                    }
                 } else {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN);
                 }
@@ -276,7 +283,7 @@ public class PropuestaServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="Procesamiento de requests.">
     protected void procesarCrearPropuesta(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, PropuestaDuplicadaException {
         HttpSession session = request.getSession(false);
         String titulo = request.getParameter("titulo");
         String categoria = request.getParameter("categoria");
@@ -310,11 +317,9 @@ public class PropuestaServlet extends HttpServlet {
                 nombreImagen, lugar, fechaPrevista, precioF, montoF, categoria,
                 nickProp, tiposRetorno, est);
 
-        try {
+       
             this.controller.addPropuesta(prop);
-        } catch (PropuestaDuplicadaException ex) {
-            Logger.getLogger(PropuestaServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
 
     }
 

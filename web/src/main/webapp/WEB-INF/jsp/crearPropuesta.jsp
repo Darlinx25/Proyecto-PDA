@@ -23,7 +23,13 @@
                 List<String> categorias = (List<String>) request.getAttribute("categorias");
 
                 String fechaActual = LocalDate.now().toString();
+                
+                String error = (String) request.getAttribute("error"); 
             %>
+            
+            <% if (error != null) { %>
+            <div class="alert alert-danger text-center"> <%= error %></div>
+            <% } %>
 
             <div class="mb-2">
                 <label for="categoria" class="form-label">Categoría</label>
