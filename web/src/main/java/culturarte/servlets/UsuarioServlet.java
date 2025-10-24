@@ -99,8 +99,19 @@ public class UsuarioServlet extends HttpServlet {
         switch (path) {
             case "/crear-cuenta":
                 if (esVisitante(request.getSession())) {
-                    procesarCrearCuenta(request, response);
-                    response.sendRedirect("/login");
+                    try {
+                        procesarCrearCuenta(request, response);
+                        response.sendRedirect("/login");
+                    } catch (NickRepetidoException | EmailRepetidoException | BadPasswordException ex) {
+                        if (ex instanceof NickRepetidoException) {
+                            request.setAttribute("error", "Error el nombre de usuario ya existe.");
+                        } else if (ex instanceof EmailRepetidoException) {
+                            request.setAttribute("error", "Error el correo electrónico ya está registrado.");
+                        } else if (ex instanceof BadPasswordException) {
+                            request.setAttribute("error", "Error la contraseña no cumple los requisitos.");
+                        }
+                        request.getRequestDispatcher("/WEB-INF/jsp/crearCuenta.jsp").forward(request, response);
+                    }
                 } else {
                     response.sendRedirect("/index");
                 }
@@ -150,13 +161,13 @@ public class UsuarioServlet extends HttpServlet {
         List<String> usuariosSeguidosSinRol = this.controller.listarUsuariosSiguiendo(u);
 
         ArrayList<String> seguidores = this.controller.ObtenerSeguidores(u);
-        ArrayList<String> propsFav=this.controller.listarPropuestasFavoritas(u);
+        ArrayList<String> propsFav = this.controller.listarPropuestasFavoritas(u);
         request.setAttribute("propuestasFav", propsFav);
         request.setAttribute("rol", tipoUser);
         ArrayList<String> usuariosSeguidos = new ArrayList<>();
         if (session.getAttribute("username") != u) {
-                List<String> usuariosSeguidosPorlog = this.controller.listarUsuariosSiguiendo((String) session.getAttribute("username"));
-                request.setAttribute("usuariosSeguidosLog", usuariosSeguidosPorlog);
+            List<String> usuariosSeguidosPorlog = this.controller.listarUsuariosSiguiendo((String) session.getAttribute("username"));
+            request.setAttribute("usuariosSeguidosLog", usuariosSeguidosPorlog);
         }
 
         for (String cat : usuariosSeguidosSinRol) {
@@ -253,7 +264,7 @@ public class UsuarioServlet extends HttpServlet {
     }
 
     protected void procesarCrearCuenta(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, NickRepetidoException, EmailRepetidoException, BadPasswordException {
         String nombre = request.getParameter("nombre");
         String apellido = request.getParameter("apellido");
         String email = request.getParameter("email");
@@ -288,11 +299,8 @@ public class UsuarioServlet extends HttpServlet {
                     password.toCharArray(), passwordConfirm.toCharArray(), email, fechaNacimiento, nombreImagen);
         }
 
-        try {
-            this.controller.addUsuario(user);
-        } catch (NickRepetidoException | EmailRepetidoException | BadPasswordException ex) {
-            System.getLogger(UsuarioServlet.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }
+        this.controller.addUsuario(user);
+
     }
 
     protected void cerrarSesion(HttpServletRequest request, HttpServletResponse response)
@@ -331,11 +339,6 @@ public class UsuarioServlet extends HttpServlet {
 
         return propuestasPubli;
     }
-    
-    
-    
- 
-    
 
     private LocalDate parsearFecha(String fechaString) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
