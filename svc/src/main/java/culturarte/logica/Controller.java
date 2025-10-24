@@ -1168,7 +1168,7 @@ public class Controller implements IController {
         String nombreArchivo = System.currentTimeMillis() + "." + tipoImagen;
 
         //porque si no tomcat mete el archivo a otra carpeta, en docker luego lo podemos cambiar más fácil
-        Path pathImagen = Paths.get(System.getProperty("user.home"), "Documents", "NetBeansProjects", "Proyecto-PDA", "estacion", "imagenesUsuarios", nombreArchivo);
+        Path pathImagen = Paths.get(System.getProperty("user.home"), "Proyecto-PDA", "estacion", "imagenesUsuarios", nombreArchivo);
 
         try {
             Files.createDirectories(pathImagen.getParent());

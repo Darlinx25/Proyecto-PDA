@@ -30,7 +30,7 @@
                 String propuesta = (String) request.getAttribute("propuesta");
             %>
 
-            <div class="mb-2">
+            <div class="mb-2" style="display: none;">
                 <label for="propuesta" class="form-label"><strong>Propuestas</strong></label>
                 <select onchange="propuestaElegida()" id="propuesta" name="propuesta" class="form-select form-select-sm" >
                     <option value=" <%= propuesta%>"><%= propuesta%> </option>

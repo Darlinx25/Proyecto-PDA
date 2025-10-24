@@ -12,7 +12,13 @@
     </head>
     <body class="bg-light">
         <jsp:include page="header.jsp"/>
-        
+            <%
+               
+                String error = (String) request.getAttribute("error"); 
+            %>
+        <% if (error != null) { %>
+            <div class="alert alert-danger text-center"> <%= error %></div>
+            <% } %>
         <div class="d-flex justify-content-center align-items-center min-vh-100">
             <form action="/crear-cuenta" method="post" enctype="multipart/form-data"
                 style="margin-top: 120px;" onsubmit="return coincidenPasswords()" class="card p-5 shadow" id="formulario">
