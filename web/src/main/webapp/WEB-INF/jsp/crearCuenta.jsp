@@ -105,8 +105,31 @@
                 <div class="form-check mb-4 d-flex justify-content-center">
                     <input type="checkbox" class="form-check-input me-2" id="aceptar-terminos" required>
                     <label class="form-check-label" for="aceptar-terminos">
-                        Acepto los <a href="#!"><u>Términos de Servicio</u></a>
+                        Acepto los 
+                        <button type="button" class="btn btn-link p-1" data-bs-toggle="modal" data-bs-target="#terminos">
+                            Términos de Servicio
+                        </button>
                     </label>
+                </div>
+                
+                <div class="modal fade" id="terminos" tabindex="-1" aria-labelledby="modal-label" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="modal-label">Términos de Servicio</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <ul>
+                                    <li>La décima parte del monto reunido por las propuestas va a parar a Culturarte Ltd.</li>
+                                    <li>No damos garantías del uso correcto de sus datos personales.</li>
+                                </ul>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-success w-100 mb-3">Registrarse</button>
@@ -119,5 +142,8 @@
         </div>
 
         <script src="/resources/js/crearCuenta.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
     </body>
 </html>
