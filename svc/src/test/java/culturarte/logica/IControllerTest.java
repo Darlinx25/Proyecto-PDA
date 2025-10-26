@@ -6,6 +6,10 @@ import culturarte.datatypes.DTDireccion;
 import culturarte.datatypes.DTProponente;
 import culturarte.datatypes.DTPropuesta;
 import culturarte.datatypes.DTUsuario;
+import culturarte.excepciones.BadPasswordException;
+import culturarte.excepciones.EmailRepetidoException;
+import culturarte.excepciones.NickRepetidoException;
+import culturarte.excepciones.PropuestaDuplicadaException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -44,6 +48,42 @@ public class IControllerTest {
         DTUsuario u = new DTColaborador("pepe", "Jose", "Mendez", "12345678".toCharArray(), "12345678".toCharArray(), "pepe@gmail.com", LocalDate.of(1960, 4, 1), "MTimg.jpg");
         controller.addUsuario(u);
         assertEquals(21, controller.listarUsuarios().size());
+        
+        DTUsuario u2 = new DTColaborador("pepe", "Jose", "Mendez", "12345678".toCharArray(), "12345678".toCharArray(), "pepe0423@gmail.com", LocalDate.of(1960, 4, 1), "MTimg.jpg");
+        NickRepetidoException throw1 = assertThrows(
+           NickRepetidoException.class,
+           () -> controller.addUsuario(u2),
+           "tendría que haber tirado excepción");
+        assertTrue(throw1.getMessage().contains("Error al registrar usuario, Nick ya existente."));
+        
+        DTUsuario u3 = new DTColaborador("carlitos1", "Jose", "Mendez", "12345678".toCharArray(), "12345678".toCharArray(), "pepe@gmail.com", LocalDate.of(1960, 4, 1), "MTimg.jpg");
+        EmailRepetidoException throw2 = assertThrows(
+           EmailRepetidoException.class,
+           () -> controller.addUsuario(u3),
+           "tendría que haber tirado excepción");
+        assertTrue(throw2.getMessage().contains("Error al registrar usuario, Email ya existente."));
+        
+        DTUsuario u4 = new DTColaborador("juancho1", "Jose", "Mendez", "1234567".toCharArray(), "12345678".toCharArray(), "juancho1@gmail.com", LocalDate.of(1960, 4, 1), "MTimg.jpg");
+        BadPasswordException throw3 = assertThrows(
+           BadPasswordException.class,
+           () -> controller.addUsuario(u4),
+           "tendría que haber tirado excepción");
+        assertTrue(throw3.getMessage().contains("La contraseña tiene que tener de 8 a 24 caracteres de largo"));
+        
+        DTUsuario u5 = new DTColaborador("juancho2", "Jose", "Mendez", "12345678".toCharArray(), "1234567".toCharArray(), "juancho2@gmail.com", LocalDate.of(1960, 4, 1), "MTimg.jpg");
+        BadPasswordException throw4 = assertThrows(
+           BadPasswordException.class,
+           () -> controller.addUsuario(u5),
+           "tendría que haber tirado excepción");
+        assertTrue(throw4.getMessage().contains("La contraseña tiene que tener de 8 a 24 caracteres de largo"));
+        
+        DTUsuario u6 = new DTColaborador("juancho3", "Jose", "Mendez", "a12345678".toCharArray(), "b12345678".toCharArray(), "juancho3@gmail.com", LocalDate.of(1960, 4, 1), "MTimg.jpg");
+        BadPasswordException throw5 = assertThrows(
+           BadPasswordException.class,
+           () -> controller.addUsuario(u6),
+           "tendría que haber tirado excepción");
+        assertTrue(throw5.getMessage().contains("La contraseña y la confirmación no coinciden"));
+        
     }
 
     @Test
@@ -212,6 +252,11 @@ public class IControllerTest {
         
         controller.addPropuesta(prop);
         assertEquals(1, controller.listaPropuestasUsu("pepe11").size());
+        PropuestaDuplicadaException throw1 = assertThrows(
+           PropuestaDuplicadaException.class,
+           () -> controller.addPropuesta(prop),
+           "tendría que haber tirado excepción");
+        assertTrue(throw1.getMessage().contains("Ya existe una propuesta con ese titulo."));
     }
 
     @Test
@@ -277,9 +322,9 @@ public class IControllerTest {
 
     @Test
     public void testCambiarEstadoPropuesta() {
-        controller.cambiarEstadoPropuesta("Bardo en la FING", EstadoPropuesta.FINANCIADA);
+        controller.cambiarEstadoPropuesta("Bardo en la FING", EstadoPropuesta.PUBLICADA);
         DTPropuesta p = controller.obtenerDTPropuesta("Bardo en la FING");
-        assertEquals(EstadoPropuesta.FINANCIADA, p.getEstadoActual().getEstado(), "tiene que dar financiada");
+        assertEquals(EstadoPropuesta.PUBLICADA, p.getEstadoActual().getEstado(), "tiene que dar publicada");
     }
 
     @Test
@@ -291,6 +336,7 @@ public class IControllerTest {
     public void testComentarioExiste() {
         controller.hacerComentario("jejeje", "tonyp", "Pilsen Rock");
         assertTrue(controller.comentarioExiste("Pilsen Rock", "tonyp"));
+        assertFalse(controller.comentarioExiste("Pilsen Rock", "usuarioInexistente"));
     }
 
     @Test
@@ -402,5 +448,17 @@ public class IControllerTest {
     public void testPropuestaYaFavorita() {
         controller.favoritarPropuesta("tonyp", "Pilsen Rock");
         assertTrue(controller.propuestaYaFavorita("Pilsen Rock", "tonyp"));
+        assertFalse(controller.propuestaYaFavorita("Pilsen Rock", "usuarioInexistente"));
+    }
+    
+    @Test
+    public void testListarPropuestasFavoritas() {
+        controller.favoritarPropuesta("tonyp", "Pilsen Rock");
+        assertEquals(1, controller.listarPropuestasFavoritas("tonyp").size());
+    }
+    
+    @Test
+    public void testActualizarEstado() {
+        controller.actualizarEstado();
     }
 }
