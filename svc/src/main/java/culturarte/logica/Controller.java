@@ -39,6 +39,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
 import javax.swing.tree.DefaultMutableTreeNode;
+import org.hibernate.annotations.Generated;
 
 /**
  *
@@ -995,7 +996,7 @@ public class Controller implements IController {
         List<Propuesta> aux = user.getPropuestasFavoritas();
         emr.close();
         for (Propuesta aux2 : aux) {
-            if (aux2.getTitulo() == null ? titulo == null : aux2.getTitulo().equals(titulo)) {
+            if (aux2.getTitulo().equals(titulo)) {
                 return true;
             }
         }
@@ -1227,6 +1228,7 @@ public class Controller implements IController {
         }
     }
 
+    @Generated
     private DefaultMutableTreeNode nodosArbolCategorias(Categoria cat) {
         if (cat == null) {
             return null;
@@ -1242,17 +1244,35 @@ public class Controller implements IController {
     }
 
     private String obtenerTipoImagen(byte[] bytesImagen) {
-        if (bytesImagen == null) {
+        if (bytesImagen == null || bytesImagen.length == 0) {
             return null;
         }
-        if (bytesImagen[0] == (byte) 0xFF && bytesImagen[1] == (byte) 0xD8 && bytesImagen[2] == (byte) 0xFF) {
+
+        byte[] jpg = {(byte) 0xFF, (byte) 0xD8, (byte) 0xFF};
+        if (empiezaCon(bytesImagen, jpg)) {
             return "jpg";
-        } else if (bytesImagen[0] == (byte) 0x89 && bytesImagen[1] == (byte) 0x50 && bytesImagen[2] == (byte) 0x4E
-                && bytesImagen[3] == (byte) 0x47 && bytesImagen[4] == (byte) 0x0D && bytesImagen[5] == (byte) 0x0A
-                && bytesImagen[6] == (byte) 0x1A && bytesImagen[7] == (byte) 0x0A) {
+        }
+
+        byte[] png = {(byte) 0x89, (byte) 0x50, (byte) 0x4E, (byte) 0x47,
+            (byte) 0x0D, (byte) 0x0A, (byte) 0x1A, (byte) 0x0A};
+        if (empiezaCon(bytesImagen, png)) {
             return "png";
         }
+
         return null;
+    }
+
+
+    private boolean empiezaCon(byte[] datos, byte[] prefijo) {
+        if (datos.length < prefijo.length) {
+            return false;
+        }
+        for (int i = 0; i < prefijo.length; i++) {
+            if (datos[i] != prefijo[i]) {
+                return false;
+            }
+        }
+        return true;
     }
     // </editor-fold>
 
