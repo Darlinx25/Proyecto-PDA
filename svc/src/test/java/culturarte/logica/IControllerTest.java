@@ -224,6 +224,9 @@ public class IControllerTest {
         ArrayList<String> seguidores = controller.ObtenerSeguidores("pepe2");
 
         assertFalse(seguidores.isEmpty());
+        
+        ArrayList<String> seguidoresInexistente = controller.ObtenerSeguidores("usuarioInexistente");
+        assertTrue(seguidoresInexistente.isEmpty());
     }
 
     @Test
@@ -419,6 +422,7 @@ public class IControllerTest {
     @Test
     public void testObtenerColaboradoresColaboracion() {
         assertEquals(3, controller.obtenerColaboradoresColaboracion("Pilsen Rock").size());
+        assertEquals(3, controller.obtenerColaboradoresColaboracion("Cine en el Botánico").size());
     }
 
     @Test
@@ -431,6 +435,8 @@ public class IControllerTest {
 
         assertEquals("colaborador", controller.obtenerTipoUser("pepe"));
         assertEquals("proponente", controller.obtenerTipoUser("pepe2"));
+        assertNull(controller.obtenerTipoUser("usuarioInexistente"));
+        
     }
 
     @Test
@@ -505,6 +511,7 @@ public class IControllerTest {
 
     @Test
     public void testFavoritarPropuesta() {
+        controller.favoritarPropuesta("tonyp", "Pilsen Rock");
         controller.favoritarPropuesta("tonyp", "Pilsen Rock");
     }
 
