@@ -680,6 +680,40 @@ public class Controller implements IController {
         return aux3;
     }
 
+    @Override
+    public ArrayList<String> obtenerUsuariosPorRanking() {
+        List<String> auxUsuarios = this.listarUsuarios();
+        ArrayList<String> retorno = new ArrayList<>();
+
+        
+        for (String usuActual : auxUsuarios) {
+            List<String> auxSeguidores = this.ObtenerSeguidores(usuActual);
+            if (!auxSeguidores.isEmpty()) {
+                retorno.add(usuActual);
+            }
+        }
+
+        boolean cambiaLista;
+
+      
+        do {
+            cambiaLista = false;
+            for (int i = 0; i < retorno.size() - 1; i++) {
+                int seguidores1 = this.ObtenerSeguidores(retorno.get(i)).size();
+                int seguidores2 = this.ObtenerSeguidores(retorno.get(i + 1)).size();
+
+                if (seguidores1 < seguidores2) {
+                    String temp = retorno.get(i);
+                    retorno.set(i, retorno.get(i + 1));
+                    retorno.set(i + 1, temp);
+                    cambiaLista = true;
+                }
+            }
+        } while (cambiaLista);
+
+        return retorno;
+    }
+
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Funciones categorías.">
     @Override
@@ -1261,7 +1295,6 @@ public class Controller implements IController {
 
         return null;
     }
-
 
     private boolean empiezaCon(byte[] datos, byte[] prefijo) {
         if (datos.length < prefijo.length) {

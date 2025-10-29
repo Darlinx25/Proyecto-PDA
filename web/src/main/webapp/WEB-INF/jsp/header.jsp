@@ -30,7 +30,10 @@
                         </li>
                         <li class="nav-item">
                             <a href="/consultar-perfil-usuario" class="nav-link active ">Consultar Perfiles</a>  
-                        </li>   
+                        </li>
+                        <li class="nav-item">
+                            <a href="/ranking-usuario" class="nav-link active ">Consultar Rankings</a>  
+                        </li>
                         <%
                         } else if(rol == "proponente"){
                         %>
@@ -39,6 +42,9 @@
                         </li>
                         <li class="nav-item">
                             <a href="/consultar-perfil-usuario" class="nav-link active ">Consultar Perfiles</a>  
+                        </li>
+                        <li class="nav-item">
+                            <a href="/ranking-usuario" class="nav-link active ">Consultar Rankings</a>  
                         </li>
                         <li class="nav-item">
                             <a href="/crear-propuesta" class="nav-link active ">Crear propuesta</a>
@@ -50,6 +56,9 @@
                         </li>
                         <li class="nav-item">
                             <a href="/consultar-perfil-usuario" class="nav-link active ">Consultar Perfiles</a>  
+                        </li>
+                        <li class="nav-item">
+                            <a href="/ranking-usuario" class="nav-link active ">Consultar Rankings</a>  
                         </li>
                         <%}%>
                     </ul>

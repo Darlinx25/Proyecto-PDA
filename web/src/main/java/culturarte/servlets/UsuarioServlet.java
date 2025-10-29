@@ -42,7 +42,7 @@ import java.util.List;
  *
  * @author mark
  */
-@WebServlet(name = "UsuarioServlet", urlPatterns = {"/usuarios", "/crear-cuenta", "/perfil", "/login", "/logout", "/seguir-usuario", "/consultar-perfil-usuario"})
+@WebServlet(name = "UsuarioServlet", urlPatterns = {"/usuarios", "/crear-cuenta", "/perfil", "/login", "/logout", "/seguir-usuario", "/consultar-perfil-usuario", "/ranking-usuario"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, //1MB+ se escriben al disco
         maxFileSize = 1024 * 1024 * 5, //5MB máximo por archivo
@@ -83,6 +83,11 @@ public class UsuarioServlet extends HttpServlet {
                 break;
             case "/consultar-perfil-usuario":
                 listarUsuarios(request, response);
+                request.getRequestDispatcher("/WEB-INF/jsp/consultaPerfilUsuario.jsp").forward(request, response);
+                break;
+            case "/ranking-usuario":
+                ArrayList<String> usuarios = this.controller.obtenerUsuariosPorRanking();
+                request.setAttribute("usuarios",usuarios);
                 request.getRequestDispatcher("/WEB-INF/jsp/consultaPerfilUsuario.jsp").forward(request, response);
                 break;
             default:

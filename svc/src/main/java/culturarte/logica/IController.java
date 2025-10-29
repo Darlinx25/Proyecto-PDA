@@ -42,6 +42,7 @@ public interface IController {
     public ArrayList<String> listarUsuariosSeguir(String nickname);
     public List<String> listarUsuariosSiguiendo(String nickname);
     public ArrayList<String> ObtenerSeguidores(String nickname);
+    public ArrayList<String> obtenerUsuariosPorRanking();
     
     // </editor-fold>
     
