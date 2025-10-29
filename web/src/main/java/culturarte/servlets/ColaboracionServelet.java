@@ -72,7 +72,16 @@ public class ColaboracionServelet extends HttpServlet {
             case "/registrar-colaboracion":
                 String titulo = (String) request.getParameter("propuesta");
                 request.setAttribute("propuestaC", titulo);
+                String userAgent = request.getHeader("User-Agent").toLowerCase();
+                boolean esMovil = userAgent.contains("mobi") || userAgent.contains("android")
+                        || userAgent.contains("iphone") || userAgent.contains("ipad");
+
+                if (esMovil) {
+                        request.getRequestDispatcher("/WEB-INF/jsp/registrarColaboracionMovil.jsp").forward(request, response);
+                } else {
                 request.getRequestDispatcher("/WEB-INF/jsp/registrarColaboracion.jsp").forward(request, response);
+                }
+                
                 break;
             default:
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
