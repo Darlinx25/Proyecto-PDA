@@ -32,9 +32,7 @@
 
             <button type="submit" class="btn btn-success w-100 mb-3">Iniciar Sesión</button>
 
-            <p class="text-center text-muted mb-0" id="mensaje-registrarse">
-                ¿No tenés cuenta? <a href="/crear-cuenta" class="fw-bold">Registrate</a>
-            </p>
+            
 
         </form>
 
