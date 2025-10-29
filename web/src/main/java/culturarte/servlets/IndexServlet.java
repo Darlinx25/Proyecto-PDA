@@ -42,14 +42,26 @@ public class IndexServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        String userAgent = request.getHeader("User-Agent").toLowerCase();
         String rol = (String) session.getAttribute("rol");
         ArrayList<String> cat = this.controller.obtenerCategorias();
         this.controller.actualizarEstado();
         request.setAttribute("categorias",cat);
         response.setContentType("text/html;charset=UTF-8");
-        RequestDispatcher dispatcher = request.getRequestDispatcher(
-                "/WEB-INF/jsp/index.jsp");
-        dispatcher.forward(request, response);
+        boolean esMovil = userAgent.contains("mobi") || userAgent.contains("android") 
+                          || userAgent.contains("iphone") || userAgent.contains("ipad");
+
+        if (esMovil) {
+            
+            request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesionMovil.jsp").forward(request, response);
+            
+        } else {
+            
+            request.getRequestDispatcher("/WEB-INF/jsp/index.jsp").forward(request, response);
+            
+        }
+        
+        
     }
     // </editor-fold>
 
