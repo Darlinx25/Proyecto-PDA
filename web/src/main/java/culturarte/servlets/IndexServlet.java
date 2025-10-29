@@ -51,11 +51,16 @@ public class IndexServlet extends HttpServlet {
         boolean esMovil = userAgent.contains("mobi") || userAgent.contains("android") 
                           || userAgent.contains("iphone") || userAgent.contains("ipad");
 
-        if (esMovil) {
+        if (esMovil && rol==null) {
             
             request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesionMovil.jsp").forward(request, response);
             
-        } else {
+        }else if (esMovil && "colaborador".equals(rol)){
+        
+        request.getRequestDispatcher("/WEB-INF/jsp/indexMovil.jsp").forward(request, response);
+        }
+        
+        else {
             
             request.getRequestDispatcher("/WEB-INF/jsp/index.jsp").forward(request, response);
             
@@ -66,3 +71,18 @@ public class IndexServlet extends HttpServlet {
     // </editor-fold>
 
 }
+
+/*String userAgent = request.getHeader("User-Agent").toLowerCase();
+ boolean esMovil = userAgent.contains("mobi") || userAgent.contains("android") 
+                          || userAgent.contains("iphone") || userAgent.contains("ipad");
+
+        if (esMovil) {
+            
+            
+            
+        } else {
+            
+            
+            
+        }
+*/

@@ -69,7 +69,20 @@ public class UsuarioServlet extends HttpServlet {
                 break;
             case "/login":
                 if (esVisitante(request.getSession())) {
-                    request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesion.jsp").forward(request, response);
+                    String userAgent = request.getHeader("User-Agent").toLowerCase();
+                    boolean esMovil = userAgent.contains("mobi") || userAgent.contains("android")
+                            || userAgent.contains("iphone") || userAgent.contains("ipad");
+
+                    if (esMovil) {
+
+                        request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesionMovil.jsp").forward(request, response);
+
+                    } else {
+
+                        request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesion.jsp").forward(request, response);
+
+                    }
+
                 } else {
                     response.sendRedirect("/index");
                 }
@@ -87,7 +100,7 @@ public class UsuarioServlet extends HttpServlet {
                 break;
             case "/ranking-usuario":
                 ArrayList<String> usuarios = this.controller.obtenerUsuariosPorRanking();
-                request.setAttribute("usuarios",usuarios);
+                request.setAttribute("usuarios", usuarios);
                 request.getRequestDispatcher("/WEB-INF/jsp/consultaPerfilUsuario.jsp").forward(request, response);
                 break;
             default:
@@ -122,6 +135,7 @@ public class UsuarioServlet extends HttpServlet {
                 }
                 break;
             case "/login":
+
                 if (esVisitante(request.getSession())) {
                     iniciarSesion(request, response);
                 } else {
@@ -236,12 +250,12 @@ public class UsuarioServlet extends HttpServlet {
         String password = request.getParameter("password");
         String tipoUsuario = this.controller.obtenerTipoUser(nickname);
         boolean autValida = this.controller.autenticarUsuario(nickname, password.toCharArray());
-
+        String userAgent = request.getHeader("User-Agent").toLowerCase();
+        boolean esMovil = userAgent.contains("mobi") || userAgent.contains("android")
+                || userAgent.contains("iphone") || userAgent.contains("ipad");
         if (tipoUsuario != null && autValida) {
             HttpSession session = request.getSession(true);
-            session.setAttribute("rol", tipoUsuario);
-            session.setAttribute("username", nickname);
-            response.sendRedirect("/index");
+
             if (tipoUsuario.equals("colaborador")) {
                 DTColaborador colab = this.controller.obtenerDTColaborador(nickname);
                 String nom = colab.getNombre();
@@ -250,7 +264,10 @@ public class UsuarioServlet extends HttpServlet {
                 session.setAttribute("nombre", nom);
                 session.setAttribute("apellido", apell);
                 session.setAttribute("ubiImagen", ubi);
-            } else if (tipoUsuario.equals("proponente")) {
+                session.setAttribute("rol", tipoUsuario);
+                session.setAttribute("username", nickname);
+                response.sendRedirect("/index");
+            } else if (tipoUsuario.equals("proponente") && !esMovil) {
                 DTProponente prop = this.controller.obtenerDTProponente(nickname);
                 String nom = prop.getNombre();
                 String apell = prop.getApellido();
@@ -258,12 +275,28 @@ public class UsuarioServlet extends HttpServlet {
                 session.setAttribute("nombre", nom);
                 session.setAttribute("apellido", apell);
                 session.setAttribute("ubiImagen", ubi);
+                session.setAttribute("rol", tipoUsuario);
+                session.setAttribute("username", nickname);
+                response.sendRedirect("/index");
 
+            } else if ("proponente".equals(tipoUsuario)&& esMovil) {
+                request.setAttribute("mensajeError", "No puedes iniciar sesion en un proponente");
+                request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesionMovil.jsp").forward(request, response);
             }
 
         } else {
-            request.setAttribute("mensajeError", "Usuario o contraseña incorrectos!");
-            request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesion.jsp").forward(request, response);
+
+            if (esMovil) {
+                request.setAttribute("mensajeError", "Usuario o contraseña incorrectos!");
+
+                request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesionMovil.jsp").forward(request, response);
+
+            } else {
+                request.setAttribute("mensajeError", "Usuario o contraseña incorrectos!");
+                request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesion.jsp").forward(request, response);
+
+            }
+
         }
 
     }
