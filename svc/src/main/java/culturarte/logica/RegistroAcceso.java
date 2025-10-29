@@ -21,8 +21,7 @@ public class RegistroAcceso {
 
     public RegistroAcceso() {}
     
-    public RegistroAcceso(Long id, String ip, String url, String browser, String os) {
-        this.id = id;
+    public RegistroAcceso(String ip, String url, String browser, String os) {
         this.ip = ip;
         this.url = url;
         this.browser = browser;
@@ -31,10 +30,6 @@ public class RegistroAcceso {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getIp() {
