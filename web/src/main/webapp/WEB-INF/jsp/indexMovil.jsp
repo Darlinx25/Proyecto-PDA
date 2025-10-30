@@ -13,7 +13,7 @@
 
     </head>
     <body class="bg-light" onload="propPorEstado(document.querySelector('.nav-tabs .nav-link.active'))"> 
-        <jsp:include page="header.jsp"/>
+        <jsp:include page="headerMovil.jsp"/>
         
         <form class="p-3" id="filtros">
             <label for="combo-filtros" id="label-ordenar" class="form-label">Ordenar por:</label>
