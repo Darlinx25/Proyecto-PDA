@@ -786,7 +786,8 @@ public class Controller implements IController {
                 List<Comentario> coment = p.getComentario();
                 List<String> comentarios = new ArrayList<>();
                 for (Comentario c : coment) {
-                    comentarios.add(c.getInformacion());
+                    String Com =  (c.getNombreColaborador()+ ": " + c.getInformacion());
+                    comentarios.add(Com);
                 }
 
                 p.getTiposRetorno().size();//para que hibernate lo agarre antes de close porque es lazy
