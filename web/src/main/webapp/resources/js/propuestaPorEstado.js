@@ -203,6 +203,24 @@ function propPorEstado(btn) {
                     }
                     div.appendChild(divColabs);
                     
+                    //ver comentarios
+                    const divComents = document.createElement("form");
+                    divComents.className = "p-3";
+                    divComents.style.display = "block";
+                    divComents.innerHTML = `
+                        <select class="form-select form-select-sm mb-3">
+                            <option selected >--Comentarios--</option>
+                        </select>`;
+                    for (const i of prop.comentarios) {
+                        const selectComents = divComents.children[0];
+                        const opcion1 = document.createElement("option");
+                        opcion1.textContent = i;
+                        opcion1.disabled = true;
+                        selectComents.appendChild(opcion1);
+                    }
+                    div.appendChild(divComents);
+                    
+                    
                     //para q no queden todos los botones amontonados
                     const contenedorBotones = document.createElement("div");
                     contenedorBotones.style.display = "flex";

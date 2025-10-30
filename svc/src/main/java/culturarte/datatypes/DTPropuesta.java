@@ -29,7 +29,7 @@ public class DTPropuesta {
     private List<TipoRetorno> tiposRetorno;
     private Estado estadoActual;
     private List<String> nicksColabs;
-    //private List<Comentario> comentarios;
+    private List<String> comentarios;
     
     
     public DTPropuesta(){
@@ -40,7 +40,7 @@ public class DTPropuesta {
     public DTPropuesta(String titulo, String descripcion, String imagen, String lugarRealizara, LocalDate fechaRealizara, 
             float precioEntrada, float montoAReunir, float dineroRecaudado, LocalDate fechaPublicacion,
             String tipoPropuesta, String nickProponedor, List<TipoRetorno> tiposRetorno, Estado estadoActual,
-            LocalDate fechaFinanciacion, List<String> nicksColabs /*,List<Comentario> comentarios*/) {
+            LocalDate fechaFinanciacion, List<String> nicksColabs ,List<String> comentarios) {
         
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -57,7 +57,7 @@ public class DTPropuesta {
         this.estadoActual = estadoActual;
         this.plazoFinanciacion = fechaFinanciacion;
         this.nicksColabs = nicksColabs;
-       // this.comentarios = comentarios;
+        this.comentarios = comentarios;
     }
     
     //este para crear la propuesta
@@ -136,10 +136,10 @@ public class DTPropuesta {
         return plazoFinanciacion;
     }
     
-    /*public List<Comentario> getComentarios(){
+    public List<String> getComentarios(){
         return this.comentarios;
     }
-    */
+    
 
     public List<String> getNicksColabs() {
         return nicksColabs;

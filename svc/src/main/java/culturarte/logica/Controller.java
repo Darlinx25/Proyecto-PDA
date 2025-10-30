@@ -782,6 +782,13 @@ public class Controller implements IController {
                 for (Colaboracion c : p.getColaboraciones()) {
                     nicksColabs.add(c.getColaborador().getNickname());
                 }
+                
+                List<Comentario> coment = p.getComentario();
+                List<String> comentarios = new ArrayList<>();
+                for (Comentario c : coment) {
+                    comentarios.add(c.getInformacion());
+                }
+
                 p.getTiposRetorno().size();//para que hibernate lo agarre antes de close porque es lazy
                 float dineroRecaudado = Float.parseFloat(this.obtenerDineroRecaudado(titulo));
                 return new DTPropuesta(
@@ -789,7 +796,7 @@ public class Controller implements IController {
                         p.getPrecioEntrada(), p.getMontoAReunir(), dineroRecaudado, p.getFechaPublicacion(),
                         p.getTipoPropuesta().getNombre(),
                         p.getProponedor().getNickname(),
-                        p.getTiposRetorno(), p.getEstadoActual(), p.getPlazoFinanciacion(), nicksColabs/*,p.getComentario()*/);
+                        p.getTiposRetorno(), p.getEstadoActual(), p.getPlazoFinanciacion(), nicksColabs ,comentarios);
             }
         } catch (Exception e) {
             e.printStackTrace();
