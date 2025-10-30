@@ -1124,6 +1124,7 @@ public class Controller implements IController {
     public ArrayList<Propuesta> obtenerRecomendaciones(String nick){
         Manejador emr = Manejador.getInstance();
         Usuario sesion = emr.find(Usuario.class, nick);
+        Boolean cambiaLista = false;
         List<Usuario> seguidos = sesion.getUsuariosSeguidos();
         ArrayList<Propuesta> retorno = new ArrayList<>();
         for(Usuario seguidosAux : seguidos){
@@ -1154,7 +1155,26 @@ public class Controller implements IController {
                 }
             }
         }
-        return retorno;
+        do {
+            cambiaLista = false;
+            for (int i = 0; i < retorno.size() - 1; i++) {
+                int puntaje1 = retorno.get(i).getPuntaje();
+                int puntaje2 = retorno.get(i + 1).getPuntaje();
+
+
+                if (puntaje1 < puntaje2) {
+                    Propuesta temp = retorno.get(i);
+                    retorno.set(i, retorno.get(i + 1));
+                    retorno.set(i + 1, temp);
+                    cambiaLista = true;
+                }
+            }
+        } while (cambiaLista);
+        ArrayList<Propuesta> retorno2 = new ArrayList<>();
+        for(int i = 0; i <= 9;i++){
+            retorno.add(retorno.get(i));
+        }
+        return retorno2;
     }
 
     // </editor-fold>
