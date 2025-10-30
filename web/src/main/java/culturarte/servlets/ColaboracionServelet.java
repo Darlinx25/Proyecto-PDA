@@ -1,13 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package culturarte.servlets;
 
 import culturarte.excepciones.PropuestaYaColaboradaException;
-import culturarte.datatypes.DTPropuesta;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
+import culturarte.wutils.Tracking;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,12 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
 
-/**
- *
- * @author kevin
- */
 @WebServlet(name = "ColaboracionServelet", urlPatterns = {"/registrar-colaboracion"})
 public class ColaboracionServelet extends HttpServlet {
 
@@ -65,6 +56,7 @@ public class ColaboracionServelet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        this.controller.registrarAcceso(Tracking.generarDTRegistroAcceso(request));
         response.setContentType("text/html;charset=UTF-8");
         String path = request.getServletPath();
 

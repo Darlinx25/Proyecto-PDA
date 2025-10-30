@@ -10,6 +10,7 @@ import culturarte.datatypes.DTColaborador;
 import culturarte.datatypes.DTProponente;
 import culturarte.datatypes.DTDireccion;
 import culturarte.datatypes.DTColaboracion;
+import culturarte.datatypes.DTRegistroAcceso;
 import culturarte.excepciones.BadPasswordException;
 import culturarte.excepciones.CategoriaDuplicadaException;
 import culturarte.excepciones.EmailRepetidoException;
@@ -1229,6 +1230,18 @@ public class Controller implements IController {
         }
 
         return propuestas;
+    }
+    
+    @Override
+    public void registrarAcceso(DTRegistroAcceso dataRegistro) {
+        Manejador emr = Manejador.getInstance();
+        
+        RegistroAcceso registro = new RegistroAcceso(dataRegistro.getIp(),
+                dataRegistro.getUrl(), dataRegistro.getBrowser(), dataRegistro.getOs());
+        
+        emr.add(registro);
+        emr.close();
+        
     }
     // </editor-fold>
 

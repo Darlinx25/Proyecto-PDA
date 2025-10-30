@@ -7,7 +7,6 @@ package culturarte.servlets;
 import culturarte.excepciones.BadPasswordException;
 import culturarte.excepciones.EmailRepetidoException;
 import culturarte.excepciones.NickRepetidoException;
-import culturarte.datatypes.DTColaboracion;
 import culturarte.datatypes.DTColaborador;
 import culturarte.datatypes.DTDireccion;
 import culturarte.datatypes.DTProponente;
@@ -19,6 +18,7 @@ import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
 import culturarte.logica.ResultadoSeguirUsuario;
 import static culturarte.wutils.SesionUtils.esVisitante;
+import culturarte.wutils.Tracking;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -29,7 +29,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.InputStream;
-import static java.lang.System.console;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -56,6 +55,7 @@ public class UsuarioServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        this.controller.registrarAcceso(Tracking.generarDTRegistroAcceso(request));
         response.setContentType("text/html;charset=UTF-8");
         String path = request.getServletPath();
 

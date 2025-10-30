@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package culturarte.logica;
 
 import culturarte.datatypes.DTUsuario;
@@ -9,6 +5,7 @@ import culturarte.datatypes.DTPropuesta;
 import culturarte.datatypes.DTColaborador;
 import culturarte.datatypes.DTProponente;
 import culturarte.datatypes.DTColaboracion;
+import culturarte.datatypes.DTRegistroAcceso;
 import culturarte.excepciones.BadPasswordException;
 import culturarte.excepciones.CategoriaDuplicadaException;
 import culturarte.excepciones.EmailRepetidoException;
@@ -19,10 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-/**
- *
- * @author mark
- */
 public interface IController {
     public void cargarDatosPrueba() throws NickRepetidoException, EmailRepetidoException, PropuestaDuplicadaException, CategoriaDuplicadaException, BadPasswordException;
     
@@ -89,6 +82,7 @@ public interface IController {
     public ArrayList<String> obtenerCategorias();
     public String guardarImagen(byte[] bytesImagen);//devuelve el nombre de la imagen luego de guardarla
     public ArrayList<DTPropuesta> buscarPropuestasTDL(String patron);
+    public void registrarAcceso(DTRegistroAcceso dataRegistro);
     // </editor-fold>
     
 }

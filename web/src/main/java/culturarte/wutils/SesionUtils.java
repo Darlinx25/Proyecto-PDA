@@ -1,15 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package culturarte.wutils;
 
 import jakarta.servlet.http.HttpSession;
 
-/**
- *
- * @author mark
- */
 public final class SesionUtils {
     private SesionUtils() {
         throw new UnsupportedOperationException("No se puede instanciar esta clase.");
