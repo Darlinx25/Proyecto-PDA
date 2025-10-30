@@ -83,6 +83,7 @@ public interface IController {
     public String guardarImagen(byte[] bytesImagen);//devuelve el nombre de la imagen luego de guardarla
     public ArrayList<DTPropuesta> buscarPropuestasTDL(String patron);
     public void registrarAcceso(DTRegistroAcceso dataRegistro);
+    public List<DTRegistroAcceso> listDTRegistroAcceso();
     // </editor-fold>
     
 }

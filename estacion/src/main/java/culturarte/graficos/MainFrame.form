@@ -145,6 +145,14 @@
             <Property name="text" type="java.lang.String" value="Sistema"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="itemVerRegistroAccesos">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Ver registro de accesos"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemVerRegistroAccesosActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="itemCargarDatos">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Cargar datos prueba"/>

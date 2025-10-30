@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package culturarte.logica;
 
 import culturarte.datatypes.DTUsuario;
@@ -42,10 +38,6 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.swing.tree.DefaultMutableTreeNode;
 import org.hibernate.annotations.Generated;
 
-/**
- *
- * @author mark
- */
 //SINGLETON
 public class Controller implements IController {
 
@@ -1242,6 +1234,22 @@ public class Controller implements IController {
         emr.add(registro);
         emr.close();
         
+    }
+    
+    @Override
+    public List<DTRegistroAcceso> listDTRegistroAcceso() {
+        Manejador emr = Manejador.getInstance();
+        List<RegistroAcceso> registros = emr.obtenerRegistrosAcceso();
+        emr.close();
+
+        List<DTRegistroAcceso> listaDTRegistros = new ArrayList();
+
+        for (RegistroAcceso r : registros) {
+            listaDTRegistros.add(new DTRegistroAcceso(r.getId(),
+                    r.getIp(), r.getUrl(), r.getBrowser(), r.getOs()));
+        }
+
+        return listaDTRegistros;
     }
     // </editor-fold>
 

@@ -33,6 +33,7 @@ public class MainFrame extends javax.swing.JFrame {
     private ConsultarColaboracion consultarColaboracion;
     private CancelarColaboracion cancelarColaboracion;
     private EvaluarPropuesta evaluarPropuesta;
+    private VerRegistroAcceso verRegistroAcceso;
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
     private IController controller;
@@ -75,6 +76,7 @@ public class MainFrame extends javax.swing.JFrame {
         itemConsultarColaboracion = new javax.swing.JMenuItem();
         itemConsultPropsPorEstado = new javax.swing.JMenuItem();
         menuSistema = new javax.swing.JMenu();
+        itemVerRegistroAccesos = new javax.swing.JMenuItem();
         itemCargarDatos = new javax.swing.JMenuItem();
 
         jCheckBoxMenuItem1.setSelected(true);
@@ -212,6 +214,14 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuBar1.add(menuPropuestas);
 
         menuSistema.setText("Sistema");
+
+        itemVerRegistroAccesos.setText("Ver registro de accesos");
+        itemVerRegistroAccesos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemVerRegistroAccesosActionPerformed(evt);
+            }
+        });
+        menuSistema.add(itemVerRegistroAccesos);
 
         itemCargarDatos.setText("Cargar datos prueba");
         itemCargarDatos.addActionListener(new java.awt.event.ActionListener() {
@@ -380,6 +390,15 @@ public class MainFrame extends javax.swing.JFrame {
         this.evaluarPropuesta.setVisible(true);
     }//GEN-LAST:event_itemEvaluarPropuestaActionPerformed
 
+    private void itemVerRegistroAccesosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemVerRegistroAccesosActionPerformed
+        if (this.verRegistroAcceso != null && this.verRegistroAcceso.isVisible()) {
+            return;
+        }
+        this.verRegistroAcceso = new VerRegistroAcceso();
+        add(this.verRegistroAcceso);
+        this.verRegistroAcceso.setVisible(true);
+    }//GEN-LAST:event_itemVerRegistroAccesosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -421,6 +440,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemModPropuesta;
     private javax.swing.JMenuItem itemRegistrarColaboracion;
     private javax.swing.JMenuItem itemSeguirUsuario;
+    private javax.swing.JMenuItem itemVerRegistroAccesos;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu menuPropuestas;
