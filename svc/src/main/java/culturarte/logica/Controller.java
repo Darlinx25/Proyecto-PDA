@@ -1120,6 +1120,42 @@ public class Controller implements IController {
             this.calcularPuntajePropuesta(propAct);
         }
     }
+    @Override
+    public ArrayList<Propuesta> obtenerRecomendaciones(String nick){
+        Manejador emr = Manejador.getInstance();
+        Usuario sesion = emr.find(Usuario.class, nick);
+        List<Usuario> seguidos = sesion.getUsuariosSeguidos();
+        ArrayList<Propuesta> retorno = new ArrayList<>();
+        for(Usuario seguidosAux : seguidos){
+            if(seguidosAux instanceof Colaborador){
+                Colaborador colab = (Colaborador) seguidosAux;
+                List<Colaboracion> colaboracionSeguido = colab.getColaboraciones();
+                for(Colaboracion colabAux :colaboracionSeguido){
+                     retorno.add(colabAux.getPropuestaColaborada());
+                }
+            }
+            
+        }
+        Colaborador sesionColab = (Colaborador) sesion;
+        List<Colaboracion> colaboraciones = sesionColab.getColaboraciones();
+        for(Colaboracion colabAux : colaboraciones){
+            Propuesta propColaborada = colabAux.getPropuestaColaborada();
+            List<Colaboracion> colaboracionesProp = propColaborada.getColaboraciones();
+            for(Colaboracion colabAux2 : colaboracionesProp){
+                if(sesionColab.getNickname() != colabAux2.getColaborador().getNickname()){
+                    Colaborador usuarioAux = colabAux2.getColaborador();
+                    //van a tener que perdonarme los nombres esta linea de busqueda me esta jodiendo el cerebro como para pensar en nombres
+                    List<Colaboracion> agregar = usuarioAux.getColaboraciones();
+                    for(Colaboracion colabAux3 : agregar){
+                        if(!retorno.contains(colabAux3.getPropuestaColaborada())){
+                            retorno.add(colabAux3.getPropuestaColaborada());
+                        }
+                    }
+                }
+            }
+        }
+        return retorno;
+    }
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Funciones colaboraciones.">
