@@ -204,20 +204,24 @@ function propPorEstado(btn) {
                     div.appendChild(divColabs);
                     
                     //ver comentarios
-                    const divComents = document.createElement("form");
-                    divComents.className = "p-3";
-                    divComents.style.display = "block";
-                    divComents.innerHTML = `
-                        <select class="form-select form-select-sm mb-3">
-                            <option selected >--Comentarios--</option>
-                        </select>`;
-                    for (const i of prop.comentarios) {
-                        const selectComents = divComents.children[0];
-                        const opcion1 = document.createElement("option");
-                        opcion1.textContent = i;
-                        opcion1.disabled = true;
-                        selectComents.appendChild(opcion1);
+                    const divComents = document.createElement("div");
+                    divComents.className = "p-2 border rounded bg-white mb-2";
+                    divComents.innerHTML = "<strong>Comentarios:</strong><br>";
+
+                    if (prop.comentarios.length > 0) {
+                        for (const i of prop.comentarios) {
+                            const p = document.createElement("p");
+                            p.className = "mb-1 small";
+                            p.textContent = `• ${i}`;
+                            divComents.appendChild(p);
+                        }
+                    } else {
+                        const p = document.createElement("p");
+                        p.className = "mb-1 text-muted small";
+                        p.textContent = "(Sin comentarios)";
+                        divComents.appendChild(p);
                     }
+
                     div.appendChild(divComents);
                     
                     
