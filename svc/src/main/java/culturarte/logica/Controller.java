@@ -1061,6 +1061,113 @@ public class Controller implements IController {
         }
         emr.close();
     }
+    @Override
+    public void calcularPuntajePropuesta(String titulo){
+        Manejador emr = Manejador.getInstance();
+        Propuesta propuestaPuntar = emr.find(Propuesta.class, titulo);
+        int puntaje = 0;
+        int calcular;
+        
+        calcular = (int) (Float.parseFloat(this.obtenerDineroRecaudado(titulo)));
+        //Sumar en base al % de financiacion
+        if(calcular<=(propuestaPuntar.getMontoAReunir()/4)){
+            puntaje = 1;
+        }else{
+            if(calcular<=(propuestaPuntar.getMontoAReunir()/2)&&calcular>(propuestaPuntar.getMontoAReunir()/4)){
+            puntaje = 2;
+            }
+            else{
+                if(calcular<=(propuestaPuntar.getMontoAReunir()*0.75)&&calcular>(propuestaPuntar.getMontoAReunir()/2)){
+                    puntaje = 3;
+                }else{
+                    puntaje = 4;
+                }
+            }
+        }
+        //Sumar puntaje en base a colaboradores que tiene
+        List<Colaboracion> colProp = propuestaPuntar.getColaboraciones();
+        for(Colaboracion aux : colProp){
+            puntaje++;
+        }
+        
+        //Sumar puntaje en base a usuarios que la tienen en favoritos
+        List<String> usuarioPropFav = this.listarUsuarios();
+        for(String nickActual : usuarioPropFav){
+            Usuario usuActual = emr.find(Usuario.class, nickActual);
+            for(Propuesta propAux : usuActual.getPropuestasFavoritas()){
+                if(propAux.getTitulo() == null ? propuestaPuntar.getTitulo() == null : propAux.getTitulo().equals(propuestaPuntar.getTitulo())){
+                    puntaje++;
+                }
+            }
+        }
+        propuestaPuntar.setPuntaje(puntaje);
+        emr.mod(propuestaPuntar);
+        emr.close();
+    }
+    
+    @Override
+    public void actualizarPuntajes(){
+        List<String> prop = this.listarPropuestas();
+        for(String propAct : prop){
+            this.calcularPuntajePropuesta(propAct);
+        }
+    }
+    @Override
+    public ArrayList<Propuesta> obtenerRecomendaciones(String nick){
+        Manejador emr = Manejador.getInstance();
+        Usuario sesion = emr.find(Usuario.class, nick);
+        Boolean cambiaLista = false;
+        List<Usuario> seguidos = sesion.getUsuariosSeguidos();
+        ArrayList<Propuesta> retorno = new ArrayList<>();
+        for(Usuario seguidosAux : seguidos){
+            if(seguidosAux instanceof Colaborador){
+                Colaborador colab = (Colaborador) seguidosAux;
+                List<Colaboracion> colaboracionSeguido = colab.getColaboraciones();
+                for(Colaboracion colabAux :colaboracionSeguido){
+                     retorno.add(colabAux.getPropuestaColaborada());
+                }
+            }
+            
+        }
+        Colaborador sesionColab = (Colaborador) sesion;
+        List<Colaboracion> colaboraciones = sesionColab.getColaboraciones();
+        for(Colaboracion colabAux : colaboraciones){
+            Propuesta propColaborada = colabAux.getPropuestaColaborada();
+            List<Colaboracion> colaboracionesProp = propColaborada.getColaboraciones();
+            for(Colaboracion colabAux2 : colaboracionesProp){
+                if(sesionColab.getNickname() != colabAux2.getColaborador().getNickname()){
+                    Colaborador usuarioAux = colabAux2.getColaborador();
+                    //van a tener que perdonarme los nombres esta linea de busqueda me esta jodiendo el cerebro como para pensar en nombres
+                    List<Colaboracion> agregar = usuarioAux.getColaboraciones();
+                    for(Colaboracion colabAux3 : agregar){
+                        if(!retorno.contains(colabAux3.getPropuestaColaborada())){
+                            retorno.add(colabAux3.getPropuestaColaborada());
+                        }
+                    }
+                }
+            }
+        }
+        do {
+            cambiaLista = false;
+            for (int i = 0; i < retorno.size() - 1; i++) {
+                int puntaje1 = retorno.get(i).getPuntaje();
+                int puntaje2 = retorno.get(i + 1).getPuntaje();
+
+
+                if (puntaje1 < puntaje2) {
+                    Propuesta temp = retorno.get(i);
+                    retorno.set(i, retorno.get(i + 1));
+                    retorno.set(i + 1, temp);
+                    cambiaLista = true;
+                }
+            }
+        } while (cambiaLista);
+        ArrayList<Propuesta> retorno2 = new ArrayList<>();
+        for(int i = 0; i <= 9;i++){
+            retorno.add(retorno.get(i));
+        }
+        return retorno2;
+    }
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Funciones colaboraciones.">

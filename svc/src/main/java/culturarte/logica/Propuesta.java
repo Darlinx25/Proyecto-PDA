@@ -30,6 +30,7 @@ public class Propuesta {
     private float montoAReunir;
     private LocalDate fechaPublicacion;
     private LocalDate fechaFinanciacion;
+    private int puntaje;
     
     @OneToMany(mappedBy = "propuestaComentada", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comentario> comentarios;
@@ -78,6 +79,7 @@ public class Propuesta {
         this.colaboraciones = new ArrayList<>();
         this.fechaFinanciacion = null; //se cambia cuando el estado pasa a publicada y se consigue fecha de publicacion
         this.comentarios = new ArrayList<>(); 
+        this.puntaje = 0;
     }
 
     
@@ -215,5 +217,10 @@ public class Propuesta {
     public List<Comentario> getComentario(){
         return comentarios;
     }
-    
+    public void setPuntaje(int puntaje){
+        this.puntaje = puntaje;
+    }
+    public int getPuntaje(){
+        return this.puntaje;
+    }
 }

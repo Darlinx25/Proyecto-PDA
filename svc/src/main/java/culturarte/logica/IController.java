@@ -65,6 +65,9 @@ public interface IController {
     public Boolean propuestaYaFavorita(String titulo,String nick);
     public void actualizarEstado();
     public ArrayList<String> listarPropuestasFavoritas(String nick);
+    public void calcularPuntajePropuesta(String titulo);
+    public void actualizarPuntajes();
+    public ArrayList<Propuesta> obtenerRecomendaciones(String nick);
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Funciones colaboraciones.">
