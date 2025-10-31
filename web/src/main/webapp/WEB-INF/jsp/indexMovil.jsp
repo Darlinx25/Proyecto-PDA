@@ -70,7 +70,7 @@
 
 
         <div class="d-flex justify-content-between gap-3">
-            <div class="ms-5 mt-5">
+            <div class="ms-5 mt-5" style="display: none;">
                 <h3>Categorias:</h3>
                 <div class="form-check">
                     <input type="radio" class="form-check-input" id="radio1" name="optradio" value="Todas" checked>
@@ -83,24 +83,25 @@
                 </div>
                 <% }%>
             </div>
-            <div class="container" >
+            <div class="container" style="display: none;" >
                 <ul class="nav nav-tabs">
-                    <li><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#PCreadas" data-estado="1" onclick="propPorEstado(this)">Propuestas Creadas</button></li>
+                    <li><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#PCreadas" data-estado="1" onclick="propPorEstado(this),">Propuestas Creadas</button></li>
                     <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PFinanciacion" data-estado="2" onclick="propPorEstado(this)">Propuestas en Financiación</button></li>
                     <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PFinanciadas" data-estado="3" onclick="propPorEstado(this)">Propuestas Financiadas</button></li>
                     <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PNOFinanciadas" data-estado="4" onclick="propPorEstado(this)">Propuestas NO Financiadas</button></li>
                     <li><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PCanceladas" data-estado="5" onclick="propPorEstado(this)">Propuestas Canceladas</button></li>
                 </ul>
-                <div class="tab-content">
+               
+            </div>
+            <div class="tab-content">
                     <div class="tab-pane fade show active" id="PCreadas"></div>
                     <div class="tab-pane fade" id="PFinanciacion"></div>
                     <div class="tab-pane fade" id="PFinanciadas"></div>
                     <div class="tab-pane fade" id="PNOFinanciadas"></div>
                     <div class="tab-pane fade" id="PCanceladas"></div>
                 </div>
-            </div> 
         </div>    
-        <script src="${pageContext.request.contextPath}/resources/js/propuestaPorEstado.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/listarPropuestasMovil.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/filtrarPropuestas.js"></script>
         
     </body>

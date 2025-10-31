@@ -273,7 +273,7 @@ public class UsuarioServlet extends HttpServlet {
                     cookieUser.setMaxAge(7 * 24 * 60 * 60); // 7 días
                     cookieUser.setPath("/");
                     Cookie cookiePass = new Cookie("passwordRecordado", password);
-                    cookiePass.setMaxAge(7 * 24 * 60 * 60); // 7 días
+                    cookiePass.setMaxAge(7 * 24 * 60 * 60); 
                     cookiePass.setPath("/");
                     response.addCookie(cookieUser);
                     response.addCookie(cookiePass);
