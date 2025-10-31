@@ -39,6 +39,7 @@ public class IndexServlet extends HttpServlet {
         String rol = (String) session.getAttribute("rol");
         ArrayList<String> cat = this.controller.obtenerCategorias();
         this.controller.actualizarEstado();
+        this.controller.actualizarPuntajes();
         request.setAttribute("categorias",cat);
         response.setContentType("text/html;charset=UTF-8");
         boolean esMovil = userAgent.contains("mobi") || userAgent.contains("android") 

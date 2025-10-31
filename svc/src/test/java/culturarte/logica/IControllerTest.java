@@ -5,6 +5,7 @@ import culturarte.datatypes.DTColaborador;
 import culturarte.datatypes.DTDireccion;
 import culturarte.datatypes.DTProponente;
 import culturarte.datatypes.DTPropuesta;
+import culturarte.datatypes.DTRegistroAcceso;
 import culturarte.datatypes.DTUsuario;
 import culturarte.excepciones.BadPasswordException;
 import culturarte.excepciones.CategoriaDuplicadaException;
@@ -530,8 +531,18 @@ public class IControllerTest {
     }
 
     @Test
-    public void testActualizarEstado() throws Exception {
+    public void testActualizarEstado() {
         controller.actualizarEstado();
+    }
+    
+    @Test
+    public void testRegistrarAcceso() {
+        DTRegistroAcceso dataRegistro = new DTRegistroAcceso("1.1.1.1", "prueba", "Firefox", "Mac");
+        controller.registrarAcceso(dataRegistro);
+        List<DTRegistroAcceso> accesos = controller.listDTRegistroAcceso();
+        assertEquals(1, accesos.size());
+        assertEquals("1.1.1.1", accesos.get(0).getIp());
+        assertEquals("Mac", accesos.get(0).getOs());
     }
 
 }

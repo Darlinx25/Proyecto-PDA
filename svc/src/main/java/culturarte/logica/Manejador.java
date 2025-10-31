@@ -138,6 +138,15 @@ public class Manejador {
                 .setParameter("nickname", nickname).getResultList();
     }
 
+    public List<RegistroAcceso> obtenerRegistrosAcceso() {
+        List<RegistroAcceso> resultado = em.createQuery(
+                "SELECT r FROM RegistroAcceso r ORDER BY r.id DESC", RegistroAcceso.class)
+                .setMaxResults(10000)
+                .getResultList();
+        
+        Collections.reverse(resultado);
+        return resultado;
+    }
     
 
     

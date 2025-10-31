@@ -203,6 +203,28 @@ function propPorEstado(btn) {
                     }
                     div.appendChild(divColabs);
                     
+                    //ver comentarios
+                    const divComents = document.createElement("div");
+                    divComents.className = "p-2 border rounded bg-white mb-2";
+                    divComents.innerHTML = "<strong>Comentarios:</strong><br>";
+
+                    if (prop.comentarios.length > 0) {
+                        for (const i of prop.comentarios) {
+                            const p = document.createElement("p");
+                            p.className = "mb-1 small";
+                            p.textContent = `• ${i}`;
+                            divComents.appendChild(p);
+                        }
+                    } else {
+                        const p = document.createElement("p");
+                        p.className = "mb-1 text-muted small";
+                        p.textContent = "(Sin comentarios)";
+                        divComents.appendChild(p);
+                    }
+
+                    div.appendChild(divComents);
+                    
+                    
                     //para q no queden todos los botones amontonados
                     const contenedorBotones = document.createElement("div");
                     contenedorBotones.style.display = "flex";
