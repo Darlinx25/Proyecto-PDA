@@ -23,6 +23,7 @@ import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -248,6 +249,7 @@ public class UsuarioServlet extends HttpServlet {
             throws ServletException, IOException {
         String nickname = request.getParameter("nickname");
         String password = request.getParameter("password");
+        String recordarme = request.getParameter("recordarme");
         String tipoUsuario = this.controller.obtenerTipoUser(nickname);
         boolean autValida = this.controller.autenticarUsuario(nickname, password.toCharArray());
         String userAgent = request.getHeader("User-Agent").toLowerCase();
@@ -266,6 +268,25 @@ public class UsuarioServlet extends HttpServlet {
                 session.setAttribute("ubiImagen", ubi);
                 session.setAttribute("rol", tipoUsuario);
                 session.setAttribute("username", nickname);
+                if (recordarme != null) {
+                    Cookie cookieUser = new Cookie("usuarioRecordado", nickname);
+                    cookieUser.setMaxAge(7 * 24 * 60 * 60); // 7 días
+                    cookieUser.setPath("/");
+                    Cookie cookiePass = new Cookie("passwordRecordado", password);
+                    cookiePass.setMaxAge(7 * 24 * 60 * 60); // 7 días
+                    cookiePass.setPath("/");
+                    response.addCookie(cookieUser);
+                    response.addCookie(cookiePass);
+                } else {
+                    Cookie cookieUser = new Cookie("usuarioRecordado", "");
+                    cookieUser.setMaxAge(0);
+                    cookieUser.setPath("/");
+                    Cookie cookiePass = new Cookie("passwordRecordado", "");
+                    cookiePass.setMaxAge(0);
+                    cookiePass.setPath("/");
+                    response.addCookie(cookieUser);
+                    response.addCookie(cookiePass);
+                }
                 response.sendRedirect("/index");
             } else if (tipoUsuario.equals("proponente") && !esMovil) {
                 DTProponente prop = this.controller.obtenerDTProponente(nickname);
@@ -277,9 +298,28 @@ public class UsuarioServlet extends HttpServlet {
                 session.setAttribute("ubiImagen", ubi);
                 session.setAttribute("rol", tipoUsuario);
                 session.setAttribute("username", nickname);
+                if (recordarme != null) {
+                    Cookie cookieUser = new Cookie("usuarioRecordado", nickname);
+                    cookieUser.setMaxAge(7 * 24 * 60 * 60);
+                    cookieUser.setPath("/");
+                    Cookie cookiePass = new Cookie("passwordRecordado", password);
+                    cookiePass.setMaxAge(7 * 24 * 60 * 60);
+                    cookiePass.setPath("/");
+                    response.addCookie(cookieUser);
+                    response.addCookie(cookiePass);
+                } else {
+                    Cookie cookieUser = new Cookie("usuarioRecordado", "");
+                    cookieUser.setMaxAge(0);
+                    cookieUser.setPath("/");
+                    Cookie cookiePass = new Cookie("passwordRecordado", "");
+                    cookiePass.setMaxAge(0);
+                    cookiePass.setPath("/");
+                    response.addCookie(cookieUser);
+                    response.addCookie(cookiePass);
+                }
                 response.sendRedirect("/index");
 
-            } else if ("proponente".equals(tipoUsuario)&& esMovil) {
+            } else if ("proponente".equals(tipoUsuario) && esMovil) {
                 request.setAttribute("mensajeError", "No puedes iniciar sesion en un proponente");
                 request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesionMovil.jsp").forward(request, response);
             }

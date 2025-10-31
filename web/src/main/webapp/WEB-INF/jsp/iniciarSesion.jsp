@@ -1,4 +1,19 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    String usuarioRecordado = "";
+    String passwordRecordado = "";
+
+    Cookie[] cookies = request.getCookies();
+    if (cookies != null) {
+        for (Cookie c : cookies) {
+            if ("usuarioRecordado".equals(c.getName())) {
+                usuarioRecordado = c.getValue();
+            } else if ("passwordRecordado".equals(c.getName())) {
+                passwordRecordado = c.getValue();
+            }
+        }
+    }
+%>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -22,12 +37,17 @@
             
             <div class="mb-3">
                 <label for="nombre" class="form-label">Usuario/email</label>
-                <input type="text" id="nombre" name="nickname" class="form-control" required>
+                <input type="text" id="nombre" name="nickname" class="form-control" value="<%= usuarioRecordado %>" required>
             </div>
 
             <div class="mb-3">
                 <label for="password" class="form-label">Contraseña</label>
-                <input type="password" id="password" name="password" class="form-control" minlength="8" maxlength="24" required>
+                <input type="password" id="password" name="password" class="form-control" minlength="8" maxlength="24" value="<%= passwordRecordado %>" required>
+            </div>
+            
+            <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="recordarme" name="recordarme">
+            <label class="form-check-label" for="recordarme">Recordarme</label>
             </div>
 
             <button type="submit" class="btn btn-success w-100 mb-3">Iniciar Sesión</button>
