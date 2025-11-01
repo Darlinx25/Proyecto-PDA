@@ -49,6 +49,7 @@ public class Propuesta {
     @Embedded
     private Estado estadoActual;
     
+    private boolean deBaja;
     
     
     @ElementCollection
@@ -80,6 +81,7 @@ public class Propuesta {
         this.fechaFinanciacion = null; //se cambia cuando el estado pasa a publicada y se consigue fecha de publicacion
         this.comentarios = new ArrayList<>(); 
         this.puntaje = 0;
+        this.deBaja = false;
     }
 
     
@@ -223,4 +225,13 @@ public class Propuesta {
     public int getPuntaje(){
         return this.puntaje;
     }
+    
+    public boolean setBaja(boolean deBaja) {
+        return this.deBaja = deBaja;
+    }
+
+    public boolean getBaja() {
+        return this.deBaja;
+    }
+    
 }

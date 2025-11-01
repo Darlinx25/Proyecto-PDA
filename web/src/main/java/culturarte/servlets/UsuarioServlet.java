@@ -42,7 +42,7 @@ import java.util.List;
  *
  * @author mark
  */
-@WebServlet(name = "UsuarioServlet", urlPatterns = {"/usuarios", "/crear-cuenta", "/perfil", "/login", "/logout", "/seguir-usuario", "/consultar-perfil-usuario", "/ranking-usuario"})
+@WebServlet(name = "UsuarioServlet", urlPatterns = {"/usuarios", "/crear-cuenta", "/perfil", "/login", "/logout", "/seguir-usuario", "/consultar-perfil-usuario", "/ranking-usuario", "/baja-proponente"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, //1MB+ se escriben al disco
         maxFileSize = 1024 * 1024 * 5, //5MB máximo por archivo
@@ -159,7 +159,15 @@ public class UsuarioServlet extends HttpServlet {
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Usuario no recibido");
                 }
                 break;
-
+            case "/baja-proponente":
+                HttpSession session = request.getSession(false);
+                String user = (String) session.getAttribute("username");
+                this.controller.bajaProponente(user);
+                if (!esVisitante(request.getSession())) {
+                    cerrarSesion(request, response);
+                }
+                response.sendRedirect("/index");
+                break;
             default:
                 response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         }

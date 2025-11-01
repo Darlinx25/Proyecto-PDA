@@ -19,6 +19,8 @@ public class Colaboracion {
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Long id;
     
+    private boolean deBaja;
+    
     public Colaboracion(){
         
     }
@@ -30,6 +32,7 @@ public class Colaboracion {
         this.propuestaColaborada = propuestaColaborada;
         
         this.fechaHora = LocalDateTime.now();
+        this.deBaja = false;
     }
     
     
@@ -88,6 +91,14 @@ public class Colaboracion {
 
     public void setPropuestaColaborada(Propuesta propuestaColaborada) {
         this.propuestaColaborada = propuestaColaborada;
+    }
+    
+    public boolean setBaja(boolean deBaja){
+        return this.deBaja = deBaja;
+    }
+    
+    public boolean getBaja(){
+        return this.deBaja;
     }
     
     

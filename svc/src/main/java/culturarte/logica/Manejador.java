@@ -100,9 +100,15 @@ public class Manejador {
     }
 
     public <T> List<T> listarAtributo(Class<T> tipoResultado, String atributo, String entidad) {
+        
         try {
-            String jpql = "SELECT e." + atributo + " FROM " + entidad + " e";
-            return em.createQuery(jpql, tipoResultado).getResultList();
+            if(entidad.equals("Propuesta")){
+                String jpql = "SELECT e." + atributo + " FROM " + entidad + " e" + " WHERE e.deBaja = false";
+                return em.createQuery(jpql, tipoResultado).getResultList();
+            }else{
+                String jpql = "SELECT e." + atributo + " FROM " + entidad + " e";
+                return em.createQuery(jpql, tipoResultado).getResultList();
+            }
         } catch (Exception e) {
             return Collections.emptyList();
         }
@@ -111,7 +117,7 @@ public class Manejador {
     public ArrayList<String> obtenerPropuestasEstado(int estado) {
         List<String> aux;
         EstadoPropuesta est = EstadoPropuesta.values()[estado];
-        String query = "SELECT p.titulo FROM Propuesta p WHERE p.estadoActual.estado = :est";
+        String query = "SELECT p.titulo FROM Propuesta p WHERE p.estadoActual.estado = :est AND p.deBaja = false";
         try {
             aux = em.createQuery(query, String.class).setParameter("est", est).getResultList();
         } catch (Exception e) {
@@ -123,7 +129,7 @@ public class Manejador {
         public ArrayList<String> obtenerPropuestasEstadoUsu(int estado, String nick) {
         List<String> aux;
         EstadoPropuesta est = EstadoPropuesta.values()[estado];
-        String query = "SELECT p.titulo FROM Propuesta p WHERE p.estadoActual.estado = :est AND p.proponente.nickname = :nick";
+        String query = "SELECT p.titulo FROM Propuesta p WHERE p.estadoActual.estado = :est AND p.proponente.nickname = :nick AND p.deBaja = false";
         try {
             aux = em.createQuery(query, String.class).setParameter("est", est).setParameter("nick", nick).getResultList();
         } catch (Exception e) {
@@ -176,7 +182,7 @@ public class Manejador {
     public ArrayList<String> listaPropuestasUsuario(String nick) {
         List<String> aux;
 
-        String query = "SELECT p.titulo FROM Propuesta p WHERE p.proponente.nickname = :nick";
+        String query = "SELECT p.titulo FROM Propuesta p WHERE p.proponente.nickname = :nick AND p.deBaja = false";
         try {
             aux = em.createQuery(query, String.class).setParameter("nick", nick).getResultList();
         } catch (Exception e) {
@@ -191,7 +197,7 @@ public class Manejador {
         List<String> aux2 = new ArrayList<>();
 
         String query = "SELECT p.titulo, p.proponente.nickname FROM Propuesta p"
-                + " WHERE p.estadoActual.estado = :estado1 OR p.estadoActual.estado = :estado2";
+                + " WHERE p.estadoActual.estado = :estado1 OR p.estadoActual.estado = :estado2 AND p.deBaja = false";
         try {
             aux = em.createQuery(query, Object[].class)
                     .setParameter("estado1", EstadoPropuesta.PUBLICADA)
@@ -211,7 +217,7 @@ public class Manejador {
         List<String> aux2 = new ArrayList<>();
 
         String query = "SELECT p.titulo, p.proponente.nickname FROM Propuesta p"
-                + " WHERE p.estadoActual.estado = :estado1";
+                + " WHERE p.estadoActual.estado = :estado1 AND p.deBaja = false";
         try {
             aux = em.createQuery(query, Object[].class)
                     .setParameter("estado1", EstadoPropuesta.INGRESADA)
@@ -228,7 +234,7 @@ public class Manejador {
     public ArrayList<String> propuestaColaboradaPorUser(String nickColab, String tituloProp) {
         List<String> aux = new ArrayList<>();
         String query = "SELECT c.propuestaColaborada.titulo FROM Colaboracion c WHERE c.colaborador.nickname = :nickColab"
-                + " AND c.propuestaColaborada.titulo = :tituloProp";
+                + " AND c.propuestaColaborada.titulo = :tituloProp AND c.deBaja = false";
 
         try {
             aux = em.createQuery(query, String.class)
@@ -245,7 +251,7 @@ public class Manejador {
     public ArrayList<Float> obtenerDinero(String tituloProp) {
         List<Float> aux;
         Float resultado = 0f;
-        String query = "SELECT c.monto FROM Colaboracion c WHERE c.propuestaColaborada.titulo = :tituloProp";
+        String query = "SELECT c.monto FROM Colaboracion c WHERE c.propuestaColaborada.titulo = :tituloProp AND c.deBaja = false";
         try {
             aux = em.createQuery(query, Float.class).setParameter("tituloProp", tituloProp).getResultList();
         } catch (Exception e) {
@@ -272,7 +278,7 @@ public class Manejador {
         List<String> aux;
 
         String query = "SELECT c.propuestaColaborada.titulo FROM Colaboracion c"
-                + " WHERE c.colaborador.nickname = :nick";
+                + " WHERE c.colaborador.nickname = :nick AND c.deBaja = false";
         try {
             aux = em.createQuery(query, String.class)
                     .setParameter("nick", nick)
@@ -289,7 +295,7 @@ public class Manejador {
         List<String> aux2 = new ArrayList<>();
 
         String query = "SELECT c.propuestaColaborada.titulo, c.id FROM Colaboracion c"
-                + " WHERE c.colaborador.nickname = :nick";
+                + " WHERE c.colaborador.nickname = :nick AND c.deBaja = false";
         try {
             aux = em.createQuery(query, Object[].class)
                     .setParameter("nick", nickColab)
@@ -302,12 +308,13 @@ public class Manejador {
         }
         return (ArrayList<String>) aux2;
     }
+    
 
     public ArrayList<String> Colaboraciones() {
         List<Object[]> aux;
         List<String> aux2 = new ArrayList<>();
 
-        String query = "SELECT c.propuestaColaborada.titulo, c.id FROM Colaboracion c";
+        String query = "SELECT c.propuestaColaborada.titulo, c.id FROM Colaboracion c WHERE c.deBaja = false";
         try {
             aux = em.createQuery(query, Object[].class).getResultList();
             for (Object[] fila : aux) {
@@ -360,7 +367,7 @@ public class Manejador {
         List<String> aux;
         String patronBusqueda = "%" + patron + "%";
         EstadoPropuesta est = EstadoPropuesta.INGRESADA;
-        String query = "SELECT DISTINCT p.titulo FROM Propuesta p WHERE p.estadoActual.estado <> :est AND "
+        String query = "SELECT DISTINCT p.titulo FROM Propuesta p WHERE p.deBaja = false AND p.estadoActual.estado <> :est AND "
                 + "(p.titulo LIKE :patronBusqueda OR p.descripcion LIKE :patronBusqueda OR p.lugarRealizara LIKE :patronBusqueda)";
         try {
             aux = em.createQuery(query, String.class)

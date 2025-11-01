@@ -706,6 +706,31 @@ public class Controller implements IController {
 
         return retorno;
     }
+    
+    @Override
+    public void bajaProponente(String nickname){
+        Manejador emr = Manejador.getInstance();
+        Proponente p = emr.find(Proponente.class, nickname);
+        p.setBaja(true);
+        List<Propuesta> listPropuesta = p.getPropuestas();
+        List<String> listColab = this.listarColaboraciones();
+        for(Propuesta prop: listPropuesta){
+            prop.setBaja(true);
+            emr.mod(prop);
+            for(String titulo: listColab){
+                if(prop.getTitulo().equals(titulo)){
+                    Colaboracion c = emr.find(Colaboracion.class, titulo);
+                    c.setBaja(true);
+                    emr.mod(c);
+                }
+            }
+        }
+        emr.mod(p);
+        emr.close();
+    }
+    
+    
+    
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Funciones categorías.">
@@ -777,7 +802,7 @@ public class Controller implements IController {
         Manejador emr = Manejador.getInstance();
         try {
             Propuesta p = emr.find(Propuesta.class, titulo);
-            if (p != null) {
+            if (p != null && p.getBaja()==false) {
                 List<String> nicksColabs = new ArrayList<>();
                 for (Colaboracion c : p.getColaboraciones()) {
                     nicksColabs.add(c.getColaborador().getNickname());

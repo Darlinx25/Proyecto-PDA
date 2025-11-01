@@ -24,7 +24,10 @@ public class Proponente extends Usuario {
     
     @OneToMany(mappedBy = "proponente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Propuesta> propuestas = new ArrayList<>();
-
+    
+    private boolean deBaja;
+    
+    
     public Proponente(){}
     
     public Proponente(DTDireccion direccion, String biografia, String sitioWeb, String nickname, String nombre, String apellido, String passwordSalt, String passwordHash, String email, LocalDate fechaNacimiento, String imagen) {
@@ -33,6 +36,7 @@ public class Proponente extends Usuario {
         this.biografia = biografia;
         this.sitioWeb = sitioWeb;
         this.propuestas = new ArrayList<>();
+        this.deBaja = false;
     }
 
     public DTDireccion getDireccion() {
@@ -65,6 +69,15 @@ public class Proponente extends Usuario {
 
     public void setPropuestas(ArrayList<Propuesta> propuestas) {
         this.propuestas = propuestas;
+    }
+    
+    
+    public boolean setBaja(boolean deBaja){
+        return this.deBaja = deBaja;
+    }
+    
+    public boolean getBaja(){
+        return this.deBaja;
     }
     
     

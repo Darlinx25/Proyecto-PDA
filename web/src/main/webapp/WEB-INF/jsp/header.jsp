@@ -35,7 +35,7 @@
                             <a href="/ranking-usuario" class="nav-link active ">Consultar Rankings</a>  
                         </li>
                         <%
-                        } else if(rol == "proponente"){
+                        } else if(rol.equals("proponente")){
                         %>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/">Culturarte</a>
@@ -49,7 +49,9 @@
                         <li class="nav-item">
                             <a href="/crear-propuesta" class="nav-link active ">Crear propuesta</a>
                         </li>
-                        <%} else if(rol == "colaborador"){
+
+
+                        <%} else if(rol.equals("colaborador")){
                         %>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/">Culturarte</a>

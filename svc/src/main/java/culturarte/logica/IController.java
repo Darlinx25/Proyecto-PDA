@@ -36,6 +36,8 @@ public interface IController {
     public List<String> listarUsuariosSiguiendo(String nickname);
     public ArrayList<String> ObtenerSeguidores(String nickname);
     public ArrayList<String> obtenerUsuariosPorRanking();
+    public void bajaProponente(String nickname);
+    
     
     // </editor-fold>
     

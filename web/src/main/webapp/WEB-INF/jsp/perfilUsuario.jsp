@@ -183,7 +183,18 @@
                     <div class="d-flex justify-content-center mt-3">
                         <button type="button" class="btn btn-danger" id="follow" onclick="seguirUser()">Seguir</button>
                     </div>
+                    
                     <% }%>
+                    
+                    <% if (miPerfil == true) { %>
+                    <div>
+                        <form action="/baja-proponente" method="post" class="nav-item" style="display:inline;">
+                            <button type="submit" class="nav-link btn btn-danger">Darse de baja</button>
+                        </form>
+                        
+                    </div>
+                     <% }%>
+                    
                 </div>
                 <div class="d-flex flex-column justify-content-center ">
                     <p class="text-start text-uppercase" id="NombreUser"><%= nombre%> <%= apellido%> - <%= rol%></p>
