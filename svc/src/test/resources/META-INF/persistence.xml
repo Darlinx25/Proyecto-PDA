@@ -17,6 +17,7 @@
         <class>culturarte.logica.Comentario</class>
         <class>culturarte.logica.Estado</class>
         <class>culturarte.logica.RegistroAcceso</class>
+        <class>culturarte.logica.FormaPago</class>
         
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="org.h2.Driver"/>
