@@ -449,11 +449,14 @@ public class PropuestaServlet extends HttpServlet {
         
         for(String prop : aux){
             DTPropuesta aux3 = this.controller.obtenerDTPropuesta(prop);
-            Estado aux4 = aux3.getEstadoActual();
-            Boolean comentarioExiste = this.controller.comentarioExiste(prop, nickCol);
-            if(aux4.getEstado() == EstadoPropuesta.FINANCIADA && !comentarioExiste){
-                aux2.add(prop);
-            }
+            
+               Estado aux4 = aux3.getEstadoActual();
+                Boolean comentarioExiste = this.controller.comentarioExiste(prop, nickCol);
+                if(aux4.getEstado() == EstadoPropuesta.FINANCIADA && !comentarioExiste){
+                    aux2.add(prop);
+                } 
+            
+            
         }
         return aux2;
     }
@@ -465,11 +468,14 @@ public class PropuestaServlet extends HttpServlet {
 
         for (String prop : aux) {
             DTPropuesta aux3 = this.controller.obtenerDTPropuesta(prop);
-            Estado aux4 = aux3.getEstadoActual();
-            Boolean comentarioExiste = this.controller.comentarioExiste(prop, nickCol);
-            if (aux4.getEstado() == EstadoPropuesta.FINANCIADA && comentarioExiste) {
-                aux2.add(prop);
-            }
+            
+                Estado aux4 = aux3.getEstadoActual();
+                Boolean comentarioExiste = this.controller.comentarioExiste(prop, nickCol);
+                if (aux4.getEstado() == EstadoPropuesta.FINANCIADA && comentarioExiste) {
+                    aux2.add(prop);
+                } 
+            
+            
         }
         return aux2;
     }

@@ -550,7 +550,7 @@ public class Controller implements IController {
             if (p == null) {
                 p = (Proponente) emr.findUserPorEmail(nick);
             }
-            if (p != null) {
+            if (p != null && p.getBaja()==false) {
                 return new DTProponente(
                         p.getDireccion(),
                         p.getBiografia(),
@@ -582,9 +582,15 @@ public class Controller implements IController {
     @Override
     public ArrayList<String> listarUsuarios() {
         Manejador emr = Manejador.getInstance();
-        List<String> aux = emr.listarAtributo(String.class, "nickname", "Usuario");
+        List<String> lista = emr.listarAtributo(String.class, "nickname", "Usuario");
+
+        lista.removeIf(nick -> {
+            Proponente p = emr.find(Proponente.class, nick);
+            return p != null && p.getBaja();
+        });
+
         emr.close();
-        return new ArrayList<>(aux);
+        return new ArrayList<>(lista);
     }
 
     @Override
@@ -713,16 +719,14 @@ public class Controller implements IController {
         Proponente p = emr.find(Proponente.class, nickname);
         p.setBaja(true);
         List<Propuesta> listPropuesta = p.getPropuestas();
-        List<String> listColab = this.listarColaboraciones();
+        
         for(Propuesta prop: listPropuesta){
             prop.setBaja(true);
             emr.mod(prop);
-            for(String titulo: listColab){
-                if(prop.getTitulo().equals(titulo)){
-                    Colaboracion c = emr.find(Colaboracion.class, titulo);
+            List<Colaboracion> listColaboraciones = prop.getColaboraciones();
+            for(Colaboracion c: listColaboraciones){
                     c.setBaja(true);
                     emr.mod(c);
-                }
             }
         }
         emr.mod(p);
@@ -1005,12 +1009,11 @@ public class Controller implements IController {
             Comentario comentarioNuevo = new Comentario(comentario, nombreColaborador, prop);
             emr.add(comentarioNuevo);
             emr.mod(prop);
-            emr.close();
         } else {
             System.out.println("Colaborador ya a comentado esta propuesta");
 
         }
-
+        emr.close();
     }
 
     @Override
@@ -1019,13 +1022,17 @@ public class Controller implements IController {
 
         Propuesta prop = emr.find(Propuesta.class, titulo);
         List<Comentario> aux = prop.getComentario();
+        
         for (Comentario aux2 : aux) {
             if (aux2.getNombreColaborador() == null ? nombreColaborador == null : aux2.getNombreColaborador().equals(nombreColaborador)) {
+                emr.close();
                 return true;
             }
 
         }
+        emr.close();
         return false;
+        
     }
 
     @Override
@@ -1054,6 +1061,9 @@ public class Controller implements IController {
         }
         user.getPropuestasFavoritas().size();
         List<Propuesta> aux = user.getPropuestasFavoritas();
+        aux.removeIf(prop -> {
+            return prop.getBaja();
+        });
         emr.close();
         for (Propuesta aux2 : aux) {
             if (aux2.getTitulo().equals(titulo)) {
@@ -1170,7 +1180,6 @@ public class Controller implements IController {
             for(Colaboracion colabAux2 : colaboracionesProp){
                 if(sesionColab.getNickname() != colabAux2.getColaborador().getNickname()){
                     Colaborador usuarioAux = colabAux2.getColaborador();
-                    //van a tener que perdonarme los nombres esta linea de busqueda me esta jodiendo el cerebro como para pensar en nombres
                     List<Colaboracion> agregar = usuarioAux.getColaboraciones();
                     for(Colaboracion colabAux3 : agregar){
                         if(!retorno.contains(colabAux3.getPropuestaColaborada())){
@@ -1199,6 +1208,7 @@ public class Controller implements IController {
         for(int i = 0; i <= 9;i++){
             retorno.add(retorno.get(i));
         }
+        emr.close();
         return retorno2;
     }
 
@@ -1237,7 +1247,7 @@ public class Controller implements IController {
         Manejador emr = Manejador.getInstance();
         try {
             Colaboracion c = emr.find(Colaboracion.class, id);
-            if (c != null) {
+            if (c != null && c.getBaja()==false) {
                 return new DTColaboracion(
                         c.getId(), c.getMonto(), c.getFechaHora(),
                         c.getTipoRetorno(), c.getColaborador().getNickname(), c.getPropuestaColaborada().getTitulo());
@@ -1286,9 +1296,16 @@ public class Controller implements IController {
         if (usu == null) {
             return null;
         }
+        
+        
+        
         if (usu instanceof Colaborador) {
             return "colaborador";
-        } else {
+        } else  {
+            Proponente p = (Proponente) usu;
+            if(p.getBaja()){
+               return null;
+            }
             return "proponente";
         }
     }
