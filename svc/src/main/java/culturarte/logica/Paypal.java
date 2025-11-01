@@ -7,19 +7,19 @@ import jakarta.persistence.Entity;
 @Entity
 @DiscriminatorValue("PAYPAL")
 public class Paypal extends FormaPago {
-    private int nroCuenta;
+    private String nroCuenta;
     private String titular;
 
-    public Paypal(int nroCuenta, String titular) {
+    public Paypal(String nroCuenta, String titular) {
         this.nroCuenta = nroCuenta;
         this.titular = titular;
     }
 
-    public int getNroCuenta() {
+    public String getNroCuenta() {
         return nroCuenta;
     }
 
-    public void setNroCuenta(int nroCuenta) {
+    public void setNroCuenta(String nroCuenta) {
         this.nroCuenta = nroCuenta;
     }
 

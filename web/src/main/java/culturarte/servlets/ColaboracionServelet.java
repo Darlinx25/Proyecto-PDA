@@ -1,5 +1,10 @@
 package culturarte.servlets;
 
+import culturarte.datatypes.DTFormaPago;
+import culturarte.datatypes.DTPago;
+import culturarte.datatypes.DTPaypal;
+import culturarte.datatypes.DTTarjeta;
+import culturarte.datatypes.DTTransferenciaBancaria;
 import culturarte.excepciones.PropuestaYaColaboradaException;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
@@ -68,6 +73,10 @@ public class ColaboracionServelet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(false);
         String path = request.getServletPath();
+        
+        String userAgent = request.getHeader("User-Agent").toLowerCase();
+        boolean esMovil = userAgent.contains("mobi") || userAgent.contains("android")
+                || userAgent.contains("iphone") || userAgent.contains("ipad");
 
         switch (path) {
             case "/registrar-colaboracion":
@@ -83,7 +92,43 @@ public class ColaboracionServelet extends HttpServlet {
                 }
                 response.sendRedirect("/index");
                 break;
-
+            
+            case "/pagar":
+                if (!esMovil || esVisitante(request.getSession())) {
+                    response.sendError(HttpServletResponse.SC_FORBIDDEN);
+                    return;
+                }
+                float montoPago = Float.parseFloat(request.getParameter("montoPago"));
+                String metodoPago = request.getParameter("metodoPago");
+                
+                if ("tarjeta".equals(metodoPago)) {
+                    String tipoTarjeta = request.getParameter("tipoTarjeta");
+                    String nroTarjeta = request.getParameter("nroTarjeta");
+                    String vencTarjeta = request.getParameter("vencTarjeta");
+                    String cvc = request.getParameter("cvc");
+                    String titularTarjeta = request.getParameter("titularTarjeta");
+                    
+                    DTFormaPago formaPago = new DTTarjeta(tipoTarjeta, nroTarjeta,
+                            vencTarjeta, cvc, titularTarjeta);
+                    DTPago pago = new DTPago(montoPago, formaPago);
+                } else if ("transferencia".equals(metodoPago)) {
+                    String nombreBanco = request.getParameter("nombreBanco");
+                    String cuentaBanco = request.getParameter("cuentaBanco");
+                    String titularBanco = request.getParameter("titularBanco");
+                    
+                    DTFormaPago formaPago = new DTTransferenciaBancaria(nombreBanco,
+                            cuentaBanco, titularBanco);
+                    DTPago pago = new DTPago(montoPago, formaPago);
+                } else if ("paypal".equals(metodoPago)) {
+                    String cuentaPaypal = request.getParameter("cuentaPaypal");
+                    String titularPaypal = request.getParameter("titularPaypal");
+                    
+                    DTFormaPago formaPago = new DTPaypal(cuentaPaypal, titularPaypal);
+                    DTPago pago = new DTPago(montoPago, formaPago);
+                } else {
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+                }
+                break;
             default:
                 response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         }

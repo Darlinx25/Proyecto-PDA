@@ -8,10 +8,10 @@ import jakarta.persistence.Entity;
 @DiscriminatorValue("TRANSFERENCIA")
 public class TransferenciaBancaria extends FormaPago {
     private String banco;
-    private int nroCuenta;
+    private String nroCuenta;
     private String titular;
 
-    public TransferenciaBancaria(String banco, int nroCuenta, String titular) {
+    public TransferenciaBancaria(String banco, String nroCuenta, String titular) {
         this.banco = banco;
         this.nroCuenta = nroCuenta;
         this.titular = titular;
@@ -25,11 +25,11 @@ public class TransferenciaBancaria extends FormaPago {
         this.banco = banco;
     }
 
-    public int getNroCuenta() {
+    public String getNroCuenta() {
         return nroCuenta;
     }
 
-    public void setNroCuenta(int nroCuenta) {
+    public void setNroCuenta(String nroCuenta) {
         this.nroCuenta = nroCuenta;
     }
 

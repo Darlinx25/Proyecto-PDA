@@ -2,18 +2,17 @@ package culturarte.logica;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import java.time.LocalDate;
 
 @Entity
 @DiscriminatorValue("TARJETA")
 public class Tarjeta extends FormaPago {
     private String tipo;
-    private int numero;
-    private LocalDate fechaVenc;
-    private int cvc;
+    private String numero;
+    private String fechaVenc;
+    private String cvc;
     private String titular;
 
-    public Tarjeta(String tipo, int numero, LocalDate fechaVenc, int cvc, String titular) {
+    public Tarjeta(String tipo, String numero, String fechaVenc, String cvc, String titular) {
         this.tipo = tipo;
         this.numero = numero;
         this.fechaVenc = fechaVenc;
@@ -29,27 +28,27 @@ public class Tarjeta extends FormaPago {
         this.tipo = tipo;
     }
 
-    public int getNumero() {
+    public String getNumero() {
         return numero;
     }
 
-    public void setNumero(int numero) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
 
-    public LocalDate getFechaVenc() {
+    public String getFechaVenc() {
         return fechaVenc;
     }
 
-    public void setFechaVenc(LocalDate fechaVenc) {
+    public void setFechaVenc(String fechaVenc) {
         this.fechaVenc = fechaVenc;
     }
 
-    public int getCvc() {
+    public String getCvc() {
         return cvc;
     }
 
-    public void setCvc(int cvc) {
+    public void setCvc(String cvc) {
         this.cvc = cvc;
     }
 
