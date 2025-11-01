@@ -21,6 +21,9 @@ public class Colaboracion {
     
     private boolean deBaja;
     
+    @Embedded
+    private Pago pago;
+    
     public Colaboracion(){
         
     }
@@ -99,6 +102,14 @@ public class Colaboracion {
     
     public boolean getBaja(){
         return this.deBaja;
+    }
+
+    public Pago getPago() {
+        return pago;
+    }
+
+    public void setPago(Pago pago) {
+        this.pago = pago;
     }
     
     
