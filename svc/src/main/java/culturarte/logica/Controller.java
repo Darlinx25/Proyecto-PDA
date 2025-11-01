@@ -1418,7 +1418,7 @@ public class Controller implements IController {
         List<DTColaboracion> listaDTColabs = new ArrayList();
 
         for (Colaboracion c : colaboraciones) {
-            listaDTColabs.add(new DTColaboracion(c.getId(),
+            listaDTColabs.add(new DTColaboracion(c.getPago() != null, c.getId(),
                     c.getMonto(),
                     c.getFechaHora(), c.getTipoRetorno(),
                     c.getColaborador().getNickname(), c.getPropuestaColaborada().getTitulo()));

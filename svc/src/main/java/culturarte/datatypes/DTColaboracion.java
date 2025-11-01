@@ -17,6 +17,7 @@ public class DTColaboracion {
     private String tipoRetorno;
     private String colaborador;
     private String propuestaColaborada;
+    private boolean pagada;
     
     public DTColaboracion(Long id, float monto, LocalDateTime fechaHora, String tipoRetorno, String colaborador, String propuestaColaborada) {
         this.id = id;
@@ -26,7 +27,24 @@ public class DTColaboracion {
         this.colaborador = colaborador;
         this.propuestaColaborada = propuestaColaborada;
     }
+    
+    //es para la web
+    public DTColaboracion(boolean pagada, Long id, float monto, LocalDateTime fechaHora, String tipoRetorno, String colaborador, String propuestaColaborada) {
+        this.pagada = pagada;
+        this.id = id;
+        this.monto = monto;
+        this.fechaHora = fechaHora;
+        this.tipoRetorno = tipoRetorno;
+        this.colaborador = colaborador;
+        this.propuestaColaborada = propuestaColaborada;
+    }
 
+    public boolean isPagada() {
+        return pagada;
+    }
+
+    
+    
     public Long getId() {
         return id;
     }

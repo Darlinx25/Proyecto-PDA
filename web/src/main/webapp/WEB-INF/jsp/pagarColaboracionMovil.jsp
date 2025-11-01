@@ -1,3 +1,5 @@
+<%@page import="java.time.LocalDateTime"%>
+<%@page import="culturarte.datatypes.DTPropuesta"%>
 <%@page import="java.util.List"%>
 <%@page import="culturarte.datatypes.DTColaboracion"%>
 <%@page import="culturarte.logica.IController"%>
@@ -18,8 +20,38 @@
         <%
             String usr = (String) session.getAttribute("username");
             IController controller = IControllerFactory.getInstance().getIController();
+            
             List<DTColaboracion> colaboraciones = controller.listDTColaboracionUser(usr);
+            
         %>
-        <h1>Hello World!</h1>
+        
+        <div class="container mt-4">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                
+                <%
+                    for (DTColaboracion c : colaboraciones) {
+                            DTPropuesta p = controller.obtenerDTPropuesta(c.getPropuestaColaborada());
+                %>
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <img src="/imagenes/<%= p.getImagen() %>" onerror="this.src='/resources/images/propdefault.png';" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= p.getTitulo() %></h5>
+                            <p class="card-text">Fecha de colaboración: <%= c.getFechaHora().toLocalDate() %></p>
+                            <p class="card-text">Monto: <%= c.getMonto() %></p>
+                            
+                            <% if (c.isPagada()) { %>
+                            <button type="button" class="btn btn-secondary">Ya pagada</button>
+                            <% } else { %>
+                            <button type="button" class="btn btn-primary">Realizar pago</button>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+                
+
+            </div>
+        </div>
     </body>
 </html>
