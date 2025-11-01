@@ -89,6 +89,7 @@ public interface IController {
     public ArrayList<DTPropuesta> buscarPropuestasTDL(String patron);
     public void registrarAcceso(DTRegistroAcceso dataRegistro);
     public List<DTRegistroAcceso> listDTRegistroAcceso();
+    public List<DTColaboracion> listDTColaboracionUser(String nickname);
     // </editor-fold>
     
 }

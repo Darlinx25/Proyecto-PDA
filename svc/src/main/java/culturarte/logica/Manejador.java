@@ -154,7 +154,14 @@ public class Manejador {
         return resultado;
     }
     
-
+    public List<Colaboracion> obtenerColaboracionesUser(String nickname) {
+        List<Colaboracion> resultado = em.createQuery(
+                "SELECT c FROM Colaboracion c WHERE c.colaborador.nickname = :nick", Colaboracion.class)
+                .setParameter("nick", nickname)
+                .getResultList();
+        
+        return resultado;
+    }
     
     public ArrayList<String> obtenerUsuariosSeguir(String nickname) {
         List<String> aux;

@@ -28,7 +28,7 @@
               <a href="/" class="nav-link">Consultar Propuestas</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link">Pagar Colaboracion</a> 
+              <a href="/pagar" class="nav-link">Pagar Colaboracion</a> 
             </li>
             <li class="nav-item">
                 <form action="/logout" method="post">

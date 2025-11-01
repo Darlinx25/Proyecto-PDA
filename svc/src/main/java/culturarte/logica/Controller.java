@@ -1408,6 +1408,24 @@ public class Controller implements IController {
 
         return listaDTRegistros;
     }
+    
+    @Override
+    public List<DTColaboracion> listDTColaboracionUser(String nickname) {
+        Manejador emr = Manejador.getInstance();
+        List<Colaboracion> colaboraciones = emr.obtenerColaboracionesUser(nickname);
+        emr.close();
+        
+        List<DTColaboracion> listaDTColabs = new ArrayList();
+
+        for (Colaboracion c : colaboraciones) {
+            listaDTColabs.add(new DTColaboracion(c.getId(),
+                    c.getMonto(),
+                    c.getFechaHora(), c.getTipoRetorno(),
+                    c.getColaborador().getNickname(), c.getPropuestaColaborada().getTitulo()));
+        }
+
+        return listaDTColabs;
+    }
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Funciones auxiliares.">

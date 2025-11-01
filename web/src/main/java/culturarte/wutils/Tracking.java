@@ -35,10 +35,10 @@ public final class Tracking {
     private static String parseBrowser(String userAgent) {
         if (userAgent.contains("Firefox")) {
             return "Firefox";
-        } else if (userAgent.contains("Safari")) {
-            return "Safari";
         } else if (userAgent.contains("Chrome")) {
             return "Chrome";
+        } else if (userAgent.contains("Safari")) {
+            return "Safari";
         } else if (userAgent.contains("Opera")) {
             return "Opera";
         } else if (userAgent.contains("Edge")) {
