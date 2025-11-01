@@ -190,6 +190,11 @@ public class UsuarioServlet extends HttpServlet {
 
         ArrayList<String> seguidores = this.controller.ObtenerSeguidores(u);
         ArrayList<String> propsFav = this.controller.listarPropuestasFavoritas(u);
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        for(String a:propsFav){
+            System.out.println(a);
+            
+        }
         request.setAttribute("propuestasFav", propsFav);
         request.setAttribute("rol", tipoUser);
         ArrayList<String> usuariosSeguidos = new ArrayList<>();
@@ -200,12 +205,18 @@ public class UsuarioServlet extends HttpServlet {
 
         for (String cat : usuariosSeguidosSinRol) {
             String tipoU = this.controller.obtenerTipoUser(cat);
-            usuariosSeguidos.add(cat + " - " + tipoU);
+            if(tipoU!=null){
+                usuariosSeguidos.add(cat + " - " + tipoU);
+            }
+            
         }
         ArrayList<String> seguidoresConRol = new ArrayList<>();
         for (String cat : seguidores) {
             String tipoUs = this.controller.obtenerTipoUser(cat);
-            seguidoresConRol.add(cat + " - " + tipoUs);
+            if(tipoUs!=null){
+               seguidoresConRol.add(cat + " - " + tipoUs); 
+            }
+            
         }
         request.setAttribute("usuariosSeguidos", usuariosSeguidos);
         request.setAttribute("seguidores", seguidoresConRol);

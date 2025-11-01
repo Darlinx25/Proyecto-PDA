@@ -302,7 +302,7 @@ public class Manejador {
         List<String> aux2 = new ArrayList<>();
 
         String query = "SELECT c.propuestaColaborada.titulo, c.id FROM Colaboracion c"
-                + " WHERE c.colaborador.nickname = :nick AND c.deBaja = false";
+                + " WHERE c.colaborador.nickname = :nick AND c.propuestaColaborada.deBaja = false";
         try {
             aux = em.createQuery(query, Object[].class)
                     .setParameter("nick", nickColab)

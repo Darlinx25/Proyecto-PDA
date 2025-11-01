@@ -187,8 +187,8 @@
                     <% }%>
                     
                     <% if (miPerfil == true) { %>
-                    <div>
-                        <form action="/baja-proponente" method="post" class="nav-item" style="display:inline;">
+                    <div class="d-flex justify-content-center mt-3">
+                        <form action="/baja-proponente" method="post"  ">
                             <button type="submit" class="nav-link btn btn-danger">Darse de baja</button>
                         </form>
                         

@@ -617,6 +617,10 @@ public class Controller implements IController {
         }
 
         List<Usuario> seguidores = seguido.getSeguidores();
+        seguidores.removeIf(nick -> {
+            Proponente p = emr.find(Proponente.class, nick.getNombre());
+            return p != null && p.getBaja();
+        });
         ArrayList<String> nicks = new ArrayList<>();
 
         for (Usuario u : seguidores) {
@@ -668,8 +672,14 @@ public class Controller implements IController {
             aux = emr.obtenerUsuario(nickname);
             aux2 = aux.get(0).getUsuariosSeguidos();
             for (Usuario u : aux2) {
-                aux3.add(u.getNickname());
+                  aux3.add(u.getNickname());    
             }
+        aux3.removeIf(nick -> {
+            Proponente p = emr.find(Proponente.class, nick);
+            return p != null && p.getBaja();
+        });    
+            
+            
         } catch (Exception e) {
             aux3 = Collections.emptyList();
             e.printStackTrace();
@@ -856,8 +866,17 @@ public class Controller implements IController {
     public ArrayList<String> listarPropuestasFavoritas(String nick) {
         Manejador emr = Manejador.getInstance();
         ArrayList<String> aux = emr.listarPropuestasFavoritas(nick);
+        ArrayList<String> favortias = new ArrayList<>();
+
+        for(String titulo: aux){
+            Propuesta p = emr.find(Propuesta.class, titulo);
+            if (p != null && p.getBaja()==false) {
+                favortias.add(titulo);
+            }
+
+        }
         emr.close();
-        return aux;
+        return favortias;
     }
 
     @Override
