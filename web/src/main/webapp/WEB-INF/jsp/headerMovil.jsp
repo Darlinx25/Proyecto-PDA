@@ -31,7 +31,9 @@
               <a class="nav-link">Pagar Colaboracion</a> 
             </li>
             <li class="nav-item">
-              <a href="/logout" class="nav-link">Cerrar sesión</a>
+                <form action="/logout" method="post">
+                        <button type="submit" class="nav-link">Cerrar sesión</button>
+                </form> 
             </li>   
         </ul>
       </div>
