@@ -1,6 +1,12 @@
 package culturarte.logica;
 
-public class Paypal implements FormaPago {
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+
+
+@Entity
+@DiscriminatorValue("PAYPAL")
+public class Paypal extends FormaPago {
     private int nroCuenta;
     private String titular;
 

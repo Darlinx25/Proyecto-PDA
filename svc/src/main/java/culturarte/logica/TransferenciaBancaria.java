@@ -1,6 +1,12 @@
 package culturarte.logica;
 
-public class TransferenciaBancaria implements FormaPago {
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+
+
+@Entity
+@DiscriminatorValue("TRANSFERENCIA")
+public class TransferenciaBancaria extends FormaPago {
     private String banco;
     private int nroCuenta;
     private String titular;

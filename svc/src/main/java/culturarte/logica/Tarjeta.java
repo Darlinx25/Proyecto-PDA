@@ -1,8 +1,12 @@
 package culturarte.logica;
 
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 import java.time.LocalDate;
 
-public class Tarjeta implements FormaPago {
+@Entity
+@DiscriminatorValue("TARJETA")
+public class Tarjeta extends FormaPago {
     private String tipo;
     private int numero;
     private LocalDate fechaVenc;
