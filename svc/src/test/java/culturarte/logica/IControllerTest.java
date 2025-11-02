@@ -3,9 +3,14 @@ package culturarte.logica;
 import culturarte.datatypes.DTColaboracion;
 import culturarte.datatypes.DTColaborador;
 import culturarte.datatypes.DTDireccion;
+import culturarte.datatypes.DTFormaPago;
+import culturarte.datatypes.DTPago;
+import culturarte.datatypes.DTPaypal;
 import culturarte.datatypes.DTProponente;
 import culturarte.datatypes.DTPropuesta;
 import culturarte.datatypes.DTRegistroAcceso;
+import culturarte.datatypes.DTTarjeta;
+import culturarte.datatypes.DTTransferenciaBancaria;
 import culturarte.datatypes.DTUsuario;
 import culturarte.excepciones.BadPasswordException;
 import culturarte.excepciones.CategoriaDuplicadaException;
@@ -544,5 +549,39 @@ public class IControllerTest {
         assertEquals("1.1.1.1", accesos.get(0).getIp());
         assertEquals("Mac", accesos.get(0).getOs());
     }
-
+    
+    @Test
+    public void testPagarColaboracion() {
+        List<DTColaboracion> lista = controller.listDTColaboracionUser("tonyp");
+        assertEquals(2, lista.size());
+        
+        assertFalse(lista.get(0).isPagada());
+        DTFormaPago formaPago = new DTPaypal("1234", "Antonio Pacheco");
+        DTPago pago = new DTPago(lista.get(0).getMonto(), formaPago);
+        controller.pagarColaboracion(pago, lista.get(0).getId());
+        lista = controller.listDTColaboracionUser("tonyp");
+        assertTrue(lista.get(0).isPagada());
+        
+        assertFalse(lista.get(1).isPagada());
+        DTFormaPago formaPago2 = new DTTransferenciaBancaria("BROU", "1234", "Antonio Pacheco");
+        DTPago pago2 = new DTPago(lista.get(1).getMonto(), formaPago2);
+        controller.pagarColaboracion(pago2, lista.get(1).getId());
+        lista = controller.listDTColaboracionUser("tonyp");
+        assertTrue(lista.get(1).isPagada());
+        
+        
+        List<DTColaboracion> lista2 = controller.listDTColaboracionUser("chino");
+        assertEquals(1, lista2.size());
+        
+        assertFalse(lista2.get(0).isPagada());
+        DTFormaPago formaPago3 = new DTTarjeta("Visa", "1234 1234 1234 1234", "05/26", "420", "Álvaro Recoba");
+        DTPago pago3 = new DTPago(lista2.get(0).getMonto(), formaPago3);
+        controller.pagarColaboracion(pago3, lista2.get(0).getId());
+        lista2 = controller.listDTColaboracionUser("chino");
+        assertTrue(lista2.get(0).isPagada());
+        
+        
+        DTPago pago4 = new DTPago(lista2.get(0).getMonto(), null);
+        controller.pagarColaboracion(pago4, lista2.get(0).getId());
+    }
 }

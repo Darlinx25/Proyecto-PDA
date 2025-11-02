@@ -18,6 +18,9 @@
         <class>culturarte.logica.Estado</class>
         <class>culturarte.logica.RegistroAcceso</class>
         <class>culturarte.logica.FormaPago</class>
+        <class>culturarte.logica.Tarjeta</class>
+        <class>culturarte.logica.TransferenciaBancaria</class>
+        <class>culturarte.logica.Paypal</class>
         <class>culturarte.logica.Pago</class>
         
         <properties>

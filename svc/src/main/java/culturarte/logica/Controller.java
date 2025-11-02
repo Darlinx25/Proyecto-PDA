@@ -1590,7 +1590,7 @@ public class Controller implements IController {
         Manejador emr = Manejador.getInstance();
         Colaboracion colab = emr.find(Colaboracion.class, idColab);
         
-        FormaPago formaPago = null;
+        FormaPago formaPago;
         DTFormaPago dtFormaPago = dtPago.getFormaPago();
         if (dtFormaPago instanceof DTTarjeta dTTarjeta) {
             formaPago = new Tarjeta(dTTarjeta.getTipoTarjeta(),
@@ -1606,6 +1606,9 @@ public class Controller implements IController {
         } else if (dtFormaPago instanceof DTPaypal dTPaypal) {
             formaPago = new Paypal(dTPaypal.getCuentaPaypal(),
                     dTPaypal.getTitularPaypal());
+        } else {
+            emr.close();
+            return;
         }
         emr.add(formaPago);
         
