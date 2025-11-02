@@ -204,17 +204,7 @@ public class PropuestaServlet extends HttpServlet {
             case "/sugerencia":
                 session = request.getSession(false);
                 String nickRecom = session.getAttribute("username").toString();
-                System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
                 ArrayList<Propuesta> propRecomList = this.controller.obtenerRecomendaciones(nickRecom);
-                
-                
-                if(propRecomList.isEmpty()){
-                    System.out.println("QUECARAJOOOOOOOOOOOOOOOOOOOOOOOS");
-                }
-                for(Propuesta aux8 : propRecomList){
-                    System.out.println("lolxdmatenmeeeeeeeeeeeeeeee" + aux8.getTitulo());
-                }
-                System.out.println("CCCCCCCCCCCCCCCC");
                 request.setAttribute("propuestas", propRecomList);
                 request.getRequestDispatcher("WEB-INF/jsp/sugerencia.jsp").forward(request, response);
                 break;
