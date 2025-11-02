@@ -538,9 +538,36 @@ public class Controller implements IController {
     public ArrayList<String> listarProponentes() {
         Manejador emr = Manejador.getInstance();
         List<String> aux = emr.listarAtributo(String.class, "nickname", "Proponente");
+        aux.removeIf(nick -> {
+            Proponente p = emr.find(Proponente.class, nick);
+            return p != null && p.getBaja();
+        });
         emr.close();
         return new ArrayList<>(aux);
     }
+    
+    
+    
+    
+    @Override
+    public ArrayList<String> listaProponentesDeBaja() {
+        Manejador emr = Manejador.getInstance();
+        List<String> aux = emr.listarAtributo(String.class, "nickname", "Proponente");
+        List<String> Proponentes = new ArrayList<>();
+        for(String nick:aux){
+            Proponente p = emr.find(Proponente.class, nick);
+            if(p != null && p.getBaja()){
+                Proponentes.add(nick);
+            }
+        }
+        
+        
+        emr.close();
+        return new ArrayList<>(Proponentes);
+    }
+    
+    
+    
 
     @Override
     public DTProponente obtenerDTProponente(String nick) {
@@ -570,6 +597,37 @@ public class Controller implements IController {
         }
         return null;
     }
+    
+    @Override
+    public DTProponente obtenerDTProponenteDeBaja(String nick) {
+        Manejador emr = Manejador.getInstance();
+        try {
+            Proponente p = emr.find(Proponente.class, nick); // Buscar proponente por PK
+            if (p == null) {
+                p = (Proponente) emr.findUserPorEmail(nick);
+            }
+            if (p != null && p.getBaja()) {
+                return new DTProponente(
+                        p.getDireccion(),
+                        p.getBiografia(),
+                        p.getSitioWeb(),
+                        p.getNickname(),
+                        p.getNombre(),
+                        p.getApellido(),
+                        p.getEmail(),
+                        p.getFechaNacimiento(),
+                        p.getImagen()
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            emr.close();
+        }
+        return null;
+    }
+    
+    
 
     @Override
     public ArrayList<String> listarColaboracionesColaborador(String nickColab) {
@@ -653,6 +711,18 @@ public class Controller implements IController {
         emr.close();
         return aux;
     }
+    
+    
+    @Override
+    public ArrayList<String> listaPropuestasUsuDeBaja(String nick) {
+        Manejador emr = Manejador.getInstance();
+        ArrayList<String> aux = emr.listaPropuestasUsuarioDeBaja(nick);
+        emr.close();
+        return aux;
+    }
+    
+    
+    
 
     @Override
     public ArrayList<String> listarUsuariosSeguir(String nickname) {
@@ -739,6 +809,27 @@ public class Controller implements IController {
         emr.mod(p);
         emr.close();
     }
+    
+    @Override
+    public void altaProponente(String nickname) {
+        Manejador emr = Manejador.getInstance();
+        Proponente p = emr.find(Proponente.class, nickname);
+        p.setBaja(false);
+        List<Propuesta> listPropuesta = p.getPropuestas();
+
+        for (Propuesta prop : listPropuesta) {
+            prop.setBaja(false);
+            emr.mod(prop);
+            List<Colaboracion> listColaboraciones = prop.getColaboraciones();
+            for (Colaboracion c : listColaboraciones) {
+                c.setBaja(false);
+                emr.mod(c);
+            }
+        }
+        emr.mod(p);
+        emr.close();
+    }
+    
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Funciones categorías.">
@@ -839,6 +930,41 @@ public class Controller implements IController {
         }
         return null;
     }
+    
+    @Override
+    public DTPropuesta obtenerDTPropuestaDeBaja(String titulo) {
+        Manejador emr = Manejador.getInstance();
+        try {
+            Propuesta p = emr.find(Propuesta.class, titulo);
+            if (p != null && p.getBaja()) {
+                List<String> nicksColabs = new ArrayList<>();
+                for (Colaboracion c : p.getColaboraciones()) {
+                    nicksColabs.add(c.getColaborador().getNickname());
+                }
+
+                List<Comentario> coment = p.getComentario();
+                List<String> comentarios = new ArrayList<>();
+                for (Comentario c : coment) {
+                    String Com = (c.getNombreColaborador() + ": " + c.getInformacion());
+                    comentarios.add(Com);
+                }
+
+                p.getTiposRetorno().size();//para que hibernate lo agarre antes de close porque es lazy
+                float dineroRecaudado = Float.parseFloat(this.obtenerDineroRecaudado(titulo));
+                return new DTPropuesta(
+                        p.getTitulo(), p.getDescripcion(), p.getImagen(), p.getLugarRealizara(), p.getFechaRealizara(),
+                        p.getPrecioEntrada(), p.getMontoAReunir(), dineroRecaudado, p.getFechaPublicacion(),
+                        p.getTipoPropuesta().getNombre(),
+                        p.getProponedor().getNickname(),
+                        p.getTiposRetorno(), p.getEstadoActual(), p.getPlazoFinanciacion(), nicksColabs, comentarios);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            emr.close();
+        }
+        return null;
+    }
 
     @Override
     public ArrayList<String> listarPropuestasEstado(int estado) {
@@ -872,7 +998,7 @@ public class Controller implements IController {
         emr.close();
         return favortias;
     }
-
+    
     @Override
     public String obtenerDineroRecaudado(String tituloProp) {
         Manejador emr = Manejador.getInstance();
@@ -887,7 +1013,22 @@ public class Controller implements IController {
         }
         return String.valueOf(resultado);
     }
-
+    
+    @Override
+    public String obtenerDineroRecaudadoDeBaja(String tituloProp) {
+        Manejador emr = Manejador.getInstance();
+        List<Float> aux = emr.obtenerDineroDeBaja(tituloProp);
+        emr.close();
+        float resultado = 0f;
+        if (aux.isEmpty()) {
+            return "0";
+        }
+        for (Float actual : aux) {
+            resultado += actual;
+        }
+        return String.valueOf(resultado);
+    }
+    
     @Override
     public ArrayList<String> listarPropuestasProponentes() {
         Manejador emr = Manejador.getInstance();

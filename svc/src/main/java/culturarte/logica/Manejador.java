@@ -198,6 +198,22 @@ public class Manejador {
         }
         return new ArrayList<>(aux);
     }
+    
+    public ArrayList<String> listaPropuestasUsuarioDeBaja(String nick) {
+        List<String> aux;
+
+        String query = "SELECT p.titulo FROM Propuesta p WHERE p.proponente.nickname = :nick";
+        try {
+            aux = em.createQuery(query, String.class).setParameter("nick", nick).getResultList();
+        } catch (Exception e) {
+            aux = Collections.emptyList();
+            e.printStackTrace();
+        }
+        return new ArrayList<>(aux);
+    }
+    
+    
+    
 
     public ArrayList<String> listPropuestasProponentes() {
         List<Object[]> aux;
@@ -259,6 +275,19 @@ public class Manejador {
         List<Float> aux;
         Float resultado = 0f;
         String query = "SELECT c.monto FROM Colaboracion c WHERE c.propuestaColaborada.titulo = :tituloProp AND c.deBaja = false";
+        try {
+            aux = em.createQuery(query, Float.class).setParameter("tituloProp", tituloProp).getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            aux = Collections.emptyList();;
+        }
+        return (ArrayList<Float>) aux;
+    }
+    
+    public ArrayList<Float> obtenerDineroDeBaja(String tituloProp) {
+        List<Float> aux;
+        Float resultado = 0f;
+        String query = "SELECT c.monto FROM Colaboracion c WHERE c.propuestaColaborada.titulo = :tituloProp";
         try {
             aux = em.createQuery(query, Float.class).setParameter("tituloProp", tituloProp).getResultList();
         } catch (Exception e) {

@@ -37,6 +37,10 @@ public interface IController {
     public ArrayList<String> ObtenerSeguidores(String nickname);
     public ArrayList<String> obtenerUsuariosPorRanking();
     public void bajaProponente(String nickname);
+    public ArrayList<String> listaProponentesDeBaja();
+    public DTProponente obtenerDTProponenteDeBaja(String nick);
+    public void altaProponente(String nickname);
+    
     
     
     // </editor-fold>
@@ -70,6 +74,9 @@ public interface IController {
     public void calcularPuntajePropuesta(String titulo);
     public void actualizarPuntajes();
     public ArrayList<Propuesta> obtenerRecomendaciones(String nick);
+    public ArrayList<String> listaPropuestasUsuDeBaja(String nick);
+    public DTPropuesta obtenerDTPropuestaDeBaja(String titulo);
+    public String obtenerDineroRecaudadoDeBaja(String tituloProp);
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Funciones colaboraciones.">

@@ -34,6 +34,7 @@ public class MainFrame extends javax.swing.JFrame {
     private CancelarColaboracion cancelarColaboracion;
     private EvaluarPropuesta evaluarPropuesta;
     private VerRegistroAcceso verRegistroAcceso;
+    private verProponentesDeBaja verPropBaja;
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
     private IController controller;
@@ -65,6 +66,7 @@ public class MainFrame extends javax.swing.JFrame {
         itemConsultarProponente = new javax.swing.JMenuItem();
         itemSeguirUsuario = new javax.swing.JMenuItem();
         itemDejarSeguirUsuario = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         menuPropuestas = new javax.swing.JMenu();
         itemAltaCategoria = new javax.swing.JMenuItem();
         itemAltaPropuesta = new javax.swing.JMenuItem();
@@ -128,6 +130,14 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         menuUsuarios.add(itemDejarSeguirUsuario);
+
+        jMenuItem1.setText("Ver Proponentes Eliminados");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        menuUsuarios.add(jMenuItem1);
 
         jMenuBar1.add(menuUsuarios);
 
@@ -399,6 +409,15 @@ public class MainFrame extends javax.swing.JFrame {
         this.verRegistroAcceso.setVisible(true);
     }//GEN-LAST:event_itemVerRegistroAccesosActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        if (this.verPropBaja != null && this.verPropBaja.isVisible()) {
+            return;
+        }
+        this.verPropBaja = new verProponentesDeBaja();
+        add(this.verPropBaja);
+        this.verPropBaja.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -443,6 +462,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemVerRegistroAccesos;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenu menuPropuestas;
     private javax.swing.JMenu menuSistema;
     private javax.swing.JMenu menuUsuarios;
