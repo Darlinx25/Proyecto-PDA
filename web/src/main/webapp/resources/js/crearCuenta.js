@@ -24,6 +24,81 @@ function coincidenPasswords() {
 document.getElementById('password').addEventListener('input', coincidenPasswords);
 document.getElementById('password-confirm').addEventListener('input', coincidenPasswords);
 
+
+function validarUsuario() {
+    const inputUsuario = document.getElementById('nombre-usuario');
+    const labelUsuario = document.getElementById('estado-usuario');
+    const valor = inputUsuario.value.trim();
+
+    if (valor.length === 0) {
+        labelUsuario.textContent = '';
+        inputUsuario.classList.remove('is-valid', 'is-invalid');
+        return;
+    }
+
+    fetch('/verificarUsuario', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'usuario=' + encodeURIComponent(valor)
+    })
+        .then(res => res.text())
+        .then(texto => {
+            if (texto === 'disponible') {
+                labelUsuario.textContent = 'Disponible';
+                labelUsuario.style.color = 'green';
+                inputUsuario.classList.add('is-valid');
+                inputUsuario.classList.remove('is-invalid');
+            } else {
+                labelUsuario.textContent = 'Ocupado';
+                labelUsuario.style.color = 'red';
+                inputUsuario.classList.add('is-invalid');
+                inputUsuario.classList.remove('is-valid');
+            }
+        })
+        .catch(e => console.error("Error al verificar usuario:", e));
+}
+
+
+function validarCorreo() {
+    const inputCorreo = document.getElementById('email');
+    const labelCorreo = document.getElementById('estado-correo');
+    const valor = inputCorreo.value.trim();
+
+    if (valor.length === 0) {
+        labelCorreo.textContent = '';
+        inputCorreo.classList.remove('is-valid', 'is-invalid');
+        return;
+    }
+
+    fetch('/verificarCorreo', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'correo=' + encodeURIComponent(valor)
+    })
+        .then(res => res.text())
+        .then(texto => {
+            if (texto === 'disponible') {
+                labelCorreo.textContent = 'Disponible';
+                labelCorreo.style.color = 'green';
+                inputCorreo.classList.add('is-valid');
+                inputCorreo.classList.remove('is-invalid');
+            } else {
+                labelCorreo.textContent = 'Ocupado';
+                labelCorreo.style.color = 'red';
+                inputCorreo.classList.add('is-invalid');
+                inputCorreo.classList.remove('is-valid');
+            }
+        })
+        .catch(e => console.error("Error al verificar correo:", e));
+}
+
+document.getElementById('nombre-usuario').addEventListener('input', validarUsuario);
+document.getElementById('email').addEventListener('input', validarCorreo);
+
 /*ocultamos/mostramos los campos del proponente*/
 function toggleCamposProponente() {
     const radioColab = document.getElementById('radio-colab');
@@ -39,7 +114,7 @@ function toggleCamposProponente() {
         calle.required = true;
         numPuerta.required = true;
     } else if (radioColab.checked) {
-        camposProp.style.display = 'none';
+        camposProp.style.display = 'none';  
         ciudad.required = false;
         calle.required = false;
         numPuerta.required = false;

@@ -43,15 +43,18 @@
                            min="1900-01-01" max="2007-01-01" required>
                 </div>
 
-                <div class="mb-2">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" id="email" name="email" class="form-control form-control-sm" required>
+                <div class="mb-3">
+                    <label for="nombre-usuario" class="form-label">Nombre de usuario</label>
+                    <input type="text" class="form-control" id="nombre-usuario" name="nickname" required>
+                    <span id="estado-usuario" class="form-text"></span>
                 </div>
 
-                <div class="mb-2">
-                    <label for="nombre-usuario" class="form-label">Nombre de usuario</label>
-                    <input type="text" id="nombre-usuario" name="nickname" class="form-control form-control-sm" required>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Correo electrónico</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                    <span id="estado-correo" class="form-text"></span>
                 </div>
+
 
                 <div class="mb-2">
                     <label for="password" class="form-label">Contraseña (8 a 24 caracteres)</label>
@@ -111,7 +114,7 @@
                         </button>
                     </label>
                 </div>
-                
+
                 <div class="modal fade" id="terminos" tabindex="-1" aria-labelledby="modal-label" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable">
                         <div class="modal-content">
@@ -141,9 +144,10 @@
             </form>
         </div>
 
-        <script src="/resources/js/crearCuenta.js"></script>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+                integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
+        <script src="/resources/js/crearCuenta.js"></script>
     </body>
 </html>

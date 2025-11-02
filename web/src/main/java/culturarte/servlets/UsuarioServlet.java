@@ -42,7 +42,7 @@ import java.util.List;
  *
  * @author mark
  */
-@WebServlet(name = "UsuarioServlet", urlPatterns = {"/usuarios", "/crear-cuenta", "/perfil", "/login", "/logout", "/seguir-usuario", "/consultar-perfil-usuario", "/ranking-usuario", "/baja-proponente"})
+@WebServlet(name = "UsuarioServlet", urlPatterns = {"/usuarios", "/crear-cuenta", "/perfil", "/login", "/logout", "/seguir-usuario", "/consultar-perfil-usuario", "/ranking-usuario", "/baja-proponente","/verificarUsuario", "/verificarCorreo" })
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, //1MB+ se escriben al disco
         maxFileSize = 1024 * 1024 * 5, //5MB máximo por archivo
@@ -168,6 +168,29 @@ public class UsuarioServlet extends HttpServlet {
                 }
                 response.sendRedirect("/index");
                 break;
+
+            case "/verificarUsuario": {
+                String usuarioVerificar = request.getParameter("usuario");
+                DTUsuario dtColaborador = controller.obtenerDTColaborador(usuarioVerificar);
+                DTUsuario dtProponente = controller.obtenerDTProponente(usuarioVerificar);
+
+                String estado = (dtColaborador == null && dtProponente == null) ? "disponible" : "ocupado";
+                response.setContentType("text/plain");
+                response.getWriter().write(estado);
+                break;
+            }
+
+            case "/verificarCorreo": {
+                String correo = request.getParameter("correo");
+                DTUsuario dtColaborador = controller.obtenerDTColaborador(correo);
+                DTUsuario dtProponente = controller.obtenerDTProponente(correo);
+
+                String estado = (dtColaborador == null && dtProponente == null) ? "disponible" : "ocupado";
+                response.setContentType("text/plain");
+                response.getWriter().write(estado);
+                break;
+            }
+
             default:
                 response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         }
@@ -191,9 +214,9 @@ public class UsuarioServlet extends HttpServlet {
         ArrayList<String> seguidores = this.controller.ObtenerSeguidores(u);
         ArrayList<String> propsFav = this.controller.listarPropuestasFavoritas(u);
         System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        for(String a:propsFav){
+        for (String a : propsFav) {
             System.out.println(a);
-            
+
         }
         request.setAttribute("propuestasFav", propsFav);
         request.setAttribute("rol", tipoUser);
@@ -205,18 +228,18 @@ public class UsuarioServlet extends HttpServlet {
 
         for (String cat : usuariosSeguidosSinRol) {
             String tipoU = this.controller.obtenerTipoUser(cat);
-            if(tipoU!=null){
+            if (tipoU != null) {
                 usuariosSeguidos.add(cat + " - " + tipoU);
             }
-            
+
         }
         ArrayList<String> seguidoresConRol = new ArrayList<>();
         for (String cat : seguidores) {
             String tipoUs = this.controller.obtenerTipoUser(cat);
-            if(tipoUs!=null){
-               seguidoresConRol.add(cat + " - " + tipoUs); 
+            if (tipoUs != null) {
+                seguidoresConRol.add(cat + " - " + tipoUs);
             }
-            
+
         }
         request.setAttribute("usuariosSeguidos", usuariosSeguidos);
         request.setAttribute("seguidores", seguidoresConRol);
@@ -292,7 +315,7 @@ public class UsuarioServlet extends HttpServlet {
                     cookieUser.setMaxAge(7 * 24 * 60 * 60); // 7 días
                     cookieUser.setPath("/");
                     Cookie cookiePass = new Cookie("passwordRecordado", password);
-                    cookiePass.setMaxAge(7 * 24 * 60 * 60); 
+                    cookiePass.setMaxAge(7 * 24 * 60 * 60);
                     cookiePass.setPath("/");
                     response.addCookie(cookieUser);
                     response.addCookie(cookiePass);
