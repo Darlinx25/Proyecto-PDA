@@ -15,6 +15,8 @@ public class DTProponente extends DTUsuario {
     private String biografia;
     private String sitioWeb;
     
+    private LocalDate fechaBaja;
+    
     public DTProponente(){
         
     }
@@ -26,11 +28,12 @@ public class DTProponente extends DTUsuario {
         this.sitioWeb = sitioWeb;
     }
     /*para consultar*/
-    public DTProponente(DTDireccion direccion, String biografia, String sitioWeb, String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, String imagen) {
+    public DTProponente(DTDireccion direccion, String biografia, String sitioWeb, String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, String imagen,LocalDate fechaBaja) {
         super(nickname, nombre, apellido, email, fechaNacimiento, imagen);
         this.direccion = direccion;
         this.biografia = biografia;
         this.sitioWeb = sitioWeb;
+        this.fechaBaja = fechaBaja;
     }
 
     public DTDireccion getDireccion() {
@@ -44,4 +47,10 @@ public class DTProponente extends DTUsuario {
     public String getSitioWeb() {
         return sitioWeb;
     }
+    
+    public LocalDate getFechaBaja(){
+        return this.fechaBaja;
+    }
+
+
 }

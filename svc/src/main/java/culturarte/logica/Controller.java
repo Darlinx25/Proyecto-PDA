@@ -592,7 +592,7 @@ public class Controller implements IController {
                         p.getApellido(),
                         p.getEmail(),
                         p.getFechaNacimiento(),
-                        p.getImagen()
+                        p.getImagen(),null
                 );
             }
         } catch (Exception e) {
@@ -621,7 +621,7 @@ public class Controller implements IController {
                         p.getApellido(),
                         p.getEmail(),
                         p.getFechaNacimiento(),
-                        p.getImagen()
+                        p.getImagen(),p.getFechaBaja()
                 );
             }
         } catch (Exception e) {
@@ -800,6 +800,7 @@ public class Controller implements IController {
         Manejador emr = Manejador.getInstance();
         Proponente p = emr.find(Proponente.class, nickname);
         p.setBaja(true);
+        p.setFechaBaja(LocalDate.now());
         List<Propuesta> listPropuesta = p.getPropuestas();
 
         for (Propuesta prop : listPropuesta) {

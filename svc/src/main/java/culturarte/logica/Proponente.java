@@ -27,6 +27,8 @@ public class Proponente extends Usuario {
     
     private boolean deBaja;
     
+    private LocalDate fechaBaja;
+    
     
     public Proponente(){}
     
@@ -72,12 +74,20 @@ public class Proponente extends Usuario {
     }
     
     
-    public boolean setBaja(boolean deBaja){
-        return this.deBaja = deBaja;
+    public void setBaja(boolean deBaja){
+        this.deBaja = deBaja;
     }
     
     public boolean getBaja(){
         return this.deBaja;
+    }
+    
+    public LocalDate getFechaBaja(){
+        return this.fechaBaja;
+    }
+    
+    public void setFechaBaja(LocalDate fecha){
+        this.fechaBaja = fecha;
     }
     
     

@@ -51,11 +51,23 @@ public class verProponentesDeBaja extends javax.swing.JInternalFrame {
                         campoApellido.setText(dt.getApellido());
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                         LocalDate fechaNacimiento = dt.getFechaNacimiento();
+                        
+                       
+                        LocalDate fechaBaja = dt.getFechaBaja();
+                        
+                        
                         if (fechaNacimiento == null) {
                             campoFechaNac.setText("");
                         } else {
                             campoFechaNac.setText(fechaNacimiento.format(formatter));
                         }
+                        
+                        if (fechaBaja == null) {
+                            campoFechaBaja.setText("");
+                        } else {
+                            campoFechaBaja.setText(fechaBaja.format(formatter));
+                        }
+                        
 
                         campoCorreo.setText(dt.getEmail());
                         areaBiografia.setText(dt.getBiografia());
@@ -152,6 +164,8 @@ public class verProponentesDeBaja extends javax.swing.JInternalFrame {
         listaPropuestas = listaPropuestas = new javax.swing.JList<>(new javax.swing.DefaultListModel<>());
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        campoFechaBaja = new javax.swing.JTextField();
 
         setClosable(true);
         setMaximizable(true);
@@ -251,6 +265,15 @@ public class verProponentesDeBaja extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel10.setText("Fecha Baja");
+
+        campoFechaBaja.setEditable(false);
+        campoFechaBaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoFechaBajaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -289,7 +312,8 @@ public class verProponentesDeBaja extends javax.swing.JInternalFrame {
                             .addComponent(jLabel7)
                             .addComponent(jLabel3)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel1)))
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel10)))
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -301,7 +325,8 @@ public class verProponentesDeBaja extends javax.swing.JInternalFrame {
                         .addComponent(campoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(campoNick, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(campoSitioWeb, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(campoFechaBaja))
                 .addGap(88, 88, 88))
         );
         layout.setVerticalGroup(
@@ -360,11 +385,15 @@ public class verProponentesDeBaja extends javax.swing.JInternalFrame {
                                         .addComponent(campoDineroRecaudado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jLabel7)
                                     .addComponent(campoSitioWeb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(24, 24, 24)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10)
+                                    .addComponent(campoFechaBaja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGap(35, 35, 35)
                         .addComponent(jButton1)
@@ -410,6 +439,10 @@ public class verProponentesDeBaja extends javax.swing.JInternalFrame {
         this.dispose();
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void campoFechaBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoFechaBajaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoFechaBajaActionPerformed
             
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -419,12 +452,14 @@ public class verProponentesDeBaja extends javax.swing.JInternalFrame {
     private javax.swing.JTextField campoApellido;
     private javax.swing.JTextField campoCorreo;
     private javax.swing.JTextField campoDineroRecaudado;
+    private javax.swing.JTextField campoFechaBaja;
     private javax.swing.JTextField campoFechaNac;
     private javax.swing.JTextField campoNick;
     private javax.swing.JTextField campoNombre;
     private javax.swing.JTextField campoSitioWeb;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
