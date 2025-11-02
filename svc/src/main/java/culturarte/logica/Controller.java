@@ -550,7 +550,7 @@ public class Controller implements IController {
             if (p == null) {
                 p = (Proponente) emr.findUserPorEmail(nick);
             }
-            if (p != null && p.getBaja()==false) {
+            if (p != null && p.getBaja() == false) {
                 return new DTProponente(
                         p.getDireccion(),
                         p.getBiografia(),
@@ -672,14 +672,13 @@ public class Controller implements IController {
             aux = emr.obtenerUsuario(nickname);
             aux2 = aux.get(0).getUsuariosSeguidos();
             for (Usuario u : aux2) {
-                  aux3.add(u.getNickname());    
+                aux3.add(u.getNickname());
             }
-        aux3.removeIf(nick -> {
-            Proponente p = emr.find(Proponente.class, nick);
-            return p != null && p.getBaja();
-        });    
-            
-            
+            aux3.removeIf(nick -> {
+                Proponente p = emr.find(Proponente.class, nick);
+                return p != null && p.getBaja();
+            });
+
         } catch (Exception e) {
             aux3 = Collections.emptyList();
             e.printStackTrace();
@@ -694,7 +693,6 @@ public class Controller implements IController {
         List<String> auxUsuarios = this.listarUsuarios();
         ArrayList<String> retorno = new ArrayList<>();
 
-        
         for (String usuActual : auxUsuarios) {
             List<String> auxSeguidores = this.ObtenerSeguidores(usuActual);
             if (!auxSeguidores.isEmpty()) {
@@ -704,7 +702,6 @@ public class Controller implements IController {
 
         boolean cambiaLista;
 
-      
         do {
             cambiaLista = false;
             for (int i = 0; i < retorno.size() - 1; i++) {
@@ -722,29 +719,26 @@ public class Controller implements IController {
 
         return retorno;
     }
-    
+
     @Override
-    public void bajaProponente(String nickname){
+    public void bajaProponente(String nickname) {
         Manejador emr = Manejador.getInstance();
         Proponente p = emr.find(Proponente.class, nickname);
         p.setBaja(true);
         List<Propuesta> listPropuesta = p.getPropuestas();
-        
-        for(Propuesta prop: listPropuesta){
+
+        for (Propuesta prop : listPropuesta) {
             prop.setBaja(true);
             emr.mod(prop);
             List<Colaboracion> listColaboraciones = prop.getColaboraciones();
-            for(Colaboracion c: listColaboraciones){
-                    c.setBaja(true);
-                    emr.mod(c);
+            for (Colaboracion c : listColaboraciones) {
+                c.setBaja(true);
+                emr.mod(c);
             }
         }
         emr.mod(p);
         emr.close();
     }
-    
-    
-    
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Funciones categorías.">
@@ -816,16 +810,16 @@ public class Controller implements IController {
         Manejador emr = Manejador.getInstance();
         try {
             Propuesta p = emr.find(Propuesta.class, titulo);
-            if (p != null && p.getBaja()==false) {
+            if (p != null && p.getBaja() == false) {
                 List<String> nicksColabs = new ArrayList<>();
                 for (Colaboracion c : p.getColaboraciones()) {
                     nicksColabs.add(c.getColaborador().getNickname());
                 }
-                
+
                 List<Comentario> coment = p.getComentario();
                 List<String> comentarios = new ArrayList<>();
                 for (Comentario c : coment) {
-                    String Com =  (c.getNombreColaborador()+ ": " + c.getInformacion());
+                    String Com = (c.getNombreColaborador() + ": " + c.getInformacion());
                     comentarios.add(Com);
                 }
 
@@ -836,7 +830,7 @@ public class Controller implements IController {
                         p.getPrecioEntrada(), p.getMontoAReunir(), dineroRecaudado, p.getFechaPublicacion(),
                         p.getTipoPropuesta().getNombre(),
                         p.getProponedor().getNickname(),
-                        p.getTiposRetorno(), p.getEstadoActual(), p.getPlazoFinanciacion(), nicksColabs ,comentarios);
+                        p.getTiposRetorno(), p.getEstadoActual(), p.getPlazoFinanciacion(), nicksColabs, comentarios);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -868,9 +862,9 @@ public class Controller implements IController {
         ArrayList<String> aux = emr.listarPropuestasFavoritas(nick);
         ArrayList<String> favortias = new ArrayList<>();
 
-        for(String titulo: aux){
+        for (String titulo : aux) {
             Propuesta p = emr.find(Propuesta.class, titulo);
-            if (p != null && p.getBaja()==false) {
+            if (p != null && p.getBaja() == false) {
                 favortias.add(titulo);
             }
 
@@ -1041,7 +1035,7 @@ public class Controller implements IController {
 
         Propuesta prop = emr.find(Propuesta.class, titulo);
         List<Comentario> aux = prop.getComentario();
-        
+
         for (Comentario aux2 : aux) {
             if (aux2.getNombreColaborador() == null ? nombreColaborador == null : aux2.getNombreColaborador().equals(nombreColaborador)) {
                 emr.close();
@@ -1051,7 +1045,7 @@ public class Controller implements IController {
         }
         emr.close();
         return false;
-        
+
     }
 
     @Override
@@ -1123,41 +1117,41 @@ public class Controller implements IController {
         }
         emr.close();
     }
+
     @Override
-    public void calcularPuntajePropuesta(String titulo){
+    public void calcularPuntajePropuesta(String titulo) {
         Manejador emr = Manejador.getInstance();
         Propuesta propuestaPuntar = emr.find(Propuesta.class, titulo);
         int puntaje = 0;
         int calcular;
-        
+
         calcular = (int) (Float.parseFloat(this.obtenerDineroRecaudado(titulo)));
         //Sumar en base al % de financiacion
-        if(calcular<=(propuestaPuntar.getMontoAReunir()/4)){
+        if (calcular <= (propuestaPuntar.getMontoAReunir() / 4)) {
             puntaje = 1;
-        }else{
-            if(calcular<=(propuestaPuntar.getMontoAReunir()/2)&&calcular>(propuestaPuntar.getMontoAReunir()/4)){
-            puntaje = 2;
-            }
-            else{
-                if(calcular<=(propuestaPuntar.getMontoAReunir()*0.75)&&calcular>(propuestaPuntar.getMontoAReunir()/2)){
+        } else {
+            if (calcular <= (propuestaPuntar.getMontoAReunir() / 2) && calcular > (propuestaPuntar.getMontoAReunir() / 4)) {
+                puntaje = 2;
+            } else {
+                if (calcular <= (propuestaPuntar.getMontoAReunir() * 0.75) && calcular > (propuestaPuntar.getMontoAReunir() / 2)) {
                     puntaje = 3;
-                }else{
+                } else {
                     puntaje = 4;
                 }
             }
         }
         //Sumar puntaje en base a colaboradores que tiene
         List<Colaboracion> colProp = propuestaPuntar.getColaboraciones();
-        for(Colaboracion aux : colProp){
+        for (Colaboracion aux : colProp) {
             puntaje++;
         }
-        
+
         //Sumar puntaje en base a usuarios que la tienen en favoritos
         List<String> usuarioPropFav = this.listarUsuarios();
-        for(String nickActual : usuarioPropFav){
+        for (String nickActual : usuarioPropFav) {
             Usuario usuActual = emr.find(Usuario.class, nickActual);
-            for(Propuesta propAux : usuActual.getPropuestasFavoritas()){
-                if(propAux.getTitulo() == null ? propuestaPuntar.getTitulo() == null : propAux.getTitulo().equals(propuestaPuntar.getTitulo())){
+            for (Propuesta propAux : usuActual.getPropuestasFavoritas()) {
+                if (propAux.getTitulo() == null ? propuestaPuntar.getTitulo() == null : propAux.getTitulo().equals(propuestaPuntar.getTitulo())) {
                     puntaje++;
                 }
             }
@@ -1166,42 +1160,43 @@ public class Controller implements IController {
         emr.mod(propuestaPuntar);
         emr.close();
     }
-    
+
     @Override
-    public void actualizarPuntajes(){
+    public void actualizarPuntajes() {
         List<String> prop = this.listarPropuestas();
-        for(String propAct : prop){
+        for (String propAct : prop) {
             this.calcularPuntajePropuesta(propAct);
         }
     }
+
     @Override
-    public ArrayList<Propuesta> obtenerRecomendaciones(String nick){
+    public ArrayList<Propuesta> obtenerRecomendaciones(String nick) {
         Manejador emr = Manejador.getInstance();
         Usuario sesion = emr.find(Usuario.class, nick);
         Boolean cambiaLista = false;
         List<Usuario> seguidos = sesion.getUsuariosSeguidos();
         ArrayList<Propuesta> retorno = new ArrayList<>();
-        for(Usuario seguidosAux : seguidos){
-            if(seguidosAux instanceof Colaborador){
+        for (Usuario seguidosAux : seguidos) {
+            if (seguidosAux instanceof Colaborador) {
                 Colaborador colab = (Colaborador) seguidosAux;
                 List<Colaboracion> colaboracionSeguido = colab.getColaboraciones();
-                for(Colaboracion colabAux :colaboracionSeguido){
-                     retorno.add(colabAux.getPropuestaColaborada());
+                for (Colaboracion colabAux : colaboracionSeguido) {
+                    retorno.add(colabAux.getPropuestaColaborada());
                 }
             }
-            
+
         }
         Colaborador sesionColab = (Colaborador) sesion;
         List<Colaboracion> colaboraciones = sesionColab.getColaboraciones();
-        for(Colaboracion colabAux : colaboraciones){
+        for (Colaboracion colabAux : colaboraciones) {
             Propuesta propColaborada = colabAux.getPropuestaColaborada();
             List<Colaboracion> colaboracionesProp = propColaborada.getColaboraciones();
-            for(Colaboracion colabAux2 : colaboracionesProp){
-                if(sesionColab.getNickname() != colabAux2.getColaborador().getNickname()){
+            for (Colaboracion colabAux2 : colaboracionesProp) {
+                if (sesionColab.getNickname() != colabAux2.getColaborador().getNickname()) {
                     Colaborador usuarioAux = colabAux2.getColaborador();
                     List<Colaboracion> agregar = usuarioAux.getColaboraciones();
-                    for(Colaboracion colabAux3 : agregar){
-                        if(!retorno.contains(colabAux3.getPropuestaColaborada())){
+                    for (Colaboracion colabAux3 : agregar) {
+                        if (!retorno.contains(colabAux3.getPropuestaColaborada())) {
                             retorno.add(colabAux3.getPropuestaColaborada());
                         }
                     }
@@ -1214,7 +1209,6 @@ public class Controller implements IController {
                 int puntaje1 = retorno.get(i).getPuntaje();
                 int puntaje2 = retorno.get(i + 1).getPuntaje();
 
-
                 if (puntaje1 < puntaje2) {
                     Propuesta temp = retorno.get(i);
                     retorno.set(i, retorno.get(i + 1));
@@ -1224,8 +1218,8 @@ public class Controller implements IController {
             }
         } while (cambiaLista);
         ArrayList<Propuesta> retorno2 = new ArrayList<>();
-        for(int i = 0; i <= 9;i++){
-            retorno.add(retorno.get(i));
+        for (int i = 0; i < Math.min(10, retorno.size()); i++) {
+            retorno2.add(retorno.get(i));
         }
         emr.close();
         return retorno2;
@@ -1266,7 +1260,7 @@ public class Controller implements IController {
         Manejador emr = Manejador.getInstance();
         try {
             Colaboracion c = emr.find(Colaboracion.class, id);
-            if (c != null && c.getBaja()==false) {
+            if (c != null && c.getBaja() == false) {
                 return new DTColaboracion(
                         c.getId(), c.getMonto(), c.getFechaHora(),
                         c.getTipoRetorno(), c.getColaborador().getNickname(), c.getPropuestaColaborada().getTitulo());
@@ -1315,15 +1309,13 @@ public class Controller implements IController {
         if (usu == null) {
             return null;
         }
-        
-        
-        
+
         if (usu instanceof Colaborador) {
             return "colaborador";
-        } else  {
+        } else {
             Proponente p = (Proponente) usu;
-            if(p.getBaja()){
-               return null;
+            if (p.getBaja()) {
+                return null;
             }
             return "proponente";
         }
@@ -1399,19 +1391,19 @@ public class Controller implements IController {
 
         return propuestas;
     }
-    
+
     @Override
     public void registrarAcceso(DTRegistroAcceso dataRegistro) {
         Manejador emr = Manejador.getInstance();
-        
+
         RegistroAcceso registro = new RegistroAcceso(dataRegistro.getIp(),
                 dataRegistro.getUrl(), dataRegistro.getBrowser(), dataRegistro.getOs());
-        
+
         emr.add(registro);
         emr.close();
-        
+
     }
-    
+
     @Override
     public List<DTRegistroAcceso> listDTRegistroAcceso() {
         Manejador emr = Manejador.getInstance();
@@ -1427,13 +1419,13 @@ public class Controller implements IController {
 
         return listaDTRegistros;
     }
-    
+
     @Override
     public List<DTColaboracion> listDTColaboracionUser(String nickname) {
         Manejador emr = Manejador.getInstance();
         List<Colaboracion> colaboraciones = emr.obtenerColaboracionesUser(nickname);
         emr.close();
-        
+
         List<DTColaboracion> listaDTColabs = new ArrayList();
 
         for (Colaboracion c : colaboraciones) {

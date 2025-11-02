@@ -11,6 +11,7 @@ import culturarte.logica.Estado;
 import culturarte.logica.EstadoPropuesta;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
+import culturarte.logica.Propuesta;
 import culturarte.logica.TipoRetorno;
 import static culturarte.wutils.SesionUtils.puedeCrearPropuesta;
 import culturarte.wutils.Tracking;
@@ -37,7 +38,7 @@ import java.util.logging.Logger;
 
 @WebServlet(name = "PropuestaServlet", urlPatterns = {"/propuestas", "/crear-propuesta",
     "/obtener-propuesta", "/obtener-propuesta-por-estado", "/extender-financiacion",
-    "/propuestas-por-estado-usu", "/buscar-propuestas", "/marcar-propuesta-favorita", "/obtener-colaboracion", "/cancelar-propuesta"})
+    "/propuestas-por-estado-usu", "/buscar-propuestas", "/marcar-propuesta-favorita", "/obtener-colaboracion", "/cancelar-propuesta","/sugerencia"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, //1MB+ se escriben al disco
         maxFileSize = 1024 * 1024 * 5, //5MB máximo por archivo
@@ -199,6 +200,23 @@ public class PropuestaServlet extends HttpServlet {
                 break;
             case "/cancelar-propuesta":
                 request.getRequestDispatcher("/WEB-INF/jsp/cancelarPropuesta.jsp").forward(request, response);
+                break;
+            case "/sugerencia":
+                session = request.getSession(false);
+                String nickRecom = session.getAttribute("username").toString();
+                System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+                ArrayList<Propuesta> propRecomList = this.controller.obtenerRecomendaciones(nickRecom);
+                
+                
+                if(propRecomList.isEmpty()){
+                    System.out.println("QUECARAJOOOOOOOOOOOOOOOOOOOOOOOS");
+                }
+                for(Propuesta aux8 : propRecomList){
+                    System.out.println("lolxdmatenmeeeeeeeeeeeeeeee" + aux8.getTitulo());
+                }
+                System.out.println("CCCCCCCCCCCCCCCC");
+                request.setAttribute("propuestas", propRecomList);
+                request.getRequestDispatcher("WEB-INF/jsp/sugerencia.jsp").forward(request, response);
                 break;
 
         }

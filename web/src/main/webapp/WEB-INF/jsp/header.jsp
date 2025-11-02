@@ -60,6 +60,9 @@
                             <a href="/consultar-perfil-usuario" class="nav-link active ">Consultar Perfiles</a>  
                         </li>
                         <li class="nav-item">
+                            <a href="/sugerencia" class="nav-link active ">Sugerencias</a>  
+                        </li>
+                        <li class="nav-item">
                             <a href="/ranking-usuario" class="nav-link active ">Consultar Rankings</a>  
                         </li>
                         <%}%>
