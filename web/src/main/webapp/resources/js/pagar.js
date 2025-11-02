@@ -32,5 +32,37 @@ document.getElementById('metodo-pago').addEventListener('change', function () {
 });
 
 function confirmarPago() {
+    const metodoPago = document.getElementById("metodo-pago").value;
+
+    let grupoVisible = null;
+    if (metodoPago === "tarjeta") grupoVisible = document.getElementById("campos-tarjeta");
+    if (metodoPago === "transferencia") grupoVisible = document.getElementById("campos-transferencia");
+    if (metodoPago === "paypal") grupoVisible = document.getElementById("campos-paypal");
+
+    if (metodoPago === "elegir") {
+        document.getElementById("metodo-pago").classList.add("is-invalid");
+        return;
+    } else {
+        document.getElementById("metodo-pago").classList.remove("is-invalid");
+    }
+
+    if (grupoVisible) {
+        const inputs = grupoVisible.querySelectorAll("input[required], select[required]");
+        let valido = true;
+
+        inputs.forEach(input => {
+            if (!input.value.trim() || input.value === "elegir") {
+                input.classList.add("is-invalid");
+                valido = false;
+            } else {
+                input.classList.remove("is-invalid");
+            }
+        });
+
+        if (!valido) {
+            return;
+        }
+    }
+
     document.getElementById("formulario-pago").submit();
 }

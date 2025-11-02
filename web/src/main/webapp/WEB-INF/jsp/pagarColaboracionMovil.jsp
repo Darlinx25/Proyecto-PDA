@@ -91,45 +91,45 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="numero-tarjeta" class="form-label">Número de tarjeta</label>
-                                    <input name="nroTarjeta" type="text" class="form-control" id="numero-tarjeta" placeholder="XXXX XXXX XXXX XXXX">
+                                    <input required name="nroTarjeta" type="text" class="form-control" id="numero-tarjeta" placeholder="XXXX XXXX XXXX XXXX">
                                 </div>
                                 <div class="mb-3">
                                     <label for="fecha-venc" class="form-label">Fecha de vencimiento</label>
-                                    <input name="vencTarjeta" type="text" class="form-control" id="fecha-venc" placeholder="MM/AA">
+                                    <input required name="vencTarjeta" type="text" class="form-control" id="fecha-venc" placeholder="MM/AA">
                                 </div>
                                 <div class="mb-3">
                                     <label for="cvc" class="form-label">CVC</label>
-                                    <input name="cvc" type="text" class="form-control" id="cvc" placeholder="XXX">
+                                    <input required name="cvc" type="text" class="form-control" id="cvc" placeholder="XXX">
                                 </div>
                                 <div class="mb-3">
                                     <label for="titular-tarjeta" class="form-label">Titular</label>
-                                    <input name="titularTarjeta" type="text" class="form-control" id="titular-tarjeta" placeholder="Albert Einstein">
+                                    <input required name="titularTarjeta" type="text" class="form-control" id="titular-tarjeta" placeholder="Albert Einstein">
                                 </div>
                             </div>
 
                             <div id="campos-transferencia" class="campos-pago" style="display: none;">
                                 <div class="mb-3">
                                     <label for="nombre-banco" class="form-label">Nombre del banco</label>
-                                    <input name="nombreBanco" type="text" class="form-control" id="nombre-banco" placeholder="Nombre del banco">
+                                    <input required name="nombreBanco" type="text" class="form-control" id="nombre-banco" placeholder="Nombre del banco">
                                 </div>
                                 <div class="mb-3">
                                     <label for="cuenta-banco" class="form-label">Número de cuenta</label>
-                                    <input name="cuentaBanco" type="text" class="form-control" id="cuenta-banco" placeholder="Número de cuenta">
+                                    <input required name="cuentaBanco" type="text" class="form-control" id="cuenta-banco" placeholder="Número de cuenta">
                                 </div>
                                 <div class="mb-3">
                                     <label for="titular-banco" class="form-label">Titular</label>
-                                    <input name="titularBanco" type="text" class="form-control" id="titular-banco" placeholder="Albert Einstein">
+                                    <input required name="titularBanco" type="text" class="form-control" id="titular-banco" placeholder="Albert Einstein">
                                 </div>
                             </div>
 
                             <div id="campos-paypal" class="campos-pago" style="display: none;">
                                 <div class="mb-3">
                                     <label for="cuenta-paypal" class="form-label">Número de cuenta</label>
-                                    <input name="cuentaPaypal" type="text" class="form-control" id="cuenta-paypal" placeholder="Número de cuenta">
+                                    <input required name="cuentaPaypal" type="text" class="form-control" id="cuenta-paypal" placeholder="Número de cuenta">
                                 </div>
                                 <div class="mb-3">
                                     <label for="titular-paypal" class="form-label">Titular</label>
-                                    <input name="titularPaypal" type="text" class="form-control" id="titular-paypal" placeholder="Albert Einstein">
+                                    <input required name="titularPaypal" type="text" class="form-control" id="titular-paypal" placeholder="Albert Einstein">
                                 </div>
                             </div>
                         </form>
