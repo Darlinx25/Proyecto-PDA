@@ -30,13 +30,6 @@
 
                 <%                    for (DTColaboracion c : colaboraciones) {
                         DTPropuesta p = controller.obtenerDTPropuesta(c.getPropuestaColaborada());
-                        String pagada;
-                        if (c.isPagada()) {
-                            pagada = "pagada";
-                        } else {
-                            pagada = "no-pagada";
-                        }
-
                 %>
                 <div class="col">
                     <div class="card shadow-sm">
@@ -49,7 +42,8 @@
                             <% if (c.isPagada()) { %>
                             <button type="button" class="btn btn-secondary">Ya pagada</button>
                             <% } else {%>
-                            <button type="button" data-monto="<%= c.getMonto()%>" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-pago">Realizar pago</button>
+                            <button type="button" data-id-colab="<%= c.getId() %>" data-monto="<%= c.getMonto()%>" class="btn btn-primary"
+                                    data-bs-toggle="modal" data-bs-target="#modal-pago">Realizar pago</button>
                             <% } %>
                         </div>
                     </div>
@@ -72,7 +66,9 @@
                                 <label for="monto-colaboracion" class="form-label">Monto de Colaboración</label>
                                 <input name="montoPago" type="text" class="form-control" id="monto-colaboracion" value="" readonly>
                             </div>
-
+                            
+                            <input name="idColaboracion" type="hidden" class="form-control" id="id-colaboracion" value="" readonly>
+                            
                             <div class="mb-3">
                                 <label for="metodo-pago" class="form-label">Método de Pago</label>
                                 <select name="metodoPago" class="form-select" id="metodo-pago" required>

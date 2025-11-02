@@ -21,7 +21,8 @@ public class Colaboracion {
     
     private boolean deBaja;
     
-    @Embedded
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "pago_id")
     private Pago pago;
     
     public Colaboracion(){

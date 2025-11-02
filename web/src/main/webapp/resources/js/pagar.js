@@ -1,8 +1,11 @@
 document.querySelectorAll('button[data-monto]').forEach(function (boton) {
     boton.addEventListener('click', function () {
         let monto = this.getAttribute('data-monto');
+        let idColaboracion = this.getAttribute('data-id-colab');
 
         document.getElementById('monto-colaboracion').value = monto;
+        document.getElementById('id-colaboracion').value = idColaboracion;
+        
         document.getElementById('metodo-pago').value = 'elegir';
         let camposPago = document.querySelectorAll('.campos-pago');
         camposPago.forEach(function (campo) {

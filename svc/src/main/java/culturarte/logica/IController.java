@@ -5,6 +5,7 @@ import culturarte.datatypes.DTPropuesta;
 import culturarte.datatypes.DTColaborador;
 import culturarte.datatypes.DTProponente;
 import culturarte.datatypes.DTColaboracion;
+import culturarte.datatypes.DTPago;
 import culturarte.datatypes.DTRegistroAcceso;
 import culturarte.excepciones.BadPasswordException;
 import culturarte.excepciones.CategoriaDuplicadaException;
@@ -97,6 +98,7 @@ public interface IController {
     public void registrarAcceso(DTRegistroAcceso dataRegistro);
     public List<DTRegistroAcceso> listDTRegistroAcceso();
     public List<DTColaboracion> listDTColaboracionUser(String nickname);
+    public void pagarColaboracion(DTPago dtPago, Long idColab);
     // </editor-fold>
     
 }

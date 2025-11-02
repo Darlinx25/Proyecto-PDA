@@ -99,6 +99,7 @@ public class ColaboracionServelet extends HttpServlet {
                     return;
                 }
                 float montoPago = Float.parseFloat(request.getParameter("montoPago"));
+                Long idColaboracion = Long.parseLong(request.getParameter("idColaboracion"));
                 String metodoPago = request.getParameter("metodoPago");
                 
                 if ("tarjeta".equals(metodoPago)) {
@@ -111,6 +112,8 @@ public class ColaboracionServelet extends HttpServlet {
                     DTFormaPago formaPago = new DTTarjeta(tipoTarjeta, nroTarjeta,
                             vencTarjeta, cvc, titularTarjeta);
                     DTPago pago = new DTPago(montoPago, formaPago);
+                    this.controller.pagarColaboracion(pago, idColaboracion);
+                    response.sendRedirect("/pagar");
                 } else if ("transferencia".equals(metodoPago)) {
                     String nombreBanco = request.getParameter("nombreBanco");
                     String cuentaBanco = request.getParameter("cuentaBanco");
@@ -119,12 +122,16 @@ public class ColaboracionServelet extends HttpServlet {
                     DTFormaPago formaPago = new DTTransferenciaBancaria(nombreBanco,
                             cuentaBanco, titularBanco);
                     DTPago pago = new DTPago(montoPago, formaPago);
+                    this.controller.pagarColaboracion(pago, idColaboracion);
+                    response.sendRedirect("/pagar");
                 } else if ("paypal".equals(metodoPago)) {
                     String cuentaPaypal = request.getParameter("cuentaPaypal");
                     String titularPaypal = request.getParameter("titularPaypal");
                     
                     DTFormaPago formaPago = new DTPaypal(cuentaPaypal, titularPaypal);
                     DTPago pago = new DTPago(montoPago, formaPago);
+                    this.controller.pagarColaboracion(pago, idColaboracion);
+                    response.sendRedirect("/pagar");
                 } else {
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST);
                 }

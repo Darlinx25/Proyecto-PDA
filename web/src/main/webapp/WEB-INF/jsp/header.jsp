@@ -76,7 +76,7 @@
                 <div>
                     <%if (rol == null) {
                     %>
-                    <h2 class="text-white ms-auto">Bienvenido, visitante </h2>
+                    <h2 class="text-white ms-auto">Bienvenido/a, visitante </h2>
                     <%
                     } else {
                     %>

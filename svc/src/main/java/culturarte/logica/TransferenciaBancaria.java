@@ -11,6 +11,8 @@ public class TransferenciaBancaria extends FormaPago {
     private String nroCuenta;
     private String titular;
 
+    public TransferenciaBancaria() {}
+    
     public TransferenciaBancaria(String banco, String nroCuenta, String titular) {
         this.banco = banco;
         this.nroCuenta = nroCuenta;

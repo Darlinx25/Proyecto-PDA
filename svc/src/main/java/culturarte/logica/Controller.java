@@ -6,7 +6,12 @@ import culturarte.datatypes.DTColaborador;
 import culturarte.datatypes.DTProponente;
 import culturarte.datatypes.DTDireccion;
 import culturarte.datatypes.DTColaboracion;
+import culturarte.datatypes.DTFormaPago;
+import culturarte.datatypes.DTPago;
+import culturarte.datatypes.DTPaypal;
 import culturarte.datatypes.DTRegistroAcceso;
+import culturarte.datatypes.DTTarjeta;
+import culturarte.datatypes.DTTransferenciaBancaria;
 import culturarte.excepciones.BadPasswordException;
 import culturarte.excepciones.CategoriaDuplicadaException;
 import culturarte.excepciones.EmailRepetidoException;
@@ -1577,6 +1582,37 @@ public class Controller implements IController {
         }
 
         return listaDTColabs;
+    }
+    
+    @Override
+    public void pagarColaboracion(DTPago dtPago, Long idColab) {
+        Manejador emr = Manejador.getInstance();
+        Colaboracion colab = emr.find(Colaboracion.class, idColab);
+        
+        FormaPago formaPago = null;
+        DTFormaPago dtFormaPago = dtPago.getFormaPago();
+        if (dtFormaPago instanceof DTTarjeta dTTarjeta) {
+            formaPago = new Tarjeta(dTTarjeta.getTipoTarjeta(),
+                    dTTarjeta.getNroTarjeta(),
+                    dTTarjeta.getVencTarjeta(),
+                    dTTarjeta.getCvc(),
+                    dTTarjeta.getTitularTarjeta());
+        } else if (dtFormaPago instanceof DTTransferenciaBancaria dTTransferenciaBancaria) {
+            formaPago = new TransferenciaBancaria(
+                    dTTransferenciaBancaria.getNombreBanco(),
+                    dTTransferenciaBancaria.getCuentaBanco(),
+                    dTTransferenciaBancaria.getTitularBanco());
+        } else if (dtFormaPago instanceof DTPaypal dTPaypal) {
+            formaPago = new Paypal(dTPaypal.getCuentaPaypal(),
+                    dTPaypal.getTitularPaypal());
+        }
+        emr.add(formaPago);
+        
+        Pago pago = new Pago(dtPago.getMontoPago(), formaPago);
+        emr.add(pago);
+        colab.setPago(pago);
+        emr.mod(colab);
+        emr.close();
     }
     // </editor-fold>
 

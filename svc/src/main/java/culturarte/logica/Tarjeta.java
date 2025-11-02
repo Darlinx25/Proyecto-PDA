@@ -12,6 +12,8 @@ public class Tarjeta extends FormaPago {
     private String cvc;
     private String titular;
 
+    public Tarjeta() {}
+    
     public Tarjeta(String tipo, String numero, String fechaVenc, String cvc, String titular) {
         this.tipo = tipo;
         this.numero = numero;

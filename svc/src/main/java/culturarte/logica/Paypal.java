@@ -10,6 +10,8 @@ public class Paypal extends FormaPago {
     private String nroCuenta;
     private String titular;
 
+    public Paypal() {}
+    
     public Paypal(String nroCuenta, String titular) {
         this.nroCuenta = nroCuenta;
         this.titular = titular;

@@ -10,7 +10,7 @@
         String imagen = (String) session.getAttribute("ubiImagen");
         String usr = (String) session.getAttribute("username");
       %>
-      <a class="navbar-brand" >Bienvenido <%= nombre%></a>
+      <a class="navbar-brand" >Bienvenido/a <%= nombre%></a>
       <button
         class="navbar-toggler"
         type="button"
