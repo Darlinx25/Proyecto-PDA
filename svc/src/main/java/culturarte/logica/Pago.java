@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "pagos")
@@ -21,12 +22,15 @@ public class Pago {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "forma_pago_id")
     private FormaPago formaPago;
+    
+    private LocalDateTime fechaPago;
 
     public Pago() {}
     
-    public Pago(float montoPago, FormaPago formaPago) {
+    public Pago(float montoPago, FormaPago formaPago, LocalDateTime fechaPago) {
         this.montoPago = montoPago;
         this.formaPago = formaPago;
+        this.fechaPago = fechaPago;
     }
 
     public float getMontoPago() {
@@ -43,6 +47,14 @@ public class Pago {
 
     public void setFormaPago(FormaPago formaPago) {
         this.formaPago = formaPago;
+    }
+
+    public LocalDateTime getFechaPago() {
+        return fechaPago;
+    }
+
+    public void setFechaPago(LocalDateTime fechaPago) {
+        this.fechaPago = fechaPago;
     }
     
     

@@ -20,6 +20,7 @@ import culturarte.excepciones.PropuestaDuplicadaException;
 import culturarte.excepciones.PropuestaYaColaboradaException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -552,19 +553,20 @@ public class IControllerTest {
     
     @Test
     public void testPagarColaboracion() {
+        LocalDateTime fechaPago = LocalDateTime.now(ZoneId.systemDefault());
         List<DTColaboracion> lista = controller.listDTColaboracionUser("tonyp");
         assertEquals(2, lista.size());
         
         assertFalse(lista.get(0).isPagada());
         DTFormaPago formaPago = new DTPaypal("1234", "Antonio Pacheco");
-        DTPago pago = new DTPago(lista.get(0).getMonto(), formaPago);
+        DTPago pago = new DTPago(lista.get(0).getMonto(), formaPago, fechaPago);
         controller.pagarColaboracion(pago, lista.get(0).getId());
         lista = controller.listDTColaboracionUser("tonyp");
         assertTrue(lista.get(0).isPagada());
         
         assertFalse(lista.get(1).isPagada());
         DTFormaPago formaPago2 = new DTTransferenciaBancaria("BROU", "1234", "Antonio Pacheco");
-        DTPago pago2 = new DTPago(lista.get(1).getMonto(), formaPago2);
+        DTPago pago2 = new DTPago(lista.get(1).getMonto(), formaPago2, fechaPago);
         controller.pagarColaboracion(pago2, lista.get(1).getId());
         lista = controller.listDTColaboracionUser("tonyp");
         assertTrue(lista.get(1).isPagada());
@@ -575,13 +577,13 @@ public class IControllerTest {
         
         assertFalse(lista2.get(0).isPagada());
         DTFormaPago formaPago3 = new DTTarjeta("Visa", "1234 1234 1234 1234", "05/26", "420", "Álvaro Recoba");
-        DTPago pago3 = new DTPago(lista2.get(0).getMonto(), formaPago3);
+        DTPago pago3 = new DTPago(lista2.get(0).getMonto(), formaPago3, fechaPago);
         controller.pagarColaboracion(pago3, lista2.get(0).getId());
         lista2 = controller.listDTColaboracionUser("chino");
         assertTrue(lista2.get(0).isPagada());
         
         
-        DTPago pago4 = new DTPago(lista2.get(0).getMonto(), null);
+        DTPago pago4 = new DTPago(lista2.get(0).getMonto(), null, fechaPago);
         controller.pagarColaboracion(pago4, lista2.get(0).getId());
     }
 }

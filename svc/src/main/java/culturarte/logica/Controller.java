@@ -1612,7 +1612,7 @@ public class Controller implements IController {
         }
         emr.add(formaPago);
         
-        Pago pago = new Pago(dtPago.getMontoPago(), formaPago);
+        Pago pago = new Pago(dtPago.getMontoPago(), formaPago, dtPago.getFechaPago());
         emr.add(pago);
         colab.setPago(pago);
         emr.mod(colab);

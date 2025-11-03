@@ -17,6 +17,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @WebServlet(name = "ColaboracionServelet", urlPatterns = {"/registrar-colaboracion", "/pagar"})
 public class ColaboracionServelet extends HttpServlet {
@@ -101,6 +103,7 @@ public class ColaboracionServelet extends HttpServlet {
                 float montoPago = Float.parseFloat(request.getParameter("montoPago"));
                 Long idColaboracion = Long.parseLong(request.getParameter("idColaboracion"));
                 String metodoPago = request.getParameter("metodoPago");
+                LocalDateTime fechaPago = LocalDateTime.now(ZoneId.systemDefault());
                 
                 if ("tarjeta".equals(metodoPago)) {
                     String tipoTarjeta = request.getParameter("tipoTarjeta");
@@ -111,7 +114,7 @@ public class ColaboracionServelet extends HttpServlet {
                     
                     DTFormaPago formaPago = new DTTarjeta(tipoTarjeta, nroTarjeta,
                             vencTarjeta, cvc, titularTarjeta);
-                    DTPago pago = new DTPago(montoPago, formaPago);
+                    DTPago pago = new DTPago(montoPago, formaPago, fechaPago);
                     this.controller.pagarColaboracion(pago, idColaboracion);
                     response.sendRedirect("/pagar");
                 } else if ("transferencia".equals(metodoPago)) {
@@ -121,7 +124,7 @@ public class ColaboracionServelet extends HttpServlet {
                     
                     DTFormaPago formaPago = new DTTransferenciaBancaria(nombreBanco,
                             cuentaBanco, titularBanco);
-                    DTPago pago = new DTPago(montoPago, formaPago);
+                    DTPago pago = new DTPago(montoPago, formaPago, fechaPago);
                     this.controller.pagarColaboracion(pago, idColaboracion);
                     response.sendRedirect("/pagar");
                 } else if ("paypal".equals(metodoPago)) {
@@ -129,7 +132,7 @@ public class ColaboracionServelet extends HttpServlet {
                     String titularPaypal = request.getParameter("titularPaypal");
                     
                     DTFormaPago formaPago = new DTPaypal(cuentaPaypal, titularPaypal);
-                    DTPago pago = new DTPago(montoPago, formaPago);
+                    DTPago pago = new DTPago(montoPago, formaPago, fechaPago);
                     this.controller.pagarColaboracion(pago, idColaboracion);
                     response.sendRedirect("/pagar");
                 } else {
