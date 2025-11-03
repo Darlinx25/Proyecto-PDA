@@ -7,6 +7,7 @@ import culturarte.datatypes.DTProponente;
 import culturarte.datatypes.DTDireccion;
 import culturarte.datatypes.DTColaboracion;
 import culturarte.datatypes.DTFormaPago;
+import culturarte.datatypes.DTMail;
 import culturarte.datatypes.DTPago;
 import culturarte.datatypes.DTPaypal;
 import culturarte.datatypes.DTRegistroAcceso;
@@ -18,6 +19,17 @@ import culturarte.excepciones.EmailRepetidoException;
 import culturarte.excepciones.NickRepetidoException;
 import culturarte.excepciones.PropuestaDuplicadaException;
 import culturarte.excepciones.PropuestaYaColaboradaException;
+import jakarta.activation.MimeType;
+import jakarta.mail.Message;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Multipart;
+import jakarta.mail.Session;
+import jakarta.mail.Transport;
+import jakarta.mail.internet.AddressException;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeBodyPart;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.mail.internet.MimeMultipart;
 import jakarta.persistence.*;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -37,10 +49,12 @@ import java.util.Base64;
 import java.util.Collections;
 
 import java.util.List;
+import java.util.Properties;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
 import javax.swing.tree.DefaultMutableTreeNode;
+import org.eclipse.angus.mail.smtp.SMTPMessage;
 import org.hibernate.annotations.Generated;
 
 //SINGLETON
@@ -1617,6 +1631,39 @@ public class Controller implements IController {
         colab.setPago(pago);
         emr.mod(colab);
         emr.close();
+    }
+    
+    @Override
+    public void mandarMail(DTMail dtMail) {
+        
+        try {
+            Properties properties = new Properties();
+            properties.put("mail.smtp.host", "localhost");
+            properties.put("mail.smtp.port", "25");
+            properties.put("mail.smtp.ssl.trust", "*");
+            properties.put("mail.smtp.ssl.checkserveridentity", false);
+            
+            Session session = Session.getDefaultInstance(properties, null);
+            Message message = new MimeMessage(session);
+            
+            message.setFrom(new InternetAddress("no-reply@culturarte.com"));
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(dtMail.getDestinatario()));
+            message.setSubject(dtMail.getAsunto());
+            
+            MimeBodyPart mimeBodyPart = new MimeBodyPart();
+            mimeBodyPart.setContent(dtMail.getCuerpo(), "text/html; charset=utf-8");
+            
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(mimeBodyPart);
+            
+            message.setContent(multipart);
+            Transport.send(message);
+            
+        } catch (MessagingException ex) {
+            System.getLogger(Controller.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        
+        
     }
     // </editor-fold>
 

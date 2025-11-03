@@ -116,6 +116,10 @@ public class ColaboracionServelet extends HttpServlet {
                             vencTarjeta, cvc, titularTarjeta);
                     DTPago pago = new DTPago(montoPago, formaPago, fechaPago);
                     this.controller.pagarColaboracion(pago, idColaboracion);
+                    
+                    mandarMailProponente();
+                    mandarMailColaborador();
+                    
                     response.sendRedirect("/pagar");
                 } else if ("transferencia".equals(metodoPago)) {
                     String nombreBanco = request.getParameter("nombreBanco");
@@ -146,5 +150,12 @@ public class ColaboracionServelet extends HttpServlet {
     }
 
     // </editor-fold>
-
+    
+    private void mandarMailProponente() {
+        
+    }
+    
+    private void mandarMailColaborador() {
+        
+    }
 }

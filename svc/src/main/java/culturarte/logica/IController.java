@@ -5,6 +5,7 @@ import culturarte.datatypes.DTPropuesta;
 import culturarte.datatypes.DTColaborador;
 import culturarte.datatypes.DTProponente;
 import culturarte.datatypes.DTColaboracion;
+import culturarte.datatypes.DTMail;
 import culturarte.datatypes.DTPago;
 import culturarte.datatypes.DTRegistroAcceso;
 import culturarte.excepciones.BadPasswordException;
@@ -99,6 +100,7 @@ public interface IController {
     public List<DTRegistroAcceso> listDTRegistroAcceso();
     public List<DTColaboracion> listDTColaboracionUser(String nickname);
     public void pagarColaboracion(DTPago dtPago, Long idColab);
+    public void mandarMail(DTMail dtMail);
     // </editor-fold>
     
 }
