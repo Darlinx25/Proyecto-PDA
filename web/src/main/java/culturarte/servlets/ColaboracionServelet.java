@@ -1,10 +1,14 @@
 package culturarte.servlets;
 
+import culturarte.datatypes.DTColaboracion;
 import culturarte.datatypes.DTFormaPago;
+import culturarte.datatypes.DTMail;
 import culturarte.datatypes.DTPago;
 import culturarte.datatypes.DTPaypal;
+import culturarte.datatypes.DTPropuesta;
 import culturarte.datatypes.DTTarjeta;
 import culturarte.datatypes.DTTransferenciaBancaria;
+import culturarte.datatypes.DTUsuario;
 import culturarte.excepciones.PropuestaYaColaboradaException;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
@@ -19,6 +23,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 @WebServlet(name = "ColaboracionServelet", urlPatterns = {"/registrar-colaboracion", "/pagar"})
 public class ColaboracionServelet extends HttpServlet {
@@ -117,8 +122,15 @@ public class ColaboracionServelet extends HttpServlet {
                     DTPago pago = new DTPago(montoPago, formaPago, fechaPago);
                     this.controller.pagarColaboracion(pago, idColaboracion);
                     
-                    mandarMailProponente();
-                    mandarMailColaborador();
+                    String nickColab = session.getAttribute("username").toString();
+                    DTUsuario colaborador = this.controller.obtenerDTColaborador(nickColab);
+                    DTColaboracion colaboracion = this.controller.obtenerDTColaboracion(idColaboracion);
+                    DTPropuesta propuesta = this.controller.obtenerDTPropuesta(colaboracion.getPropuestaColaborada());
+                    DTUsuario proponente = this.controller.obtenerDTProponente(propuesta.getNickProponedor());
+                    mandarMailProponente(proponente.getEmail(), fechaPago, colaborador.getNickname(),
+                            proponente.getNickname(), propuesta.getTitulo(), montoPago);
+                    mandarMailColaborador(colaborador.getEmail(), fechaPago, colaborador.getNickname(),
+                            proponente.getNickname(), propuesta.getTitulo(), montoPago);
                     
                     response.sendRedirect("/pagar");
                 } else if ("transferencia".equals(metodoPago)) {
@@ -130,6 +142,17 @@ public class ColaboracionServelet extends HttpServlet {
                             cuentaBanco, titularBanco);
                     DTPago pago = new DTPago(montoPago, formaPago, fechaPago);
                     this.controller.pagarColaboracion(pago, idColaboracion);
+                    
+                    String nickColab = session.getAttribute("username").toString();
+                    DTUsuario colaborador = this.controller.obtenerDTColaborador(nickColab);
+                    DTColaboracion colaboracion = this.controller.obtenerDTColaboracion(idColaboracion);
+                    DTPropuesta propuesta = this.controller.obtenerDTPropuesta(colaboracion.getPropuestaColaborada());
+                    DTUsuario proponente = this.controller.obtenerDTProponente(propuesta.getNickProponedor());
+                    mandarMailProponente(proponente.getEmail(), fechaPago, colaborador.getNickname(),
+                            proponente.getNickname(), propuesta.getTitulo(), montoPago);
+                    mandarMailColaborador(colaborador.getEmail(), fechaPago, colaborador.getNickname(),
+                            proponente.getNickname(), propuesta.getTitulo(), montoPago);
+                    
                     response.sendRedirect("/pagar");
                 } else if ("paypal".equals(metodoPago)) {
                     String cuentaPaypal = request.getParameter("cuentaPaypal");
@@ -138,6 +161,17 @@ public class ColaboracionServelet extends HttpServlet {
                     DTFormaPago formaPago = new DTPaypal(cuentaPaypal, titularPaypal);
                     DTPago pago = new DTPago(montoPago, formaPago, fechaPago);
                     this.controller.pagarColaboracion(pago, idColaboracion);
+                    
+                    String nickColab = session.getAttribute("username").toString();
+                    DTUsuario colaborador = this.controller.obtenerDTColaborador(nickColab);
+                    DTColaboracion colaboracion = this.controller.obtenerDTColaboracion(idColaboracion);
+                    DTPropuesta propuesta = this.controller.obtenerDTPropuesta(colaboracion.getPropuestaColaborada());
+                    DTUsuario proponente = this.controller.obtenerDTProponente(propuesta.getNickProponedor());
+                    mandarMailProponente(proponente.getEmail(), fechaPago, colaborador.getNickname(),
+                            proponente.getNickname(), propuesta.getTitulo(), montoPago);
+                    mandarMailColaborador(colaborador.getEmail(), fechaPago, colaborador.getNickname(),
+                            proponente.getNickname(), propuesta.getTitulo(), montoPago);
+                    
                     response.sendRedirect("/pagar");
                 } else {
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -151,11 +185,65 @@ public class ColaboracionServelet extends HttpServlet {
 
     // </editor-fold>
     
-    private void mandarMailProponente() {
+    private void mandarMailProponente(String mailProp, LocalDateTime fechaPago, String nickColab,
+            String nickProp, String tituloProp, float montoPago) {
         
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        String fechaNormal = fechaPago.format(formatter);
+        
+        String asunto = "[Culturarte] [" + fechaNormal
+                + "] Pago de colaboración registrado";
+        
+        String cuerpo = "<p>Estimado/a " + nickProp + ". El pago correspondiente "
+                + "a la colaboración de la propuesta " + tituloProp
+                + " realizada por " + nickColab
+                + " ha sido registrado en forma exitosa.</p>"
+                + "<p>---Detalles de la Colaboración<br>"
+                + "-Propuesta:<br>"
+                + "   - " + tituloProp + "<br>"
+                + "-Proponente:<br>"
+                + "   - " + nickProp + "<br>"
+                + "-Colaborador:<br>"
+                + "   - " + nickColab + "<br>"
+                + "-Monto:<br>"
+                + "   - $ " + String.valueOf(montoPago) + "<br>"
+                + "-Fecha de pago:<br>"
+                + "   - " + fechaNormal + "</p>"
+                + "<p>Gracias por preferirnos,<br>Saludos.<br>Culturarte.</p>";
+        
+        DTMail dtMail = new DTMail(mailProp, asunto, cuerpo);
+        this.controller.mandarMail(dtMail);
     }
     
-    private void mandarMailColaborador() {
+    private void mandarMailColaborador(String mailColab, LocalDateTime fechaPago, String nickColab,
+            String nickProp, String tituloProp, float montoPago) {
         
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        String fechaNormal = fechaPago.format(formatter);
+        
+        String asunto = "[Culturarte] [" + fechaNormal
+                + "] Pago de colaboración registrado";
+        
+        String cuerpo = "<p>Estimado/a " + nickColab + ". El pago correspondiente "
+                + "a la colaboración de la propuesta " + tituloProp
+                + " realizada por " + nickColab
+                + " ha sido registrado en forma exitosa.</p>"
+                + "<p>---Detalles de la Colaboración<br>"
+                + "-Propuesta:<br>"
+                + "   - " + tituloProp + "<br>"
+                + "-Proponente:<br>"
+                + "   - " + nickProp + "<br>"
+                + "-Colaborador:<br>"
+                + "   - " + nickColab + "<br>"
+                + "-Monto:<br>"
+                + "   - $ " + String.valueOf(montoPago) + "<br>"
+                + "-Fecha de pago:<br>"
+                + "   - " + fechaNormal + "</p>"
+                + "<p><a href=\"http://localhost:8080/constancia-pago\">Click acá<a/>"
+                + " para obtener la constancia de pago.</p>"
+                + "<p>Gracias por preferirnos,<br>Saludos.<br>Culturarte.</p>";
+        
+        DTMail dtMail = new DTMail(mailColab, asunto, cuerpo);
+        this.controller.mandarMail(dtMail);
     }
 }

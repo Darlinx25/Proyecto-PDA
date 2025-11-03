@@ -1639,7 +1639,7 @@ public class Controller implements IController {
         try {
             Properties properties = new Properties();
             properties.put("mail.smtp.host", "localhost");
-            properties.put("mail.smtp.port", "25");
+            properties.put("mail.smtp.port", "12345");
             properties.put("mail.smtp.ssl.trust", "*");
             properties.put("mail.smtp.ssl.checkserveridentity", false);
             
