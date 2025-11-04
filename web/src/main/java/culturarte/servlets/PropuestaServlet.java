@@ -38,7 +38,7 @@ import java.util.logging.Logger;
 
 @WebServlet(name = "PropuestaServlet", urlPatterns = {"/propuestas", "/crear-propuesta",
     "/obtener-propuesta", "/obtener-propuesta-por-estado", "/extender-financiacion",
-    "/propuestas-por-estado-usu", "/buscar-propuestas", "/marcar-propuesta-favorita", "/obtener-colaboracion", "/cancelar-propuesta","/sugerencia"})
+    "/propuestas-por-estado-usu", "/buscar-propuestas", "/marcar-propuesta-favorita", "/obtener-colaboracion", "/cancelar-propuesta", "/sugerencia"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, //1MB+ se escriben al disco
         maxFileSize = 1024 * 1024 * 5, //5MB máximo por archivo
@@ -116,7 +116,7 @@ public class PropuestaServlet extends HttpServlet {
                 List<String> propuestasComentables = propuestasComentables(nick3);
                 List<String> propuestasComentadas = propuestasComentadas(nick3);
                 List<Object> respuesta = new ArrayList<>();
-                
+
                 respuesta.add(propuestas);
                 respuesta.add(propuestasFav);
                 respuesta.add(propuestasColab);
@@ -125,7 +125,7 @@ public class PropuestaServlet extends HttpServlet {
                 respuesta.add(propuestasFinanciadas);
                 respuesta.add(propuestasComentables);
                 respuesta.add(propuestasComentadas);
-                
+
                 response.setContentType("application/json;charset=UTF-8");
                 ObjectMapper mapper = new ObjectMapper();
                 mapper.registerModule(new JavaTimeModule());
@@ -205,7 +205,16 @@ public class PropuestaServlet extends HttpServlet {
                 session = request.getSession(false);
                 String nickRecom = session.getAttribute("username").toString();
                 ArrayList<Propuesta> propRecomList = this.controller.obtenerRecomendaciones(nickRecom);
-                request.setAttribute("propuestas", propRecomList);
+                List<String> propuestasPuntage = new ArrayList<>();
+                if (propRecomList != null) {
+                    for (Propuesta p : propRecomList) {
+                        String t = p.getTitulo();
+                        int puntaje = p.getPuntaje();
+                        String propuesta = t + " - " + puntaje + " - " + " puntos";
+                        propuestasPuntage.add(propuesta);
+                    }
+                }
+                request.setAttribute("propuestas", propuestasPuntage);
                 request.getRequestDispatcher("WEB-INF/jsp/sugerencia.jsp").forward(request, response);
                 break;
 
@@ -221,14 +230,14 @@ public class PropuestaServlet extends HttpServlet {
         switch (path) {
             case "/crear-propuesta":
                 if (puedeCrearPropuesta(request.getSession())) {
-                    try{
-                    procesarCrearPropuesta(request, response);
-                    response.sendRedirect("/index");
-                    }catch(PropuestaDuplicadaException ex){
-                    ArrayList<String> categorias = this.controller.obtenerCategorias();
-                    request.setAttribute("categorias", categorias);
-                    request.setAttribute("error", "Ya existe una propuesta con ese nombre.");
-                    request.getRequestDispatcher("/WEB-INF/jsp/crearPropuesta.jsp").forward(request, response);
+                    try {
+                        procesarCrearPropuesta(request, response);
+                        response.sendRedirect("/index");
+                    } catch (PropuestaDuplicadaException ex) {
+                        ArrayList<String> categorias = this.controller.obtenerCategorias();
+                        request.setAttribute("categorias", categorias);
+                        request.setAttribute("error", "Ya existe una propuesta con ese nombre.");
+                        request.getRequestDispatcher("/WEB-INF/jsp/crearPropuesta.jsp").forward(request, response);
                     }
                 } else {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN);
@@ -318,9 +327,7 @@ public class PropuestaServlet extends HttpServlet {
                 nombreImagen, lugar, fechaPrevista, precioF, montoF, categoria,
                 nickProp, tiposRetorno, est);
 
-       
-            this.controller.addPropuesta(prop);
-        
+        this.controller.addPropuesta(prop);
 
     }
 
@@ -394,7 +401,7 @@ public class PropuestaServlet extends HttpServlet {
         if (nick == null) {
             return aux2;
         }
-        
+
         for (String prop : aux) {
             Boolean propuestaYaFavorita = this.controller.propuestaYaFavorita(prop, nick);
             if (propuestaYaFavorita) {
@@ -403,7 +410,7 @@ public class PropuestaServlet extends HttpServlet {
         }
         return aux2;
     }
-    
+
     private ArrayList<String> recibirPropuestas(String nick) {
 
         ArrayList<String> aux = this.controller.listarPropuestas();
@@ -421,7 +428,7 @@ public class PropuestaServlet extends HttpServlet {
         }
         return aux2;
     }
-    
+
     private ArrayList<String> propuestasPubliYenFina() {
 
         ArrayList<String> aux = this.controller.listarPropuestas();
@@ -429,13 +436,13 @@ public class PropuestaServlet extends HttpServlet {
 
         for (String prop : aux) {
             DTPropuesta propuestaAux = this.controller.obtenerDTPropuesta(prop);
-            if (propuestaAux.getEstadoActual().getEstado() == EstadoPropuesta.PUBLICADA || propuestaAux.getEstadoActual().getEstado() == EstadoPropuesta.EN_FINANCIACION ) {
+            if (propuestaAux.getEstadoActual().getEstado() == EstadoPropuesta.PUBLICADA || propuestaAux.getEstadoActual().getEstado() == EstadoPropuesta.EN_FINANCIACION) {
                 aux2.add(prop);
             }
         }
         return aux2;
     }
-    
+
     private ArrayList<String> propuestasFinanciadas() {
 
         ArrayList<String> aux = this.controller.listarPropuestas();
@@ -449,26 +456,25 @@ public class PropuestaServlet extends HttpServlet {
         }
         return aux2;
     }
-    
-    private ArrayList<String> propuestasComentables(String nickCol){
-        
+
+    private ArrayList<String> propuestasComentables(String nickCol) {
+
         ArrayList<String> aux = this.controller.obtenerPropuestasColaboradas(nickCol);
         ArrayList<String> aux2 = new ArrayList<>();
-        
-        for(String prop : aux){
+
+        for (String prop : aux) {
             DTPropuesta aux3 = this.controller.obtenerDTPropuesta(prop);
-            
-               Estado aux4 = aux3.getEstadoActual();
-                Boolean comentarioExiste = this.controller.comentarioExiste(prop, nickCol);
-                if(aux4.getEstado() == EstadoPropuesta.FINANCIADA && !comentarioExiste){
-                    aux2.add(prop);
-                } 
-            
-            
+
+            Estado aux4 = aux3.getEstadoActual();
+            Boolean comentarioExiste = this.controller.comentarioExiste(prop, nickCol);
+            if (aux4.getEstado() == EstadoPropuesta.FINANCIADA && !comentarioExiste) {
+                aux2.add(prop);
+            }
+
         }
         return aux2;
     }
-    
+
     private ArrayList<String> propuestasComentadas(String nickCol) {
 
         ArrayList<String> aux = this.controller.obtenerPropuestasColaboradas(nickCol);
@@ -476,19 +482,17 @@ public class PropuestaServlet extends HttpServlet {
 
         for (String prop : aux) {
             DTPropuesta aux3 = this.controller.obtenerDTPropuesta(prop);
-            
-                Estado aux4 = aux3.getEstadoActual();
-                Boolean comentarioExiste = this.controller.comentarioExiste(prop, nickCol);
-                if (aux4.getEstado() == EstadoPropuesta.FINANCIADA && comentarioExiste) {
-                    aux2.add(prop);
-                } 
-            
-            
+
+            Estado aux4 = aux3.getEstadoActual();
+            Boolean comentarioExiste = this.controller.comentarioExiste(prop, nickCol);
+            if (aux4.getEstado() == EstadoPropuesta.FINANCIADA && comentarioExiste) {
+                aux2.add(prop);
+            }
+
         }
         return aux2;
     }
-    
-    
+
     private String obtenerColaboracionJSON(Long id) {
         DTColaboracion colab = this.controller.obtenerDTColaboracion(id);
         if (colab == null) {
@@ -504,9 +508,6 @@ public class PropuestaServlet extends HttpServlet {
             return "{}";
         }
     }
-    
-    
-    
-    
+
     // </editor-fold>
 }

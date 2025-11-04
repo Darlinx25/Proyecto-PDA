@@ -3,14 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
  */
 
-function cargarPropuestaColab() {
-    const select = document.getElementById("propuestaColaboradas");
-    const valor = select.value;
-
+function cargarPropuestaSugerida(valor) {
     if (!valor)
         return;
 
     const titulo = valor.split(" - ")[0];
+    console.log(titulo);
     const container = document.getElementById("contenedorPropuestaColaboradas");
     console.log(titulo);
     fetch(`/obtener-propuesta?titulo=${encodeURIComponent(titulo)}`)
