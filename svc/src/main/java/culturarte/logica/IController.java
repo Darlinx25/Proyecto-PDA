@@ -75,7 +75,7 @@ public interface IController {
     public ArrayList<String> listarPropuestasFavoritas(String nick);
     public void calcularPuntajePropuesta(String titulo);
     public void actualizarPuntajes();
-    public ArrayList<Propuesta> obtenerRecomendaciones(String nick);
+    public ArrayList<String> obtenerRecomendaciones(String nick);
     public ArrayList<String> listaPropuestasUsuDeBaja(String nick);
     public DTPropuesta obtenerDTPropuestaDeBaja(String titulo);
     public String obtenerDineroRecaudadoDeBaja(String tituloProp);

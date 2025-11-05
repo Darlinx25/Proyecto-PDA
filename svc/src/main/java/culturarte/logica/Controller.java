@@ -1331,7 +1331,20 @@ public class Controller implements IController {
     }
 
     @Override
-    public ArrayList<Propuesta> obtenerRecomendaciones(String nick) {
+    public ArrayList<String> obtenerRecomendaciones(String nick){
+        ArrayList<Propuesta> prop = this.obtenerRecomendacion(nick);
+        ArrayList<String> listaPropuesta = new ArrayList<>();
+        for(Propuesta p: prop){
+            String t = p.getTitulo();
+            int puntaje = p.getPuntaje();
+            String propuesta = t + " - " + puntaje + " - " + " puntos";
+            listaPropuesta.add(propuesta);
+        }
+
+        return listaPropuesta;
+    }
+
+    private ArrayList<Propuesta> obtenerRecomendacion(String nick) {
         Manejador emr = Manejador.getInstance();
         Usuario sesion = emr.find(Usuario.class, nick);
         Boolean cambiaLista = false;
