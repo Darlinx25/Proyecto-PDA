@@ -63,9 +63,16 @@ function cargarColabPropia() {
                 const horas = fecha.getHours().toString().padStart(2, '0');
                 const minutos = fecha.getMinutes().toString().padStart(2, '0');
                 const fechaFormateada = `${dia}/${mes}/${anio} ${horas}:${minutos}`;
+                const estaPaga = data.pagada;
+
+                
                 container.innerHTML = `
                 <p><strong>Monto colaborado:</strong> $${data.monto}</p>
                 <p><strong>Fecha colaboracion:</strong> ${fechaFormateada}</p>
+                ${estaPaga
+                        ? `<button class="btn btn-success" onclick="emitirConstancia('${id}')">Emitir Constancia de Pago</button>`
+                        : '<p><em>(Colaboración aún no pagada)</em></p>'
+                }
             `;
 
             })
@@ -73,3 +80,50 @@ function cargarColabPropia() {
 }
 
 
+function emitirConstancia(idColaboracion){
+    
+    if (!idColaboracion)
+        return;
+
+    const modalElemento = document.getElementById('modalConstancia');
+    const miModal = new bootstrap.Modal(modalElemento);
+
+    fetch(`/obtener-colaboracion?id=${encodeURIComponent(idColaboracion)}`)
+            .then(resp => {
+                if (!resp.ok)
+                    throw new Error("Error al obtener la colaboracion");
+                return resp.json();
+            })
+            .then(data => {
+                const fecha = new Date(data.fechaHora);
+                const dia = fecha.getDate().toString().padStart(2, '0');
+                const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+                const anio = fecha.getFullYear();
+                const horas = fecha.getHours().toString().padStart(2, '0');
+                const minutos = fecha.getMinutes().toString().padStart(2, '0');
+                const fechaFormateada = `${dia}/${mes}/${anio} ${horas}:${minutos}`;
+                
+                const fechaPago = new Date(data.pago.fechaPago);
+                const diaPago = fechaPago.getDate().toString().padStart(2, '0');
+                const mesPago = (fechaPago.getMonth() + 1).toString().padStart(2, '0');
+                const anioPago = fechaPago.getFullYear();
+                const horasPago = fechaPago.getHours().toString().padStart(2, '0');
+                const minutosPago = fechaPago.getMinutes().toString().padStart(2, '0');
+                const fechaFormateadaPago = `${diaPago}/${mesPago}/${anioPago} ${horasPago}:${minutosPago}`;
+
+
+                
+                document.getElementById('modal-retorno').innerText = `${data.tipoRetorno}`;
+                document.getElementById('modal-propColab').innerText = `${data.propuestaColaborada}`;
+                document.getElementById('modal-monto').innerText = `$${data.monto}`;
+                document.getElementById('modal-fecha').innerText = fechaFormateada;
+                document.getElementById('modal-fechaPago').innerText = fechaFormateadaPago;
+                document.getElementById('modal-metodoPago').innerText = data.pago.metodoPago;
+                miModal.show();
+            })
+            .catch(err => {
+                console.error("Error:", err);
+                document.getElementById('modal-id-colab').value = "Error al cargar datos";
+                miModal.show();
+            });
+}

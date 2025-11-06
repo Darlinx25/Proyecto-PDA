@@ -1435,7 +1435,7 @@ public class Controller implements IController {
         try {
             Colaboracion c = emr.find(Colaboracion.class, id);
             if (c != null && c.getBaja() == false) {
-                return new DTColaboracion(
+                return new DTColaboracion(c.getPago() != null,c.getPago(),
                         c.getId(), c.getMonto(), c.getFechaHora(),
                         c.getTipoRetorno(), c.getColaborador().getNickname(), c.getPropuestaColaborada().getTitulo());
             }
@@ -1601,9 +1601,10 @@ public class Controller implements IController {
         emr.close();
 
         List<DTColaboracion> listaDTColabs = new ArrayList();
-
+        
         for (Colaboracion c : colaboraciones) {
-            listaDTColabs.add(new DTColaboracion(c.getPago() != null, c.getId(),
+
+            listaDTColabs.add(new DTColaboracion(c.getPago() != null,c.getPago(), c.getId(),
                     c.getMonto(),
                     c.getFechaHora(), c.getTipoRetorno(),
                     c.getColaborador().getNickname(), c.getPropuestaColaborada().getTitulo()));
@@ -1618,6 +1619,7 @@ public class Controller implements IController {
         Colaboracion colab = emr.find(Colaboracion.class, idColab);
         
         FormaPago formaPago;
+        String metodoPago;
         DTFormaPago dtFormaPago = dtPago.getFormaPago();
         if (dtFormaPago instanceof DTTarjeta dTTarjeta) {
             formaPago = new Tarjeta(dTTarjeta.getTipoTarjeta(),
@@ -1639,12 +1641,13 @@ public class Controller implements IController {
         }
         emr.add(formaPago);
         
-        Pago pago = new Pago(dtPago.getMontoPago(), formaPago, dtPago.getFechaPago());
+        Pago pago = new Pago(dtPago.getMontoPago(), formaPago, dtPago.getFechaPago(),dtPago.getMetodoPago());
         emr.add(pago);
         colab.setPago(pago);
         emr.mod(colab);
         emr.close();
     }
+    
     
     @Override
     public void mandarMail(DTMail dtMail) {

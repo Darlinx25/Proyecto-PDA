@@ -1,3 +1,5 @@
+<%@page import="java.time.LocalDateTime"%>
+<%@page import="java.time.LocalDate"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -134,18 +136,53 @@
                                 <% }%>
                             </select>
                         </div> 
-                        
-                        
-                        
+
+
+
                     </div>
-           
+
                 </div>
             </div>
+            <div class="modal fade" id="modalConstancia" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Constancia de Pago</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                         <%
+                        LocalDateTime fechaCons = LocalDateTime.now();
+                        %>
+                        <div class="modal-body">
+                            <p><strong>Detalles de la colaboración:</strong></p>
+                            <p><strong>Plataforma:</strong>  Culturarte</p>
+                            <p><strong>Fecha de constancia:</strong> <%= java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").format(fechaCons)%> </p>
+                            <p><strong>Colaborador:</strong>  <%= nombre%> <%= apellido%></p>
+                            <p><strong>Propuesta colaborada: </strong> <span id="modal-propColab"></span></p>
+                            <p><strong>Monto colaborado:</strong> <span id="modal-monto"></span></p>
+                            <p><strong>Tipo de retorno:</strong> <span id="modal-retorno"></span></p>
+                            <p><strong>Fecha colaboracion:</strong> <span id="modal-fecha"></span></p>
+                            <p><strong>Fecha de pago:</strong> <span id="modal-fechaPago"></span></p>
+                            <p><strong>Metodo de pago:</strong> <span id="modal-metodoPago"></span></p>
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary">Descargar PDF</button>
+                        </div>
+                    </div>
+                </div>
+            </div>                
+
+
+
+
             <div class="align-items-center">
                 <div class="bg-secondary p-2 rounded shadow-sm border border-5 border-dark mb-3 mt-3">
                     <h3 class=" text-center">  Datos de propuesta colaborada:  </h3>
                     <div id="contenedorPropuestaColaboradas"></div>
                     <div id="contenedorPropuestaColaboradasPropias"></div>
+
                 </div> 
             </div>    
             <div class="align-items-center">
@@ -183,18 +220,18 @@
                     <div class="d-flex justify-content-center mt-3">
                         <button type="button" class="btn btn-danger" id="follow" onclick="seguirUser()">Seguir</button>
                     </div>
-                    
+
                     <% }%>
-                    
+
                     <% if (miPerfil == true) { %>
                     <div class="d-flex justify-content-center mt-3">
                         <form action="/baja-proponente" method="post"  ">
                             <button type="submit" class="nav-link btn btn-danger">Darse de baja</button>
                         </form>
-                        
+
                     </div>
-                     <% }%>
-                    
+                    <% }%>
+
                 </div>
                 <div class="d-flex flex-column justify-content-center ">
                     <p class="text-start text-uppercase" id="NombreUser"><%= nombre%> <%= apellido%> - <%= rol%></p>
@@ -261,7 +298,7 @@
 
 
                         </div >
-                            <div class="mb-3">
+                        <div class="mb-3">
                             <label for="propuesta" class="form-label"><strong>Propuestas favoritas:</strong></label>
                             <select onchange="cargarPropuestaFavorita()" id="propuestaFavoritas" name="propuestaFav" class="form-select form-select-sm" required>
                                 <option value="" selected disabled>-- Seleccione una propuesta  --</option>
@@ -295,6 +332,7 @@
         <script>
             const u = "<%= username%>";
         </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/colaboracion.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/propuestaColabDetalle.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/propuestaDetalle.js"></script>

@@ -4,6 +4,7 @@
  */
 package culturarte.datatypes;
 
+import culturarte.logica.Pago;
 import java.time.LocalDateTime;
 
 /**
@@ -18,6 +19,7 @@ public class DTColaboracion {
     private String colaborador;
     private String propuestaColaborada;
     private boolean pagada;
+    private Pago pago;
     
     public DTColaboracion(Long id, float monto, LocalDateTime fechaHora, String tipoRetorno, String colaborador, String propuestaColaborada) {
         this.id = id;
@@ -29,8 +31,9 @@ public class DTColaboracion {
     }
     
     //es para la web
-    public DTColaboracion(boolean pagada, Long id, float monto, LocalDateTime fechaHora, String tipoRetorno, String colaborador, String propuestaColaborada) {
+    public DTColaboracion(boolean pagada,Pago pago, Long id, float monto, LocalDateTime fechaHora, String tipoRetorno, String colaborador, String propuestaColaborada) {
         this.pagada = pagada;
+        this.pago = pago;
         this.id = id;
         this.monto = monto;
         this.fechaHora = fechaHora;
@@ -68,4 +71,9 @@ public class DTColaboracion {
     public String getPropuestaColaborada() {
         return propuestaColaborada;
     }
+    
+    public Pago getPago() {
+        return pago;
+    }
+    
 }

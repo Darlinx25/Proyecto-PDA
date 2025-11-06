@@ -23,11 +23,14 @@ public class Pago {
     @JoinColumn(name = "forma_pago_id")
     private FormaPago formaPago;
     
+    private String metodoPago;
+    
     private LocalDateTime fechaPago;
 
     public Pago() {}
     
-    public Pago(float montoPago, FormaPago formaPago, LocalDateTime fechaPago) {
+    public Pago(float montoPago, FormaPago formaPago, LocalDateTime fechaPago,String metodoPago) {
+        this.metodoPago = metodoPago;
         this.montoPago = montoPago;
         this.formaPago = formaPago;
         this.fechaPago = fechaPago;
@@ -55,6 +58,14 @@ public class Pago {
 
     public void setFechaPago(LocalDateTime fechaPago) {
         this.fechaPago = fechaPago;
+    }
+    
+    public void setMetodoPago(String metodo){
+        this.metodoPago = metodo;
+    }
+    
+    public String getMetodoPago(){
+        return this.metodoPago;
     }
     
     

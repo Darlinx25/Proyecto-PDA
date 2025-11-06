@@ -559,14 +559,14 @@ public class IControllerTest {
         
         assertFalse(lista.get(0).isPagada());
         DTFormaPago formaPago = new DTPaypal("1234", "Antonio Pacheco");
-        DTPago pago = new DTPago(lista.get(0).getMonto(), formaPago, fechaPago);
+        DTPago pago = new DTPago(lista.get(0).getMonto(), formaPago, fechaPago,"Paypal");
         controller.pagarColaboracion(pago, lista.get(0).getId());
         lista = controller.listDTColaboracionUser("tonyp");
         assertTrue(lista.get(0).isPagada());
         
         assertFalse(lista.get(1).isPagada());
         DTFormaPago formaPago2 = new DTTransferenciaBancaria("BROU", "1234", "Antonio Pacheco");
-        DTPago pago2 = new DTPago(lista.get(1).getMonto(), formaPago2, fechaPago);
+        DTPago pago2 = new DTPago(lista.get(1).getMonto(), formaPago2, fechaPago,"Trasferencia");
         controller.pagarColaboracion(pago2, lista.get(1).getId());
         lista = controller.listDTColaboracionUser("tonyp");
         assertTrue(lista.get(1).isPagada());
@@ -577,13 +577,13 @@ public class IControllerTest {
         
         assertFalse(lista2.get(0).isPagada());
         DTFormaPago formaPago3 = new DTTarjeta("Visa", "1234 1234 1234 1234", "05/26", "420", "Álvaro Recoba");
-        DTPago pago3 = new DTPago(lista2.get(0).getMonto(), formaPago3, fechaPago);
+        DTPago pago3 = new DTPago(lista2.get(0).getMonto(), formaPago3, fechaPago,"Tarjeta");
         controller.pagarColaboracion(pago3, lista2.get(0).getId());
         lista2 = controller.listDTColaboracionUser("chino");
         assertTrue(lista2.get(0).isPagada());
         
         
-        DTPago pago4 = new DTPago(lista2.get(0).getMonto(), null, fechaPago);
+        DTPago pago4 = new DTPago(lista2.get(0).getMonto(), null, fechaPago,"Tarjeta");
         controller.pagarColaboracion(pago4, lista2.get(0).getId());
     }
 }

@@ -119,7 +119,7 @@ public class ColaboracionServelet extends HttpServlet {
                     
                     DTFormaPago formaPago = new DTTarjeta(tipoTarjeta, nroTarjeta,
                             vencTarjeta, cvc, titularTarjeta);
-                    DTPago pago = new DTPago(montoPago, formaPago, fechaPago);
+                    DTPago pago = new DTPago(montoPago, formaPago, fechaPago,"Tarjeta");
                     this.controller.pagarColaboracion(pago, idColaboracion);
                     
                     String nickColab = session.getAttribute("username").toString();
@@ -140,7 +140,7 @@ public class ColaboracionServelet extends HttpServlet {
                     
                     DTFormaPago formaPago = new DTTransferenciaBancaria(nombreBanco,
                             cuentaBanco, titularBanco);
-                    DTPago pago = new DTPago(montoPago, formaPago, fechaPago);
+                    DTPago pago = new DTPago(montoPago, formaPago, fechaPago,"Transferencia");
                     this.controller.pagarColaboracion(pago, idColaboracion);
                     
                     String nickColab = session.getAttribute("username").toString();
@@ -159,7 +159,7 @@ public class ColaboracionServelet extends HttpServlet {
                     String titularPaypal = request.getParameter("titularPaypal");
                     
                     DTFormaPago formaPago = new DTPaypal(cuentaPaypal, titularPaypal);
-                    DTPago pago = new DTPago(montoPago, formaPago, fechaPago);
+                    DTPago pago = new DTPago(montoPago, formaPago, fechaPago,"Paypal");
                     this.controller.pagarColaboracion(pago, idColaboracion);
                     
                     String nickColab = session.getAttribute("username").toString();

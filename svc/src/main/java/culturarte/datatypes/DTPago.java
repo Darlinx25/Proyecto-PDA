@@ -6,8 +6,10 @@ public class DTPago {
     private float montoPago;
     private DTFormaPago formaPago;
     private LocalDateTime fechaPago;
+    private String metodoPago;
 
-    public DTPago(float montoPago, DTFormaPago formaPago, LocalDateTime fechaPago) {
+    public DTPago(float montoPago, DTFormaPago formaPago, LocalDateTime fechaPago,String metodoPago) {
+        this.metodoPago = metodoPago;
         this.montoPago = montoPago;
         this.formaPago = formaPago;
         this.fechaPago = fechaPago;
@@ -23,6 +25,10 @@ public class DTPago {
 
     public LocalDateTime getFechaPago() {
         return fechaPago;
+    }
+    
+    public String getMetodoPago() {
+        return metodoPago;
     }
     
     
