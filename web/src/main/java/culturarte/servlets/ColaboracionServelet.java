@@ -45,7 +45,7 @@ public class ColaboracionServelet extends HttpServlet {
         this.controller.registrarAcceso(Tracking.generarDTRegistroAcceso(request));
         response.setContentType("text/html;charset=UTF-8");
         String path = request.getServletPath();
-
+        
         String userAgent = request.getHeader("User-Agent").toLowerCase();
         boolean esMovil = userAgent.contains("mobi") || userAgent.contains("android")
                 || userAgent.contains("iphone") || userAgent.contains("ipad");

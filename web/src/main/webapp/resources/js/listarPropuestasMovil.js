@@ -2,7 +2,7 @@ function propPorEstado(btn) {
 
 
     const catSeleccionada = document.querySelector('input[name="optradio"]:checked');
-    const categoriaSelec = catSeleccionada ? catSeleccionada.value : 'Todas';
+    const categoriaSelec = 'Todas';
     const tabId = btn.getAttribute("data-bs-target");
     const tabDiv = document.querySelector(tabId);
     tabDiv.innerHTML = "";

@@ -38,19 +38,7 @@
 
 
         <div class="d-flex justify-content-between gap-3">
-            <div class="ms-5 mt-5" style="display: none;">
-                <h3>Categorias:</h3>
-                <div class="form-check">
-                    <input type="radio" class="form-check-input" id="radio1" name="optradio" value="Todas" checked>
-                    <label class="form-check-label" for="radio1">Todas</label>
-                </div>
-                <%for (String cat : categorias) {%>
-                <div class="form-check">
-                    <input type="radio" class="form-check-input" id="radio2" name="optradio" value="<%= cat%>">
-                    <label class="form-check-label" for="radio2"><%= cat%> </label>
-                </div>
-                <% }%>
-            </div>
+            
             <div class="container" style="display: none;" >
                 <ul class="nav nav-tabs">
                     <li><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#PCreadas" data-estado="1" onclick="propPorEstado(this),">Propuestas Creadas</button></li>

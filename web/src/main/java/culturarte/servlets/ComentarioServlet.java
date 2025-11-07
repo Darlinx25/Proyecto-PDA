@@ -66,12 +66,28 @@ public class ComentarioServlet extends HttpServlet {
         String path = request.getServletPath();
 
         switch (path) {
-          case "/hacer-comentario":
+            case "/hacer-comentario":
+                HttpSession session = request.getSession();
+                String userAgent = request.getHeader("User-Agent").toLowerCase();
+                String rol = (String) session.getAttribute("rol");
+                boolean esMovil = userAgent.contains("mobi") || userAgent.contains("android")
+                        || userAgent.contains("iphone") || userAgent.contains("ipad");
+
+                if (esMovil && rol == null) {
+
+                    request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesionMovil.jsp").forward(request, response);
+
+                } else if (esMovil && "colaborador".equals(rol)) {
+
+                    request.getRequestDispatcher("/WEB-INF/jsp/indexMovil.jsp").forward(request, response);
+                } else{
                 String propuestaColaborada = (String) request.getParameter("tituloProp");
                 request.setAttribute("propuesta", propuestaColaborada);
                 request.getRequestDispatcher("WEB-INF/jsp/hacerComentario.jsp").forward(request, response);
+                }
                 break;
-    }
+                
+        }
     }
 
     /**
@@ -86,20 +102,20 @@ public class ComentarioServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-       
+
         String path = request.getServletPath();
 
         switch (path) {
-           case "/hacer-comentario":
+            case "/hacer-comentario":
                 String titulo = request.getParameter("propuesta").trim();
                 System.out.println("");
                 HttpSession session = request.getSession(false);
                 String nick = session.getAttribute("username").toString();
-                String comentario = request.getParameter("comentario");     
-                {
+                String comentario = request.getParameter("comentario");
+                 {
                     try {
                         this.controller.hacerComentario(comentario, nick, titulo);
-                    } catch(Exception ex){
+                    } catch (Exception ex) {
                         Logger.getLogger(PropuestaServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
@@ -120,21 +136,20 @@ public class ComentarioServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
-    private ArrayList<String> recibirPropuestas(String nickCol){
-        
+
+    private ArrayList<String> recibirPropuestas(String nickCol) {
+
         ArrayList<String> aux = this.controller.obtenerPropuestasColaboradas(nickCol);
         ArrayList<String> aux2 = new ArrayList<>();
-        
-        for(String prop : aux){
+
+        for (String prop : aux) {
             DTPropuesta aux3 = this.controller.obtenerDTPropuesta(prop);
             Estado aux4 = aux3.getEstadoActual();
             Boolean comentarioExiste = this.controller.comentarioExiste(prop, nickCol);
-            if(aux4.getEstado() == EstadoPropuesta.FINANCIADA && !comentarioExiste){
+            if (aux4.getEstado() == EstadoPropuesta.FINANCIADA && !comentarioExiste) {
                 aux2.add(prop);
             }
         }
         return aux2;
     }
 }
-    

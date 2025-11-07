@@ -89,20 +89,80 @@ public class UsuarioServlet extends HttpServlet {
                 }
                 break;
             case "/seguir-usuario":
+                HttpSession session = request.getSession();
+                String userAgent = request.getHeader("User-Agent").toLowerCase();
+                String rol = (String) session.getAttribute("rol");
+                boolean esMovil = userAgent.contains("mobi") || userAgent.contains("android")
+                        || userAgent.contains("iphone") || userAgent.contains("ipad");
+
+                if (esMovil && rol == null) {
+
+                    request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesionMovil.jsp").forward(request, response);
+
+                } else if (esMovil && "colaborador".equals(rol)) {
+
+                    request.getRequestDispatcher("/WEB-INF/jsp/indexMovil.jsp").forward(request, response);
+                } else{
                 request.getRequestDispatcher("/WEB-INF/jsp/seguirUsuario.jsp").forward(request, response);
+                }
                 break;
             case "/perfil":
+                session = request.getSession();
+                userAgent = request.getHeader("User-Agent").toLowerCase();
+                rol = (String) session.getAttribute("rol");
+                esMovil = userAgent.contains("mobi") || userAgent.contains("android")
+                        || userAgent.contains("iphone") || userAgent.contains("ipad");
+
+                if (esMovil && rol == null) {
+
+                    request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesionMovil.jsp").forward(request, response);
+
+                } else if (esMovil && "colaborador".equals(rol)) {
+
+                    request.getRequestDispatcher("/WEB-INF/jsp/indexMovil.jsp").forward(request, response);
+                } else{
                 cargarDatosPerfil(request, response, request.getParameter("user"));
                 request.getRequestDispatcher("/WEB-INF/jsp/perfilUsuario.jsp").forward(request, response);
+                }
                 break;
             case "/consultar-perfil-usuario":
+                session = request.getSession();
+                userAgent = request.getHeader("User-Agent").toLowerCase();
+                rol = (String) session.getAttribute("rol");
+                esMovil = userAgent.contains("mobi") || userAgent.contains("android")
+                        || userAgent.contains("iphone") || userAgent.contains("ipad");
+
+                if (esMovil && rol == null) {
+
+                    request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesionMovil.jsp").forward(request, response);
+
+                } else if (esMovil && "colaborador".equals(rol)) {
+
+                    request.getRequestDispatcher("/WEB-INF/jsp/indexMovil.jsp").forward(request, response);
+                } else{
                 listarUsuarios(request, response);
                 request.getRequestDispatcher("/WEB-INF/jsp/consultaPerfilUsuario.jsp").forward(request, response);
+                }
                 break;
             case "/ranking-usuario":
+                session = request.getSession();
+                userAgent = request.getHeader("User-Agent").toLowerCase();
+                rol = (String) session.getAttribute("rol");
+                esMovil = userAgent.contains("mobi") || userAgent.contains("android")
+                        || userAgent.contains("iphone") || userAgent.contains("ipad");
+
+                if (esMovil && rol == null) {
+
+                    request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesionMovil.jsp").forward(request, response);
+
+                } else if (esMovil && "colaborador".equals(rol)) {
+
+                    request.getRequestDispatcher("/WEB-INF/jsp/indexMovil.jsp").forward(request, response);
+                } else{
                 ArrayList<String> usuarios = this.controller.obtenerUsuariosPorRanking();
                 request.setAttribute("usuarios", usuarios);
                 request.getRequestDispatcher("/WEB-INF/jsp/consultaPerfilUsuario.jsp").forward(request, response);
+                }
                 break;
             default:
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);

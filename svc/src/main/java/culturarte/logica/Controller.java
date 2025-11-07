@@ -1681,7 +1681,7 @@ public class Controller implements IController {
         
         
     }
-    // </editor-fold>
+    // </editor-fold>s
 
     // <editor-fold defaultstate="collapsed" desc="Funciones auxiliares.">
     private String crearPasswordHash(String passwordSalt, char[] password) throws NoSuchAlgorithmException, InvalidKeySpecException {

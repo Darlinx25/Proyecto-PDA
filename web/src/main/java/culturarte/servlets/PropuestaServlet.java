@@ -58,6 +58,20 @@ public class PropuestaServlet extends HttpServlet {
 
         switch (path) {
             case "/crear-propuesta":
+                HttpSession session = request.getSession();
+                String userAgent = request.getHeader("User-Agent").toLowerCase();
+                String rol = (String) session.getAttribute("rol");
+                boolean esMovil = userAgent.contains("mobi") || userAgent.contains("android")
+                        || userAgent.contains("iphone") || userAgent.contains("ipad");
+
+                if (esMovil && rol == null) {
+
+                    request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesionMovil.jsp").forward(request, response);
+
+                } else if (esMovil && "colaborador".equals(rol)) {
+
+                    request.getRequestDispatcher("/WEB-INF/jsp/indexMovil.jsp").forward(request, response);
+                }else{
                 if (puedeCrearPropuesta(request.getSession())) {
                     ArrayList<String> categorias = this.controller.obtenerCategorias();
                     request.setAttribute("categorias", categorias);
@@ -65,8 +79,10 @@ public class PropuestaServlet extends HttpServlet {
                 } else {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN);
                 }
+                }
                 break;
             case "/obtener-propuesta":
+                
                 String titulo = request.getParameter("titulo");
                 if (titulo == null || titulo.isEmpty()) {
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'titulo'");
@@ -133,11 +149,25 @@ public class PropuestaServlet extends HttpServlet {
                 mapper.writeValue(response.getWriter(), respuesta);
                 break;
             case "/extender-financiacion":
-                request.getRequestDispatcher("/WEB-INF/jsp/extenderFinanciacion.jsp").forward(request, response);
+                session = request.getSession();
+                userAgent = request.getHeader("User-Agent").toLowerCase();
+                rol = (String) session.getAttribute("rol");
+                esMovil = userAgent.contains("mobi") || userAgent.contains("android")
+                        || userAgent.contains("iphone") || userAgent.contains("ipad");
 
+                if (esMovil && rol == null) {
+
+                    request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesionMovil.jsp").forward(request, response);
+
+                } else if (esMovil && "colaborador".equals(rol)) {
+
+                    request.getRequestDispatcher("/WEB-INF/jsp/indexMovil.jsp").forward(request, response);
+                }else{
+                request.getRequestDispatcher("/WEB-INF/jsp/extenderFinanciacion.jsp").forward(request, response);
+                }
                 break;
             case "/propuestas-por-estado-usu":
-                HttpSession session = request.getSession(false);
+                session = request.getSession(false);
                 String estadoParamExt = request.getParameter("estado");
                 if (estadoParamExt == null) {
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'estado'");
@@ -175,10 +205,25 @@ public class PropuestaServlet extends HttpServlet {
                 break;
             case "/marcar-propuesta-favorita":
                 session = request.getSession(false);
+                userAgent = request.getHeader("User-Agent").toLowerCase();
+                rol = (String) session.getAttribute("rol");
+                esMovil = userAgent.contains("mobi") || userAgent.contains("android")
+                        || userAgent.contains("iphone") || userAgent.contains("ipad");
+
+                if (esMovil && rol == null) {
+
+                    request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesionMovil.jsp").forward(request, response);
+
+                } else if (esMovil && "colaborador".equals(rol)) {
+
+                    request.getRequestDispatcher("/WEB-INF/jsp/indexMovil.jsp").forward(request, response);
+                }else{
+                
                 String nick2 = session.getAttribute("username").toString();
                 List<String> aux2 = recibirPropuestas(nick2);
                 request.setAttribute("propuestas", aux2);
                 request.getRequestDispatcher("/WEB-INF/jsp/marcarPropuestaFavorita.jsp").forward(request, response);
+                }
                 break;
             case "/obtener-colaboracion":
                 String id = request.getParameter("id");
@@ -199,15 +244,45 @@ public class PropuestaServlet extends HttpServlet {
                 }
                 break;
             case "/cancelar-propuesta":
+                session = request.getSession(false);
+                userAgent = request.getHeader("User-Agent").toLowerCase();
+                rol = (String) session.getAttribute("rol");
+                esMovil = userAgent.contains("mobi") || userAgent.contains("android")
+                        || userAgent.contains("iphone") || userAgent.contains("ipad");
+
+                if (esMovil && rol == null) {
+
+                    request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesionMovil.jsp").forward(request, response);
+
+                } else if (esMovil && "colaborador".equals(rol)) {
+
+                    request.getRequestDispatcher("/WEB-INF/jsp/indexMovil.jsp").forward(request, response);
+                }else{
                 request.getRequestDispatcher("/WEB-INF/jsp/cancelarPropuesta.jsp").forward(request, response);
+                }
                 break;
             case "/sugerencia":
+                
                 session = request.getSession(false);
+                userAgent = request.getHeader("User-Agent").toLowerCase();
+                rol = (String) session.getAttribute("rol");
+                esMovil = userAgent.contains("mobi") || userAgent.contains("android")
+                        || userAgent.contains("iphone") || userAgent.contains("ipad");
+
+                if (esMovil && rol == null) {
+
+                    request.getRequestDispatcher("/WEB-INF/jsp/iniciarSesionMovil.jsp").forward(request, response);
+
+                } else if (esMovil && "colaborador".equals(rol)) {
+
+                    request.getRequestDispatcher("/WEB-INF/jsp/indexMovil.jsp").forward(request, response);
+                }else{
                 String nickRecom = session.getAttribute("username").toString();
 
-                List<String> propuestasPuntage = this.controller.obtenerRecomendaciones(nickRecom);
-                request.setAttribute("propuestas", propuestasPuntage);
+                List<String> propuestasPuntaje = this.controller.obtenerRecomendaciones(nickRecom);
+                request.setAttribute("propuestas", propuestasPuntaje);
                 request.getRequestDispatcher("WEB-INF/jsp/sugerencia.jsp").forward(request, response);
+                }
                 break;
 
             case "/consultar-propuesta-movil":
@@ -217,7 +292,6 @@ public class PropuestaServlet extends HttpServlet {
                     return;
                 }
 
-                
                 DTPropuesta propMovil = controller.obtenerDTPropuesta(titulopropMovil);
                 if (propMovil == null) {
                     response.sendError(HttpServletResponse.SC_NOT_FOUND, "Propuesta no encontrada");
