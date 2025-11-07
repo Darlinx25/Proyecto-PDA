@@ -1650,6 +1650,7 @@ public class Controller implements IController {
     
     
     @Override
+    @Generated
     public void mandarMail(DTMail dtMail) {
         
         try {

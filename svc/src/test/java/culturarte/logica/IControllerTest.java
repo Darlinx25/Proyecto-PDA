@@ -452,6 +452,7 @@ public class IControllerTest {
         controller.addUsuario(u);
         assertTrue(controller.autenticarUsuario("pepe", "12345678".toCharArray()));
         assertFalse(controller.autenticarUsuario("pepe", "asfgafesf".toCharArray()));
+        assertFalse(controller.autenticarUsuario("noexisteeste", "12345678".toCharArray()));
     }
 
     @Test
@@ -585,5 +586,22 @@ public class IControllerTest {
         
         DTPago pago4 = new DTPago(lista2.get(0).getMonto(), null, fechaPago,"Tarjeta");
         controller.pagarColaboracion(pago4, lista2.get(0).getId());
+    }
+    
+    @Test
+    public void testObtenerUsuariosPorRanking() {
+        List<String> users = controller.obtenerUsuariosPorRanking();
+        assertFalse(users.isEmpty());
+    }
+    
+    @Test
+    public void testObtenerRecomendaciones() {
+        ArrayList<String> recomendaciones = controller.obtenerRecomendaciones("chino");
+        assertFalse(recomendaciones.isEmpty());
+    }
+    
+    @Test
+    public void testActualizarPuntajes() {;
+        controller.actualizarPuntajes();
     }
 }
