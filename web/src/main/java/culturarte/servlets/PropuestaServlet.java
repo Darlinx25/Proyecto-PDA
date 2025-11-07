@@ -36,10 +36,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 @WebServlet(name = "PropuestaServlet", urlPatterns = {"/propuestas", "/crear-propuesta",
     "/obtener-propuesta", "/obtener-propuesta-por-estado", "/extender-financiacion",
-    "/propuestas-por-estado-usu", "/buscar-propuestas", "/marcar-propuesta-favorita", "/obtener-colaboracion", "/cancelar-propuesta", "/sugerencia"})
+    "/propuestas-por-estado-usu", "/buscar-propuestas", "/marcar-propuesta-favorita", "/obtener-colaboracion", "/cancelar-propuesta", "/sugerencia", "/consultar-propuesta-movil"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, //1MB+ se escriben al disco
         maxFileSize = 1024 * 1024 * 5, //5MB máximo por archivo
@@ -205,10 +204,28 @@ public class PropuestaServlet extends HttpServlet {
             case "/sugerencia":
                 session = request.getSession(false);
                 String nickRecom = session.getAttribute("username").toString();
-                
+
                 List<String> propuestasPuntage = this.controller.obtenerRecomendaciones(nickRecom);
                 request.setAttribute("propuestas", propuestasPuntage);
                 request.getRequestDispatcher("WEB-INF/jsp/sugerencia.jsp").forward(request, response);
+                break;
+
+            case "/consultar-propuesta-movil":
+                String titulopropMovil = request.getParameter("titulo");
+                if (titulopropMovil == null || titulopropMovil.isEmpty()) {
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'titulo'");
+                    return;
+                }
+
+                
+                DTPropuesta propMovil = controller.obtenerDTPropuesta(titulopropMovil);
+                if (propMovil == null) {
+                    response.sendError(HttpServletResponse.SC_NOT_FOUND, "Propuesta no encontrada");
+                    return;
+                }
+
+                request.setAttribute("propuestaC", titulopropMovil);
+                request.getRequestDispatcher("/WEB-INF/jsp/consultarPropuestaMovil.jsp").forward(request, response);
                 break;
 
         }
@@ -275,8 +292,7 @@ public class PropuestaServlet extends HttpServlet {
                 }
                 response.sendRedirect("/index");
                 break;
-            
-                
+
         }
     }
 

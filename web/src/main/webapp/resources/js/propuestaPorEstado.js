@@ -86,8 +86,8 @@ function propPorEstado(btn) {
                         clonFav.style.display = "block";
                         div.appendChild(clonFav);
                 }
-                //Colaborar
                 }
+                //Colaborar
                 const yaColaboro = data[2].includes(prop.titulo);
                 const sePuedeColaborar = data[3].includes(prop.titulo);
                 if (plantillaColab !== null) {

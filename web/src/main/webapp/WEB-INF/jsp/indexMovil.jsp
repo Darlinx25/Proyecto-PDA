@@ -34,39 +34,7 @@
 
 
         %>
-        <%            if (rol == null) {
-        %>
-
-
-        <%
-        } else {
-        %>
-        <form action="/marcar-propuesta-favorita" class="p-3" method="post" style="display: none;" id="add-favorito">
-            <input type="hidden" name="propuesta" value="">
-            <button type="submit" class="btn btn-primary mb-3">Agregar a favoritos</button>
-        </form>
-
-        <%
-            if (rol == "colaborador") {
-        %>
-        <form action="/registrar-colaboracion" class="p-3" method="get" style="display: none;" id="registrar-colab">
-            <input type="hidden" name="propuesta" value="">
-            <button type="submit" class="btn btn-primary mb-3">Colaborar</button>
-        </form>  
-
-
-        <form action="/hacer-comentario" class="p-3" method="get" style="display: none;" id="comentar-prop">
-            <input type="hidden" name="tituloProp" value="">
-            <button type="submit" class="btn btn-primary mb-3">Comentar</button>
-        </form> 
-
-
-
-
-
-        <%}%>
-
-        <% }%>
+        
 
 
         <div class="d-flex justify-content-between gap-3">
