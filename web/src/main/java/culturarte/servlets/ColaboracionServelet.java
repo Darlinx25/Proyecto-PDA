@@ -300,8 +300,8 @@ public class ColaboracionServelet extends HttpServlet {
                 + "   - $ " + String.valueOf(montoPago) + "<br>"
                 + "-Fecha de pago:<br>"
                 + "   - " + fechaNormal + "</p>"
-                + "<p><a href=\"http://localhost:8080/constancia-pago\">Click acá<a/>"
-                + " para obtener la constancia de pago.</p>"
+                + "<p><a href=\"http://localhost:8080/perfil?user="+ nickColab + "\">Click acá<a/>"
+                + " para ir a tu perfil y obtener la constancia de pago.</p>"
                 + "<p>Gracias por preferirnos,<br>Saludos.<br>Culturarte.</p>";
         
         DTMail dtMail = new DTMail(mailColab, asunto, cuerpo);
