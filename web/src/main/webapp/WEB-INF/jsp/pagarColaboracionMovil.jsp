@@ -25,6 +25,11 @@
 
         %>
 
+        <% if (colaboraciones.isEmpty()) { %>
+        <div class="d-flex justify-content-center align-items-center vh-100">
+            <h1 class="text-center display-4">¡No has hecho ninguna colaboración!</h1>
+        </div>
+        <% } else {%>
         <div class="container mt-4">
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 
@@ -51,7 +56,7 @@
                 <% }%>
             </div>
         </div>
-            
+        <% } %>
             
         <div class="modal fade" id="modal-pago" tabindex="-1">
             <div class="modal-dialog">
