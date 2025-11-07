@@ -150,8 +150,8 @@
                             <h5 class="modal-title">Constancia de Pago</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
-                         <%
-                        LocalDateTime fechaCons = LocalDateTime.now();
+                        <%
+                            LocalDateTime fechaCons = LocalDateTime.now();
                         %>
                         <div class="modal-body">
                             <p><strong>Detalles de la colaboración:</strong></p>
@@ -164,19 +164,38 @@
                             <p><strong>Fecha colaboracion:</strong> <span id="modal-fecha"></span></p>
                             <p><strong>Fecha de pago:</strong> <span id="modal-fechaPago"></span></p>
                             <p><strong>Metodo de pago:</strong> <span id="modal-metodoPago"></span></p>
-                            
+
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="button" class="btn btn-primary">Descargar PDF</button>
-                        </div>
+                            <div class="modal-footer">
+                                <form action="/generarPDF" method="POST" target="_blank" style="display: contents;">
+                                    <div class="d-flex justify-content-between  mt-3 gap-4">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                        <button type="submit" class="btn btn-primary" onclick="prepararDescarga()">Descargar PDF</button>
+                                    </div>
+                                        
+                                    <input type="hidden" name="fechaCons" value="<%= java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").format(fechaCons)%>">
+                                    <input type="hidden" name="nombre" value="<%= nombre%>">
+                                    <input type="hidden" name="apellido" value="<%= apellido%>">
+                                    <input type="hidden" id="pdf-propColab" name="propColab">
+                                    <input type="hidden" id="pdf-monto" name="monto">
+                                    <input type="hidden" id="pdf-retorno" name="retorno">
+                                    <input type="hidden" id="pdf-fecha" name="fecha">
+                                    <input type="hidden" id="pdf-fechaPago" name="fechaPago">
+                                    <input type="hidden" id="pdf-metodoPago" name="metodoPago">  
+                                </form>
+                            </div>
                     </div>
                 </div>
             </div>                
-
-
-
-
+            <script>
+                function prepararDescarga() {
+                    document.getElementById('pdf-propColab').value = document.getElementById('modal-propColab').innerText;
+                    document.getElementById('pdf-monto').value = document.getElementById('modal-monto').innerText;
+                    document.getElementById('pdf-retorno').value = document.getElementById('modal-retorno').innerText;
+                    document.getElementById('pdf-fecha').value = document.getElementById('modal-fecha').innerText;
+                    document.getElementById('pdf-fechaPago').value = document.getElementById('modal-fechaPago').innerText;
+                    document.getElementById('pdf-metodoPago').value = document.getElementById('modal-metodoPago').innerText;}
+            </script>
             <div class="align-items-center">
                 <div class="bg-secondary p-2 rounded shadow-sm border border-5 border-dark mb-3 mt-3">
                     <h3 class=" text-center">  Datos de propuesta colaborada:  </h3>

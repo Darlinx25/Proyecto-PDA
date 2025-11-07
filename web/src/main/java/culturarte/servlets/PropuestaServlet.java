@@ -35,10 +35,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.BaseColor;
 
 @WebServlet(name = "PropuestaServlet", urlPatterns = {"/propuestas", "/crear-propuesta",
     "/obtener-propuesta", "/obtener-propuesta-por-estado", "/extender-financiacion",
-    "/propuestas-por-estado-usu", "/buscar-propuestas", "/marcar-propuesta-favorita", "/obtener-colaboracion", "/cancelar-propuesta", "/sugerencia"})
+    "/propuestas-por-estado-usu", "/buscar-propuestas", "/marcar-propuesta-favorita", "/obtener-colaboracion", "/cancelar-propuesta", "/sugerencia","/generarPDF"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, //1MB+ se escriben al disco
         maxFileSize = 1024 * 1024 * 5, //5MB máximo por archivo
@@ -274,6 +281,56 @@ public class PropuestaServlet extends HttpServlet {
                 }
                 response.sendRedirect("/index");
                 break;
+            case "/generarPDF":
+                request.setCharacterEncoding("UTF-8");
+
+                try {
+                    String fechaCons = request.getParameter("fechaCons");
+                    String nombre = request.getParameter("nombre");
+                    String apellido = request.getParameter("apellido");
+                    String propColab = request.getParameter("propColab");
+                    String monto = request.getParameter("monto");
+                    String retorno = request.getParameter("retorno");
+                    String fecha = request.getParameter("fecha");
+                    String fechaPago = request.getParameter("fechaPago");
+                    String metodoPago = request.getParameter("metodoPago");
+                    
+                    response.setContentType("application/pdf");
+                    response.setHeader("Content-Disposition", "attachment; filename=\"Constancia_de_pago.pdf\"");
+
+                    Document document = new Document();
+                    PdfWriter.getInstance(document, response.getOutputStream());
+
+                    document.open();
+                    
+                    Font fuenteTitulo = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18, BaseColor.BLACK);
+                    Font fuenteSubtitulo = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.BLACK);
+                    Font fuenteBase = FontFactory.getFont(FontFactory.HELVETICA, 12, BaseColor.BLACK);
+                    
+                    document.add(new Paragraph("Constancia de Pago", fuenteTitulo));
+                    document.add(new Paragraph(" "));
+                    document.add(new Paragraph("Plataforma: Culturarte", fuenteBase));
+                    document.add(new Paragraph("Fecha de constancia: " + fechaCons, fuenteBase));
+                    document.add(new Paragraph(" "));
+                    document.add(new Paragraph("Detalles de la colaboración:", fuenteSubtitulo));
+                    document.add(new Paragraph("Colaborador: " + nombre + " " + apellido, fuenteBase));
+                    document.add(new Paragraph("Propuesta colaborada: " + propColab, fuenteBase));
+                    document.add(new Paragraph("Monto colaborado: " + monto, fuenteBase));
+                    document.add(new Paragraph("Tipo de retorno: " + retorno, fuenteBase));
+                    document.add(new Paragraph("Fecha colaboración: " + fecha, fuenteBase));
+                    document.add(new Paragraph("Fecha de pago: " + fechaPago, fuenteBase));
+                    document.add(new Paragraph("Método de pago: " + metodoPago, fuenteBase));
+                    
+                    document.close();
+
+                } catch (DocumentException e) {
+                    e.printStackTrace();
+                    response.getWriter().println("Error al generar el PDF: " + e.getMessage());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+                
         }
     }
 
