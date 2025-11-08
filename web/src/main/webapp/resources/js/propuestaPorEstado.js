@@ -236,6 +236,7 @@ function propPorEstado(btn) {
                     div.appendChild(contenedorBotones);
                 tabDiv.appendChild(div);
                 });
+                botonBusq.click();
             })
             .catch(e => console.error("Error:", e));
 }
@@ -248,4 +249,13 @@ document.querySelectorAll('input[name="optradio"]').forEach(radio => { //Puse es
             propPorEstado(tabActivo);
         }
     });
+});
+
+window.addEventListener('DOMContentLoaded', function() {
+    const params = new URLSearchParams(window.location.search);
+    const valorBusq = params.get('busqueda');
+    if (valorBusq) {
+        inputBusq.value = valorBusq;
+        botonBusq.click();
+    }
 });

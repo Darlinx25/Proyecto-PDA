@@ -20,7 +20,8 @@ botonBusq.addEventListener('click', function() {
     const valorBusq = inputBusq.value;
     
     if (path !== "/index" && path !== "/" && path !== "") {
-        window.location = "/";
+        window.location = "/?busqueda=" + encodeURIComponent(valorBusq);
+        return;
     }
     const patronBusq = new RegExp(valorBusq, "i");
     const divsPropuestas = document.querySelectorAll('div[data-grupo="propuestas"]');
