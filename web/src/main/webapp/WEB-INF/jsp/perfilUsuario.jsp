@@ -148,12 +148,14 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Constancia de Pago</h5>
+                            
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <%
                             LocalDateTime fechaCons = LocalDateTime.now();
                         %>
                         <div class="modal-body">
+                            <p><em>(Una vez cerrada no podra volver a ver la constancia)</em></p>
                             <p><strong>Detalles de la colaboración:</strong></p>
                             <p><strong>Plataforma:</strong>  Culturarte</p>
                             <p><strong>Fecha de constancia:</strong> <%= java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").format(fechaCons)%> </p>

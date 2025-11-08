@@ -88,6 +88,7 @@ public interface IController {
     public ArrayList<String> listarColaboraciones();
     public void eliminarColaboracion(Long id);
     public ArrayList<String> obtenerColaboradoresColaboracion(String tituloProp);
+    public void constanciaEmitida(Long id);
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Funciones web.">

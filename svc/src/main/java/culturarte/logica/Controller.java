@@ -1437,7 +1437,7 @@ public class Controller implements IController {
             if (c != null && c.getBaja() == false) {
                 return new DTColaboracion(c.getPago() != null,c.getPago(),
                         c.getId(), c.getMonto(), c.getFechaHora(),
-                        c.getTipoRetorno(), c.getColaborador().getNickname(), c.getPropuestaColaborada().getTitulo());
+                        c.getTipoRetorno(), c.getColaborador().getNickname(), c.getPropuestaColaborada().getTitulo(),c.getConstanciaEmitida());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1446,7 +1446,16 @@ public class Controller implements IController {
         }
         return null;
     }
-
+    
+    @Override
+    public void constanciaEmitida(Long id){
+        Manejador emr = Manejador.getInstance();
+        Colaboracion colab = emr.find(Colaboracion.class, id);
+        colab.setConstanciaEmitida(true);
+        emr.mod(colab);
+        emr.close();
+    }
+    
     @Override
     public ArrayList<String> listarColaboraciones() {
         Manejador emr = Manejador.getInstance();
@@ -1607,7 +1616,7 @@ public class Controller implements IController {
             listaDTColabs.add(new DTColaboracion(c.getPago() != null,c.getPago(), c.getId(),
                     c.getMonto(),
                     c.getFechaHora(), c.getTipoRetorno(),
-                    c.getColaborador().getNickname(), c.getPropuestaColaborada().getTitulo()));
+                    c.getColaborador().getNickname(), c.getPropuestaColaborada().getTitulo(),c.getConstanciaEmitida()));
         }
 
         return listaDTColabs;

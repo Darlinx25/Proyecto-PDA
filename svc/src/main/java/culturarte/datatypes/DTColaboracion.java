@@ -19,6 +19,7 @@ public class DTColaboracion {
     private String colaborador;
     private String propuestaColaborada;
     private boolean pagada;
+    private boolean constanciaEmitida;
     private Pago pago;
     
     public DTColaboracion(Long id, float monto, LocalDateTime fechaHora, String tipoRetorno, String colaborador, String propuestaColaborada) {
@@ -31,7 +32,7 @@ public class DTColaboracion {
     }
     
     //es para la web
-    public DTColaboracion(boolean pagada,Pago pago, Long id, float monto, LocalDateTime fechaHora, String tipoRetorno, String colaborador, String propuestaColaborada) {
+    public DTColaboracion(boolean pagada,Pago pago, Long id, float monto, LocalDateTime fechaHora, String tipoRetorno, String colaborador, String propuestaColaborada, boolean constanciaEmitida) {
         this.pagada = pagada;
         this.pago = pago;
         this.id = id;
@@ -40,6 +41,7 @@ public class DTColaboracion {
         this.tipoRetorno = tipoRetorno;
         this.colaborador = colaborador;
         this.propuestaColaborada = propuestaColaborada;
+        this.constanciaEmitida = constanciaEmitida;
     }
 
     public boolean isPagada() {
@@ -74,6 +76,10 @@ public class DTColaboracion {
     
     public Pago getPago() {
         return pago;
+    }
+    
+    public boolean getConstanciaEmitida(){
+        return this.constanciaEmitida;
     }
     
 }

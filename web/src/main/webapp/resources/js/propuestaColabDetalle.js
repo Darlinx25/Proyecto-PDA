@@ -64,14 +64,16 @@ function cargarColabPropia() {
                 const minutos = fecha.getMinutes().toString().padStart(2, '0');
                 const fechaFormateada = `${dia}/${mes}/${anio} ${horas}:${minutos}`;
                 const estaPaga = data.pagada;
-
+                const seEmitioConsancia = data.constanciaEmitida;
                 
                 container.innerHTML = `
                 <p><strong>Monto colaborado:</strong> $${data.monto}</p>
                 <p><strong>Fecha colaboracion:</strong> ${fechaFormateada}</p>
                 ${estaPaga
-                        ? `<button class="btn btn-success" onclick="emitirConstancia('${id}')">Emitir Constancia de Pago</button>`
-                        : '<p><em>(Colaboración aún no pagada)</em></p>'
+                    ? (seEmitioConsancia
+                        ? `<button class="btn btn-secondary" disabled>Constancia Emitida</button>`
+                        : `<button id="btn-constancia-${id}" class="btn btn-success" onclick="emitirConstancia('${id}')">Emitir Constancia de Pago</button>`)
+                    : '<p><em>(Colaboración aún no pagada)</em></p>'
                 }
             `;
 
@@ -126,4 +128,25 @@ function emitirConstancia(idColaboracion){
                 document.getElementById('modal-id-colab').value = "Error al cargar datos";
                 miModal.show();
             });
+            
+          
+
+            fetch(`/marcar-constancia-emitida?idColaboracion=${encodeURIComponent(idColaboracion)}`, {
+                method: 'POST'
+            })
+            .then(respMarcado => {
+                    const btn = document.getElementById(`btn-constancia-${idColaboracion}`);
+                    if (btn) {
+                        btn.disabled = true;
+                        btn.innerText = "Constancia Emitida";
+                        btn.classList.remove('btn-success');
+                        btn.classList.add('btn-secondary');
+                    }
+                
+            })
+            .catch(errMarcar => console.error("Error en fetch de marcado:", errMarcar));
+            
+            
+            
+            
 }

@@ -21,6 +21,8 @@ public class Colaboracion {
     
     private boolean deBaja;
     
+    private boolean constanciaEmitida;
+    
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "pago_id")
     private Pago pago;
@@ -37,6 +39,7 @@ public class Colaboracion {
         
         this.fechaHora = LocalDateTime.now();
         this.deBaja = false;
+        this.constanciaEmitida = false;
     }
     
     
@@ -103,6 +106,14 @@ public class Colaboracion {
     
     public boolean getBaja(){
         return this.deBaja;
+    }
+    
+    public boolean setConstanciaEmitida(boolean constanciaEmitida){
+        return this.constanciaEmitida = constanciaEmitida;
+    }
+    
+    public boolean getConstanciaEmitida(){
+        return this.constanciaEmitida;
     }
 
     public Pago getPago() {
