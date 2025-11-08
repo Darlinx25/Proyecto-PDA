@@ -191,8 +191,6 @@ public class ColaboracionServelet extends HttpServlet {
             case "/marcar-constancia-emitida":
                 Long idColab =  Long.parseLong(request.getParameter("idColaboracion"));
                 this.controller.constanciaEmitida(idColab);
-                System.out.println("ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-                System.out.println(idColab);
                 break;
             default:
                 response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
