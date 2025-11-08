@@ -6,6 +6,8 @@ function propPorEstado(btn) {
     const tabId = btn.getAttribute("data-bs-target");
     const tabDiv = document.querySelector(tabId);
     tabDiv.innerHTML = "";
+    
+
     for (let ESTADO = 1; ESTADO <= 5; ESTADO++) {
         fetch(`/obtener-propuesta-por-estado?estado=${encodeURIComponent(ESTADO)}&categoriaSelec=${encodeURIComponent(categoriaSelec)}`)
                 .then(res => res.json())
@@ -40,33 +42,6 @@ function propPorEstado(btn) {
                         </p>  
                         </div>
                     </div>`;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        //para q no queden todos los botones amontonados
-                        const contenedorBotones = document.createElement("div");
-                        contenedorBotones.style.display = "flex";
-                        contenedorBotones.style.flexWrap = "wrap";
-                        contenedorBotones.style.gap = "8px";
-                        div.querySelectorAll("form").forEach(form => {
-                            contenedorBotones.appendChild(form);
-                        });
-                        div.appendChild(contenedorBotones);
                         tabDiv.appendChild(div);
                     });
                 })

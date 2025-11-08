@@ -10,14 +10,49 @@
         <link rel="icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico?v=1" type="image/x-icon">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+        
+        
+>
+
         <link href="/resources/css/registrarColaboracion.css" rel="stylesheet">
+        <script>
+            const propuestasColabUsuario = [
+            <%
+                List<String> propuestasColab = (List<String>) request.getAttribute("propuestasColab");
+                if (propuestasColab != null) {
+                    for (int i = 0; i < propuestasColab.size(); i++) {
+                        out.print("\"" + propuestasColab.get(i).replace("\"", "\\\"") + "\"");
+                        if (i < propuestasColab.size() - 1) {
+                            out.print(",");
+                        }
+                    }
+                }
+
+            %>
+            ];
+
+            const propuestasPuedeColab = [
+            <%                    
+                List<String> propsParaColab = (List<String>) request.getAttribute("propsparacolab");
+                    if (propsParaColab != null) {
+                        for (int i = 0; i < propsParaColab.size(); i++) {
+                            out.print("\"" + propsParaColab.get(i).replace("\"", "\\\"") + "\"");
+                            if (i < propsParaColab.size() - 1) {
+                                out.print(",");
+                            }
+                        }
+
+                    }
+            %>
+            ];
+        </script>
     </head>
     <body class="bg-light d-flex justify-content-center align-items-center min-vh-100 py-2" id="cuerpo" onload="propuestaElegida(document.getElementById('propuesta').value)">
         <jsp:include page="headerMovil.jsp"/>
-        
+
         <form class="card p-5 shadow" id="formulario" style="margin-top: 120px;">
 
-            
+
 
             <%
                 List<String> propuestas = (List<String>) request.getAttribute("propuestas");
@@ -30,11 +65,11 @@
                     <option value="<%= propuestaC%>" selected ><%= propuestaC%></option>
                 </select>   
             </div>   
-            
+
             <div id="contenedor-propuesta" class="mt-3"></div>
 
 
-            
+
 
         </form>
 

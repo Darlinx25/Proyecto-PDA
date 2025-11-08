@@ -287,6 +287,10 @@ public class PropuestaServlet extends HttpServlet {
 
             case "/consultar-propuesta-movil":
                 String titulopropMovil = request.getParameter("titulo");
+                String nick1 = (String) request.getSession().getAttribute("username");
+                List<String> propuestasColab1 = this.controller.obtenerPropuestasColaboradas(nick1);
+                List<String> propsParaColab1 = propuestasPubliYenFina();
+                
                 if (titulopropMovil == null || titulopropMovil.isEmpty()) {
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'titulo'");
                     return;
@@ -299,6 +303,9 @@ public class PropuestaServlet extends HttpServlet {
                 }
 
                 request.setAttribute("propuestaC", titulopropMovil);
+                request.setAttribute("propuestasColab", propuestasColab1);
+                request.setAttribute("propsparacolab", propsParaColab1);
+
                 request.getRequestDispatcher("/WEB-INF/jsp/consultarPropuestaMovil.jsp").forward(request, response);
                 break;
 
