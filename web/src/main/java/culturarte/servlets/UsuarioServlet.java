@@ -4,6 +4,8 @@
  */
 package culturarte.servlets;
 
+import culturarte.cliente.CulturarteWS;
+import culturarte.cliente.CulturarteWS_Service;
 import culturarte.excepciones.BadPasswordException;
 import culturarte.excepciones.EmailRepetidoException;
 import culturarte.excepciones.NickRepetidoException;
@@ -37,6 +39,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 
 /**
  *
@@ -51,6 +54,20 @@ import java.util.List;
 public class UsuarioServlet extends HttpServlet {
 
     private IController controller = IControllerFactory.getInstance().getIController();
+    private CulturarteWS servicePort;
+    
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        try {
+            // Inicializar el Service y obtener el Port (la interfaz de la llamada remota)
+            CulturarteWS_Service service = new CulturarteWS_Service();
+            this.servicePort = service.getCulturarteWSPort();
+        } catch (Exception e) {
+            throw new ServletException("Error al conectar con el servicio web", e);
+        }
+    }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods.">
     @Override
@@ -159,7 +176,8 @@ public class UsuarioServlet extends HttpServlet {
 
                     request.getRequestDispatcher("/WEB-INF/jsp/indexMovil.jsp").forward(request, response);
                 } else{
-                ArrayList<String> usuarios = this.controller.obtenerUsuariosPorRanking();
+                //ArrayList<String> usuarios = this.controller.obtenerUsuariosPorRanking();
+                List<String> usuarios =  this.servicePort.obtenerUsuariosPorRanking();
                 request.setAttribute("usuarios", usuarios);
                 request.getRequestDispatcher("/WEB-INF/jsp/consultaPerfilUsuario.jsp").forward(request, response);
                 }
