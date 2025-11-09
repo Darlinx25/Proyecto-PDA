@@ -15,10 +15,10 @@ public abstract class DTUsuario {
     private String nickname;
     private String nombre;
     private String apellido;
-    private char[] password;
-    private char[] passwordConfirm;
+    private String password;
+    private String passwordConfirm;
     private String email;
-    private LocalDate fechaNacimiento;
+    private String fechaNacimiento;
     private String imagen;
     
     protected DTUsuario(){
@@ -37,11 +37,11 @@ public abstract class DTUsuario {
         this.apellido = apellido;
     }
 
-    public void setPassword(char[] password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setPasswordConfirm(char[] passwordConfirm) {
+    public void setPasswordConfirm(String passwordConfirm) {
         this.passwordConfirm = passwordConfirm;
     }
 
@@ -49,7 +49,7 @@ public abstract class DTUsuario {
         this.email = email;
     }
 
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+    public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -57,7 +57,7 @@ public abstract class DTUsuario {
         this.imagen = imagen;
     }
     /*para crear*/
-    protected DTUsuario(String nickname, String nombre, String apellido, char[] password, char[] passwordConfirm, String email, LocalDate fechaNacimiento, String imagen) {
+    protected DTUsuario(String nickname, String nombre, String apellido, String password, String passwordConfirm, String email, String fechaNacimiento, String imagen) {
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -68,7 +68,7 @@ public abstract class DTUsuario {
         this.imagen = imagen;
     }
     /*para consultar*/
-    protected DTUsuario(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, String imagen) {
+    protected DTUsuario(String nickname, String nombre, String apellido, String email, String fechaNacimiento, String imagen) {
         this.nickname = nickname;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -89,11 +89,11 @@ public abstract class DTUsuario {
         return apellido;
     }
 
-    public char[] getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public char[] getPasswordConfirm() {
+    public String getPasswordConfirm() {
         return passwordConfirm;
     }
 
@@ -101,7 +101,7 @@ public abstract class DTUsuario {
         return email;
     }
 
-    public LocalDate getFechaNacimiento() {
+    public String getFechaNacimiento() {
         return fechaNacimiento;
     }
 

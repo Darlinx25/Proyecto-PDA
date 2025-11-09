@@ -38,14 +38,14 @@ public class DTProponente extends DTUsuario {
         this.fechaBaja = fechaBaja;
     }
     /*para crear*/
-    public DTProponente(DTDireccion direccion, String biografia, String sitioWeb, String nickname, String nombre, String apellido, char[] password, char[] passwordConfirm, String email, LocalDate fechaNacimiento, String imagen) {
+    public DTProponente(DTDireccion direccion, String biografia, String sitioWeb, String nickname, String nombre, String apellido, String password, String passwordConfirm, String email, String fechaNacimiento, String imagen) {
         super(nickname, nombre, apellido, password, passwordConfirm, email, fechaNacimiento, imagen);
         this.direccion = direccion;
         this.biografia = biografia;
         this.sitioWeb = sitioWeb;
     }
     /*para consultar*/
-    public DTProponente(DTDireccion direccion, String biografia, String sitioWeb, String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, String imagen,LocalDate fechaBaja) {
+    public DTProponente(DTDireccion direccion, String biografia, String sitioWeb, String nickname, String nombre, String apellido, String email, String fechaNacimiento, String imagen,LocalDate fechaBaja) {
         super(nickname, nombre, apellido, email, fechaNacimiento, imagen);
         this.direccion = direccion;
         this.biografia = biografia;

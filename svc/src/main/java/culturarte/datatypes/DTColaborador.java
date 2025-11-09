@@ -20,11 +20,11 @@ public class DTColaborador extends DTUsuario {
         
     }
     /*para crear*/
-    public DTColaborador(String nickname, String nombre, String apellido, char[] password, char[] passwordConfirm, String email, LocalDate fechaNacimiento, String imagen) {
+    public DTColaborador(String nickname, String nombre, String apellido, String password, String passwordConfirm, String email, String fechaNacimiento, String imagen) {
         super(nickname, nombre, apellido, password, passwordConfirm, email, fechaNacimiento, imagen);
     }
     /*para consultar*/
-    public DTColaborador(String nickname, String nombre, String apellido, String email, LocalDate fechaNacimiento, String imagen) {
+    public DTColaborador(String nickname, String nombre, String apellido, String email, String fechaNacimiento, String imagen) {
         super(nickname, nombre, apellido, email, fechaNacimiento, imagen);
     }
 }

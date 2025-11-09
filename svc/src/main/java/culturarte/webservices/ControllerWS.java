@@ -176,6 +176,13 @@ public class ControllerWS {
     public String obtenerDineroRecaudado(@WebParam(name = "nombre") String nombre) {
         return controller.obtenerDineroRecaudado(nombre);
     }
+     
+    @WebMethod(operationName = "listarPropuestasFavoritas")
+    public ArrayList<String> listarPropuestasFavoritas(@WebParam(name = "nick") String nick) {
+        return controller.listarPropuestasFavoritas(nick);
+    }
+    
+    
 
     // </editor-fold>
 
@@ -212,8 +219,8 @@ public class ControllerWS {
     }
 
     @WebMethod(operationName = "autenticarUsuario")
-    public boolean autenticarUsuario(@WebParam(name = "nickname") String nickname, @WebParam(name = "password") char[] password) {
-        return controller.autenticarUsuario(nickname, password);
+    public boolean autenticarUsuario(@WebParam(name = "nickname") String nickname, @WebParam(name = "password") String password) {
+        return controller.autenticarUsuario(nickname, password.toCharArray());
     }
 
     @WebMethod(operationName = "obtenerCategorias")

@@ -4,19 +4,9 @@
  */
 package culturarte.servlets;
 
-import culturarte.excepciones.BadPasswordException;
-import culturarte.excepciones.EmailRepetidoException;
-import culturarte.excepciones.NickRepetidoException;
-import culturarte.datatypes.DTColaborador;
-import culturarte.datatypes.DTDireccion;
-import culturarte.datatypes.DTProponente;
-import culturarte.datatypes.DTPropuesta;
-import culturarte.datatypes.DTUsuario;
-import culturarte.logica.Estado;
-import culturarte.logica.EstadoPropuesta;
-import culturarte.logica.IController;
-import culturarte.logica.IControllerFactory;
-import culturarte.logica.ResultadoSeguirUsuario;
+
+
+
 import static culturarte.wutils.SesionUtils.esVisitante;
 import culturarte.wutils.Tracking;
 import java.io.IOException;
@@ -32,13 +22,25 @@ import jakarta.servlet.http.Part;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+//import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import webservices.BadPasswordException_Exception;
 import webservices.ControllerWS;
 import webservices.ControllerWS_Service;
+import webservices.DTColaborador;
+import webservices.DTDireccion;
+import webservices.DTProponente;
+import webservices.DTPropuesta;
+import webservices.DTUsuario;
+import webservices.EmailRepetidoException_Exception;
+import webservices.Estado;
+import webservices.EstadoPropuesta;
+import webservices.LocalDate;
+import webservices.NickRepetidoException_Exception;
+import webservices.ResultadoSeguirUsuario;
 
 /**
  *
@@ -52,7 +54,7 @@ import webservices.ControllerWS_Service;
 )
 public class UsuarioServlet extends HttpServlet {
 
-    private IController controller = IControllerFactory.getInstance().getIController();
+    //private IController controller = IControllerFactory.getInstance().getIController();
     private ControllerWS webServices;
     
 
@@ -166,7 +168,7 @@ public class UsuarioServlet extends HttpServlet {
 
                     request.getRequestDispatcher("/WEB-INF/jsp/indexMovil.jsp").forward(request, response);
                 } else{
-                ArrayList<String> usuarios = this.controller.obtenerUsuariosPorRanking();
+                List<String> usuarios = this.webServices.obtenerUsuariosPorRanking();
                 request.setAttribute("usuarios", usuarios);
                 request.getRequestDispatcher("/WEB-INF/jsp/consultaPerfilUsuario.jsp").forward(request, response);
                 }
@@ -181,19 +183,21 @@ public class UsuarioServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String path = request.getServletPath();
-
+        ControllerWS_Service service = new ControllerWS_Service();
+        this.webServices = service.getControllerWSPort();
+        
         switch (path) {
             case "/crear-cuenta":
                 if (esVisitante(request.getSession())) {
                     try {
                         procesarCrearCuenta(request, response);
                         response.sendRedirect("/login");
-                    } catch (NickRepetidoException | EmailRepetidoException | BadPasswordException ex) {
-                        if (ex instanceof NickRepetidoException) {
+                    } catch (NickRepetidoException_Exception | EmailRepetidoException_Exception | BadPasswordException_Exception ex) {
+                        if (ex instanceof NickRepetidoException_Exception) {
                             request.setAttribute("error", "Error el nombre de usuario ya existe.");
-                        } else if (ex instanceof EmailRepetidoException) {
+                        } else if (ex instanceof EmailRepetidoException_Exception) {
                             request.setAttribute("error", "Error el correo electrónico ya está registrado.");
-                        } else if (ex instanceof BadPasswordException) {
+                        } else if (ex instanceof BadPasswordException_Exception) {
                             request.setAttribute("error", "Error la contraseña no cumple los requisitos.");
                         }
                         request.getRequestDispatcher("/WEB-INF/jsp/crearCuenta.jsp").forward(request, response);
@@ -229,7 +233,7 @@ public class UsuarioServlet extends HttpServlet {
             case "/baja-proponente":
                 HttpSession session = request.getSession(false);
                 String user = (String) session.getAttribute("username");
-                this.controller.bajaProponente(user);
+                this.webServices.bajaProponente(user);
                 if (!esVisitante(request.getSession())) {
                     cerrarSesion(request, response);
                 }
@@ -238,8 +242,8 @@ public class UsuarioServlet extends HttpServlet {
 
             case "/verificarUsuario": {
                 String usuarioVerificar = request.getParameter("usuario");
-                DTUsuario dtColaborador = controller.obtenerDTColaborador(usuarioVerificar);
-                DTUsuario dtProponente = controller.obtenerDTProponente(usuarioVerificar);
+                DTUsuario dtColaborador = webServices.obtenerDTColaborador(usuarioVerificar);
+                DTUsuario dtProponente = webServices.obtenerDTProponente(usuarioVerificar);
 
                 String estado = (dtColaborador == null && dtProponente == null) ? "disponible" : "ocupado";
                 response.setContentType("text/plain");
@@ -249,8 +253,8 @@ public class UsuarioServlet extends HttpServlet {
 
             case "/verificarCorreo": {
                 String correo = request.getParameter("correo");
-                DTUsuario dtColaborador = controller.obtenerDTColaborador(correo);
-                DTUsuario dtProponente = controller.obtenerDTProponente(correo);
+                DTUsuario dtColaborador = webServices.obtenerDTColaborador(correo);
+                DTUsuario dtProponente = webServices.obtenerDTProponente(correo);
 
                 String estado = (dtColaborador == null && dtProponente == null) ? "disponible" : "ocupado";
                 response.setContentType("text/plain");
@@ -273,28 +277,26 @@ public class UsuarioServlet extends HttpServlet {
     protected void cargarDatosPerfil(HttpServletRequest request, HttpServletResponse response, String u)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
+        ControllerWS_Service service = new ControllerWS_Service();
+        this.webServices = service.getControllerWSPort();
+        
+        String tipoUser = this.webServices.obtenerTipoUser(u);
 
-        String tipoUser = this.controller.obtenerTipoUser(u);
+        List<String> usuariosSeguidosSinRol = this.webServices.listarUsuariosSiguiendo(u);
 
-        List<String> usuariosSeguidosSinRol = this.controller.listarUsuariosSiguiendo(u);
-
-        ArrayList<String> seguidores = this.controller.ObtenerSeguidores(u);
-        ArrayList<String> propsFav = this.controller.listarPropuestasFavoritas(u);
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        for (String a : propsFav) {
-            System.out.println(a);
-
-        }
+        List<String> seguidores = this.webServices.obtenerSeguidores(u);
+        List<String> propsFav = this.webServices.listarPropuestasFavoritas(u);
+        
         request.setAttribute("propuestasFav", propsFav);
         request.setAttribute("rol", tipoUser);
         ArrayList<String> usuariosSeguidos = new ArrayList<>();
         if (session.getAttribute("username") != u) {
-            List<String> usuariosSeguidosPorlog = this.controller.listarUsuariosSiguiendo((String) session.getAttribute("username"));
+            List<String> usuariosSeguidosPorlog = this.webServices.listarUsuariosSiguiendo((String) session.getAttribute("username"));
             request.setAttribute("usuariosSeguidosLog", usuariosSeguidosPorlog);
         }
 
         for (String cat : usuariosSeguidosSinRol) {
-            String tipoU = this.controller.obtenerTipoUser(cat);
+            String tipoU = this.webServices.obtenerTipoUser(cat);
             if (tipoU != null) {
                 usuariosSeguidos.add(cat + " - " + tipoU);
             }
@@ -302,7 +304,7 @@ public class UsuarioServlet extends HttpServlet {
         }
         ArrayList<String> seguidoresConRol = new ArrayList<>();
         for (String cat : seguidores) {
-            String tipoUs = this.controller.obtenerTipoUser(cat);
+            String tipoUs = this.webServices.obtenerTipoUser(cat);
             if (tipoUs != null) {
                 seguidoresConRol.add(cat + " - " + tipoUs);
             }
@@ -312,9 +314,9 @@ public class UsuarioServlet extends HttpServlet {
         request.setAttribute("seguidores", seguidoresConRol);
 
         if ("colaborador".equals(tipoUser)) {
-            DTColaborador colab = this.controller.obtenerDTColaborador(u);
+            DTColaborador colab = this.webServices.obtenerDTColaborador(u);
             if (colab != null) {
-                ArrayList<String> propColaboradas = this.controller.listarColaboracionesColaborador(colab.getNickname());
+                List<String> propColaboradas = this.webServices.listarColaboracionesColaborador(colab.getNickname());
                 request.setAttribute("propuestasColab", propColaboradas);
                 request.setAttribute("username", u);
                 request.setAttribute("nombre", colab.getNombre());
@@ -324,10 +326,10 @@ public class UsuarioServlet extends HttpServlet {
             }
 
         } else if ("proponente".equals(tipoUser)) {
-            DTProponente prop = this.controller.obtenerDTProponente(u);
+            DTProponente prop = this.webServices.obtenerDTProponente(u);
 
             if (prop != null) {
-                request.setAttribute("propuestasPropias", this.controller.listaPropuestasUsu(prop.getNickname()));
+                request.setAttribute("propuestasPropias", this.webServices.listaPropuestasUsu(prop.getNickname()));
                 request.setAttribute("propuestasUsu", listaPropuestasPropPublicadas(prop.getNickname()));
                 request.setAttribute("username", u);
                 request.setAttribute("biografia", prop.getBiografia());
@@ -343,12 +345,14 @@ public class UsuarioServlet extends HttpServlet {
     private void seguirUser(HttpServletRequest request, HttpServletResponse response, String userAseguir, String accion)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
+        ControllerWS_Service service = new ControllerWS_Service();
+        this.webServices = service.getControllerWSPort();
         if (session != null) {
             String user = (String) session.getAttribute("username");
             if (accion.equals("seguir")) {
-                ResultadoSeguirUsuario s = this.controller.seguirUsuario(user, userAseguir);
+                ResultadoSeguirUsuario s = this.webServices.seguirUsuario(user, userAseguir);
             } else {
-                ResultadoSeguirUsuario s = this.controller.dejarDeSeguirUsuario(user, userAseguir);
+                ResultadoSeguirUsuario s = this.webServices.dejarDeSeguirUsuario(user, userAseguir);
             }
 
         }
@@ -356,11 +360,13 @@ public class UsuarioServlet extends HttpServlet {
 
     protected void iniciarSesion(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        ControllerWS_Service service = new ControllerWS_Service();
+        this.webServices = service.getControllerWSPort();
         String nickname = request.getParameter("nickname");
         String password = request.getParameter("password");
         String recordarme = request.getParameter("recordarme");
-        String tipoUsuario = this.controller.obtenerTipoUser(nickname);
-        boolean autValida = this.controller.autenticarUsuario(nickname, password.toCharArray());
+        String tipoUsuario = this.webServices.obtenerTipoUser(nickname);
+        boolean autValida = this.webServices.autenticarUsuario(nickname, password);
         String userAgent = request.getHeader("User-Agent").toLowerCase();
         boolean esMovil = userAgent.contains("mobi") || userAgent.contains("android")
                 || userAgent.contains("iphone") || userAgent.contains("ipad");
@@ -368,7 +374,7 @@ public class UsuarioServlet extends HttpServlet {
             HttpSession session = request.getSession(true);
 
             if (tipoUsuario.equals("colaborador")) {
-                DTColaborador colab = this.controller.obtenerDTColaborador(nickname);
+                DTColaborador colab = this.webServices.obtenerDTColaborador(nickname);
                 String nom = colab.getNombre();
                 String apell = colab.getApellido();
                 String ubi = colab.getImagen();
@@ -398,7 +404,7 @@ public class UsuarioServlet extends HttpServlet {
                 }
                 response.sendRedirect("/index");
             } else if (tipoUsuario.equals("proponente") && !esMovil) {
-                DTProponente prop = this.controller.obtenerDTProponente(nickname);
+                DTProponente prop = this.webServices.obtenerDTProponente(nickname);
                 String nom = prop.getNombre();
                 String apell = prop.getApellido();
                 String ubi = prop.getImagen();
@@ -451,7 +457,9 @@ public class UsuarioServlet extends HttpServlet {
     }
 
     protected void procesarCrearCuenta(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, NickRepetidoException, EmailRepetidoException, BadPasswordException {
+            throws ServletException, IOException, BadPasswordException_Exception, EmailRepetidoException_Exception, NickRepetidoException_Exception {
+        ControllerWS_Service service = new ControllerWS_Service();
+        this.webServices = service.getControllerWSPort();
         String nombre = request.getParameter("nombre");
         String apellido = request.getParameter("apellido");
         String email = request.getParameter("email");
@@ -461,11 +469,11 @@ public class UsuarioServlet extends HttpServlet {
         String tipoUsuario = request.getParameter("tipoUsuario");
 
         String fNacString = request.getParameter("fechaNacimiento");
-        LocalDate fechaNacimiento = parsearFecha(fNacString);
+        
 
         Part parteArchivo = request.getPart("imagen");
         byte[] bytesImagen = partABytes(parteArchivo);
-        String nombreImagen = this.controller.guardarImagen(bytesImagen);
+        String nombreImagen = this.webServices.guardarImagen(bytesImagen);
 
         DTUsuario user = null;
 
@@ -474,19 +482,46 @@ public class UsuarioServlet extends HttpServlet {
             String calle = request.getParameter("calle");
             String numPuertaString = request.getParameter("numPuerta");
             int numPuerta = Integer.parseInt(numPuertaString);
-            DTDireccion direccion = new DTDireccion(ciudad, calle, numPuerta);
+            DTDireccion direccion = new DTDireccion();
+            direccion.setCalle(calle);
+            direccion.setCiudad(ciudad);
+            direccion.setNumeroPuerta(numPuerta);
             String biografia = request.getParameter("biografia");
             String sitioWeb = request.getParameter("sitioWeb");
-
-            user = new DTProponente(direccion, biografia, sitioWeb, nickname, nombre, apellido,
-                    password.toCharArray(), passwordConfirm.toCharArray(), email, fechaNacimiento, nombreImagen);
+            DTProponente prop = new DTProponente();
+            prop.setDireccion(direccion);
+            prop.setBiografia(biografia);
+            prop.setSitioWeb(sitioWeb);
+            prop.setNickname(nickname);
+            prop.setNombre(nombre);
+            prop.setApellido(apellido);
+            prop.setPassword(password);
+            prop.setPasswordConfirm(passwordConfirm);
+            prop.setEmail(email);
+            prop.setFechaNacimiento(fNacString);
+            prop.setImagen(nombreImagen);
+          
+            this.webServices.addUsuario(prop); 
+           
+            
 
         } else if (tipoUsuario.equals("colaborador")) {
-            user = new DTColaborador(nickname, nombre, apellido,
-                    password.toCharArray(), passwordConfirm.toCharArray(), email, fechaNacimiento, nombreImagen);
+            DTColaborador colab = new DTColaborador();
+            colab.setNickname(nickname);
+            colab.setNombre(nombre);
+            colab.setApellido(apellido);
+            colab.setPassword(password);
+            colab.setPasswordConfirm(passwordConfirm);
+            colab.setEmail(email);
+            colab.setFechaNacimiento(fNacString);
+            colab.setImagen(nombreImagen);
+          
+            this.webServices.addUsuario(colab); 
+            
+            
         }
 
-        this.controller.addUsuario(user);
+        this.webServices.addUsuario(user);
 
     }
 
@@ -514,10 +549,12 @@ public class UsuarioServlet extends HttpServlet {
     }
 
     private ArrayList<String> listaPropuestasPropPublicadas(String nick) {
-        ArrayList<String> aux = this.controller.listaPropuestasUsu(nick);
+        ControllerWS_Service service = new ControllerWS_Service();
+        this.webServices = service.getControllerWSPort();
+        List<String> aux = this.webServices.listaPropuestasUsu(nick);
         ArrayList<String> propuestasPubli = new ArrayList<>();
         for (String p : aux) {
-            DTPropuesta prop = this.controller.obtenerDTPropuesta(p);
+            DTPropuesta prop = this.webServices.obtenerDTPropuesta(p);
             Estado est = prop.getEstadoActual();
             if (est.getEstado() != EstadoPropuesta.INGRESADA) {
                 propuestasPubli.add(p);
@@ -527,7 +564,7 @@ public class UsuarioServlet extends HttpServlet {
         return propuestasPubli;
     }
 
-    private LocalDate parsearFecha(String fechaString) {
+    /*private LocalDate parsearFecha(String fechaString) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date utilDate = null;
         try {
@@ -540,12 +577,13 @@ public class UsuarioServlet extends HttpServlet {
             fecha = utilDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         }
         return fecha;
-    }
+    }*/
 
     private void listarUsuarios(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        ArrayList<String> usuarios = this.controller.listarUsuarios();
+        ControllerWS_Service service = new ControllerWS_Service();
+        this.webServices = service.getControllerWSPort();
+        List<String> usuarios = this.webServices.listarUsuarios();
         request.setAttribute("usuarios", usuarios);
         request.getRequestDispatcher("/WEB-INF/jsp/consultaPerfilUsuario.jsp").forward(request, response);
     }

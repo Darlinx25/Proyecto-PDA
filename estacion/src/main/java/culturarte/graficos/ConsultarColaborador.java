@@ -286,8 +286,8 @@ public class ConsultarColaborador extends javax.swing.JInternalFrame {
         this.campoEmail.setText(colab.getEmail());
         
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate fechaNacimiento = colab.getFechaNacimiento();
-        this.campoFNac.setText(fechaNacimiento.format(formatter));
+        String fechaNacimiento = colab.getFechaNacimiento();
+        this.campoFNac.setText(fechaNacimiento);
         
         String basePath = System.getProperty("user.dir") + "/imagenesUsuarios/";
         String imagen = colab.getImagen();

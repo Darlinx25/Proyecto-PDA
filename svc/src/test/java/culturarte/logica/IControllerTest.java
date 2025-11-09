@@ -53,39 +53,39 @@ public class IControllerTest {
     @Test
     public void testAddUsuario() throws Exception {
         assertEquals(20, controller.listarUsuarios().size());
-        DTUsuario u = new DTColaborador("pepe", "Jose", "Mendez", "12345678".toCharArray(), "12345678".toCharArray(), "pepe@gmail.com", LocalDate.of(1960, 4, 1), "MTimg.jpg");
+        DTUsuario u = new DTColaborador("pepe", "Jose", "Mendez", "12345678", "12345678", "pepe@gmail.com", LocalDate.of(1960, 4, 1).toString(), "MTimg.jpg");
         controller.addUsuario(u);
         assertEquals(21, controller.listarUsuarios().size());
 
-        DTUsuario u2 = new DTColaborador("pepe", "Jose", "Mendez", "12345678".toCharArray(), "12345678".toCharArray(), "pepe0423@gmail.com", LocalDate.of(1960, 4, 1), "MTimg.jpg");
+        DTUsuario u2 = new DTColaborador("pepe", "Jose", "Mendez", "12345678", "12345678", "pepe0423@gmail.com", LocalDate.of(1960, 4, 1).toString(), "MTimg.jpg");
         NickRepetidoException throw1 = assertThrows(
                 NickRepetidoException.class,
                 () -> controller.addUsuario(u2),
                 "tendría que haber tirado excepción");
         assertTrue(throw1.getMessage().contains("Error al registrar usuario, Nick ya existente."));
 
-        DTUsuario u3 = new DTColaborador("carlitos1", "Jose", "Mendez", "12345678".toCharArray(), "12345678".toCharArray(), "pepe@gmail.com", LocalDate.of(1960, 4, 1), "MTimg.jpg");
+        DTUsuario u3 = new DTColaborador("carlitos1", "Jose", "Mendez", "12345678", "12345678", "pepe@gmail.com", LocalDate.of(1960, 4, 1).toString(), "MTimg.jpg");
         EmailRepetidoException throw2 = assertThrows(
                 EmailRepetidoException.class,
                 () -> controller.addUsuario(u3),
                 "tendría que haber tirado excepción");
         assertTrue(throw2.getMessage().contains("Error al registrar usuario, Email ya existente."));
 
-        DTUsuario u4 = new DTColaborador("juancho1", "Jose", "Mendez", "1234567".toCharArray(), "12345678".toCharArray(), "juancho1@gmail.com", LocalDate.of(1960, 4, 1), "MTimg.jpg");
+        DTUsuario u4 = new DTColaborador("juancho1", "Jose", "Mendez", "1234567", "12345678", "juancho1@gmail.com", LocalDate.of(1960, 4, 1).toString(), "MTimg.jpg");
         BadPasswordException throw3 = assertThrows(
                 BadPasswordException.class,
                 () -> controller.addUsuario(u4),
                 "tendría que haber tirado excepción");
         assertTrue(throw3.getMessage().contains("La contraseña tiene que tener de 8 a 24 caracteres de largo"));
 
-        DTUsuario u5 = new DTColaborador("juancho2", "Jose", "Mendez", "12345678".toCharArray(), "1234567".toCharArray(), "juancho2@gmail.com", LocalDate.of(1960, 4, 1), "MTimg.jpg");
+        DTUsuario u5 = new DTColaborador("juancho2", "Jose", "Mendez", "12345678", "1234567", "juancho2@gmail.com", LocalDate.of(1960, 4, 1).toString(), "MTimg.jpg");
         BadPasswordException throw4 = assertThrows(
                 BadPasswordException.class,
                 () -> controller.addUsuario(u5),
                 "tendría que haber tirado excepción");
         assertTrue(throw4.getMessage().contains("La contraseña tiene que tener de 8 a 24 caracteres de largo"));
 
-        DTUsuario u6 = new DTColaborador("juancho3", "Jose", "Mendez", "a12345678".toCharArray(), "b12345678".toCharArray(), "juancho3@gmail.com", LocalDate.of(1960, 4, 1), "MTimg.jpg");
+        DTUsuario u6 = new DTColaborador("juancho3", "Jose", "Mendez", "a12345678", "b12345678", "juancho3@gmail.com", LocalDate.of(1960, 4, 1).toString(), "MTimg.jpg");
         BadPasswordException throw5 = assertThrows(
                 BadPasswordException.class,
                 () -> controller.addUsuario(u6),
@@ -101,16 +101,14 @@ public class IControllerTest {
 
     @Test
     public void testObtenerDTColaborador() throws Exception {
-        DTUsuario u = new DTColaborador("pepe", "Jose", "Mendez", "12345678".toCharArray(), "12345678".toCharArray(), "pepe@gmail.com", LocalDate.of(1960, 4, 1), "MTimg.jpg");
+        DTUsuario u = new DTColaborador("pepe", "Jose", "Mendez", "12345678", "12345678", "pepe@gmail.com", LocalDate.of(1960, 4, 1).toString(), "MTimg.jpg");
         controller.addUsuario(u);
         DTColaborador c = controller.obtenerDTColaborador("pepe");
         assertEquals("pepe", c.getNickname());
         assertEquals("Jose", c.getNombre());
         assertEquals("Mendez", c.getApellido());
         assertEquals("pepe@gmail.com", c.getEmail());
-        assertEquals(1960, c.getFechaNacimiento().getYear());
-        assertEquals(4, c.getFechaNacimiento().getMonthValue());
-        assertEquals(1, c.getFechaNacimiento().getDayOfMonth());
+        assertEquals("1960-04-01", c.getFechaNacimiento());
         assertEquals("MTimg.jpg", c.getImagen());
 
         DTColaborador c2 = controller.obtenerDTColaborador("pepe@gmail.com");
@@ -160,10 +158,10 @@ public class IControllerTest {
 
     @Test
     public void testSeguirUsuario() throws Exception {
-        DTUsuario u = new DTColaborador("pepe", "Jose", "Mendez", "12345678".toCharArray(), "12345678".toCharArray(), "pepe@gmail.com", LocalDate.of(1960, 4, 1), "MTimg.jpg");
+        DTUsuario u = new DTColaborador("pepe", "Jose", "Mendez", "12345678", "12345678", "pepe@gmail.com", LocalDate.of(1960, 4, 1).toString(), "MTimg.jpg");
         controller.addUsuario(u);
         DTUsuario u2 = (new DTProponente(new DTDireccion("Montevideo", " Br. Artigas", 4567), "descripción",
-                "https://www.facebook.com/pepe2", "pepe2", "Jose", "González", "12345678".toCharArray(), "12345678".toCharArray(), "pepe2@hotmail.com", LocalDate.of(1947, 1, 1), "CSimg.jpg"));
+                "https://www.facebook.com/pepe2", "pepe2", "Jose", "González", "12345678", "12345678", "pepe2@hotmail.com", LocalDate.of(1947, 1, 1).toString(), "CSimg.jpg"));
         controller.addUsuario(u2);
 
         ResultadoSeguirUsuario r = controller.seguirUsuario("pepe", "pepe2");
@@ -173,10 +171,10 @@ public class IControllerTest {
 
     @Test
     public void testDejarDeSeguirUsuario() throws Exception {
-        DTUsuario u = new DTColaborador("pepe", "Jose", "Mendez", "12345678".toCharArray(), "12345678".toCharArray(), "pepe@gmail.com", LocalDate.of(1960, 4, 1), "MTimg.jpg");
+        DTUsuario u = new DTColaborador("pepe", "Jose", "Mendez", "12345678", "12345678", "pepe@gmail.com", LocalDate.of(1960, 4, 1).toString(), "MTimg.jpg");
         controller.addUsuario(u);
         DTUsuario u2 = (new DTProponente(new DTDireccion("Montevideo", " Br. Artigas", 4567), "descripción",
-                "https://www.facebook.com/pepe2", "pepe2", "Jose", "González", "12345678".toCharArray(), "12345678".toCharArray(), "pepe2@hotmail.com", LocalDate.of(1947, 1, 1), "CSimg.jpg"));
+                "https://www.facebook.com/pepe2", "pepe2", "Jose", "González", "12345678", "12345678", "pepe2@hotmail.com", LocalDate.of(1947, 1, 1).toString(), "CSimg.jpg"));
         controller.addUsuario(u2);
 
         controller.seguirUsuario("pepe", "pepe2");
@@ -193,10 +191,10 @@ public class IControllerTest {
 
     @Test
     public void testListarUsuariosSeguir() throws Exception {
-        DTUsuario u = new DTColaborador("pepe4", "Jose", "Mendez", "12345678".toCharArray(), "12345678".toCharArray(), "pepe4@gmail.com", LocalDate.of(1960, 4, 1), "MTimg.jpg");
+        DTUsuario u = new DTColaborador("pepe4", "Jose", "Mendez", "12345678", "12345678", "pepe4@gmail.com", LocalDate.of(1960, 4, 1).toString(), "MTimg.jpg");
         controller.addUsuario(u);
         DTUsuario u2 = (new DTProponente(new DTDireccion("Montevideo", " Br. Artigas", 4567), "descripción",
-                "https://www.facebook.com/pepe2", "pepe5", "Jose", "González", "12345678".toCharArray(), "12345678".toCharArray(), "pepe5@hotmail.com", LocalDate.of(1947, 1, 1), "CSimg.jpg"));
+                "https://www.facebook.com/pepe2", "pepe5", "Jose", "González", "12345678", "12345678", "pepe5@hotmail.com", LocalDate.of(1947, 1, 1).toString(), "CSimg.jpg"));
         controller.addUsuario(u2);
 
         controller.seguirUsuario("pepe4", "pepe5");
@@ -207,10 +205,10 @@ public class IControllerTest {
 
     @Test
     public void testListarUsuariosSiguiendo() throws Exception {
-        DTUsuario u = new DTColaborador("pepe", "Jose", "Mendez", "12345678".toCharArray(), "12345678".toCharArray(), "pepe@gmail.com", LocalDate.of(1960, 4, 1), "MTimg.jpg");
+        DTUsuario u = new DTColaborador("pepe", "Jose", "Mendez", "12345678", "12345678", "pepe@gmail.com", LocalDate.of(1960, 4, 1).toString(), "MTimg.jpg");
         controller.addUsuario(u);
         DTUsuario u2 = (new DTProponente(new DTDireccion("Montevideo", " Br. Artigas", 4567), "descripción",
-                "https://www.facebook.com/pepe2", "pepe2", "Jose", "González", "12345678".toCharArray(), "12345678".toCharArray(), "pepe2@hotmail.com", LocalDate.of(1947, 1, 1), "CSimg.jpg"));
+                "https://www.facebook.com/pepe2", "pepe2", "Jose", "González", "12345678", "12345678", "pepe2@hotmail.com", LocalDate.of(1947, 1, 1).toString(), "CSimg.jpg"));
         controller.addUsuario(u2);
 
         controller.seguirUsuario("pepe", "pepe2");
@@ -221,10 +219,10 @@ public class IControllerTest {
 
     @Test
     public void testObtenerSeguidores() throws Exception {
-        DTUsuario u = new DTColaborador("pepe", "Jose", "Mendez", "12345678".toCharArray(), "12345678".toCharArray(), "pepe@gmail.com", LocalDate.of(1960, 4, 1), "MTimg.jpg");
+        DTUsuario u = new DTColaborador("pepe", "Jose", "Mendez", "12345678", "12345678", "pepe@gmail.com", LocalDate.of(1960, 4, 1).toString(), "MTimg.jpg");
         controller.addUsuario(u);
         DTUsuario u2 = (new DTProponente(new DTDireccion("Montevideo", " Br. Artigas", 4567), "descripción",
-                "https://www.facebook.com/pepe2", "pepe2", "Jose", "González", "12345678".toCharArray(), "12345678".toCharArray(), "pepe2@hotmail.com", LocalDate.of(1947, 1, 1), "CSimg.jpg"));
+                "https://www.facebook.com/pepe2", "pepe2", "Jose", "González", "12345678", "12345678", "pepe2@hotmail.com", LocalDate.of(1947, 1, 1).toString(), "CSimg.jpg"));
         controller.addUsuario(u2);
 
         controller.seguirUsuario("pepe", "pepe2");
@@ -254,7 +252,7 @@ public class IControllerTest {
     @Test
     public void testAddPropuesta() throws Exception {
         DTUsuario u2 = (new DTProponente(new DTDireccion("Montevideo", " Br. Artigas", 4567), "descripción",
-                "https://www.facebook.com/pepe2", "pepe11", "Jose", "González", "12345678".toCharArray(), "12345678".toCharArray(), "pepe11@hotmail.com", LocalDate.of(1947, 1, 1), "CSimg.jpg"));
+                "https://www.facebook.com/pepe2", "pepe11", "Jose", "González", "12345678", "12345678", "pepe11@hotmail.com", LocalDate.of(1947, 1, 1).toString(), "CSimg.jpg"));
         controller.addUsuario(u2);
         DTPropuesta prop;
         List<TipoRetorno> retornos = new ArrayList<>();
@@ -434,10 +432,10 @@ public class IControllerTest {
 
     @Test
     public void testObtenerTipoUser() throws Exception {
-        DTUsuario u = new DTColaborador("pepe", "Jose", "Mendez", "12345678".toCharArray(), "12345678".toCharArray(), "pepe@gmail.com", LocalDate.of(1960, 4, 1), "MTimg.jpg");
+        DTUsuario u = new DTColaborador("pepe", "Jose", "Mendez", "12345678", "12345678", "pepe@gmail.com", LocalDate.of(1960, 4, 1).toString(), "MTimg.jpg");
         controller.addUsuario(u);
         DTUsuario u2 = (new DTProponente(new DTDireccion("Montevideo", " Br. Artigas", 4567), "descripción",
-                "https://www.facebook.com/pepe2", "pepe2", "Jose", "González", "12345678".toCharArray(), "12345678".toCharArray(), "pepe2@hotmail.com", LocalDate.of(1947, 1, 1), "CSimg.jpg"));
+                "https://www.facebook.com/pepe2", "pepe2", "Jose", "González", "12345678", "12345678", "pepe2@hotmail.com", LocalDate.of(1947, 1, 1).toString(), "CSimg.jpg"));
         controller.addUsuario(u2);
 
         assertEquals("colaborador", controller.obtenerTipoUser("pepe"));
@@ -448,7 +446,7 @@ public class IControllerTest {
 
     @Test
     public void testAutenticarUsuario() throws Exception {
-        DTUsuario u = new DTColaborador("pepe", "Jose", "Mendez", "12345678".toCharArray(), "12345678".toCharArray(), "pepe@gmail.com", LocalDate.of(1960, 4, 1), "MTimg.jpg");
+        DTUsuario u = new DTColaborador("pepe", "Jose", "Mendez", "12345678", "12345678", "pepe@gmail.com", LocalDate.of(1960, 4, 1).toString(), "MTimg.jpg");
         controller.addUsuario(u);
         assertTrue(controller.autenticarUsuario("pepe", "12345678".toCharArray()));
         assertFalse(controller.autenticarUsuario("pepe", "asfgafesf".toCharArray()));
@@ -501,7 +499,7 @@ public class IControllerTest {
     @Test
     public void testBuscarPropuestasTDL() throws Exception {
         DTUsuario u2 = (new DTProponente(new DTDireccion("Montevideo", " Br. Artigas", 4567), "descripción",
-                "https://www.facebook.com/pepe2", "pepe3", "Jose", "González", "12345678".toCharArray(), "12345678".toCharArray(), "pepe3@hotmail.com", LocalDate.of(1947, 1, 1), "CSimg.jpg"));
+                "https://www.facebook.com/pepe2", "pepe3", "Jose", "González", "12345678", "12345678", "pepe3@hotmail.com", LocalDate.of(1947, 1, 1).toString(), "CSimg.jpg"));
         controller.addUsuario(u2);
         controller.addCategoria("baile al Aire Libre", "Categorías");
         DTPropuesta prop;

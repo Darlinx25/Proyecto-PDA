@@ -50,7 +50,7 @@ public class verProponentesDeBaja extends javax.swing.JInternalFrame {
                         campoNombre.setText(dt.getNombre());
                         campoApellido.setText(dt.getApellido());
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                        LocalDate fechaNacimiento = dt.getFechaNacimiento();
+                        String fechaNacimiento = dt.getFechaNacimiento();
                         
                        
                         LocalDate fechaBaja = dt.getFechaBaja();
@@ -59,7 +59,7 @@ public class verProponentesDeBaja extends javax.swing.JInternalFrame {
                         if (fechaNacimiento == null) {
                             campoFechaNac.setText("");
                         } else {
-                            campoFechaNac.setText(fechaNacimiento.format(formatter));
+                            campoFechaNac.setText(fechaNacimiento);
                         }
                         
                         if (fechaBaja == null) {
