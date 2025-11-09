@@ -12,10 +12,7 @@
     
     <properties>
         <maven.compiler.release>17</maven.compiler.release>
-
-        
-
-        <DB_HOST>db</DB_HOST>
+        <DB_HOST>localhost</DB_HOST>
         <DB_PORT>3306</DB_PORT>
         <DB_USER>culturarte</DB_USER>
         <DB_PASS>culturarte</DB_PASS>
@@ -83,6 +80,12 @@
     </dependencies>
     
     <build>
+        <resources>
+        <resource>
+            <directory>src/main/resources</directory>
+            <filtering>true</filtering>
+        </resource>
+    </resources>
         <plugins>
             <plugin>
                 <groupId>org.jacoco</groupId>
@@ -105,5 +108,6 @@
                 </executions>
             </plugin>
         </plugins>
+        
     </build>
 </project>

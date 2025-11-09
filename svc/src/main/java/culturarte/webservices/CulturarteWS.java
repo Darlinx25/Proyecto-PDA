@@ -11,7 +11,7 @@ import jakarta.jws.WebService;
 import jakarta.xml.ws.Endpoint;
 import java.util.ArrayList;
 import java.util.List;
-
+import javax.swing.tree.DefaultMutableTreeNode;
 
 @WebService(serviceName = "CulturarteWS")
 public class CulturarteWS {
@@ -123,6 +123,11 @@ public class CulturarteWS {
     @WebMethod(operationName = "altaProponente")
     public void altaProponente(@WebParam(name = "nickname") String nickname) {
         Controller.getInstance().altaProponente(nickname);
+    }
+
+    @WebMethod(operationName = "listarCategorias")
+    public DefaultMutableTreeNode listarCategorias() {
+        return Controller.getInstance().listarCategorias();
     }
 
     @WebMethod(operationName = "addCategoria")
