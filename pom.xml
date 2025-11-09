@@ -16,9 +16,7 @@
     <module>estacion</module>
             
     <module>web</module>
-          
     <module>svc</module>
-      
   </modules>
       
   <properties>
