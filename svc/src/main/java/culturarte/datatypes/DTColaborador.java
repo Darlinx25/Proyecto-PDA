@@ -5,12 +5,14 @@
 package culturarte.datatypes;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlType;
 import java.time.LocalDate;
 
 /**
  *
  * @author mark
  */
+@XmlType(name = "DTColaborador")
 @XmlRootElement
 public class DTColaborador extends DTUsuario {
     

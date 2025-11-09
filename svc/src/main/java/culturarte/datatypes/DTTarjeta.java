@@ -1,6 +1,9 @@
 package culturarte.datatypes;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlType;
+
+@XmlType(name = "DTTarjeta")
 @XmlRootElement
 public class DTTarjeta extends DTFormaPago {
 

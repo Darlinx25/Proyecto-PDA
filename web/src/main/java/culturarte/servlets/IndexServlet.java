@@ -11,17 +11,23 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
+import webservices.ControllerWS;
+import webservices.ControllerWS_Service;
 
 @WebServlet(name = "IndexServlet", urlPatterns = {"/index"})
 public class IndexServlet extends HttpServlet {
 
     private IController controller = IControllerFactory.getInstance().getIController();
+    private ControllerWS webServices;
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods.">
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        this.controller.registrarAcceso(Tracking.generarDTRegistroAcceso(request));
+        ControllerWS_Service service = new ControllerWS_Service();
+        this.webServices = service.getControllerWSPort();
+        
+        this.webServices.registrarAcceso(Tracking.generarDTRegistroAcceso(request));
         processRequest(request, response);
     }
 

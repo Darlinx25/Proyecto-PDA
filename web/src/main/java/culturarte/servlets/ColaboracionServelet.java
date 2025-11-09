@@ -31,18 +31,25 @@ import jakarta.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import webservices.ControllerWS;
+import webservices.ControllerWS_Service;
 
 @WebServlet(name = "ColaboracionServelet", urlPatterns = {"/registrar-colaboracion", "/pagar", "/generarPDF", "/marcar-constancia-emitida"})
 public class ColaboracionServelet extends HttpServlet {
 
     private IController controller = IControllerFactory.getInstance().getIController();
+    private ControllerWS webServices;
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
  
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        this.controller.registrarAcceso(Tracking.generarDTRegistroAcceso(request));
+        ControllerWS_Service service = new ControllerWS_Service();
+        this.webServices = service.getControllerWSPort();
+        
+        this.webServices.registrarAcceso(Tracking.generarDTRegistroAcceso(request));
+        
         response.setContentType("text/html;charset=UTF-8");
         String path = request.getServletPath();
         

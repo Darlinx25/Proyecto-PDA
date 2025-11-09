@@ -10,6 +10,9 @@ import jakarta.persistence.*;
  * @author mark
  */
 import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlType;
+
+@XmlType(name = "DTDireccion")
 @XmlRootElement
 @Embeddable
 public class DTDireccion {

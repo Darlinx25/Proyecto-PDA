@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlType;
+
+@XmlType(name = "DTPropuesta")
 @XmlRootElement
 public class DTPropuesta {
     private String titulo;

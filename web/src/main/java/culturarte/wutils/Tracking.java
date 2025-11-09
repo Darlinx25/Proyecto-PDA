@@ -1,6 +1,6 @@
 package culturarte.wutils;
 
-import culturarte.datatypes.DTRegistroAcceso;
+import webservices.DTRegistroAcceso;
 import jakarta.servlet.http.HttpServletRequest;
 
 public final class Tracking {
@@ -29,7 +29,13 @@ public final class Tracking {
         browser = parseBrowser(userAgent);
         os = parseOs(userAgent);
         
-        return new DTRegistroAcceso(ip, url, browser, os);
+        DTRegistroAcceso ret = new DTRegistroAcceso();
+        ret.setIp(ip);
+        ret.setUrl(url);
+        ret.setBrowser(browser);
+        ret.setOs(os);
+        
+        return ret;
     }
     
     private static String parseBrowser(String userAgent) {

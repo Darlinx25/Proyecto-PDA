@@ -2,6 +2,9 @@
 package culturarte.datatypes;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlType;
+
+@XmlType(name = "DTRegistroAcceso")
 @XmlRootElement
 public class DTRegistroAcceso {
     

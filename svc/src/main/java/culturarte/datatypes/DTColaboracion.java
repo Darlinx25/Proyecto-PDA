@@ -6,12 +6,14 @@ package culturarte.datatypes;
 
 import culturarte.logica.Pago;
 import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlType;
 import java.time.LocalDateTime;
 
 /**
  *
  * @author mark
  */
+@XmlType(name = "DTColaboracion")
 @XmlRootElement
 public class DTColaboracion {
     private Long id;

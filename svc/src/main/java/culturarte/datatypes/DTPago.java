@@ -3,6 +3,9 @@ package culturarte.datatypes;
 import java.time.LocalDateTime;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlType;
+
+@XmlType(name = "DTPago")
 @XmlRootElement
 public class DTPago {
     private float montoPago;

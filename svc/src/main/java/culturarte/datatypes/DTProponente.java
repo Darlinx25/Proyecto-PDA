@@ -7,6 +7,9 @@ package culturarte.datatypes;
 import java.time.LocalDate;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlType;
+
+@XmlType(name = "DTProponente")
 @XmlRootElement
 public class DTProponente extends DTUsuario {
     private DTDireccion direccion;

@@ -37,6 +37,8 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import webservices.ControllerWS;
+import webservices.ControllerWS_Service;
 
 /**
  *
@@ -51,12 +53,17 @@ import java.util.List;
 public class UsuarioServlet extends HttpServlet {
 
     private IController controller = IControllerFactory.getInstance().getIController();
+    private ControllerWS webServices;
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods.">
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        this.controller.registrarAcceso(Tracking.generarDTRegistroAcceso(request));
+        ControllerWS_Service service = new ControllerWS_Service();
+        this.webServices = service.getControllerWSPort();
+        
+        this.webServices.registrarAcceso(Tracking.generarDTRegistroAcceso(request));
         response.setContentType("text/html;charset=UTF-8");
         String path = request.getServletPath();
 
