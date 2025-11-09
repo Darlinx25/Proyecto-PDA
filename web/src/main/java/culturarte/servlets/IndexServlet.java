@@ -1,7 +1,5 @@
 package culturarte.servlets;
 
-import culturarte.logica.IController;
-import culturarte.logica.IControllerFactory;
 import culturarte.wutils.Tracking;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -10,14 +8,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
+import java.util.List;
 import webservices.ControllerWS;
 import webservices.ControllerWS_Service;
 
 @WebServlet(name = "IndexServlet", urlPatterns = {"/index"})
 public class IndexServlet extends HttpServlet {
 
-    private IController controller = IControllerFactory.getInstance().getIController();
+    //private IController controller = IControllerFactory.getInstance().getIController();
     private ControllerWS webServices;
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods.">
@@ -41,11 +39,13 @@ public class IndexServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        ControllerWS_Service service = new ControllerWS_Service();
+        this.webServices = service.getControllerWSPort();
         String userAgent = request.getHeader("User-Agent").toLowerCase();
         String rol = (String) session.getAttribute("rol");
-        ArrayList<String> cat = this.controller.obtenerCategorias();
-        this.controller.actualizarEstado();
-        this.controller.actualizarPuntajes();
+        List<String> cat = this.webServices.obtenerCategorias();
+        this.webServices.actualizarEstado();
+        this.webServices.actualizarPuntajes();
         request.setAttribute("categorias",cat);
         response.setContentType("text/html;charset=UTF-8");
         boolean esMovil = userAgent.contains("mobi") || userAgent.contains("android") 
