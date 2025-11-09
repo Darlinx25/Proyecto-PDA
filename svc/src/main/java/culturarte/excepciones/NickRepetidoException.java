@@ -11,6 +11,9 @@ package culturarte.excepciones;
  */
 @SuppressWarnings("serial")
 public class NickRepetidoException extends Exception {
+
+    public NickRepetidoException() {
+    }
     
     public NickRepetidoException(String string){
         super(string);

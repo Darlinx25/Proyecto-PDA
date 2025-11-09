@@ -13,5 +13,8 @@ public class PropuestaYaColaboradaException extends Exception {
     public PropuestaYaColaboradaException(String message) {
         super(message);
     }
+
+    public PropuestaYaColaboradaException() {
+    }
     
 }

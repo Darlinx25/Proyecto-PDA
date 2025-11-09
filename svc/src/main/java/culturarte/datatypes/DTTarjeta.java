@@ -1,5 +1,7 @@
 package culturarte.datatypes;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+@XmlRootElement
 public class DTTarjeta extends DTFormaPago {
 
     private String tipoTarjeta;
@@ -14,6 +16,29 @@ public class DTTarjeta extends DTFormaPago {
         this.nroTarjeta = nroTarjeta;
         this.vencTarjeta = vencTarjeta;
         this.cvc = cvc;
+        this.titularTarjeta = titularTarjeta;
+    }
+
+    public DTTarjeta() {
+    }
+
+    public void setTipoTarjeta(String tipoTarjeta) {
+        this.tipoTarjeta = tipoTarjeta;
+    }
+
+    public void setNroTarjeta(String nroTarjeta) {
+        this.nroTarjeta = nroTarjeta;
+    }
+
+    public void setVencTarjeta(String vencTarjeta) {
+        this.vencTarjeta = vencTarjeta;
+    }
+
+    public void setCvc(String cvc) {
+        this.cvc = cvc;
+    }
+
+    public void setTitularTarjeta(String titularTarjeta) {
         this.titularTarjeta = titularTarjeta;
     }
 

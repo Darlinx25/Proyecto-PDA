@@ -6,10 +6,8 @@ package culturarte.datatypes;
 
 import java.time.LocalDate;
 
-/**
- *
- * @author mark
- */
+import jakarta.xml.bind.annotation.XmlRootElement;
+@XmlRootElement
 public class DTProponente extends DTUsuario {
     private DTDireccion direccion;
     private String biografia;
@@ -19,6 +17,22 @@ public class DTProponente extends DTUsuario {
     
     public DTProponente(){
         
+    }
+
+    public void setDireccion(DTDireccion direccion) {
+        this.direccion = direccion;
+    }
+
+    public void setBiografia(String biografia) {
+        this.biografia = biografia;
+    }
+
+    public void setSitioWeb(String sitioWeb) {
+        this.sitioWeb = sitioWeb;
+    }
+
+    public void setFechaBaja(LocalDate fechaBaja) {
+        this.fechaBaja = fechaBaja;
     }
     /*para crear*/
     public DTProponente(DTDireccion direccion, String biografia, String sitioWeb, String nickname, String nombre, String apellido, char[] password, char[] passwordConfirm, String email, LocalDate fechaNacimiento, String imagen) {

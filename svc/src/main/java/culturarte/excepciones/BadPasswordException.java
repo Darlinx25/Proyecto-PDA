@@ -9,6 +9,9 @@ package culturarte.excepciones;
  * @author mark
  */
 public class BadPasswordException extends Exception {
+
+    public BadPasswordException() {
+    }
     
     public BadPasswordException(String message) {
         super(message);

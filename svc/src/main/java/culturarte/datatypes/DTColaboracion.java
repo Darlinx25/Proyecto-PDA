@@ -5,12 +5,14 @@
 package culturarte.datatypes;
 
 import culturarte.logica.Pago;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDateTime;
 
 /**
  *
  * @author mark
  */
+@XmlRootElement
 public class DTColaboracion {
     private Long id;
     private float monto;
@@ -21,6 +23,51 @@ public class DTColaboracion {
     private boolean pagada;
     private boolean constanciaEmitida;
     private Pago pago;
+
+    public DTColaboracion() {
+    }
+
+    public boolean isConstanciaEmitida() {
+        return constanciaEmitida;
+    }
+
+    public void setConstanciaEmitida(boolean constanciaEmitida) {
+        this.constanciaEmitida = constanciaEmitida;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setMonto(float monto) {
+        this.monto = monto;
+    }
+
+    public void setFechaHora(LocalDateTime fechaHora) {
+        this.fechaHora = fechaHora;
+    }
+
+    public void setTipoRetorno(String tipoRetorno) {
+        this.tipoRetorno = tipoRetorno;
+    }
+
+    public void setColaborador(String colaborador) {
+        this.colaborador = colaborador;
+    }
+
+    public void setPropuestaColaborada(String propuestaColaborada) {
+        this.propuestaColaborada = propuestaColaborada;
+    }
+
+    public void setPagada(boolean pagada) {
+        this.pagada = pagada;
+    }
+
+    public void setPago(Pago pago) {
+        this.pago = pago;
+    }
+    
+    
     
     public DTColaboracion(Long id, float monto, LocalDateTime fechaHora, String tipoRetorno, String colaborador, String propuestaColaborada) {
         this.id = id;

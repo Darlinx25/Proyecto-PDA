@@ -9,6 +9,9 @@ package culturarte.excepciones;
  * @author kevin
  */
 public class EmailRepetidoException extends Exception{
+
+    public EmailRepetidoException() {
+    }
     
     public EmailRepetidoException (String string){
         super(string);

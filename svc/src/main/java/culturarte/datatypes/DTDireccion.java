@@ -4,10 +4,13 @@
  */
 package culturarte.datatypes;
 import jakarta.persistence.*;
+
 /**
  *
  * @author mark
  */
+import jakarta.xml.bind.annotation.XmlRootElement;
+@XmlRootElement
 @Embeddable
 public class DTDireccion {
     private String ciudad;
@@ -18,6 +21,19 @@ public class DTDireccion {
     public DTDireccion(){
         
     }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    public void setCalle(String calle) {
+        this.calle = calle;
+    }
+
+    public void setNumeroPuerta(int numeroPuerta) {
+        this.numeroPuerta = numeroPuerta;
+    }
+    
     public DTDireccion(String ciudad, String calle, int numeroPuerta) {
         this.ciudad = ciudad;
         this.calle = calle;

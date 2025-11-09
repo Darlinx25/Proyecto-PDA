@@ -12,4 +12,8 @@ public class PropuestaDuplicadaException extends Exception {
     public PropuestaDuplicadaException(String string){
         super(string);
     }
+
+    public PropuestaDuplicadaException() {
+    }
+    
 }

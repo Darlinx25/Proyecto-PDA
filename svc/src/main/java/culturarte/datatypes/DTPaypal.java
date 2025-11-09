@@ -1,5 +1,7 @@
 package culturarte.datatypes;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+@XmlRootElement
 public class DTPaypal extends DTFormaPago {
 
     private String cuentaPaypal;
@@ -16,6 +18,17 @@ public class DTPaypal extends DTFormaPago {
 
     public String getTitularPaypal() {
         return titularPaypal;
+    }
+
+    public DTPaypal() {
+    }
+
+    public void setCuentaPaypal(String cuentaPaypal) {
+        this.cuentaPaypal = cuentaPaypal;
+    }
+
+    public void setTitularPaypal(String titularPaypal) {
+        this.titularPaypal = titularPaypal;
     }
     
     

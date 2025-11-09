@@ -6,10 +6,8 @@ package culturarte.datatypes;
 
 import java.time.LocalDate;
 
-/**
- *
- * @author mark
- */
+import jakarta.xml.bind.annotation.XmlRootElement;
+@XmlRootElement
 public abstract class DTUsuario {
     private String nickname;
     private String nombre;
@@ -22,6 +20,38 @@ public abstract class DTUsuario {
     
     protected DTUsuario(){
         
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public void setPassword(char[] password) {
+        this.password = password;
+    }
+
+    public void setPasswordConfirm(char[] passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
     /*para crear*/
     protected DTUsuario(String nickname, String nombre, String apellido, char[] password, char[] passwordConfirm, String email, LocalDate fechaNacimiento, String imagen) {

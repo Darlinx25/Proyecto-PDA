@@ -1,5 +1,7 @@
 package culturarte.datatypes;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+@XmlRootElement
 public class DTMail {
     private String destinatario;
     private String asunto;
@@ -8,6 +10,21 @@ public class DTMail {
     public DTMail(String destinatario, String asunto, String cuerpo) {
         this.destinatario = destinatario;
         this.asunto = asunto;
+        this.cuerpo = cuerpo;
+    }
+
+    public DTMail() {
+    }
+
+    public void setDestinatario(String destinatario) {
+        this.destinatario = destinatario;
+    }
+
+    public void setAsunto(String asunto) {
+        this.asunto = asunto;
+    }
+
+    public void setCuerpo(String cuerpo) {
         this.cuerpo = cuerpo;
     }
 

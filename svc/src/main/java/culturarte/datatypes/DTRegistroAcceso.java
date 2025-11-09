@@ -1,6 +1,8 @@
 
 package culturarte.datatypes;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+@XmlRootElement
 public class DTRegistroAcceso {
     
     private long id;
@@ -15,6 +17,29 @@ public class DTRegistroAcceso {
         this.ip = ip;
         this.url = url;
         this.browser = browser;
+        this.os = os;
+    }
+
+    public DTRegistroAcceso() {
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public void setBrowser(String browser) {
+        this.browser = browser;
+    }
+
+    public void setOs(String os) {
         this.os = os;
     }
     

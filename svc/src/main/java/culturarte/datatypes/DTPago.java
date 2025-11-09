@@ -2,6 +2,8 @@ package culturarte.datatypes;
 
 import java.time.LocalDateTime;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+@XmlRootElement
 public class DTPago {
     private float montoPago;
     private DTFormaPago formaPago;
@@ -13,6 +15,25 @@ public class DTPago {
         this.montoPago = montoPago;
         this.formaPago = formaPago;
         this.fechaPago = fechaPago;
+    }
+
+    public DTPago() {
+    }
+
+    public void setMontoPago(float montoPago) {
+        this.montoPago = montoPago;
+    }
+
+    public void setFormaPago(DTFormaPago formaPago) {
+        this.formaPago = formaPago;
+    }
+
+    public void setFechaPago(LocalDateTime fechaPago) {
+        this.fechaPago = fechaPago;
+    }
+
+    public void setMetodoPago(String metodoPago) {
+        this.metodoPago = metodoPago;
     }
 
     public float getMontoPago() {

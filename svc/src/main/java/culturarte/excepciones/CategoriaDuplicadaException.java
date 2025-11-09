@@ -9,6 +9,9 @@ package culturarte.excepciones;
  * @author kevin
  */
 public class CategoriaDuplicadaException extends Exception {
+
+    public CategoriaDuplicadaException() {
+    }
     
     public CategoriaDuplicadaException (String string){
         super (string);

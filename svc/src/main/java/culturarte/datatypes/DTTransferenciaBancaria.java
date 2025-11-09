@@ -1,5 +1,8 @@
 package culturarte.datatypes;
 
+
+import jakarta.xml.bind.annotation.XmlRootElement;
+@XmlRootElement
 public class DTTransferenciaBancaria extends DTFormaPago {
 
     private String nombreBanco;
@@ -22,6 +25,21 @@ public class DTTransferenciaBancaria extends DTFormaPago {
 
     public String getTitularBanco() {
         return titularBanco;
+    }
+
+    public DTTransferenciaBancaria() {
+    }
+
+    public void setNombreBanco(String nombreBanco) {
+        this.nombreBanco = nombreBanco;
+    }
+
+    public void setCuentaBanco(String cuentaBanco) {
+        this.cuentaBanco = cuentaBanco;
+    }
+
+    public void setTitularBanco(String titularBanco) {
+        this.titularBanco = titularBanco;
     }
     
     

@@ -10,9 +10,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author kevin*/
+import jakarta.xml.bind.annotation.XmlRootElement;
+@XmlRootElement
 public class DTPropuesta {
     private String titulo;
     private String descripcion;
@@ -34,6 +33,70 @@ public class DTPropuesta {
     
     public DTPropuesta(){
         
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    public void setLugarRealizara(String lugarRealizara) {
+        this.lugarRealizara = lugarRealizara;
+    }
+
+    public void setFechaRealizara(LocalDate fechaRealizara) {
+        this.fechaRealizara = fechaRealizara;
+    }
+
+    public void setPrecioEntrada(float precioEntrada) {
+        this.precioEntrada = precioEntrada;
+    }
+
+    public void setMontoAReunir(float montoAReunir) {
+        this.montoAReunir = montoAReunir;
+    }
+
+    public void setDineroRecaudado(float dineroRecaudado) {
+        this.dineroRecaudado = dineroRecaudado;
+    }
+
+    public void setFechaPublicacion(LocalDate fechaPublicacion) {
+        this.fechaPublicacion = fechaPublicacion;
+    }
+
+    public void setPlazoFinanciacion(LocalDate plazoFinanciacion) {
+        this.plazoFinanciacion = plazoFinanciacion;
+    }
+
+    public void setTipoPropuesta(String tipoPropuesta) {
+        this.tipoPropuesta = tipoPropuesta;
+    }
+
+    public void setNickProponedor(String nickProponedor) {
+        this.nickProponedor = nickProponedor;
+    }
+
+    public void setTiposRetorno(List<TipoRetorno> tiposRetorno) {
+        this.tiposRetorno = tiposRetorno;
+    }
+
+    public void setEstadoActual(Estado estadoActual) {
+        this.estadoActual = estadoActual;
+    }
+
+    public void setNicksColabs(List<String> nicksColabs) {
+        this.nicksColabs = nicksColabs;
+    }
+
+    public void setComentarios(List<String> comentarios) {
+        this.comentarios = comentarios;
     }
     
     //este para obtener los datos de una propuesta

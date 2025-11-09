@@ -17,12 +17,13 @@ import culturarte.excepciones.PropuestaYaColaboradaException;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
 import culturarte.logica.ResultadoSeguirUsuario;
+import jakarta.jws.WebMethod;
+import jakarta.jws.WebParam;
+import jakarta.jws.WebService;
+import jakarta.xml.ws.Endpoint;
 import java.util.ArrayList;
 import java.util.List;
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
-import javax.jws.WebService;
-import javax.xml.ws.Endpoint;
+
 
 @WebService(serviceName = "ControllerWS")
 public class ControllerWS {
