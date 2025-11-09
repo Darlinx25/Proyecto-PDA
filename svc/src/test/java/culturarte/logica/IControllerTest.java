@@ -259,7 +259,7 @@ public class IControllerTest {
         retornos.add(TipoRetorno.ENTRADA_GRATIS);
         prop = new DTPropuesta("Cine en las nubes",
                 "descripción", null, "tropósfera",
-                LocalDate.of(2025, 11, 16), 200, 150000, "Cine al Aire Libre", "pepe11",
+                LocalDate.of(2025, 11, 16).toString(), 200, 150000, "Cine al Aire Libre", "pepe11",
                 retornos, new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 10, 15, 14, 50)));
 
         controller.addPropuesta(prop);
@@ -325,7 +325,7 @@ public class IControllerTest {
                 + "importante para el aprendizaje y la democratización de la ciencia, los monólogos científicos son una forma didáctica de "
                 + "apropiación del conocimiento científico y contribuyen a que el público aprenda ciencia de forma amena. Los invitamos a "
                 + "pasar un rato divertido, en un espacio en el cual aprenderán cosas de la ciencia que los sorprenderán. ¡Los esperamos!", null, "Anfiteatro Edificio \"José Luis Massera\"",
-                LocalDate.of(2025, 12, 10), 200, 100000, "Stand-up", "losBardo", entrada, new Estado(EstadoPropuesta.CANCELADA, LocalDateTime.of(2025, 10, 16, 2, 12)));
+                LocalDate.of(2025, 12, 10).toString(), 200, 100000, "Stand-up", "losBardo", entrada, new Estado(EstadoPropuesta.CANCELADA, LocalDateTime.of(2025, 10, 16, 2, 12)));
 
         DTPropuesta p = controller.obtenerDTPropuesta("Bardo en la FING");
         assertEquals(EstadoPropuesta.INGRESADA, p.getEstadoActual().getEstado(), "tiene que dar ingresada");
@@ -340,7 +340,7 @@ public class IControllerTest {
                 + "importante para el aprendizaje y la democratización de la ciencia, los monólogos científicos son una forma didáctica de "
                 + "apropiación del conocimiento científico y contribuyen a que el público aprenda ciencia de forma amena. Los invitamos a "
                 + "pasar un rato divertido, en un espacio en el cual aprenderán cosas de la ciencia que los sorprenderán. ¡Los esperamos!", "MTimg.jpg", "Anfiteatro Edificio \"José Luis Massera\"",
-                LocalDate.of(2025, 12, 10), 200, 100000, "Stand-up", "losBardo", entrada, new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 10, 16, 2, 12)));
+                LocalDate.of(2025, 12, 10).toString(), 200, 100000, "Stand-up", "losBardo", entrada, new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 10, 16, 2, 12)));
 
         controller.modPropuesta(prop2);
         p = controller.obtenerDTPropuesta("Bardo en la FING");
@@ -507,7 +507,7 @@ public class IControllerTest {
         retornos.add(TipoRetorno.ENTRADA_GRATIS);
         prop = new DTPropuesta("baile en las nubes",
                 "descripción", null, "tropósfera",
-                LocalDate.of(2025, 11, 16), 200, 150000, "Cine al Aire Libre", "pepe3",
+                LocalDate.of(2025, 11, 16).toString(), 200, 150000, "Cine al Aire Libre", "pepe3",
                 retornos, new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 10, 15, 14, 50)));
 
         controller.addPropuesta(prop);

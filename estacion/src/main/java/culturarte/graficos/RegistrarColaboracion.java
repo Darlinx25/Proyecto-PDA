@@ -352,15 +352,15 @@ public class RegistrarColaboracion extends javax.swing.JInternalFrame {
         this.campoLugar.setText(datosProp.getLugarRealizara());
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate fechaRealizar = datosProp.getFechaRealizara();
-        this.campoFechaRealizar.setText(fechaRealizar.format(formatter));
+        String fechaRealizar = datosProp.getFechaRealizara();
+        this.campoFechaRealizar.setText(fechaRealizar);
         this.campoPrecio.setText(Float.toString(datosProp.getPrecioEntrada()));
         this.campoMontoReunir.setText(Float.toString(datosProp.getMontoAReunir()));
-        LocalDate fechaPublicacion = datosProp.getFechaPublicacion();
+        String fechaPublicacion = datosProp.getFechaPublicacion();
         if(fechaPublicacion == null){
            this.campoFechaPublicacion.setText(""); 
         }else{
-           this.campoFechaPublicacion.setText(fechaPublicacion.format(formatter)); 
+           this.campoFechaPublicacion.setText(fechaPublicacion); 
         }
         campoCategoria.setText(datosProp.getTipoPropuesta());
         cargarRetornosCombo(datosProp.getTiposRetorno());

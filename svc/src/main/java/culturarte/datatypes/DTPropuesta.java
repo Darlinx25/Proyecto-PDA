@@ -20,11 +20,11 @@ public class DTPropuesta {
     private String descripcion;
     private String imagen;
     private String lugarRealizara;
-    private LocalDate fechaRealizara;
+    private String fechaRealizara;
     private float precioEntrada;
     private float montoAReunir;
     private float dineroRecaudado;
-    private LocalDate fechaPublicacion;
+    private String fechaPublicacion;
     private LocalDate plazoFinanciacion;
     private String tipoPropuesta;
     private String nickProponedor;
@@ -54,7 +54,7 @@ public class DTPropuesta {
         this.lugarRealizara = lugarRealizara;
     }
 
-    public void setFechaRealizara(LocalDate fechaRealizara) {
+    public void setFechaRealizara(String fechaRealizara) {
         this.fechaRealizara = fechaRealizara;
     }
 
@@ -70,7 +70,7 @@ public class DTPropuesta {
         this.dineroRecaudado = dineroRecaudado;
     }
 
-    public void setFechaPublicacion(LocalDate fechaPublicacion) {
+    public void setFechaPublicacion(String fechaPublicacion) {
         this.fechaPublicacion = fechaPublicacion;
     }
 
@@ -103,8 +103,8 @@ public class DTPropuesta {
     }
     
     //este para obtener los datos de una propuesta
-    public DTPropuesta(String titulo, String descripcion, String imagen, String lugarRealizara, LocalDate fechaRealizara, 
-            float precioEntrada, float montoAReunir, float dineroRecaudado, LocalDate fechaPublicacion,
+    public DTPropuesta(String titulo, String descripcion, String imagen, String lugarRealizara, String fechaRealizara, 
+            float precioEntrada, float montoAReunir, float dineroRecaudado, String fechaPublicacion,
             String tipoPropuesta, String nickProponedor, List<TipoRetorno> tiposRetorno, Estado estadoActual,
             LocalDate fechaFinanciacion, List<String> nicksColabs ,List<String> comentarios) {
         
@@ -127,7 +127,7 @@ public class DTPropuesta {
     }
     
     //este para crear la propuesta
-    public DTPropuesta(String titulo, String descripcion, String imagen, String lugarRealizara, LocalDate fechaRealizara, 
+    public DTPropuesta(String titulo, String descripcion, String imagen, String lugarRealizara, String fechaRealizara, 
             float precioEntrada, float montoAReunir, String tipoPropuesta, String nickProponedor, List<TipoRetorno> tiposRetorno, Estado estadoActual) {
         
         this.titulo = titulo;
@@ -162,7 +162,7 @@ public class DTPropuesta {
         return lugarRealizara;
     }
 
-    public LocalDate getFechaRealizara() {
+    public String getFechaRealizara() {
         return fechaRealizara;
     }
 
@@ -178,7 +178,7 @@ public class DTPropuesta {
         return dineroRecaudado;
     }
     
-    public LocalDate getFechaPublicacion() {
+    public String getFechaPublicacion() {
         return fechaPublicacion;
     }
 

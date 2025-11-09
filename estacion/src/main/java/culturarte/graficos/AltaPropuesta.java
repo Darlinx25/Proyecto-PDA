@@ -392,7 +392,7 @@ public class AltaPropuesta extends javax.swing.JInternalFrame {
             if (this.checkGanancias.isSelected()) {
                 tiposRetorno.add(TipoRetorno.PORCENTAJE_GANANCIAS);
             }
-            DTPropuesta propuesta = new DTPropuesta(titulo, descripcion, this.imagenPropuesta, lugarRealizara, fechaRealizara,
+            DTPropuesta propuesta = new DTPropuesta(titulo, descripcion, this.imagenPropuesta, lugarRealizara, fechaRealizara.toString(),
                     precioEntrada, montoAReunir, tipoPropuesta, nickProponedor, tiposRetorno, est);
 
             try {

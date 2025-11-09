@@ -4,15 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import culturarte.datatypes.DTColaboracion;
-import culturarte.excepciones.PropuestaDuplicadaException;
-import culturarte.datatypes.DTPropuesta;
-import culturarte.logica.Estado;
-import culturarte.logica.EstadoPropuesta;
-import culturarte.logica.IController;
-import culturarte.logica.IControllerFactory;
-import culturarte.logica.Propuesta;
-import culturarte.logica.TipoRetorno;
+import webservices.DTPropuesta;
+import webservices.Estado;
+import webservices.EstadoPropuesta;
 import static culturarte.wutils.SesionUtils.puedeCrearPropuesta;
 import culturarte.wutils.Tracking;
 import java.io.IOException;
@@ -26,17 +20,15 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.InputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import webservices.ControllerWS;
 import webservices.ControllerWS_Service;
+import webservices.DTColaboracion;
+import webservices.PropuestaDuplicadaException_Exception;
+import webservices.TipoRetorno;
 
 @WebServlet(name = "PropuestaServlet", urlPatterns = {"/propuestas", "/crear-propuesta",
     "/obtener-propuesta", "/obtener-propuesta-por-estado", "/extender-financiacion",
@@ -48,7 +40,7 @@ import webservices.ControllerWS_Service;
 )
 public class PropuestaServlet extends HttpServlet {
 
-    private IController controller = IControllerFactory.getInstance().getIController();
+    //private IController controller = IControllerFactory.getInstance().getIController();
     private ControllerWS webServices;
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods.">
@@ -79,7 +71,7 @@ public class PropuestaServlet extends HttpServlet {
                     request.getRequestDispatcher("/WEB-INF/jsp/indexMovil.jsp").forward(request, response);
                 }else{
                 if (puedeCrearPropuesta(request.getSession())) {
-                    ArrayList<String> categorias = this.controller.obtenerCategorias();
+                    List<String> categorias = this.webServices.obtenerCategorias();
                     request.setAttribute("categorias", categorias);
                     request.getRequestDispatcher("/WEB-INF/jsp/crearPropuesta.jsp").forward(request, response);
                 } else {
@@ -94,7 +86,7 @@ public class PropuestaServlet extends HttpServlet {
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'titulo'");
                     return;
                 }
-                DTPropuesta prop = controller.obtenerDTPropuesta(titulo);
+                DTPropuesta prop = webServices.obtenerDTPropuesta(titulo);
                 if (prop == null) {
                     response.sendError(HttpServletResponse.SC_NOT_FOUND, "Propuesta no encontrada");
                     return;
@@ -113,11 +105,11 @@ public class PropuestaServlet extends HttpServlet {
                 String cat = request.getParameter("categoriaSelec");
                 System.out.println(cat);
                 int estado = Integer.parseInt(estadoStr);
-                ArrayList<String> titulos = controller.listarPropuestasEstado(estado);
+                List<String> titulos = webServices.listarPropuestasEstado(estado);
 
                 List<DTPropuesta> propuestas = new ArrayList<>();
                 for (String t : titulos) {
-                    DTPropuesta p = controller.obtenerDTPropuesta(t);
+                    DTPropuesta p = webServices.obtenerDTPropuesta(t);
                     if (p != null) {
                         //propuestas.add(p);
 
@@ -131,9 +123,9 @@ public class PropuestaServlet extends HttpServlet {
                 }
                 String nick3 = (String) request.getSession().getAttribute("username");
                 List<String> propuestasFav = recibirPropuestasFavoritas(nick3);
-                List<String> propuestasColab = this.controller.obtenerPropuestasColaboradas(nick3);
+                List<String> propuestasColab = this.webServices.obtenerPropuestasColaboradas(nick3);
                 List<String> propsParaColab = propuestasPubliYenFina();
-                List<String> propuestasProp = this.controller.listaPropuestasUsu(nick3);
+                List<String> propuestasProp = this.webServices.listaPropuestasUsu(nick3);
                 List<String> propuestasFinanciadas = propuestasFinanciadas();
                 List<String> propuestasComentables = propuestasComentables(nick3);
                 List<String> propuestasComentadas = propuestasComentadas(nick3);
@@ -183,14 +175,15 @@ public class PropuestaServlet extends HttpServlet {
                 String nick = session.getAttribute("username").toString();
 
                 int estadoIntExt = Integer.parseInt(estadoParamExt);
-                ArrayList<String> titulosExt = controller.listarPropuestasEstadoUsu(estadoIntExt, nick);
+                List<String> titulosExt = webServices.listarPropuestasEstadoUsu(estadoIntExt, nick);
 
-                LocalDate hoy = LocalDate.now();
+                java.time.LocalDate hoy = java.time.LocalDate.now();
                 List<DTPropuesta> propuestasExt = new ArrayList<>();
-
+                
                 for (String tituloExt : titulosExt) {
-                    DTPropuesta propuestaExt = controller.obtenerDTPropuesta(tituloExt);
-                    if (propuestaExt != null && !hoy.isAfter(propuestaExt.getFechaPublicacion().plusDays(30))) {
+                    DTPropuesta propuestaExt = webServices.obtenerDTPropuesta(tituloExt);
+                    java.time.LocalDate tiempo = java.time.LocalDate.parse(propuestaExt.getFechaPublicacion());
+                    if (propuestaExt != null && !hoy.isAfter(tiempo.plusDays(30))) {
 
                         propuestasExt.add(propuestaExt);
                     }
@@ -205,7 +198,7 @@ public class PropuestaServlet extends HttpServlet {
 
             case "/buscar-propuestas":
                 String patron = request.getParameter("busq");
-                List<DTPropuesta> aux = controller.buscarPropuestasTDL(patron);
+                List<DTPropuesta> aux = webServices.buscarPropuestasTDL(patron);
                 request.setAttribute("propuestas", aux);
                 request.getRequestDispatcher("/WEB-INF/jsp/resultadosBusqueda.jsp").forward(request, response);
                 break;
@@ -239,7 +232,7 @@ public class PropuestaServlet extends HttpServlet {
                     return;
                 }
                 Long idColab = Long.valueOf(id);
-                DTColaboracion colaboracion = this.controller.obtenerDTColaboracion(idColab);
+                DTColaboracion colaboracion = this.webServices.obtenerDTColaboracion(idColab);
                 if (colaboracion == null) {
                     response.sendError(HttpServletResponse.SC_NOT_FOUND, "Colaboracion no encontrada");
                     return;
@@ -285,7 +278,7 @@ public class PropuestaServlet extends HttpServlet {
                 }else{
                 String nickRecom = session.getAttribute("username").toString();
 
-                List<String> propuestasPuntaje = this.controller.obtenerRecomendaciones(nickRecom);
+                List<String> propuestasPuntaje = this.webServices.obtenerRecomendaciones(nickRecom);
                 request.setAttribute("propuestas", propuestasPuntaje);
                 request.getRequestDispatcher("WEB-INF/jsp/sugerencia.jsp").forward(request, response);
                 }
@@ -294,7 +287,7 @@ public class PropuestaServlet extends HttpServlet {
             case "/consultar-propuesta-movil":
                 String titulopropMovil = request.getParameter("titulo");
                 String nick1 = (String) request.getSession().getAttribute("username");
-                List<String> propuestasColab1 = this.controller.obtenerPropuestasColaboradas(nick1);
+                List<String> propuestasColab1 = this.webServices.obtenerPropuestasColaboradas(nick1);
                 List<String> propsParaColab1 = propuestasPubliYenFina();
                 
                 if (titulopropMovil == null || titulopropMovil.isEmpty()) {
@@ -302,7 +295,7 @@ public class PropuestaServlet extends HttpServlet {
                     return;
                 }
 
-                DTPropuesta propMovil = controller.obtenerDTPropuesta(titulopropMovil);
+                DTPropuesta propMovil = webServices.obtenerDTPropuesta(titulopropMovil);
                 if (propMovil == null) {
                     response.sendError(HttpServletResponse.SC_NOT_FOUND, "Propuesta no encontrada");
                     return;
@@ -323,6 +316,8 @@ public class PropuestaServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String path = request.getServletPath();
+        ControllerWS_Service service = new ControllerWS_Service();
+        this.webServices = service.getControllerWSPort();
 
         switch (path) {
             case "/crear-propuesta":
@@ -330,8 +325,8 @@ public class PropuestaServlet extends HttpServlet {
                     try {
                         procesarCrearPropuesta(request, response);
                         response.sendRedirect("/index");
-                    } catch (PropuestaDuplicadaException ex) {
-                        ArrayList<String> categorias = this.controller.obtenerCategorias();
+                    } catch (PropuestaDuplicadaException_Exception ex) {
+                        List<String> categorias = this.webServices.obtenerCategorias();
                         request.setAttribute("categorias", categorias);
                         request.setAttribute("error", "Ya existe una propuesta con ese nombre.");
                         request.getRequestDispatcher("/WEB-INF/jsp/crearPropuesta.jsp").forward(request, response);
@@ -346,7 +341,7 @@ public class PropuestaServlet extends HttpServlet {
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'titulo'");
                     return;
                 }
-                controller.extenderFinanciacion(tituloProp);
+                webServices.extenderFinanciacion(tituloProp);
                 response.sendRedirect("/index");
                 break;
             case "/marcar-propuesta-favorita":
@@ -355,7 +350,7 @@ public class PropuestaServlet extends HttpServlet {
                 String nick = session.getAttribute("username").toString();
                  {
                     try {
-                        this.controller.favoritarPropuesta(nick, titulo);
+                        this.webServices.favoritarPropuesta(nick, titulo);
                     } catch (Exception ex) {
                         Logger.getLogger(PropuestaServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -371,7 +366,7 @@ public class PropuestaServlet extends HttpServlet {
                 }
 
                 try {
-                    controller.cambiarEstadoPropuesta(tituloCancelar, EstadoPropuesta.CANCELADA);
+                    webServices.cambiarEstadoPropuesta(tituloCancelar, EstadoPropuesta.CANCELADA.toString());
                 } catch (Exception e) {
                     e.printStackTrace();
                     response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error al cancelar la propuesta");
@@ -391,7 +386,9 @@ public class PropuestaServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="Procesamiento de requests.">
     protected void procesarCrearPropuesta(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, PropuestaDuplicadaException {
+            throws ServletException, IOException, PropuestaDuplicadaException_Exception {
+        ControllerWS_Service service = new ControllerWS_Service();
+        this.webServices = service.getControllerWSPort();
         HttpSession session = request.getSession(false);
         String titulo = request.getParameter("titulo");
         String categoria = request.getParameter("categoria");
@@ -414,26 +411,34 @@ public class PropuestaServlet extends HttpServlet {
         String monto = request.getParameter("monto");
         float montoF = Float.parseFloat(monto);
         String fPrevistaString = request.getParameter("fecha-prevista");
-        LocalDate fechaPrevista = parsearFecha(fPrevistaString);
         Part parteArchivo = request.getPart("imagen");
         byte[] bytesImagen = partABytes(parteArchivo);
-        String nombreImagen = this.controller.guardarImagen(bytesImagen);
+        String nombreImagen = this.webServices.guardarImagen(bytesImagen);
         EstadoPropuesta estp = EstadoPropuesta.INGRESADA;
-        Estado est = new Estado(estp);
+        Estado est = new Estado();
+        est.setEstado(estp);
         String nickProp = (String) session.getAttribute("username");
-        DTPropuesta prop = new DTPropuesta(titulo, descripcion,
-                nombreImagen, lugar, fechaPrevista, precioF, montoF, categoria,
-                nickProp, tiposRetorno, est);
-
-        this.controller.addPropuesta(prop);
-
+        DTPropuesta prop = new DTPropuesta();
+        prop.setDescripcion(descripcion);
+        prop.setTitulo(titulo);
+        prop.setImagen(nombreImagen);
+        prop.setLugarRealizara(lugar);
+        prop.setFechaRealizara(fPrevistaString);
+        prop.setMontoAReunir(montoF);
+        prop.setPrecioEntrada(precioF);
+        prop.setTipoPropuesta(categoria);
+        prop.setNickProponedor(nickProp);
+        for(TipoRetorno a:tiposRetorno ){
+            prop.getTiposRetorno().add(a);
+        }
+        prop.setEstadoActual(est);
+        this.webServices.addPropuesta(prop);
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -448,7 +453,7 @@ public class PropuestaServlet extends HttpServlet {
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Funciones auxiliares.">
-    private LocalDate parsearFecha(String fechaString) {
+    /*private LocalDate parsearFecha(String fechaString) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date utilDate = null;
         try {
@@ -461,11 +466,11 @@ public class PropuestaServlet extends HttpServlet {
             fecha = utilDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         }
         return fecha;
-    }
+    }*/
 
     private byte[] partABytes(Part parteArchivo) {
         byte[] bytesArchivo = null;
-
+        
         if (parteArchivo != null && parteArchivo.getSize() > 0) {
             try (InputStream input = parteArchivo.getInputStream()) {
                 bytesArchivo = input.readAllBytes();
@@ -477,7 +482,9 @@ public class PropuestaServlet extends HttpServlet {
     }
 
     private String obtenerPropuestaJSON(String titulo) {
-        DTPropuesta prop = this.controller.obtenerDTPropuesta(titulo);
+        ControllerWS_Service service = new ControllerWS_Service();
+        this.webServices = service.getControllerWSPort();
+        DTPropuesta prop = this.webServices.obtenerDTPropuesta(titulo);
         if (prop == null) {
             return "{}";
         }
@@ -493,15 +500,16 @@ public class PropuestaServlet extends HttpServlet {
     }
 
     private ArrayList<String> recibirPropuestasFavoritas(String nick) {
-
-        ArrayList<String> aux = this.controller.listarPropuestas();
+        ControllerWS_Service service = new ControllerWS_Service();
+        this.webServices = service.getControllerWSPort();
+        List<String> aux = this.webServices.listarPropuestas();
         ArrayList<String> aux2 = new ArrayList<>();
         if (nick == null) {
             return aux2;
         }
 
         for (String prop : aux) {
-            Boolean propuestaYaFavorita = this.controller.propuestaYaFavorita(prop, nick);
+            Boolean propuestaYaFavorita = this.webServices.propuestaYaFavorita(prop, nick);
             if (propuestaYaFavorita) {
                 aux2.add(prop);
             }
@@ -510,16 +518,17 @@ public class PropuestaServlet extends HttpServlet {
     }
 
     private ArrayList<String> recibirPropuestas(String nick) {
-
-        ArrayList<String> aux = this.controller.listarPropuestas();
+        ControllerWS_Service service = new ControllerWS_Service();
+        this.webServices = service.getControllerWSPort();
+        List<String> aux = this.webServices.listarPropuestas();
         ArrayList<String> aux2 = new ArrayList<>();
         if (nick == null) {
             return aux2;
         }
         for (String prop : aux) {
-            DTPropuesta aux3 = this.controller.obtenerDTPropuesta(prop);
+            DTPropuesta aux3 = this.webServices.obtenerDTPropuesta(prop);
             Estado aux4 = aux3.getEstadoActual();
-            Boolean propuestaYaFavorita = this.controller.propuestaYaFavorita(prop, nick);
+            Boolean propuestaYaFavorita = this.webServices.propuestaYaFavorita(prop, nick);
             if (!propuestaYaFavorita && aux4.getEstado() != EstadoPropuesta.INGRESADA) {
                 aux2.add(prop);
             }
@@ -528,43 +537,52 @@ public class PropuestaServlet extends HttpServlet {
     }
 
     private ArrayList<String> propuestasPubliYenFina() {
-
-        ArrayList<String> aux = this.controller.listarPropuestas();
+        ControllerWS_Service service = new ControllerWS_Service();
+        this.webServices = service.getControllerWSPort();
+        List<String> aux = this.webServices.listarPropuestas();
         ArrayList<String> aux2 = new ArrayList<>();
 
         for (String prop : aux) {
-            DTPropuesta propuestaAux = this.controller.obtenerDTPropuesta(prop);
-            if (propuestaAux.getEstadoActual().getEstado() == EstadoPropuesta.PUBLICADA || propuestaAux.getEstadoActual().getEstado() == EstadoPropuesta.EN_FINANCIACION) {
+            DTPropuesta propuestaAux = this.webServices.obtenerDTPropuesta(prop);
+            if(propuestaAux!=null){
+                if (propuestaAux.getEstadoActual().getEstado() == EstadoPropuesta.PUBLICADA || propuestaAux.getEstadoActual().getEstado() == EstadoPropuesta.EN_FINANCIACION) {
                 aux2.add(prop);
+                }
             }
+            
         }
         return aux2;
     }
 
     private ArrayList<String> propuestasFinanciadas() {
-
-        ArrayList<String> aux = this.controller.listarPropuestas();
+        ControllerWS_Service service = new ControllerWS_Service();
+        this.webServices = service.getControllerWSPort();
+        List<String> aux = this.webServices.listarPropuestas();
         ArrayList<String> aux2 = new ArrayList<>();
 
         for (String prop : aux) {
-            DTPropuesta propuestaAux = this.controller.obtenerDTPropuesta(prop);
-            if (propuestaAux.getEstadoActual().getEstado() == EstadoPropuesta.FINANCIADA) {
-                aux2.add(prop);
+            DTPropuesta propuestaAux = this.webServices.obtenerDTPropuesta(prop);
+            if(propuestaAux!=null){
+                if (propuestaAux.getEstadoActual().getEstado() == EstadoPropuesta.FINANCIADA) {
+                    aux2.add(prop);
+                }
             }
+            
         }
         return aux2;
     }
 
     private ArrayList<String> propuestasComentables(String nickCol) {
-
-        ArrayList<String> aux = this.controller.obtenerPropuestasColaboradas(nickCol);
+        ControllerWS_Service service = new ControllerWS_Service();
+        this.webServices = service.getControllerWSPort();
+        List<String> aux = this.webServices.obtenerPropuestasColaboradas(nickCol);
         ArrayList<String> aux2 = new ArrayList<>();
 
         for (String prop : aux) {
-            DTPropuesta aux3 = this.controller.obtenerDTPropuesta(prop);
+            DTPropuesta aux3 = this.webServices.obtenerDTPropuesta(prop);
 
             Estado aux4 = aux3.getEstadoActual();
-            Boolean comentarioExiste = this.controller.comentarioExiste(prop, nickCol);
+            Boolean comentarioExiste = this.webServices.comentarioExiste(prop, nickCol);
             if (aux4.getEstado() == EstadoPropuesta.FINANCIADA && !comentarioExiste) {
                 aux2.add(prop);
             }
@@ -574,15 +592,16 @@ public class PropuestaServlet extends HttpServlet {
     }
 
     private ArrayList<String> propuestasComentadas(String nickCol) {
-
-        ArrayList<String> aux = this.controller.obtenerPropuestasColaboradas(nickCol);
+        ControllerWS_Service service = new ControllerWS_Service();
+        this.webServices = service.getControllerWSPort();
+        List<String> aux = this.webServices.obtenerPropuestasColaboradas(nickCol);
         ArrayList<String> aux2 = new ArrayList<>();
 
         for (String prop : aux) {
-            DTPropuesta aux3 = this.controller.obtenerDTPropuesta(prop);
+            DTPropuesta aux3 = this.webServices.obtenerDTPropuesta(prop);
 
             Estado aux4 = aux3.getEstadoActual();
-            Boolean comentarioExiste = this.controller.comentarioExiste(prop, nickCol);
+            Boolean comentarioExiste = this.webServices.comentarioExiste(prop, nickCol);
             if (aux4.getEstado() == EstadoPropuesta.FINANCIADA && comentarioExiste) {
                 aux2.add(prop);
             }
@@ -592,7 +611,9 @@ public class PropuestaServlet extends HttpServlet {
     }
 
     private String obtenerColaboracionJSON(Long id) {
-        DTColaboracion colab = this.controller.obtenerDTColaboracion(id);
+        ControllerWS_Service service = new ControllerWS_Service();
+        this.webServices = service.getControllerWSPort();
+        DTColaboracion colab = this.webServices.obtenerDTColaboracion(id);
         if (colab == null) {
             return "{}";
         }

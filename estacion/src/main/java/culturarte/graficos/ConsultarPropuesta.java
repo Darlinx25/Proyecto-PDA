@@ -50,17 +50,17 @@ public class ConsultarPropuesta extends javax.swing.JInternalFrame {
                     campoPrecio.setText(Float.toString(DTProp.getPrecioEntrada()));
                     campoMontoReunir.setText(Float.toString(DTProp.getMontoAReunir()));
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                    LocalDate fechaRealizar = DTProp.getFechaRealizara();
+                    String fechaRealizar = DTProp.getFechaRealizara();
                     if (fechaRealizar == null) {
                         campoFechaRealizar.setText("");
                     } else {
-                        campoFechaRealizar.setText(fechaRealizar.format(formatter));
+                        campoFechaRealizar.setText(fechaRealizar);
                     }
-                    LocalDate fechaPublicacion = DTProp.getFechaPublicacion();
+                    String fechaPublicacion = DTProp.getFechaPublicacion();
                     if (fechaPublicacion == null) {
                         campoFechaPublicacion.setText("no hay publicacion");
                     } else {
-                        campoFechaPublicacion.setText(fechaPublicacion.format(formatter));
+                        campoFechaPublicacion.setText(fechaPublicacion);
                     }
                     campoCategoria.setText(DTProp.getTipoPropuesta());
                     EstadoPropuesta ese = DTProp.getEstadoActual().getEstado();

@@ -115,8 +115,8 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
                         }
 
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                        LocalDate fechaRealizar = dtprop.getFechaRealizara();
-                        this.campoFechaRealizar.setText(fechaRealizar.format(formatter));
+                        String fechaRealizar = dtprop.getFechaRealizara();
+                        this.campoFechaRealizar.setText(fechaRealizar);
                         this.campoLugar.setText(dtprop.getLugarRealizara());
                         EstadoPropuesta ese = dtprop.getEstadoActual().getEstado();
                         this.comboEstado.setSelectedIndex(ese.ordinal());
@@ -485,7 +485,7 @@ public class ModificarPropuesta extends javax.swing.JInternalFrame {
             EstadoPropuesta auxEst =  EstadoPropuesta.valueOf(this.comboEstado.getSelectedItem().toString());
             Estado est = new Estado(auxEst);
             String lug = this.campoLugar.getText();
-            DTPropuesta propuesta = new DTPropuesta(titulo,descri,this.imagenProponente,lug,f,Float.parseFloat(this.campoPrecioEntrada.getText()),Float.parseFloat(this.campoMontoReunir.getText()),tipoPropuesta,null,tiposRetorno,est);
+            DTPropuesta propuesta = new DTPropuesta(titulo,descri,this.imagenProponente,lug,f.toString(),Float.parseFloat(this.campoPrecioEntrada.getText()),Float.parseFloat(this.campoMontoReunir.getText()),tipoPropuesta,null,tiposRetorno,est);
             controller.modPropuesta(propuesta);
             
             this.dispose();

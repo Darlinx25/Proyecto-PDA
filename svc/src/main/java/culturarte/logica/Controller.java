@@ -156,7 +156,7 @@ public class Controller implements IController {
                 "El 16 de Diciembre a la hora 20 se proyectará la película \"Clever\", en el Jardín Botánico (Av. 19 de Abril 1181) en el marco"
                 + " de las actividades realizadas por el ciclo Cultura al Aire Libre. El largometraje uruguayo de ficción Clever es dirigido por "
                 + "Federico Borgia y Guillermo Madeiro. Es apto para mayores de 15 años.", null, "Jardín Botánico",
-                LocalDate.of(2025, 11, 16), 200, 150000, "Cine al Aire Libre", "diegop", porcentaje, new Estado(EstadoPropuesta.CANCELADA, LocalDateTime.of(2025, 8, 15, 14, 50)));
+                LocalDate.of(2025, 11, 16).toString(), 200, 150000, "Cine al Aire Libre", "diegop", porcentaje, new Estado(EstadoPropuesta.CANCELADA, LocalDateTime.of(2025, 8, 15, 14, 50)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "Cine en el Botánico");
         listAux = new ArrayList<>();
@@ -175,7 +175,7 @@ public class Controller implements IController {
                 + "religión Momosapiens, mediante el humor y la reflexión, hilvana una historia que muestra al hombre inmerso en el tema "
                 + "religioso. El libreto está escrito utilizando diferentes lenguajes de humor, dando una visión satírica y reflexiva desde "
                 + "distintos puntos de vista, logrando mediante situaciones paródicas armar una propuesta plena de arte carnavalero.", "MOMimg.jpg", "Teatro de Verano",
-                LocalDate.of(2025, 12, 7), 300, 300000, "Parodistas", "hrubino", entPor, new Estado(EstadoPropuesta.FINANCIADA, LocalDateTime.of(2025, 9, 15, 9, 45)));
+                LocalDate.of(2025, 12, 7).toString(), 300, 300000, "Parodistas", "hrubino", entPor, new Estado(EstadoPropuesta.FINANCIADA, LocalDateTime.of(2025, 9, 15, 9, 45)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "Religiosamente");
         listAux = new ArrayList<>();
@@ -193,7 +193,7 @@ public class Controller implements IController {
                 + "Octubre, su primer trabajo. Bajo un título homónimo al del grupo, es un disco que según los propios protagonistas “no se "
                 + "parece al de ninguno de los dos por separado. Entre los títulos que se podrán escuchar se encuentran “Nadador salvador”, "
                 + "“América es más grande”, “Pescaito Enroscado” o “La reina del placer”.", "PIMimg.jpg", "Teatro Solís",
-                LocalDate.of(2025, 12, 19), 400, 400000, "Concierto", "mbusca", porcentaje, new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 10, 1, 7, 40)));
+                LocalDate.of(2025, 12, 19).toString(), 400, 400000, "Concierto", "mbusca", porcentaje, new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 10, 1, 7, 40)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "El Pimiento Indomable");
         listAux = new ArrayList<>();
@@ -209,7 +209,7 @@ public class Controller implements IController {
                 "La edición 2017 del Pilsen Rock se celebrará el 21 de Octubre en la Rural del Prado y contará con la participación de más "
                 + "de 15 bandas nacionales. Quienes no puedan trasladarse al lugar, tendrán la posibilidad de disfrutar los shows a través de "
                 + "Internet, así como entrevistas en vivo a los músicos una vez finalizados los conciertos.", "PILimg.jpg", "Rural de Prado",
-                LocalDate.of(2025, 12, 21), 1000, 900000, "Festival", "kairoh", entPor, new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 10, 5, 16, 50)));
+                LocalDate.of(2025, 12, 21).toString(), 1000, 900000, "Festival", "kairoh", entPor, new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 10, 5, 16, 50)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "Pilsen Rock");
         listAux = new ArrayList<>();
@@ -226,7 +226,7 @@ public class Controller implements IController {
                 + "nuevamente el 5 de Noviembre en el Auditorio Nacional del Sodre. Basada en la obra homónima de William Shakespeare, "
                 + "Romeo y Julieta es considerada la coreografía maestra del MacMillan. La producción de vestuario y escenografía se realizó "
                 + "en los Talleres del Auditorio Adela Reta, sobre los diseños originales.", "RYJimg.jpg", "Auditorio Nacional del Sodre",
-                LocalDate.of(2025, 11, 5), 800, 750000, "Ballet", "juliob", porcentaje, new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 10, 13, 16, 50)));
+                LocalDate.of(2025, 11, 5).toString(), 800, 750000, "Ballet", "juliob", porcentaje, new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 10, 13, 16, 50)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "Romeo y Julieta");
         listAux = new ArrayList<>();
@@ -242,7 +242,7 @@ public class Controller implements IController {
                 "La Catalina presenta el espectáculo \"Un Día de Julio\" en Landia. Un hombre misterioso y solitario vive encerrado entre las "
                 + "cuatro paredes de su casa. Intenta, con sus teorías extravagantes, cambiar el mundo exterior que le resulta inhabitable. Un "
                 + "día de Julio sucederá algo que cambiará su vida y la de su entorno para siempre.", "UDJimg.jpg", "Landia",
-                LocalDate.of(2025, 12, 16), 650, 300000, "Murga", "tabarec", entPor, new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 10, 15, 4, 48)));
+                LocalDate.of(2025, 12, 16).toString(), 650, 300000, "Murga", "tabarec", entPor, new Estado(EstadoPropuesta.EN_FINANCIACION, LocalDateTime.of(2025, 10, 15, 4, 48)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "Un día de Julio");
         listAux = new ArrayList<>();
@@ -259,7 +259,7 @@ public class Controller implements IController {
                 + "Miami, Nueva York, Washington, México, Guadalajara, Río de Janeiro y La Habana. En nuestro país, El Lazarillo de "
                 + "Tormes fue nominado en los rubros mejor espectáculo y mejor dirección a los Premios Florencio 1995, obteniendo su "
                 + "protagonista Héctor Guido el Florencio a Mejor actor de ese año.", null, "Teatro el Galpón",
-                LocalDate.of(2025, 12, 3), 350, 175000, "Teatro Dramático", "hectorg", entrada, new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 10, 15, 21, 58)));
+                LocalDate.of(2025, 12, 3).toString(), 350, 175000, "Teatro Dramático", "hectorg", entrada, new Estado(EstadoPropuesta.PUBLICADA, LocalDateTime.of(2025, 10, 15, 21, 58)));
         addPropuesta(prop);
         aux = emr.find(Propuesta.class, "El Lazarillo de Tormes");
         listAux = new ArrayList<>();
@@ -274,7 +274,7 @@ public class Controller implements IController {
                 + "importante para el aprendizaje y la democratización de la ciencia, los monólogos científicos son una forma didáctica de "
                 + "apropiación del conocimiento científico y contribuyen a que el público aprenda ciencia de forma amena. Los invitamos a "
                 + "pasar un rato divertido, en un espacio en el cual aprenderán cosas de la ciencia que los sorprenderán. ¡Los esperamos!", null, "Anfiteatro Edificio \"José Luis Massera\"",
-                LocalDate.of(2025, 12, 10), 200, 100000, "Stand-up", "losBardo", entrada, new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2025, 10, 16, 2, 12)));
+                LocalDate.of(2025, 12, 10).toString(), 200, 100000, "Stand-up", "losBardo", entrada, new Estado(EstadoPropuesta.INGRESADA, LocalDateTime.of(2025, 10, 16, 2, 12)));
         addPropuesta(prop);
         emr.close();
     }
@@ -894,7 +894,7 @@ public class Controller implements IController {
         String descripcion = prop.getDescripcion();
         String imagen = prop.getImagen();
         String lugarRealizara = prop.getLugarRealizara();
-        LocalDate fechaRealizara = prop.getFechaRealizara();
+        LocalDate fechaRealizara = LocalDate.parse(prop.getFechaRealizara());
         float precioEntrada = prop.getPrecioEntrada();
         float montoAReunir = prop.getMontoAReunir();
 
@@ -928,12 +928,15 @@ public class Controller implements IController {
                     String Com = (c.getNombreColaborador() + ": " + c.getInformacion());
                     comentarios.add(Com);
                 }
-
+                String prop = null;
+                if(p.getFechaPublicacion() != null){
+                    prop = p.getFechaPublicacion().toString();
+                }
                 p.getTiposRetorno().size();//para que hibernate lo agarre antes de close porque es lazy
                 float dineroRecaudado = Float.parseFloat(this.obtenerDineroRecaudado(titulo));
                 return new DTPropuesta(
-                        p.getTitulo(), p.getDescripcion(), p.getImagen(), p.getLugarRealizara(), p.getFechaRealizara(),
-                        p.getPrecioEntrada(), p.getMontoAReunir(), dineroRecaudado, p.getFechaPublicacion(),
+                        p.getTitulo(), p.getDescripcion(), p.getImagen(), p.getLugarRealizara(), p.getFechaRealizara().toString(),
+                        p.getPrecioEntrada(), p.getMontoAReunir(), dineroRecaudado, prop,
                         p.getTipoPropuesta().getNombre(),
                         p.getProponedor().getNickname(),
                         p.getTiposRetorno(), p.getEstadoActual(), p.getPlazoFinanciacion(), nicksColabs, comentarios);
@@ -967,8 +970,8 @@ public class Controller implements IController {
                 p.getTiposRetorno().size();//para que hibernate lo agarre antes de close porque es lazy
                 float dineroRecaudado = Float.parseFloat(this.obtenerDineroRecaudado(titulo));
                 return new DTPropuesta(
-                        p.getTitulo(), p.getDescripcion(), p.getImagen(), p.getLugarRealizara(), p.getFechaRealizara(),
-                        p.getPrecioEntrada(), p.getMontoAReunir(), dineroRecaudado, p.getFechaPublicacion(),
+                        p.getTitulo(), p.getDescripcion(), p.getImagen(), p.getLugarRealizara(), p.getFechaRealizara().toString(),
+                        p.getPrecioEntrada(), p.getMontoAReunir(), dineroRecaudado, p.getFechaPublicacion().toString(),
                         p.getTipoPropuesta().getNombre(),
                         p.getProponedor().getNickname(),
                         p.getTiposRetorno(), p.getEstadoActual(), p.getPlazoFinanciacion(), nicksColabs, comentarios);
@@ -1151,7 +1154,7 @@ public class Controller implements IController {
             aux.setEstadoActual(prop.getEstadoActual());
         }
         aux.setLugarRealizara(prop.getLugarRealizara());
-        aux.setFechaRealizara(prop.getFechaRealizara());
+        aux.setFechaRealizara(LocalDate.parse(prop.getFechaRealizara()));
         aux.setPrecioEntrada(prop.getPrecioEntrada());
         aux.setMontoAReunir(prop.getMontoAReunir());
         aux.setTiposRetorno(prop.getTiposRetorno());
