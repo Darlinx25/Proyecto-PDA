@@ -1,9 +1,10 @@
+<%@page import="webservices.DTPropuesta"%>
+<%@page import="webservices.DTColaboracion"%>
+<%@page import="webservices.ControllerWS"%>
+<%@page import="webservices.ControllerWS_Service"%>
 <%@page import="java.time.LocalDateTime"%>
-<%@page import="culturarte.datatypes.DTPropuesta"%>
 <%@page import="java.util.List"%>
-<%@page import="culturarte.datatypes.DTColaboracion"%>
-<%@page import="culturarte.logica.IController"%>
-<%@page import="culturarte.logica.IControllerFactory"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -19,12 +20,14 @@
         <jsp:include page="headerMovil.jsp"/>
         <%
             String usr = (String) session.getAttribute("username");
-            IController controller = IControllerFactory.getInstance().getIController();
 
-            List<DTColaboracion> colaboraciones = controller.listDTColaboracionUser(usr);
+            ControllerWS_Service service = new ControllerWS_Service();
+            ControllerWS webServices = service.getControllerWSPort();
+
+            List<DTColaboracion> colaboraciones = webServices.listDTColaboracionUser(usr);
 
         %>
-
+        
         <% if (colaboraciones.isEmpty()) { %>
         <div class="d-flex justify-content-center align-items-center vh-100">
             <h1 class="text-center display-4">¡No has hecho ninguna colaboración!</h1>
@@ -34,14 +37,14 @@
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 
                 <%                    for (DTColaboracion c : colaboraciones) {
-                        DTPropuesta p = controller.obtenerDTPropuesta(c.getPropuestaColaborada());
+                        DTPropuesta p = webServices.obtenerDTPropuesta(c.getPropuestaColaborada());
                 %>
                 <div class="col">
                     <div class="card shadow-sm">
                         <img src="/imagenes/<%= p.getImagen()%>" onerror="this.src='/resources/images/propdefault.png';" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title"><%= p.getTitulo()%></h5>
-                            <p class="card-text">Fecha de colaboración: <%= c.getFechaHora().toLocalDate()%></p>
+                            <p class="card-text">Fecha de colaboración: <%=  java.time.LocalDateTime.parse(c.getFechaHora()).toLocalDate() %></p>
                             <p class="card-text">Monto: <%= c.getMonto()%></p>
 
                             <% if (c.isPagada()) { %>

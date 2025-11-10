@@ -10,10 +10,10 @@ import jakarta.xml.bind.annotation.XmlType;
 public class DTPago {
     private float montoPago;
     private DTFormaPago formaPago;
-    private LocalDateTime fechaPago;
+    private String fechaPago;
     private String metodoPago;
 
-    public DTPago(float montoPago, DTFormaPago formaPago, LocalDateTime fechaPago,String metodoPago) {
+    public DTPago(float montoPago, DTFormaPago formaPago, String fechaPago,String metodoPago) {
         this.metodoPago = metodoPago;
         this.montoPago = montoPago;
         this.formaPago = formaPago;
@@ -31,7 +31,7 @@ public class DTPago {
         this.formaPago = formaPago;
     }
 
-    public void setFechaPago(LocalDateTime fechaPago) {
+    public void setFechaPago(String fechaPago) {
         this.fechaPago = fechaPago;
     }
 
@@ -47,7 +47,7 @@ public class DTPago {
         return formaPago;
     }
 
-    public LocalDateTime getFechaPago() {
+    public String getFechaPago() {
         return fechaPago;
     }
     

@@ -7,18 +7,6 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
-import culturarte.datatypes.DTColaboracion;
-import culturarte.datatypes.DTFormaPago;
-import culturarte.datatypes.DTMail;
-import culturarte.datatypes.DTPago;
-import culturarte.datatypes.DTPaypal;
-import culturarte.datatypes.DTPropuesta;
-import culturarte.datatypes.DTTarjeta;
-import culturarte.datatypes.DTTransferenciaBancaria;
-import culturarte.datatypes.DTUsuario;
-import culturarte.excepciones.PropuestaYaColaboradaException;
-import culturarte.logica.IController;
-import culturarte.logica.IControllerFactory;
 import static culturarte.wutils.SesionUtils.esVisitante;
 import culturarte.wutils.Tracking;
 import java.io.IOException;
@@ -33,11 +21,21 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import webservices.ControllerWS;
 import webservices.ControllerWS_Service;
+import webservices.DTColaboracion;
+import webservices.DTFormaPago;
+import webservices.DTMail;
+import webservices.DTPago;
+import webservices.DTPaypal;
+import webservices.DTPropuesta;
+import webservices.DTTarjeta;
+import webservices.DTTransferenciaBancaria;
+import webservices.DTUsuario;
+import webservices.PropuestaYaColaboradaException_Exception;
 
 @WebServlet(name = "ColaboracionServelet", urlPatterns = {"/registrar-colaboracion", "/pagar", "/generarPDF", "/marcar-constancia-emitida"})
 public class ColaboracionServelet extends HttpServlet {
 
-    private IController controller = IControllerFactory.getInstance().getIController();
+    //private IController controller = IControllerFactory.getInstance().getIController();
     private ControllerWS webServices;
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -91,6 +89,8 @@ public class ColaboracionServelet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        ControllerWS_Service service = new ControllerWS_Service();
+        this.webServices = service.getControllerWSPort();
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(false);
         String path = request.getServletPath();
@@ -107,8 +107,8 @@ public class ColaboracionServelet extends HttpServlet {
                 float monto = Float.parseFloat(request.getParameter("colaboracion"));
 
                 try {
-                    this.controller.realizarColaboracion(nick, titulo, monto, retorno);
-                } catch (PropuestaYaColaboradaException ex) {
+                    this.webServices.realizarColaboracion(nick, titulo, monto, retorno);
+                } catch (PropuestaYaColaboradaException_Exception ex) {
                     System.getLogger(ColaboracionServelet.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
                 }
                 response.sendRedirect("/index");
@@ -131,16 +131,26 @@ public class ColaboracionServelet extends HttpServlet {
                     String cvc = request.getParameter("cvc");
                     String titularTarjeta = request.getParameter("titularTarjeta");
                     
-                    DTFormaPago formaPago = new DTTarjeta(tipoTarjeta, nroTarjeta,
-                            vencTarjeta, cvc, titularTarjeta);
-                    DTPago pago = new DTPago(montoPago, formaPago, fechaPago,"Tarjeta");
-                    this.controller.pagarColaboracion(pago, idColaboracion);
+                    DTTarjeta formaPago = new DTTarjeta();
+                    formaPago.setTipoTarjeta(tipoTarjeta);
+                    formaPago.setNroTarjeta(nroTarjeta);
+                    formaPago.setTitularTarjeta(titularTarjeta);
+                    formaPago.setVencTarjeta(vencTarjeta);
+                    formaPago.setCvc(cvc);
+                    
+                    
+                    DTPago pago = new DTPago();
+                    pago.setMontoPago(montoPago);
+                    pago.setFormaPago(formaPago);
+                    pago.setFechaPago(fechaPago.toString());
+                    pago.setMetodoPago("Tarjeta");
+                    this.webServices.pagarColaboracion(pago, idColaboracion);
                     
                     String nickColab = session.getAttribute("username").toString();
-                    DTUsuario colaborador = this.controller.obtenerDTColaborador(nickColab);
-                    DTColaboracion colaboracion = this.controller.obtenerDTColaboracion(idColaboracion);
-                    DTPropuesta propuesta = this.controller.obtenerDTPropuesta(colaboracion.getPropuestaColaborada());
-                    DTUsuario proponente = this.controller.obtenerDTProponente(propuesta.getNickProponedor());
+                    DTUsuario colaborador = this.webServices.obtenerDTColaborador(nickColab);
+                    DTColaboracion colaboracion = this.webServices.obtenerDTColaboracion(idColaboracion);
+                    DTPropuesta propuesta = this.webServices.obtenerDTPropuesta(colaboracion.getPropuestaColaborada());
+                    DTUsuario proponente = this.webServices.obtenerDTProponente(propuesta.getNickProponedor());
                     mandarMailProponente(proponente.getEmail(), fechaPago, colaborador.getNickname(),
                             proponente.getNickname(), propuesta.getTitulo(), montoPago);
                     mandarMailColaborador(colaborador.getEmail(), fechaPago, colaborador.getNickname(),
@@ -152,16 +162,23 @@ public class ColaboracionServelet extends HttpServlet {
                     String cuentaBanco = request.getParameter("cuentaBanco");
                     String titularBanco = request.getParameter("titularBanco");
                     
-                    DTFormaPago formaPago = new DTTransferenciaBancaria(nombreBanco,
-                            cuentaBanco, titularBanco);
-                    DTPago pago = new DTPago(montoPago, formaPago, fechaPago,"Transferencia");
-                    this.controller.pagarColaboracion(pago, idColaboracion);
+                    DTTransferenciaBancaria formaPago = new DTTransferenciaBancaria();
+                    formaPago.setCuentaBanco(cuentaBanco);
+                    formaPago.setTitularBanco(titularBanco);
+                    formaPago.setNombreBanco(nombreBanco);
+                    
+                    DTPago pago = new DTPago();
+                    pago.setMontoPago(montoPago);
+                    pago.setFormaPago(formaPago);
+                    pago.setFechaPago(fechaPago.toString());
+                    pago.setMetodoPago("Transferencia");
+                    this.webServices.pagarColaboracion(pago, idColaboracion);
                     
                     String nickColab = session.getAttribute("username").toString();
-                    DTUsuario colaborador = this.controller.obtenerDTColaborador(nickColab);
-                    DTColaboracion colaboracion = this.controller.obtenerDTColaboracion(idColaboracion);
-                    DTPropuesta propuesta = this.controller.obtenerDTPropuesta(colaboracion.getPropuestaColaborada());
-                    DTUsuario proponente = this.controller.obtenerDTProponente(propuesta.getNickProponedor());
+                    DTUsuario colaborador = this.webServices.obtenerDTColaborador(nickColab);
+                    DTColaboracion colaboracion = this.webServices.obtenerDTColaboracion(idColaboracion);
+                    DTPropuesta propuesta = this.webServices.obtenerDTPropuesta(colaboracion.getPropuestaColaborada());
+                    DTUsuario proponente = this.webServices.obtenerDTProponente(propuesta.getNickProponedor());
                     mandarMailProponente(proponente.getEmail(), fechaPago, colaborador.getNickname(),
                             proponente.getNickname(), propuesta.getTitulo(), montoPago);
                     mandarMailColaborador(colaborador.getEmail(), fechaPago, colaborador.getNickname(),
@@ -172,15 +189,22 @@ public class ColaboracionServelet extends HttpServlet {
                     String cuentaPaypal = request.getParameter("cuentaPaypal");
                     String titularPaypal = request.getParameter("titularPaypal");
                     
-                    DTFormaPago formaPago = new DTPaypal(cuentaPaypal, titularPaypal);
-                    DTPago pago = new DTPago(montoPago, formaPago, fechaPago,"Paypal");
-                    this.controller.pagarColaboracion(pago, idColaboracion);
+                    DTPaypal formaPago = new DTPaypal();
+                    formaPago.setCuentaPaypal(cuentaPaypal);
+                    formaPago.setTitularPaypal(titularPaypal);
+                    
+                    DTPago pago = new DTPago();
+                    pago.setMontoPago(montoPago);
+                    pago.setFormaPago(formaPago);
+                    pago.setFechaPago(fechaPago.toString());
+                    pago.setMetodoPago("Paypal");
+                    this.webServices.pagarColaboracion(pago, idColaboracion);
                     
                     String nickColab = session.getAttribute("username").toString();
-                    DTUsuario colaborador = this.controller.obtenerDTColaborador(nickColab);
-                    DTColaboracion colaboracion = this.controller.obtenerDTColaboracion(idColaboracion);
-                    DTPropuesta propuesta = this.controller.obtenerDTPropuesta(colaboracion.getPropuestaColaborada());
-                    DTUsuario proponente = this.controller.obtenerDTProponente(propuesta.getNickProponedor());
+                    DTUsuario colaborador = this.webServices.obtenerDTColaborador(nickColab);
+                    DTColaboracion colaboracion = this.webServices.obtenerDTColaboracion(idColaboracion);
+                    DTPropuesta propuesta = this.webServices.obtenerDTPropuesta(colaboracion.getPropuestaColaborada());
+                    DTUsuario proponente = this.webServices.obtenerDTProponente(propuesta.getNickProponedor());
                     mandarMailProponente(proponente.getEmail(), fechaPago, colaborador.getNickname(),
                             proponente.getNickname(), propuesta.getTitulo(), montoPago);
                     mandarMailColaborador(colaborador.getEmail(), fechaPago, colaborador.getNickname(),
@@ -197,7 +221,7 @@ public class ColaboracionServelet extends HttpServlet {
                 break;    
             case "/marcar-constancia-emitida":
                 Long idColab =  Long.parseLong(request.getParameter("idColaboracion"));
-                this.controller.constanciaEmitida(idColab);
+                this.webServices.constanciaEmitida(idColab);
                 break;
             default:
                 response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
@@ -258,7 +282,8 @@ public class ColaboracionServelet extends HttpServlet {
     
     private void mandarMailProponente(String mailProp, LocalDateTime fechaPago, String nickColab,
             String nickProp, String tituloProp, float montoPago) {
-        
+        ControllerWS_Service service = new ControllerWS_Service();
+        this.webServices = service.getControllerWSPort();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         String fechaNormal = fechaPago.format(formatter);
         
@@ -282,13 +307,17 @@ public class ColaboracionServelet extends HttpServlet {
                 + "   - " + fechaNormal + "</p>"
                 + "<p>Gracias por preferirnos,<br>Saludos.<br>Culturarte.</p>";
         
-        DTMail dtMail = new DTMail(mailProp, asunto, cuerpo);
-        this.controller.mandarMail(dtMail);
+        DTMail dtMail = new DTMail();
+        dtMail.setDestinatario(mailProp);
+        dtMail.setCuerpo(cuerpo);
+        dtMail.setAsunto(asunto);
+        this.webServices.mandarMail(dtMail);
     }
     
     private void mandarMailColaborador(String mailColab, LocalDateTime fechaPago, String nickColab,
             String nickProp, String tituloProp, float montoPago) {
-        
+        ControllerWS_Service service = new ControllerWS_Service();
+        this.webServices = service.getControllerWSPort();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         String fechaNormal = fechaPago.format(formatter);
         
@@ -314,7 +343,10 @@ public class ColaboracionServelet extends HttpServlet {
                 + " para ir a tu perfil y obtener la constancia de pago.</p>"
                 + "<p>Gracias por preferirnos,<br>Saludos.<br>Culturarte.</p>";
         
-        DTMail dtMail = new DTMail(mailColab, asunto, cuerpo);
-        this.controller.mandarMail(dtMail);
+        DTMail dtMail = new DTMail();
+        dtMail.setDestinatario(mailColab);
+        dtMail.setCuerpo(cuerpo);
+        dtMail.setAsunto(asunto);
+        this.webServices.mandarMail(dtMail);
     }
 }

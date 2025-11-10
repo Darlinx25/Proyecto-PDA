@@ -4,9 +4,12 @@ import culturarte.datatypes.DTColaboracion;
 import culturarte.datatypes.DTColaborador;
 import culturarte.datatypes.DTMail;
 import culturarte.datatypes.DTPago;
+import culturarte.datatypes.DTPaypal;
 import culturarte.datatypes.DTProponente;
 import culturarte.datatypes.DTPropuesta;
 import culturarte.datatypes.DTRegistroAcceso;
+import culturarte.datatypes.DTTarjeta;
+import culturarte.datatypes.DTTransferenciaBancaria;
 import culturarte.datatypes.DTUsuario;
 import culturarte.excepciones.BadPasswordException;
 import culturarte.excepciones.CategoriaDuplicadaException;
@@ -199,6 +202,19 @@ public class ControllerWS {
     @WebMethod(operationName = "extenderFinanciacion")
     public void extenderFinanciacion(@WebParam(name = "tituloProp")String tituloProp) {
         controller.extenderFinanciacion(tituloProp);
+    }
+    
+    @WebMethod
+    public void forzarGeneracionTarjeta(DTTarjeta tarjeta) {
+        // No hace nada, solo sirve para que DTTarjeta aparezca en el WSDL
+    }
+    
+    @WebMethod
+    public void forzarGeneracionTransferencia(DTTransferenciaBancaria transferencia) {
+    }
+    
+    @WebMethod
+    public void forzarGeneracionPaypal(DTPaypal paypal) { 
     }
     
     // </editor-fold>

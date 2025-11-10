@@ -47,7 +47,7 @@
         </form>
 
         <%
-            if (rol == "colaborador") {
+            if (rol.equals("colaborador")) {
         %>
         <form action="/registrar-colaboracion" class="p-3" method="get" style="display: none;" id="registrar-colab">
             <input type="hidden" name="propuesta" value="">
@@ -64,7 +64,7 @@
 
 
 
-        <%} else if (rol == "proponente") {
+        <%} else if (rol.equals("proponente")) {
         %>
         <div>
             <form action="/extender-financiacion" class="p-3" method="get" style="display: none;" id="extender-prop">

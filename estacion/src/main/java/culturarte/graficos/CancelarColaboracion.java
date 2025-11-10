@@ -7,6 +7,7 @@ package culturarte.graficos;
 import culturarte.datatypes.DTColaboracion;
 import culturarte.logica.IController;
 import culturarte.logica.IControllerFactory;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -213,7 +214,7 @@ public class CancelarColaboracion extends javax.swing.JInternalFrame {
         DTColaboracion colaboracion = this.controller.obtenerDTColaboracion(id);
         this.campoNickColab.setText(colaboracion.getColaborador());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        this.campoFechaHora.setText(colaboracion.getFechaHora().format(formatter));
+        this.campoFechaHora.setText(LocalDateTime.parse(colaboracion.getFechaHora()).format(formatter));
         this.campoMonto.setText(Float.toString(colaboracion.getMonto()));
         this.campoRetorno.setText(colaboracion.getTipoRetorno());
     }//GEN-LAST:event_listaColaboracionesValueChanged

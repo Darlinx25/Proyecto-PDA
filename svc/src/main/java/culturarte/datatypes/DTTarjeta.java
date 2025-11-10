@@ -23,6 +23,7 @@ public class DTTarjeta extends DTFormaPago {
     }
 
     public DTTarjeta() {
+        super();
     }
 
     public void setTipoTarjeta(String tipoTarjeta) {

@@ -23,7 +23,6 @@ function propPorEstado(btn) {
                         div.setAttribute("data-grupo", "propuestas");
                         const fechahoy = new Date();
                         const fechaFinanciacion = parseStringToLocalDate(prop.plazoFinanciacion);
-                        console.log(prop.plazoFinanciacion);
                         const diferenciaDias = Math.ceil((fechaFinanciacion - fechahoy) / (1000 * 3600 * 24));
                         div.innerHTML = `
                     <div class="d-flex align-items-center gap-5">
@@ -272,3 +271,5 @@ function parseStringToLocalDate(dateString) {
     const day = parseInt(parts[2], 10);
     return new Date(year, month, day);
 }
+
+

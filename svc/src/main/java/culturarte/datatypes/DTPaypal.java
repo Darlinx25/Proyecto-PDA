@@ -24,6 +24,7 @@ public class DTPaypal extends DTFormaPago {
     }
 
     public DTPaypal() {
+        super();
     }
 
     public void setCuentaPaypal(String cuentaPaypal) {

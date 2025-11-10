@@ -25,7 +25,7 @@ public class DTPropuesta {
     private float montoAReunir;
     private float dineroRecaudado;
     private String fechaPublicacion;
-    private LocalDate plazoFinanciacion;
+    private String plazoFinanciacion;
     private String tipoPropuesta;
     private String nickProponedor;
     private List<TipoRetorno> tiposRetorno;
@@ -74,7 +74,7 @@ public class DTPropuesta {
         this.fechaPublicacion = fechaPublicacion;
     }
 
-    public void setPlazoFinanciacion(LocalDate plazoFinanciacion) {
+    public void setPlazoFinanciacion(String plazoFinanciacion) {
         this.plazoFinanciacion = plazoFinanciacion;
     }
 
@@ -106,7 +106,7 @@ public class DTPropuesta {
     public DTPropuesta(String titulo, String descripcion, String imagen, String lugarRealizara, String fechaRealizara, 
             float precioEntrada, float montoAReunir, float dineroRecaudado, String fechaPublicacion,
             String tipoPropuesta, String nickProponedor, List<TipoRetorno> tiposRetorno, Estado estadoActual,
-            LocalDate fechaFinanciacion, List<String> nicksColabs ,List<String> comentarios) {
+            String fechaFinanciacion, List<String> nicksColabs ,List<String> comentarios) {
         
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -198,7 +198,7 @@ public class DTPropuesta {
         return estadoActual;
     }
     
-    public LocalDate getPlazoFinanciacion(){
+    public String getPlazoFinanciacion(){
         return plazoFinanciacion;
     }
     
