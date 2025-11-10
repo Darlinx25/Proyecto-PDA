@@ -25,4 +25,4 @@ jobs:
         cache: maven
 
     - name: Build SVC and ESTACION (Excluding WEB)
-      run: mvn -B package --file pom.xml -DskipTests -pl !web
+      run: mvn -B package --file pom.xml -pl !web
