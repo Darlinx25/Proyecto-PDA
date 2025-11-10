@@ -1,4 +1,4 @@
-name: Java CI with Maven and SOAP Service
+name: Java CI (Excluding Web Module)
 
 on:
   push:
@@ -24,29 +24,5 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-    - name: Compile SVC module
-      run: mvn clean install -DskipTests --projects svc
-      
-    - name: Run Publicador (Start SOAP Service) in Background
-      run: |
-        nohup mvn exec:java -Dexec.mainClass="culturarte.webservices.Publicador" --projects svc > svc_startup.log 2>&1 &
-        echo "El Publicador se está iniciando en segundo plano."
-        
-    - name: Wait for SOAP Service to be available on port 9128
-      run: |
-        echo "Esperando a que el servicio esté activo en localhost:9128..."
-        for i in {1..30}; do
-          if nc -z localhost 9128; then
-            echo "Servicio listo."
-            cat svc_startup.log
-            exit 0
-          fi
-          echo "Puerto 9128 no listo, esperando 4 segundos..."
-          sleep 4
-        done
-        echo "Error: El servicio SOAP no inició a tiempo en el puerto 9128. Falló después de 120 segundos."
-        cat svc_startup.log
-        exit 1
-        
-    - name: Build All Modules
-      run: mvn -B package --file pom.xml -DskipTests
+    - name: Build SVC and ESTACION (Excluding WEB)
+      run: mvn -B package --file pom.xml -DskipTests -pl !web
