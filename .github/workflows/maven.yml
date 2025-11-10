@@ -1,5 +1,3 @@
-# .github/workflows/main.yml
-
 name: Java CI with Maven and SOAP Service
 
 on:
@@ -25,32 +23,30 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    
-    - name: Compile and Package SVC module
+
+    - name: Compile SVC module
       run: mvn clean install -DskipTests --projects svc
-    
+      
     - name: Run Publicador (Start SOAP Service) in Background
       run: |
-        JAR_FILE=$(find svc/target -name "svc-*.jar" | head -n 1)
-        if [ -z "$JAR_FILE" ]; then
-          echo "ERROR: JAR de SVC no encontrado. Asegúrate de que mvn install lo genere."
-          exit 1
-        fi
-        echo "Iniciando servicio SOAP: $JAR_FILE"
-        # Iniciamos el servicio en segundo plano (usando &)
-        java -jar $JAR_FILE &
-
+        nohup mvn exec:java -Dexec.mainClass="culturarte.webservices.Publicador" --projects svc > svc_startup.log 2>&1 &
+        echo "El Publicador se está iniciando en segundo plano."
+        
     - name: Wait for SOAP Service to be available on port 9128
       run: |
         echo "Esperando a que el servicio esté activo en localhost:9128..."
-        # Espera hasta 120 segundos para que el puerto 9128 responda
-        for i in {1..20}; do
-          nc -z localhost 9128 && echo "Servicio listo." && exit 0
-          echo "Puerto 9128 no listo, esperando 6 segundos..."
-          sleep 6
+        for i in {1..30}; do
+          if nc -z localhost 9128; then
+            echo "Servicio listo."
+            cat svc_startup.log
+            exit 0
+          fi
+          echo "Puerto 9128 no listo, esperando 4 segundos..."
+          sleep 4
         done
-        echo "Error: El servicio SOAP no inició a tiempo en el puerto 9128."
+        echo "Error: El servicio SOAP no inició a tiempo en el puerto 9128. Falló después de 120 segundos."
+        cat svc_startup.log
         exit 1
-
-    - name: Build All Modules (Web will generate stubs now)
+        
+    - name: Build All Modules
       run: mvn -B package --file pom.xml -DskipTests
