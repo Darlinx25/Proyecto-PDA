@@ -378,10 +378,10 @@ public class IControllerTest {
     @Test
     public void testExtenderFinanciacion() {
         DTPropuesta p = controller.obtenerDTPropuesta("Un día de Julio");
-        LocalDate fecha1 = p.getPlazoFinanciacion();
+        LocalDate fecha1 = LocalDate.parse(p.getPlazoFinanciacion());
         controller.extenderFinanciacion("Un día de Julio");
         p = controller.obtenerDTPropuesta("Un día de Julio");
-        LocalDate fecha2 = p.getPlazoFinanciacion();
+        LocalDate fecha2 = LocalDate.parse(p.getPlazoFinanciacion());
         assertTrue(fecha2.isAfter(fecha1), "la fecha2 tiene que ser después de la fecha1");
 
         controller.extenderFinanciacion("Dos días de Julio");
@@ -558,14 +558,14 @@ public class IControllerTest {
         
         assertFalse(lista.get(0).isPagada());
         DTFormaPago formaPago = new DTPaypal("1234", "Antonio Pacheco");
-        DTPago pago = new DTPago(lista.get(0).getMonto(), formaPago, fechaPago,"Paypal");
+        DTPago pago = new DTPago(lista.get(0).getMonto(), formaPago, fechaPago.toString(),"Paypal");
         controller.pagarColaboracion(pago, lista.get(0).getId());
         lista = controller.listDTColaboracionUser("tonyp");
         assertTrue(lista.get(0).isPagada());
         
         assertFalse(lista.get(1).isPagada());
         DTFormaPago formaPago2 = new DTTransferenciaBancaria("BROU", "1234", "Antonio Pacheco");
-        DTPago pago2 = new DTPago(lista.get(1).getMonto(), formaPago2, fechaPago,"Trasferencia");
+        DTPago pago2 = new DTPago(lista.get(1).getMonto(), formaPago2, fechaPago.toString(),"Trasferencia");
         controller.pagarColaboracion(pago2, lista.get(1).getId());
         lista = controller.listDTColaboracionUser("tonyp");
         assertTrue(lista.get(1).isPagada());
@@ -576,13 +576,13 @@ public class IControllerTest {
         
         assertFalse(lista2.get(0).isPagada());
         DTFormaPago formaPago3 = new DTTarjeta("Visa", "1234 1234 1234 1234", "05/26", "420", "Álvaro Recoba");
-        DTPago pago3 = new DTPago(lista2.get(0).getMonto(), formaPago3, fechaPago,"Tarjeta");
+        DTPago pago3 = new DTPago(lista2.get(0).getMonto(), formaPago3, fechaPago.toString(),"Tarjeta");
         controller.pagarColaboracion(pago3, lista2.get(0).getId());
         lista2 = controller.listDTColaboracionUser("chino");
         assertTrue(lista2.get(0).isPagada());
         
         
-        DTPago pago4 = new DTPago(lista2.get(0).getMonto(), null, fechaPago,"Tarjeta");
+        DTPago pago4 = new DTPago(lista2.get(0).getMonto(), null, fechaPago.toString(),"Tarjeta");
         controller.pagarColaboracion(pago4, lista2.get(0).getId());
     }
     

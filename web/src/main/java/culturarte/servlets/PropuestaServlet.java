@@ -130,7 +130,7 @@ public class PropuestaServlet extends HttpServlet {
                 List<String> propuestasComentables = propuestasComentables(nick3);
                 List<String> propuestasComentadas = propuestasComentadas(nick3);
                 List<Object> respuesta = new ArrayList<>();
-
+  
                 respuesta.add(propuestas);
                 respuesta.add(propuestasFav);
                 respuesta.add(propuestasColab);
@@ -226,7 +226,6 @@ public class PropuestaServlet extends HttpServlet {
                 break;
             case "/obtener-colaboracion":
                 String id = request.getParameter("id");
-
                 if (id == null || id.isEmpty()) {
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'id Colaboracion'");
                     return;
@@ -237,6 +236,7 @@ public class PropuestaServlet extends HttpServlet {
                     response.sendError(HttpServletResponse.SC_NOT_FOUND, "Colaboracion no encontrada");
                     return;
                 }
+                
                 response.setContentType("application/json;charset=UTF-8");
                 try (PrintWriter out = response.getWriter()) {
                     out.print(obtenerColaboracionJSON(idColab));

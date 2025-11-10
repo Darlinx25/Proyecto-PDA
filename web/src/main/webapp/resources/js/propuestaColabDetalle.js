@@ -41,7 +41,7 @@ function cargarPropuestaColab() {
 function cargarColabPropia() {
     const select = document.getElementById("propuestaColaboradas");
     const valor = select.value;
-
+    
     if (!valor)
         return;
     const id = valor.split(" - ")[1];
@@ -55,21 +55,17 @@ function cargarColabPropia() {
                 return resp.json();
             })
             .then(data => {
-                
-                const fecha = new Date(data.fechaHora);
-                const dia = fecha.getDate().toString().padStart(2, '0');
-                const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
-                const anio = fecha.getFullYear();
-                const horas = fecha.getHours().toString().padStart(2, '0');
-                const minutos = fecha.getMinutes().toString().padStart(2, '0');
-                const fechaFormateada = `${dia}/${mes}/${anio} ${horas}:${minutos}`;
+
                 const estaPaga = data.pagada;
+                console.log(data.pagada + "DATA DEL PAGO ACA");
                 const seEmitioConsancia = data.constanciaEmitida;
-                
+                console.log(estaPaga + "SE PAGO???");
+                console.log(seEmitioConsancia + "SE EMITIOCONSTANCIA???");
                 container.innerHTML = `
                 <p><strong>Monto colaborado:</strong> $${data.monto}</p>
-                <p><strong>Fecha colaboracion:</strong> ${fechaFormateada}</p>
-                ${estaPaga
+                <p><strong>Fecha colaboracion:</strong> ${formatDateTimeShort(data.fechaHora)}</p>
+                
+                ${data.pagada
                     ? (seEmitioConsancia
                         ? `<button class="btn btn-secondary" disabled>Constancia Emitida</button>`
                         : `<button id="btn-constancia-${id}" class="btn btn-success" onclick="emitirConstancia('${id}')">Emitir Constancia de Pago</button>`)
@@ -97,29 +93,12 @@ function emitirConstancia(idColaboracion){
                 return resp.json();
             })
             .then(data => {
-                const fecha = new Date(data.fechaHora);
-                const dia = fecha.getDate().toString().padStart(2, '0');
-                const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
-                const anio = fecha.getFullYear();
-                const horas = fecha.getHours().toString().padStart(2, '0');
-                const minutos = fecha.getMinutes().toString().padStart(2, '0');
-                const fechaFormateada = `${dia}/${mes}/${anio} ${horas}:${minutos}`;
-                
-                const fechaPago = new Date(data.pago.fechaPago);
-                const diaPago = fechaPago.getDate().toString().padStart(2, '0');
-                const mesPago = (fechaPago.getMonth() + 1).toString().padStart(2, '0');
-                const anioPago = fechaPago.getFullYear();
-                const horasPago = fechaPago.getHours().toString().padStart(2, '0');
-                const minutosPago = fechaPago.getMinutes().toString().padStart(2, '0');
-                const fechaFormateadaPago = `${diaPago}/${mesPago}/${anioPago} ${horasPago}:${minutosPago}`;
 
-
-                
                 document.getElementById('modal-retorno').innerText = `${data.tipoRetorno}`;
                 document.getElementById('modal-propColab').innerText = `${data.propuestaColaborada}`;
                 document.getElementById('modal-monto').innerText = `$${data.monto}`;
-                document.getElementById('modal-fecha').innerText = fechaFormateada;
-                document.getElementById('modal-fechaPago').innerText = fechaFormateadaPago;
+                document.getElementById('modal-fecha').innerText = formatDateTimeShort(data.fechaHora);
+                document.getElementById('modal-fechaPago').innerText = formatDateTimeShort(data.pago.fechaPago);
                 document.getElementById('modal-metodoPago').innerText = data.pago.metodoPago;
                 miModal.show();
             })
@@ -149,4 +128,17 @@ function emitirConstancia(idColaboracion){
             
             
             
+}
+
+function formatDateTimeShort(isoString) {
+  const dateObj = new Date(isoString);
+  
+  return dateObj.toLocaleString('es-ES', { 
+    year: 'numeric', 
+    month: '2-digit', 
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false // Usa formato de 24 horas
+  });
 }

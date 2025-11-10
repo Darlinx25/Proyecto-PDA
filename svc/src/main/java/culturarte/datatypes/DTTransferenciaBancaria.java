@@ -31,6 +31,7 @@ public class DTTransferenciaBancaria extends DTFormaPago {
     }
 
     public DTTransferenciaBancaria() {
+        super();
     }
 
     public void setNombreBanco(String nombreBanco) {

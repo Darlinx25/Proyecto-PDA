@@ -18,13 +18,13 @@ import java.time.LocalDateTime;
 public class DTColaboracion {
     private Long id;
     private float monto;
-    private LocalDateTime fechaHora;
+    private String fechaHora;
     private String tipoRetorno;
     private String colaborador;
     private String propuestaColaborada;
     private boolean pagada;
     private boolean constanciaEmitida;
-    private Pago pago;
+    private DTPago pago;
 
     public DTColaboracion() {
     }
@@ -45,7 +45,7 @@ public class DTColaboracion {
         this.monto = monto;
     }
 
-    public void setFechaHora(LocalDateTime fechaHora) {
+    public void setFechaHora(String fechaHora) {
         this.fechaHora = fechaHora;
     }
 
@@ -65,13 +65,13 @@ public class DTColaboracion {
         this.pagada = pagada;
     }
 
-    public void setPago(Pago pago) {
+    public void setPago(DTPago pago) {
         this.pago = pago;
     }
     
     
     
-    public DTColaboracion(Long id, float monto, LocalDateTime fechaHora, String tipoRetorno, String colaborador, String propuestaColaborada) {
+    public DTColaboracion(Long id, float monto, String fechaHora, String tipoRetorno, String colaborador, String propuestaColaborada) {
         this.id = id;
         this.monto = monto;
         this.fechaHora = fechaHora;
@@ -81,7 +81,7 @@ public class DTColaboracion {
     }
     
     //es para la web
-    public DTColaboracion(boolean pagada,Pago pago, Long id, float monto, LocalDateTime fechaHora, String tipoRetorno, String colaborador, String propuestaColaborada, boolean constanciaEmitida) {
+    public DTColaboracion(boolean pagada,DTPago pago, Long id, float monto, String fechaHora, String tipoRetorno, String colaborador, String propuestaColaborada, boolean constanciaEmitida) {
         this.pagada = pagada;
         this.pago = pago;
         this.id = id;
@@ -107,7 +107,7 @@ public class DTColaboracion {
         return monto;
     }
 
-    public LocalDateTime getFechaHora() {
+    public String getFechaHora() {
         return fechaHora;
     }
 
@@ -123,7 +123,7 @@ public class DTColaboracion {
         return propuestaColaborada;
     }
     
-    public Pago getPago() {
+    public DTPago getPago() {
         return pago;
     }
     

@@ -1,10 +1,7 @@
 package culturarte.servlets;
 
-import culturarte.datatypes.DTPropuesta;
-import culturarte.logica.Estado;
-import culturarte.logica.EstadoPropuesta;
-import culturarte.logica.IController;
-import culturarte.logica.IControllerFactory;
+
+
 import culturarte.wutils.Tracking;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,15 +12,19 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import webservices.ControllerWS;
 import webservices.ControllerWS_Service;
+import webservices.DTPropuesta;
+import webservices.Estado;
+import webservices.EstadoPropuesta;
 
 @WebServlet(name = "ComentarioServlet", urlPatterns = {"/hacer-comentario"})
 public class ComentarioServlet extends HttpServlet {
 
-    private IController controller = IControllerFactory.getInstance().getIController();
+    //private IController controller = IControllerFactory.getInstance().getIController();
     private ControllerWS webServices;
 
     /**
@@ -108,9 +109,12 @@ public class ComentarioServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+        
         String path = request.getServletPath();
-
+        
+        ControllerWS_Service service = new ControllerWS_Service();
+        this.webServices = service.getControllerWSPort();
+        
         switch (path) {
             case "/hacer-comentario":
                 String titulo = request.getParameter("propuesta").trim();
@@ -120,7 +124,7 @@ public class ComentarioServlet extends HttpServlet {
                 String comentario = request.getParameter("comentario");
                  {
                     try {
-                        this.controller.hacerComentario(comentario, nick, titulo);
+                        this.webServices.hacerComentario(comentario, nick, titulo);
                     } catch (Exception ex) {
                         Logger.getLogger(PropuestaServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -133,25 +137,22 @@ public class ComentarioServlet extends HttpServlet {
 
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+
     @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 
     private ArrayList<String> recibirPropuestas(String nickCol) {
-
-        ArrayList<String> aux = this.controller.obtenerPropuestasColaboradas(nickCol);
+        ControllerWS_Service service = new ControllerWS_Service();
+        this.webServices = service.getControllerWSPort();
+        List<String> aux = this.webServices.obtenerPropuestasColaboradas(nickCol);
         ArrayList<String> aux2 = new ArrayList<>();
 
         for (String prop : aux) {
-            DTPropuesta aux3 = this.controller.obtenerDTPropuesta(prop);
+            DTPropuesta aux3 = this.webServices.obtenerDTPropuesta(prop);
             Estado aux4 = aux3.getEstadoActual();
-            Boolean comentarioExiste = this.controller.comentarioExiste(prop, nickCol);
+            Boolean comentarioExiste = this.webServices.comentarioExiste(prop, nickCol);
             if (aux4.getEstado() == EstadoPropuesta.FINANCIADA && !comentarioExiste) {
                 aux2.add(prop);
             }

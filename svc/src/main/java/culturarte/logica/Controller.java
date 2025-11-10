@@ -932,6 +932,10 @@ public class Controller implements IController {
                 if(p.getFechaPublicacion() != null){
                     prop = p.getFechaPublicacion().toString();
                 }
+                String plazo = null;
+                if(p.getPlazoFinanciacion() != null){
+                    plazo = p.getPlazoFinanciacion().toString();
+                }
                 p.getTiposRetorno().size();//para que hibernate lo agarre antes de close porque es lazy
                 float dineroRecaudado = Float.parseFloat(this.obtenerDineroRecaudado(titulo));
                 return new DTPropuesta(
@@ -939,7 +943,7 @@ public class Controller implements IController {
                         p.getPrecioEntrada(), p.getMontoAReunir(), dineroRecaudado, prop,
                         p.getTipoPropuesta().getNombre(),
                         p.getProponedor().getNickname(),
-                        p.getTiposRetorno(), p.getEstadoActual(), p.getPlazoFinanciacion(), nicksColabs, comentarios);
+                        p.getTiposRetorno(), p.getEstadoActual(), plazo, nicksColabs, comentarios);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -974,7 +978,7 @@ public class Controller implements IController {
                         p.getPrecioEntrada(), p.getMontoAReunir(), dineroRecaudado, p.getFechaPublicacion().toString(),
                         p.getTipoPropuesta().getNombre(),
                         p.getProponedor().getNickname(),
-                        p.getTiposRetorno(), p.getEstadoActual(), p.getPlazoFinanciacion(), nicksColabs, comentarios);
+                        p.getTiposRetorno(), p.getEstadoActual(), p.getPlazoFinanciacion().toString(), nicksColabs, comentarios);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1432,9 +1436,32 @@ public class Controller implements IController {
         Manejador emr = Manejador.getInstance();
         try {
             Colaboracion c = emr.find(Colaboracion.class, id);
+            FormaPago fp = null;
+            if(c.getPago() !=null){
+               fp = c.getPago().getFormaPago(); 
+            }
+            
+            DTFormaPago form = null;
+            if(fp instanceof Tarjeta && fp!=null){
+                form = new DTTarjeta(((Tarjeta) fp).getTipo(), ((Tarjeta) fp).getNumero(), ((Tarjeta) fp).getFechaVenc(),((Tarjeta) fp).getCvc(), ((Tarjeta) fp).getTitular());
+                
+            }
+            else if(fp instanceof Paypal && fp!=null){
+                form = new DTPaypal(((Paypal) fp).getNroCuenta(),((Paypal) fp).getTitular());
+                
+            }
+            else if(fp instanceof TransferenciaBancaria && fp!=null){
+                form = new DTTransferenciaBancaria(((TransferenciaBancaria) fp).getBanco(),((TransferenciaBancaria) fp).getNroCuenta(),((TransferenciaBancaria) fp).getTitular());
+                
+            }
+            
             if (c != null && c.getBaja() == false) {
-                return new DTColaboracion(c.getPago() != null,c.getPago(),
-                        c.getId(), c.getMonto(), c.getFechaHora(),
+                DTPago p = null;
+                if (c.getPago() != null) {
+                    p = new DTPago(c.getPago().getMontoPago(),form, c.getPago().getFechaPago().toString(), c.getPago().getMetodoPago());
+                }
+                return new DTColaboracion(c.getPago() != null,p,
+                        c.getId(), c.getMonto(), c.getFechaHora().toString(),
                         c.getTipoRetorno(), c.getColaborador().getNickname(), c.getPropuestaColaborada().getTitulo(),c.getConstanciaEmitida());
             }
         } catch (Exception e) {
@@ -1610,10 +1637,30 @@ public class Controller implements IController {
         List<DTColaboracion> listaDTColabs = new ArrayList();
         
         for (Colaboracion c : colaboraciones) {
+            FormaPago fp = null;
+            if (c.getPago() != null) {
+                fp = c.getPago().getFormaPago();
+            }
 
-            listaDTColabs.add(new DTColaboracion(c.getPago() != null,c.getPago(), c.getId(),
+            DTFormaPago form = null;
+            if (fp instanceof Tarjeta && fp != null) {
+                form = new DTTarjeta(((Tarjeta) fp).getTipo(), ((Tarjeta) fp).getNumero(), ((Tarjeta) fp).getFechaVenc(), ((Tarjeta) fp).getCvc(), ((Tarjeta) fp).getTitular());
+
+            } else if (fp instanceof Paypal && fp != null) {
+                form = new DTPaypal(((Paypal) fp).getNroCuenta(), ((Paypal) fp).getTitular());
+
+            } else if (fp instanceof TransferenciaBancaria && fp != null) {
+                form = new DTTransferenciaBancaria(((TransferenciaBancaria) fp).getBanco(), ((TransferenciaBancaria) fp).getNroCuenta(), ((TransferenciaBancaria) fp).getTitular());
+
+            }
+            DTPago p = null;
+            if (c.getPago() != null) {
+                p = new DTPago(c.getPago().getMontoPago(),form, c.getPago().getFechaPago().toString(), c.getPago().getMetodoPago());
+            }
+            
+            listaDTColabs.add(new DTColaboracion(c.getPago() != null,p, c.getId(),
                     c.getMonto(),
-                    c.getFechaHora(), c.getTipoRetorno(),
+                    c.getFechaHora().toString(), c.getTipoRetorno(),
                     c.getColaborador().getNickname(), c.getPropuestaColaborada().getTitulo(),c.getConstanciaEmitida()));
         }
 
@@ -1648,7 +1695,7 @@ public class Controller implements IController {
         }
         emr.add(formaPago);
         
-        Pago pago = new Pago(dtPago.getMontoPago(), formaPago, dtPago.getFechaPago(),dtPago.getMetodoPago());
+        Pago pago = new Pago(dtPago.getMontoPago(), formaPago, LocalDateTime.parse(dtPago.getFechaPago()),dtPago.getMetodoPago());
         emr.add(pago);
         colab.setPago(pago);
         emr.mod(colab);

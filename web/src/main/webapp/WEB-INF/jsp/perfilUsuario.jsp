@@ -175,7 +175,7 @@
                                         <button type="submit" class="btn btn-primary" onclick="prepararDescarga()">Descargar PDF</button>
                                     </div>
                                         
-                                    <input type="hidden" name="fechaCons" value="<%= java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").format(fechaCons)%>">
+                                    <input type="hidden" name="fechaCons" value="<%= java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm").format(fechaCons)%>">
                                     <input type="hidden" name="nombre" value="<%= nombre%>">
                                     <input type="hidden" name="apellido" value="<%= apellido%>">
                                     <input type="hidden" id="pdf-propColab" name="propColab">

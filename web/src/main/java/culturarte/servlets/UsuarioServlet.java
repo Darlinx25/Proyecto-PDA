@@ -372,7 +372,8 @@ public class UsuarioServlet extends HttpServlet {
                 || userAgent.contains("iphone") || userAgent.contains("ipad");
         if (tipoUsuario != null && autValida) {
             HttpSession session = request.getSession(true);
-
+            System.out.println("ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");   
+            System.out.println(tipoUsuario + "Nombre");
             if (tipoUsuario.equals("colaborador")) {
                 DTColaborador colab = this.webServices.obtenerDTColaborador(nickname);
                 String nom = colab.getNombre();
@@ -475,8 +476,6 @@ public class UsuarioServlet extends HttpServlet {
         byte[] bytesImagen = partABytes(parteArchivo);
         String nombreImagen = this.webServices.guardarImagen(bytesImagen);
 
-        DTUsuario user = null;
-
         if (tipoUsuario.equals("proponente")) {
             String ciudad = request.getParameter("ciudad");
             String calle = request.getParameter("calle");
@@ -500,11 +499,7 @@ public class UsuarioServlet extends HttpServlet {
             prop.setEmail(email);
             prop.setFechaNacimiento(fNacString);
             prop.setImagen(nombreImagen);
-          
             this.webServices.addUsuario(prop); 
-           
-            
-
         } else if (tipoUsuario.equals("colaborador")) {
             DTColaborador colab = new DTColaborador();
             colab.setNickname(nickname);
@@ -517,12 +512,7 @@ public class UsuarioServlet extends HttpServlet {
             colab.setImagen(nombreImagen);
           
             this.webServices.addUsuario(colab); 
-            
-            
         }
-
-        this.webServices.addUsuario(user);
-
     }
 
     protected void cerrarSesion(HttpServletRequest request, HttpServletResponse response)

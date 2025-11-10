@@ -16,13 +16,13 @@ function propPorEstado(btn) {
                 const plantillaExtend = document.getElementById("extender-prop");
                 const plantillaCancelar = document.getElementById("cancelar-prop");
                 const plantillaComentar = document.getElementById("comentar-prop");
-
+                
                 data[0].forEach(prop => {
                 const div = document.createElement("div");
                         div.className = "mb-2 p-2 border rounded bg-light";
                         div.setAttribute("data-grupo", "propuestas");
                         const fechahoy = new Date();
-                        const fechaFinanciacion = new Date(prop.plazoFinanciacion);
+                        const fechaFinanciacion = parseStringToLocalDate(prop.plazoFinanciacion);
                         const diferenciaDias = Math.ceil((fechaFinanciacion - fechahoy) / (1000 * 3600 * 24));
                         div.innerHTML = `
                     <div class="d-flex align-items-center gap-5">
@@ -259,3 +259,17 @@ window.addEventListener('DOMContentLoaded', function() {
         botonBusq.click();
     }
 });
+
+
+function parseStringToLocalDate(dateString) {
+    if (typeof dateString !== 'string' || !dateString) { // La corrección: verifica si es string
+        return new Date(); // Devuelve una fecha segura (la de hoy) si es inválido o nulo
+    }
+    const parts = dateString.split('-');
+    const year = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10) - 1;
+    const day = parseInt(parts[2], 10);
+    return new Date(year, month, day);
+}
+
+
