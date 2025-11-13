@@ -1,0 +1,38 @@
+#mensaje-error {
+    color: rgb(220, 20, 20);
+    display: none;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+#formulario {
+    max-width: 500px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+}
+
+#formulario * {
+    max-width: 100%;
+}
+
+@media (max-width: 576px) {
+    body {
+        padding: 10px;
+    }
+    
+    #formulario {
+        padding: 1.5rem !important;
+    }
+}

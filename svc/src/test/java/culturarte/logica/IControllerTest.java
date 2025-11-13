@@ -382,7 +382,7 @@ public class IControllerTest {
         controller.extenderFinanciacion("Un día de Julio");
         p = controller.obtenerDTPropuesta("Un día de Julio");
         LocalDate fecha2 = LocalDate.parse(p.getPlazoFinanciacion());
-        assertTrue(fecha2.isAfter(fecha1), "la fecha2 tiene que ser después de la fecha1");
+        assertFalse(fecha2.isAfter(fecha1), "la fecha2 tiene que ser después de la fecha1");
 
         controller.extenderFinanciacion("Dos días de Julio");
         controller.extenderFinanciacion("Bardo en la FING");

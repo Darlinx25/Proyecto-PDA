@@ -39,9 +39,10 @@ function propuestaElegida() {
                             <p><strong>Título:</strong> ${prop.titulo}</p>
                             <p><strong>Proponedor:</strong> ${prop.nickProponedor}</p>
                             <p><img src="/imagenes/${prop.imagen}" 
-                                    onerror="this.src='/resources/images/propdefault.png';" 
-                                    alt="${prop.titulo}" 
-                                    style="max-width:300px;border-radius:5px;"></p>
+                                onerror="this.src='/resources/images/propdefault.png';" 
+                                alt="${prop.titulo}" 
+                                class="img-fluid" 
+                                style="width: 100%; height: auto; border-radius: 5px;"></p>
                             <p class="text-center"><strong>Dinero recaudado:</strong></p>
                             <div class="progress" style="height: 25px;">
                                 <div class="progress-bar" 
@@ -98,7 +99,7 @@ function propuestaElegida() {
                     <button type="button" class="btn btn-secondary mb-3" disabled>
                         Ya colaboraste
                     </button>`;
-                    } else if(puedeColaborar){
+                    } else if (puedeColaborar) {
                         formColab.method = "get";
                         formColab.action = "/registrar-colaboracion";
                         formColab.innerHTML = `
@@ -106,7 +107,7 @@ function propuestaElegida() {
                     <button type="submit" class="btn btn-success mb-3">
                         Colaborar
                     </button>`;
-                    }else {
+                    } else {
                         formColab.innerHTML = `
                     <button type="button" class="btn btn-secondary mb-3" disabled>
                         No puede colaborar
