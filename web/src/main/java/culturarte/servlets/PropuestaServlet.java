@@ -20,6 +20,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -42,15 +46,17 @@ public class PropuestaServlet extends HttpServlet {
 
     //private IController controller = IControllerFactory.getInstance().getIController();
     private ControllerWS webServices;
-
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods.">
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         ControllerWS_Service service = new ControllerWS_Service();
         this.webServices = service.getControllerWSPort();
         
         this.webServices.registrarAcceso(Tracking.generarDTRegistroAcceso(request));
+        sincImg();
         response.setContentType("text/html;charset=UTF-8");
         String path = request.getServletPath();
 
@@ -87,7 +93,9 @@ public class PropuestaServlet extends HttpServlet {
                     return;
                 }
                 DTPropuesta prop = webServices.obtenerDTPropuesta(titulo);
+                
                 if (prop == null) {
+                    
                     response.sendError(HttpServletResponse.SC_NOT_FOUND, "Propuesta no encontrada");
                     return;
                 }
@@ -111,8 +119,7 @@ public class PropuestaServlet extends HttpServlet {
                 for (String t : titulos) {
                     DTPropuesta p = webServices.obtenerDTPropuesta(t);
                     if (p != null) {
-                        //propuestas.add(p);
-
+                        //propuestas.add(p); 
                         if ("Todas".equals(cat)) {
                             propuestas.add(p);
                         } else if (cat.equals(p.getTipoPropuesta())) {
@@ -627,6 +634,34 @@ public class PropuestaServlet extends HttpServlet {
             return "{}";
         }
     }
+        
+        private void sincImg(){
+            List<String> list = this.webServices.listarPropuestas();
+            for(String titulo: list){
+                DTPropuesta p = this.webServices.obtenerDTPropuesta(titulo);
+                if(!existeImg(p.getImagen())){
+                    guardarImagen(this.webServices.obtenerImagen(p.getImagen()),p.getImagen()); 
+                }
+                
+            }
+            
+        }
+        
+        private boolean existeImg(String IDimg){
+            return  Paths.get(System.getProperty("user.home"),"imgProyePDA", IDimg)!=null;
+        }    
+    
+        private void guardarImagen(byte[] bytesImagen,String nombreArchivo) {
+        Path pathImagen = Paths.get(System.getProperty("user.home"),"imgProyePDA", nombreArchivo);
+        try {
+            Files.createDirectories(pathImagen.getParent());
+            Files.write(pathImagen, bytesImagen, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+
+        } catch (IOException ex) {
+
+        }
+    }
+    
 
     // </editor-fold>
 }

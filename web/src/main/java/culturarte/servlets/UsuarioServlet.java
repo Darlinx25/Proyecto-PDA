@@ -341,6 +341,7 @@ public class UsuarioServlet extends HttpServlet {
                 request.setAttribute("sitioWeb", prop.getSitioWeb());
                 request.setAttribute("nombre", prop.getNombre());
                 request.setAttribute("apellido", prop.getApellido());
+                guardarImagen(this.webServices.obtenerImagen(prop.getImagen()),prop.getImagen());
                 request.setAttribute("ubiImagen", prop.getImagen());
             }
         }
@@ -584,9 +585,7 @@ public class UsuarioServlet extends HttpServlet {
     
    
     private void guardarImagen(byte[] bytesImagen,String nombreArchivo) {
-        
-        Path pathImagen = Paths.get(System.getProperty("user.home"), nombreArchivo);
-
+        Path pathImagen = Paths.get(System.getProperty("user.home"),"imgProyePDA", nombreArchivo);
         try {
             Files.createDirectories(pathImagen.getParent());
             Files.write(pathImagen, bytesImagen, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
@@ -595,10 +594,7 @@ public class UsuarioServlet extends HttpServlet {
 
         }
     }
-    
 
-    
-    
 
     // </editor-fold>
 }
