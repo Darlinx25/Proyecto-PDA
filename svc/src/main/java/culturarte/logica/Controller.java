@@ -1583,6 +1583,20 @@ public class Controller implements IController {
             return null;
         }
     }
+    
+    @Override
+    public byte[] obtenerImagen(String IDimagen) {
+
+        Path pathImagen = Paths.get(System.getProperty("user.home"), "Proyecto-PDA", "estacion", "imagenesUsuarios", IDimagen);
+        try {
+            return Files.readAllBytes(pathImagen);
+
+        } catch (IOException ex) {
+            return null;
+        }
+    }
+    
+    
 
     // buscar por patrón en título, descripción y lugar
     @Override

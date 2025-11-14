@@ -41,6 +41,10 @@ import webservices.EstadoPropuesta;
 import webservices.LocalDate;
 import webservices.NickRepetidoException_Exception;
 import webservices.ResultadoSeguirUsuario;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 /**
  *
@@ -322,7 +326,8 @@ public class UsuarioServlet extends HttpServlet {
                 request.setAttribute("nombre", colab.getNombre());
                 request.setAttribute("apellido", colab.getApellido());
                 request.setAttribute("email", colab.getEmail());
-                request.setAttribute("ubiImagen", colab.getImagen());
+                guardarImagen(this.webServices.obtenerImagen(colab.getImagen()),colab.getImagen());
+                request.setAttribute("ubiImagen",colab.getImagen());
             }
 
         } else if ("proponente".equals(tipoUser)) {
@@ -337,7 +342,6 @@ public class UsuarioServlet extends HttpServlet {
                 request.setAttribute("nombre", prop.getNombre());
                 request.setAttribute("apellido", prop.getApellido());
                 request.setAttribute("ubiImagen", prop.getImagen());
-
             }
         }
     }
@@ -372,7 +376,6 @@ public class UsuarioServlet extends HttpServlet {
                 || userAgent.contains("iphone") || userAgent.contains("ipad");
         if (tipoUsuario != null && autValida) {
             HttpSession session = request.getSession(true);
-            System.out.println("ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");   
             System.out.println(tipoUsuario + "Nombre");
             if (tipoUsuario.equals("colaborador")) {
                 DTColaborador colab = this.webServices.obtenerDTColaborador(nickname);
@@ -577,6 +580,25 @@ public class UsuarioServlet extends HttpServlet {
         request.setAttribute("usuarios", usuarios);
         request.getRequestDispatcher("/WEB-INF/jsp/consultaPerfilUsuario.jsp").forward(request, response);
     }
+    
+    
+   
+    private void guardarImagen(byte[] bytesImagen,String nombreArchivo) {
+        
+        Path pathImagen = Paths.get(System.getProperty("user.home"), nombreArchivo);
+
+        try {
+            Files.createDirectories(pathImagen.getParent());
+            Files.write(pathImagen, bytesImagen, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+
+        } catch (IOException ex) {
+
+        }
+    }
+    
+
+    
+    
 
     // </editor-fold>
 }

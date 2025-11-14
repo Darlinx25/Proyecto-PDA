@@ -102,6 +102,7 @@ public interface IController {
     public List<DTColaboracion> listDTColaboracionUser(String nickname);
     public void pagarColaboracion(DTPago dtPago, Long idColab);
     public void mandarMail(DTMail dtMail);
+    public byte[] obtenerImagen(String IDimagen);
     // </editor-fold>
     
 }

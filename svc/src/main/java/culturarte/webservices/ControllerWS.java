@@ -265,6 +265,12 @@ public class ControllerWS {
     public String guardarImagen(@WebParam(name = "bytesImagen") byte[] bytesImagen) {
         return controller.guardarImagen(bytesImagen);
     }
+    
+    @WebMethod(operationName = "obtenerImagen")
+    public byte[] obtenerImagen(@WebParam(name = "IDimagen") String IDimagen) {
+        return controller.obtenerImagen(IDimagen);
+    }
+    
 
     @WebMethod(operationName = "buscarPropuestasTDL")
     public ArrayList<DTPropuesta> buscarPropuestasTDL(@WebParam(name = "patron") String patron) {
