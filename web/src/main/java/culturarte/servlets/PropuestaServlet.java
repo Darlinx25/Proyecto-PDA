@@ -647,9 +647,15 @@ public class PropuestaServlet extends HttpServlet {
             
         }
         
-        private boolean existeImg(String IDimg){
-            return  Paths.get(System.getProperty("user.home"),"imgProyePDA", IDimg)!=null;
-        }    
+        private boolean existeImg(String IDimg) {
+        Path ruta = Paths.get(
+                System.getProperty("user.home"),
+                "imgProyePDA",
+                IDimg
+        );
+        return Files.exists(ruta);
+    }
+    
     
         private void guardarImagen(byte[] bytesImagen,String nombreArchivo) {
         Path pathImagen = Paths.get(System.getProperty("user.home"),"imgProyePDA", nombreArchivo);
