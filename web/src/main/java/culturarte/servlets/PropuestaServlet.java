@@ -459,6 +459,7 @@ public class PropuestaServlet extends HttpServlet {
     }
 
     // </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="Funciones auxiliares.">
     /*private LocalDate parsearFecha(String fechaString) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -641,8 +642,7 @@ public class PropuestaServlet extends HttpServlet {
                 DTPropuesta p = this.webServices.obtenerDTPropuesta(titulo);
                 String img = p.getImagen();
 
-                if (img != null && !img.isEmpty()) {
-                    byte[] bytes = this.webServices.obtenerImagen(img);
+                if (img != null && !img.isEmpty() && !existeImg(img)) {
                     guardarImagen(this.webServices.obtenerImagen(p.getImagen()),p.getImagen());
                    
                 } 
@@ -650,13 +650,16 @@ public class PropuestaServlet extends HttpServlet {
             
         }
         
-        private boolean existeImg(String IDimg) {
+    private boolean existeImg(String IDimg) {
+
         Path ruta = Paths.get(
                 System.getProperty("user.home"),
                 "imgProyePDA",
                 IDimg
         );
+
         return Files.exists(ruta);
+
     }
     
     

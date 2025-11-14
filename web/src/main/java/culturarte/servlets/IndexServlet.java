@@ -78,28 +78,38 @@ public class IndexServlet extends HttpServlet {
     // </editor-fold>
     
     
-        private void sincImg() {
+    private void sincImg() {
         List<String> list = this.webServices.listarUsuarios();
         for (String nick : list) {
-            if(this.webServices.obtenerTipoUser(nick).equals("colaborador")){
+            if (this.webServices.obtenerTipoUser(nick).equals("colaborador")) {
                 DTColaborador p = this.webServices.obtenerDTColaborador(nick);
                 String img = p.getImagen();
-            if (img != null && !img.isEmpty()) {
-                byte[] bytes = this.webServices.obtenerImagen(img);
-                guardarImagen(this.webServices.obtenerImagen(p.getImagen()), p.getImagen());
+                if (img != null && !img.isEmpty() && !existeImg(img)) {
+                    guardarImagen(this.webServices.obtenerImagen(p.getImagen()), p.getImagen());
 
-            }
-            }else if (this.webServices.obtenerTipoUser(nick).equals("proponente")){
+                }
+            } else if (this.webServices.obtenerTipoUser(nick).equals("proponente")) {
                 DTProponente p = this.webServices.obtenerDTProponente(nick);
                 String img = p.getImagen();
-            if (img != null && !img.isEmpty()) {
-                byte[] bytes = this.webServices.obtenerImagen(img);
-                guardarImagen(this.webServices.obtenerImagen(p.getImagen()), p.getImagen());
+                if (img != null && !img.isEmpty() && !existeImg(img)) {
+                    guardarImagen(this.webServices.obtenerImagen(p.getImagen()), p.getImagen());
 
-            }
+                }
             }
 
         }
+
+    }
+    
+    private boolean existeImg(String IDimg) {
+
+        Path ruta = Paths.get(
+                System.getProperty("user.home"),
+                "imgProyePDA",
+                IDimg
+        );
+
+        return Files.exists(ruta);
 
     }
    

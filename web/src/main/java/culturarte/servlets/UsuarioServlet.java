@@ -1,11 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package culturarte.servlets;
-
-
-
 
 import static culturarte.wutils.SesionUtils.esVisitante;
 import culturarte.wutils.Tracking;
@@ -20,12 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.InputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-//import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import webservices.BadPasswordException_Exception;
 import webservices.ControllerWS;
@@ -38,7 +26,6 @@ import webservices.DTUsuario;
 import webservices.EmailRepetidoException_Exception;
 import webservices.Estado;
 import webservices.EstadoPropuesta;
-import webservices.LocalDate;
 import webservices.NickRepetidoException_Exception;
 import webservices.ResultadoSeguirUsuario;
 import java.nio.file.Files;
@@ -46,11 +33,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-/**
- *
- * @author mark
- */
-@WebServlet(name = "UsuarioServlet", urlPatterns = {"/usuarios", "/crear-cuenta", "/perfil", "/login", "/logout", "/seguir-usuario", "/consultar-perfil-usuario", "/ranking-usuario", "/baja-proponente","/verificarUsuario", "/verificarCorreo" })
+@WebServlet(name = "UsuarioServlet", urlPatterns = {"/usuarios", "/crear-cuenta", "/perfil", "/login", "/logout", "/seguir-usuario", "/consultar-perfil-usuario", "/ranking-usuario", "/baja-proponente", "/verificarUsuario", "/verificarCorreo"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, //1MB+ se escriben al disco
         maxFileSize = 1024 * 1024 * 5, //5MB máximo por archivo
@@ -58,9 +41,7 @@ import java.nio.file.StandardOpenOption;
 )
 public class UsuarioServlet extends HttpServlet {
 
-    //private IController controller = IControllerFactory.getInstance().getIController();
     private ControllerWS webServices;
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods.">
     @Override
@@ -68,7 +49,7 @@ public class UsuarioServlet extends HttpServlet {
             throws ServletException, IOException {
         ControllerWS_Service service = new ControllerWS_Service();
         this.webServices = service.getControllerWSPort();
-        
+
         this.webServices.registrarAcceso(Tracking.generarDTRegistroAcceso(request));
         sincImg();
         response.setContentType("text/html;charset=UTF-8");
@@ -116,8 +97,8 @@ public class UsuarioServlet extends HttpServlet {
                 } else if (esMovil && "colaborador".equals(rol)) {
 
                     request.getRequestDispatcher("/WEB-INF/jsp/indexMovil.jsp").forward(request, response);
-                } else{
-                request.getRequestDispatcher("/WEB-INF/jsp/seguirUsuario.jsp").forward(request, response);
+                } else {
+                    request.getRequestDispatcher("/WEB-INF/jsp/seguirUsuario.jsp").forward(request, response);
                 }
                 break;
             case "/perfil":
@@ -134,9 +115,9 @@ public class UsuarioServlet extends HttpServlet {
                 } else if (esMovil && "colaborador".equals(rol)) {
 
                     request.getRequestDispatcher("/WEB-INF/jsp/indexMovil.jsp").forward(request, response);
-                } else{
-                cargarDatosPerfil(request, response, request.getParameter("user"));
-                request.getRequestDispatcher("/WEB-INF/jsp/perfilUsuario.jsp").forward(request, response);
+                } else {
+                    cargarDatosPerfil(request, response, request.getParameter("user"));
+                    request.getRequestDispatcher("/WEB-INF/jsp/perfilUsuario.jsp").forward(request, response);
                 }
                 break;
             case "/consultar-perfil-usuario":
@@ -153,9 +134,9 @@ public class UsuarioServlet extends HttpServlet {
                 } else if (esMovil && "colaborador".equals(rol)) {
 
                     request.getRequestDispatcher("/WEB-INF/jsp/indexMovil.jsp").forward(request, response);
-                } else{
-                listarUsuarios(request, response);
-                request.getRequestDispatcher("/WEB-INF/jsp/consultaPerfilUsuario.jsp").forward(request, response);
+                } else {
+                    listarUsuarios(request, response);
+                    request.getRequestDispatcher("/WEB-INF/jsp/consultaPerfilUsuario.jsp").forward(request, response);
                 }
                 break;
             case "/ranking-usuario":
@@ -172,10 +153,10 @@ public class UsuarioServlet extends HttpServlet {
                 } else if (esMovil && "colaborador".equals(rol)) {
 
                     request.getRequestDispatcher("/WEB-INF/jsp/indexMovil.jsp").forward(request, response);
-                } else{
-                List<String> usuarios = this.webServices.obtenerUsuariosPorRanking();
-                request.setAttribute("usuarios", usuarios);
-                request.getRequestDispatcher("/WEB-INF/jsp/consultaPerfilUsuario.jsp").forward(request, response);
+                } else {
+                    List<String> usuarios = this.webServices.obtenerUsuariosPorRanking();
+                    request.setAttribute("usuarios", usuarios);
+                    request.getRequestDispatcher("/WEB-INF/jsp/consultaPerfilUsuario.jsp").forward(request, response);
                 }
                 break;
             default:
@@ -190,7 +171,7 @@ public class UsuarioServlet extends HttpServlet {
         String path = request.getServletPath();
         ControllerWS_Service service = new ControllerWS_Service();
         this.webServices = service.getControllerWSPort();
-        
+
         switch (path) {
             case "/crear-cuenta":
                 if (esVisitante(request.getSession())) {
@@ -284,14 +265,14 @@ public class UsuarioServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         ControllerWS_Service service = new ControllerWS_Service();
         this.webServices = service.getControllerWSPort();
-        
+
         String tipoUser = this.webServices.obtenerTipoUser(u);
 
         List<String> usuariosSeguidosSinRol = this.webServices.listarUsuariosSiguiendo(u);
 
         List<String> seguidores = this.webServices.obtenerSeguidores(u);
         List<String> propsFav = this.webServices.listarPropuestasFavoritas(u);
-        
+
         request.setAttribute("propuestasFav", propsFav);
         request.setAttribute("rol", tipoUser);
         ArrayList<String> usuariosSeguidos = new ArrayList<>();
@@ -328,14 +309,7 @@ public class UsuarioServlet extends HttpServlet {
                 request.setAttribute("apellido", colab.getApellido());
                 request.setAttribute("email", colab.getEmail());
                 String img = colab.getImagen();
-
-                if (img != null && !img.isEmpty()) {
-                    byte[] bytes = this.webServices.obtenerImagen(img);
-                    guardarImagen(bytes, img);
-                    request.setAttribute("ubiImagen", img);
-                } else {
-                    request.setAttribute("ubiImagen",".");
-                }
+                request.setAttribute("ubiImagen", img);
             }
 
         } else if ("proponente".equals(tipoUser)) {
@@ -350,14 +324,7 @@ public class UsuarioServlet extends HttpServlet {
                 request.setAttribute("nombre", prop.getNombre());
                 request.setAttribute("apellido", prop.getApellido());
                 String img = prop.getImagen();
-
-                if (img != null && !img.isEmpty()) {
-                    byte[] bytes = this.webServices.obtenerImagen(img);
-                    guardarImagen(bytes, img);
-                    request.setAttribute("ubiImagen", img);
-                } else {
-                    request.setAttribute("ubiImagen",".");
-                }
+                request.setAttribute("ubiImagen", img);
             }
         }
     }
@@ -489,7 +456,6 @@ public class UsuarioServlet extends HttpServlet {
         String tipoUsuario = request.getParameter("tipoUsuario");
 
         String fNacString = request.getParameter("fechaNacimiento");
-        
 
         Part parteArchivo = request.getPart("imagen");
         byte[] bytesImagen = partABytes(parteArchivo);
@@ -518,7 +484,7 @@ public class UsuarioServlet extends HttpServlet {
             prop.setEmail(email);
             prop.setFechaNacimiento(fNacString);
             prop.setImagen(nombreImagen);
-            this.webServices.addUsuario(prop); 
+            this.webServices.addUsuario(prop);
         } else if (tipoUsuario.equals("colaborador")) {
             DTColaborador colab = new DTColaborador();
             colab.setNickname(nickname);
@@ -529,8 +495,8 @@ public class UsuarioServlet extends HttpServlet {
             colab.setEmail(email);
             colab.setFechaNacimiento(fNacString);
             colab.setImagen(nombreImagen);
-          
-            this.webServices.addUsuario(colab); 
+
+            this.webServices.addUsuario(colab);
         }
     }
 
@@ -573,21 +539,6 @@ public class UsuarioServlet extends HttpServlet {
         return propuestasPubli;
     }
 
-    /*private LocalDate parsearFecha(String fechaString) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date utilDate = null;
-        try {
-            utilDate = formatter.parse(fechaString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        LocalDate fecha = null;
-        if (utilDate != null) {
-            fecha = utilDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        }
-        return fecha;
-    }*/
-
     private void listarUsuarios(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ControllerWS_Service service = new ControllerWS_Service();
@@ -596,35 +547,45 @@ public class UsuarioServlet extends HttpServlet {
         request.setAttribute("usuarios", usuarios);
         request.getRequestDispatcher("/WEB-INF/jsp/consultaPerfilUsuario.jsp").forward(request, response);
     }
-    
+
     private void sincImg() {
         List<String> list = this.webServices.listarUsuarios();
         for (String nick : list) {
-            if(this.webServices.obtenerTipoUser(nick).equals("colaborador")){
+            if (this.webServices.obtenerTipoUser(nick).equals("colaborador")) {
                 DTColaborador p = this.webServices.obtenerDTColaborador(nick);
                 String img = p.getImagen();
-            if (img != null && !img.isEmpty()) {
-                byte[] bytes = this.webServices.obtenerImagen(img);
-                guardarImagen(this.webServices.obtenerImagen(p.getImagen()), p.getImagen());
+                if (img != null && !img.isEmpty() && !existeImg(img)) {
+                    guardarImagen(this.webServices.obtenerImagen(p.getImagen()), p.getImagen());
 
-            }
-            }else if (this.webServices.obtenerTipoUser(nick).equals("proponente")){
+                }
+            } else if (this.webServices.obtenerTipoUser(nick).equals("proponente")) {
                 DTProponente p = this.webServices.obtenerDTProponente(nick);
                 String img = p.getImagen();
-            if (img != null && !img.isEmpty()) {
-                byte[] bytes = this.webServices.obtenerImagen(img);
-                guardarImagen(this.webServices.obtenerImagen(p.getImagen()), p.getImagen());
+                if (img != null && !img.isEmpty() && !existeImg(img)) {
+                    guardarImagen(this.webServices.obtenerImagen(p.getImagen()), p.getImagen());
 
-            }
+                }
             }
 
         }
 
     }
-   
-    private void guardarImagen(byte[] bytesImagen,String nombreArchivo) {
-        Path pathImagen = Paths.get(System.getProperty("user.home"),"imgProyePDA", nombreArchivo);
-        if(bytesImagen == null){
+
+    private boolean existeImg(String IDimg) {
+
+        Path ruta = Paths.get(
+                System.getProperty("user.home"),
+                "imgProyePDA",
+                IDimg
+        );
+
+        return Files.exists(ruta);
+
+    }
+
+    private void guardarImagen(byte[] bytesImagen, String nombreArchivo) {
+        Path pathImagen = Paths.get(System.getProperty("user.home"), "imgProyePDA", nombreArchivo);
+        if (bytesImagen == null) {
             return;
         }
         try {
@@ -635,7 +596,6 @@ public class UsuarioServlet extends HttpServlet {
 
         }
     }
-
 
     // </editor-fold>
 }

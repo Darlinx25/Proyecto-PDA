@@ -22,7 +22,6 @@ import java.time.format.DateTimeFormatter;
 import webservices.ControllerWS;
 import webservices.ControllerWS_Service;
 import webservices.DTColaboracion;
-import webservices.DTFormaPago;
 import webservices.DTMail;
 import webservices.DTPago;
 import webservices.DTPaypal;
