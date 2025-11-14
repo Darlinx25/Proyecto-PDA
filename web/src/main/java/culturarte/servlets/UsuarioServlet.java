@@ -70,6 +70,7 @@ public class UsuarioServlet extends HttpServlet {
         this.webServices = service.getControllerWSPort();
         
         this.webServices.registrarAcceso(Tracking.generarDTRegistroAcceso(request));
+        sincImg();
         response.setContentType("text/html;charset=UTF-8");
         String path = request.getServletPath();
 
@@ -326,8 +327,15 @@ public class UsuarioServlet extends HttpServlet {
                 request.setAttribute("nombre", colab.getNombre());
                 request.setAttribute("apellido", colab.getApellido());
                 request.setAttribute("email", colab.getEmail());
-                guardarImagen(this.webServices.obtenerImagen(colab.getImagen()),colab.getImagen());
-                request.setAttribute("ubiImagen",colab.getImagen());
+                String img = colab.getImagen();
+
+                if (img != null && !img.isEmpty()) {
+                    byte[] bytes = this.webServices.obtenerImagen(img);
+                    guardarImagen(bytes, img);
+                    request.setAttribute("ubiImagen", img);
+                } else {
+                    request.setAttribute("ubiImagen",".");
+                }
             }
 
         } else if ("proponente".equals(tipoUser)) {
@@ -341,8 +349,15 @@ public class UsuarioServlet extends HttpServlet {
                 request.setAttribute("sitioWeb", prop.getSitioWeb());
                 request.setAttribute("nombre", prop.getNombre());
                 request.setAttribute("apellido", prop.getApellido());
-                guardarImagen(this.webServices.obtenerImagen(prop.getImagen()),prop.getImagen());
-                request.setAttribute("ubiImagen", prop.getImagen());
+                String img = prop.getImagen();
+
+                if (img != null && !img.isEmpty()) {
+                    byte[] bytes = this.webServices.obtenerImagen(img);
+                    guardarImagen(bytes, img);
+                    request.setAttribute("ubiImagen", img);
+                } else {
+                    request.setAttribute("ubiImagen",".");
+                }
             }
         }
     }
@@ -582,10 +597,36 @@ public class UsuarioServlet extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/jsp/consultaPerfilUsuario.jsp").forward(request, response);
     }
     
-    
+    private void sincImg() {
+        List<String> list = this.webServices.listarUsuarios();
+        for (String nick : list) {
+            if(this.webServices.obtenerTipoUser(nick).equals("colaborador")){
+                DTColaborador p = this.webServices.obtenerDTColaborador(nick);
+                String img = p.getImagen();
+            if (img != null && !img.isEmpty()) {
+                byte[] bytes = this.webServices.obtenerImagen(img);
+                guardarImagen(this.webServices.obtenerImagen(p.getImagen()), p.getImagen());
+
+            }
+            }else if (this.webServices.obtenerTipoUser(nick).equals("proponente")){
+                DTProponente p = this.webServices.obtenerDTProponente(nick);
+                String img = p.getImagen();
+            if (img != null && !img.isEmpty()) {
+                byte[] bytes = this.webServices.obtenerImagen(img);
+                guardarImagen(this.webServices.obtenerImagen(p.getImagen()), p.getImagen());
+
+            }
+            }
+
+        }
+
+    }
    
     private void guardarImagen(byte[] bytesImagen,String nombreArchivo) {
         Path pathImagen = Paths.get(System.getProperty("user.home"),"imgProyePDA", nombreArchivo);
+        if(bytesImagen == null){
+            return;
+        }
         try {
             Files.createDirectories(pathImagen.getParent());
             Files.write(pathImagen, bytesImagen, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);

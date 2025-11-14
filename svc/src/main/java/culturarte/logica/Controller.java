@@ -1586,7 +1586,10 @@ public class Controller implements IController {
     
     @Override
     public byte[] obtenerImagen(String IDimagen) {
-
+        if(IDimagen == null || IDimagen.isEmpty()) {
+            return null;
+        }
+        
         Path pathImagen = Paths.get(System.getProperty("user.home"), "Proyecto-PDA", "estacion", "imagenesUsuarios", IDimagen);
  
         try {

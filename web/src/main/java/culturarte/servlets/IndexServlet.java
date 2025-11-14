@@ -8,9 +8,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 import webservices.ControllerWS;
 import webservices.ControllerWS_Service;
+import webservices.DTColaborador;
+import webservices.DTProponente;
 
 @WebServlet(name = "IndexServlet", urlPatterns = {"/index"})
 public class IndexServlet extends HttpServlet {
@@ -26,6 +32,7 @@ public class IndexServlet extends HttpServlet {
         this.webServices = service.getControllerWSPort();
         
         this.webServices.registrarAcceso(Tracking.generarDTRegistroAcceso(request));
+        sincImg();
         processRequest(request, response);
     }
 
@@ -69,8 +76,54 @@ public class IndexServlet extends HttpServlet {
         
     }
     // </editor-fold>
+    
+    
+        private void sincImg() {
+        List<String> list = this.webServices.listarUsuarios();
+        for (String nick : list) {
+            if(this.webServices.obtenerTipoUser(nick).equals("colaborador")){
+                DTColaborador p = this.webServices.obtenerDTColaborador(nick);
+                String img = p.getImagen();
+            if (img != null && !img.isEmpty()) {
+                byte[] bytes = this.webServices.obtenerImagen(img);
+                guardarImagen(this.webServices.obtenerImagen(p.getImagen()), p.getImagen());
 
+            }
+            }else if (this.webServices.obtenerTipoUser(nick).equals("proponente")){
+                DTProponente p = this.webServices.obtenerDTProponente(nick);
+                String img = p.getImagen();
+            if (img != null && !img.isEmpty()) {
+                byte[] bytes = this.webServices.obtenerImagen(img);
+                guardarImagen(this.webServices.obtenerImagen(p.getImagen()), p.getImagen());
+
+            }
+            }
+
+        }
+
+    }
+   
+    private void guardarImagen(byte[] bytesImagen,String nombreArchivo) {
+        Path pathImagen = Paths.get(System.getProperty("user.home"),"imgProyePDA", nombreArchivo);
+        if(bytesImagen == null){
+            return;
+        }
+        try {
+            Files.createDirectories(pathImagen.getParent());
+            Files.write(pathImagen, bytesImagen, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+
+        } catch (IOException ex) {
+
+        }
+    }
+    
+    
 }
+
+
+
+
+
 
 /*String userAgent = request.getHeader("User-Agent").toLowerCase();
  boolean esMovil = userAgent.contains("mobi") || userAgent.contains("android") 

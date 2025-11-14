@@ -639,11 +639,13 @@ public class PropuestaServlet extends HttpServlet {
             List<String> list = this.webServices.listarPropuestas();
             for(String titulo: list){
                 DTPropuesta p = this.webServices.obtenerDTPropuesta(titulo);
-                
-                if(!existeImg(p.getImagen())){
-                    guardarImagen(this.webServices.obtenerImagen(p.getImagen()),p.getImagen()); 
-                }
-                
+                String img = p.getImagen();
+
+                if (img != null && !img.isEmpty()) {
+                    byte[] bytes = this.webServices.obtenerImagen(img);
+                    guardarImagen(this.webServices.obtenerImagen(p.getImagen()),p.getImagen());
+                   
+                } 
             }
             
         }
