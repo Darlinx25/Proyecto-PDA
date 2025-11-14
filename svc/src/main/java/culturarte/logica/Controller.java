@@ -1588,9 +1588,12 @@ public class Controller implements IController {
     public byte[] obtenerImagen(String IDimagen) {
 
         Path pathImagen = Paths.get(System.getProperty("user.home"), "Proyecto-PDA", "estacion", "imagenesUsuarios", IDimagen);
+ 
         try {
+            if(Files.exists(pathImagen)){
             return Files.readAllBytes(pathImagen);
-
+            }
+            return null;
         } catch (IOException ex) {
             return null;
         }

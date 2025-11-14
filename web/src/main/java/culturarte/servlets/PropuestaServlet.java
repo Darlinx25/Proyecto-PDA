@@ -639,6 +639,7 @@ public class PropuestaServlet extends HttpServlet {
             List<String> list = this.webServices.listarPropuestas();
             for(String titulo: list){
                 DTPropuesta p = this.webServices.obtenerDTPropuesta(titulo);
+                
                 if(!existeImg(p.getImagen())){
                     guardarImagen(this.webServices.obtenerImagen(p.getImagen()),p.getImagen()); 
                 }
@@ -659,6 +660,9 @@ public class PropuestaServlet extends HttpServlet {
     
         private void guardarImagen(byte[] bytesImagen,String nombreArchivo) {
         Path pathImagen = Paths.get(System.getProperty("user.home"),"imgProyePDA", nombreArchivo);
+        if(bytesImagen == null){
+            return;
+        }
         try {
             Files.createDirectories(pathImagen.getParent());
             Files.write(pathImagen, bytesImagen, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
