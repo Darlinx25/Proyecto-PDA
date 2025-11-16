@@ -111,7 +111,6 @@ public class PropuestaServlet extends HttpServlet {
                     return;
                 }
                 String cat = request.getParameter("categoriaSelec");
-                System.out.println(cat);
                 int estado = Integer.parseInt(estadoStr);
                 List<String> titulos = webServices.listarPropuestasEstado(estado);
 
