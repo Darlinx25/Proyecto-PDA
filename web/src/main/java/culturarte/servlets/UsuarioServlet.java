@@ -32,6 +32,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import webservices.ClienteWS;
 
 @WebServlet(name = "UsuarioServlet", urlPatterns = {"/usuarios", "/crear-cuenta", "/perfil", "/login", "/logout", "/seguir-usuario", "/consultar-perfil-usuario", "/ranking-usuario", "/baja-proponente", "/verificarUsuario", "/verificarCorreo"})
 @MultipartConfig(
@@ -47,9 +48,7 @@ public class UsuarioServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
-
+        this.webServices = ClienteWS.getPort();
         this.webServices.registrarAcceso(Tracking.generarDTRegistroAcceso(request));
         sincImg();
         response.setContentType("text/html;charset=UTF-8");
@@ -169,8 +168,7 @@ public class UsuarioServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String path = request.getServletPath();
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
+        this.webServices = ClienteWS.getPort();
 
         switch (path) {
             case "/crear-cuenta":
@@ -263,8 +261,7 @@ public class UsuarioServlet extends HttpServlet {
     protected void cargarDatosPerfil(HttpServletRequest request, HttpServletResponse response, String u)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
+        this.webServices = ClienteWS.getPort(); 
 
         String tipoUser = this.webServices.obtenerTipoUser(u);
 
@@ -332,8 +329,7 @@ public class UsuarioServlet extends HttpServlet {
     private void seguirUser(HttpServletRequest request, HttpServletResponse response, String userAseguir, String accion)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
+        this.webServices = ClienteWS.getPort();
         if (session != null) {
             String user = (String) session.getAttribute("username");
             if (accion.equals("seguir")) {
@@ -347,8 +343,7 @@ public class UsuarioServlet extends HttpServlet {
 
     protected void iniciarSesion(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
+        this.webServices = ClienteWS.getPort();
         String nickname = request.getParameter("nickname");
         String password = request.getParameter("password");
         String recordarme = request.getParameter("recordarme");
@@ -445,8 +440,7 @@ public class UsuarioServlet extends HttpServlet {
 
     protected void procesarCrearCuenta(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, BadPasswordException_Exception, EmailRepetidoException_Exception, NickRepetidoException_Exception {
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
+        this.webServices = ClienteWS.getPort();
         String nombre = request.getParameter("nombre");
         String apellido = request.getParameter("apellido");
         String email = request.getParameter("email");
@@ -524,8 +518,7 @@ public class UsuarioServlet extends HttpServlet {
     }
 
     private ArrayList<String> listaPropuestasPropPublicadas(String nick) {
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
+        this.webServices = ClienteWS.getPort();
         List<String> aux = this.webServices.listaPropuestasUsu(nick);
         ArrayList<String> propuestasPubli = new ArrayList<>();
         for (String p : aux) {
@@ -541,8 +534,7 @@ public class UsuarioServlet extends HttpServlet {
 
     private void listarUsuarios(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
+        this.webServices = ClienteWS.getPort();
         List<String> usuarios = this.webServices.listarUsuarios();
         request.setAttribute("usuarios", usuarios);
         request.getRequestDispatcher("/WEB-INF/jsp/consultaPerfilUsuario.jsp").forward(request, response);

@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
+import webservices.ClienteWS;
 import webservices.ControllerWS;
 import webservices.ControllerWS_Service;
 import webservices.DTColaborador;
@@ -28,8 +29,7 @@ public class IndexServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
+        this.webServices = ClienteWS.getPort();
         
         this.webServices.registrarAcceso(Tracking.generarDTRegistroAcceso(request));
         sincImg();
@@ -46,8 +46,7 @@ public class IndexServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
+        this.webServices = ClienteWS.getPort();
         String userAgent = request.getHeader("User-Agent").toLowerCase();
         String rol = (String) session.getAttribute("rol");
         List<String> cat = this.webServices.obtenerCategorias();

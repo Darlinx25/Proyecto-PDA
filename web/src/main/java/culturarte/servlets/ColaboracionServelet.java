@@ -19,6 +19,7 @@ import jakarta.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import webservices.ClienteWS;
 import webservices.ControllerWS;
 import webservices.ControllerWS_Service;
 import webservices.DTColaboracion;
@@ -42,8 +43,7 @@ public class ColaboracionServelet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
+        this.webServices = ClienteWS.getPort();
         
         this.webServices.registrarAcceso(Tracking.generarDTRegistroAcceso(request));
         
@@ -88,8 +88,7 @@ public class ColaboracionServelet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
+        this.webServices = ClienteWS.getPort();
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(false);
         String path = request.getServletPath();
@@ -281,8 +280,7 @@ public class ColaboracionServelet extends HttpServlet {
     
     private void mandarMailProponente(String mailProp, LocalDateTime fechaPago, String nickColab,
             String nickProp, String tituloProp, float montoPago) {
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
+        this.webServices = ClienteWS.getPort();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         String fechaNormal = fechaPago.format(formatter);
         
@@ -315,8 +313,7 @@ public class ColaboracionServelet extends HttpServlet {
     
     private void mandarMailColaborador(String mailColab, LocalDateTime fechaPago, String nickColab,
             String nickProp, String tituloProp, float montoPago) {
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
+        this.webServices = ClienteWS.getPort();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         String fechaNormal = fechaPago.format(formatter);
         

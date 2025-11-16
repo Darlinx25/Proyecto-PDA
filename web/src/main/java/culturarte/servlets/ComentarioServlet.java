@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import webservices.ClienteWS;
 import webservices.ControllerWS;
 import webservices.ControllerWS_Service;
 import webservices.DTPropuesta;
@@ -65,8 +66,7 @@ public class ComentarioServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
+        this.webServices = ClienteWS.getPort();
         
         this.webServices.registrarAcceso(Tracking.generarDTRegistroAcceso(request));
         response.setContentType("text/html;charset=UTF-8");
@@ -112,8 +112,7 @@ public class ComentarioServlet extends HttpServlet {
         
         String path = request.getServletPath();
         
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
+        this.webServices = ClienteWS.getPort();
         
         switch (path) {
             case "/hacer-comentario":
@@ -144,8 +143,7 @@ public class ComentarioServlet extends HttpServlet {
     }// </editor-fold>
 
     private ArrayList<String> recibirPropuestas(String nickCol) {
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
+        this.webServices = ClienteWS.getPort();
         List<String> aux = this.webServices.obtenerPropuestasColaboradas(nickCol);
         ArrayList<String> aux2 = new ArrayList<>();
 

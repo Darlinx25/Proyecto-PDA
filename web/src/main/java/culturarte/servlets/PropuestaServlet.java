@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import webservices.ClienteWS;
 import webservices.ControllerWS;
 import webservices.ControllerWS_Service;
 import webservices.DTColaboracion;
@@ -52,8 +53,7 @@ public class PropuestaServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
+        this.webServices = ClienteWS.getPort();
 
         this.webServices.registrarAcceso(Tracking.generarDTRegistroAcceso(request));
         sincImg();
@@ -322,8 +322,7 @@ public class PropuestaServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String path = request.getServletPath();
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
+        this.webServices = ClienteWS.getPort();
 
         switch (path) {
             case "/crear-propuesta":
@@ -393,8 +392,7 @@ public class PropuestaServlet extends HttpServlet {
     // <editor-fold defaultstate="collapsed" desc="Procesamiento de requests.">
     protected void procesarCrearPropuesta(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, PropuestaDuplicadaException_Exception {
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
+        this.webServices = ClienteWS.getPort();
         HttpSession session = request.getSession(false);
         String titulo = request.getParameter("titulo");
         String categoria = request.getParameter("categoria");
@@ -487,8 +485,7 @@ public class PropuestaServlet extends HttpServlet {
     }
 
     private String obtenerPropuestaJSON(String titulo) {
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
+        this.webServices = ClienteWS.getPort();
         DTPropuesta prop = this.webServices.obtenerDTPropuesta(titulo);
         if (prop == null) {
             return "{}";
@@ -505,8 +502,7 @@ public class PropuestaServlet extends HttpServlet {
     }
 
     private ArrayList<String> recibirPropuestasFavoritas(String nick) {
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
+        this.webServices = ClienteWS.getPort();
         List<String> aux = this.webServices.listarPropuestas();
         ArrayList<String> aux2 = new ArrayList<>();
         if (nick == null) {
@@ -523,8 +519,7 @@ public class PropuestaServlet extends HttpServlet {
     }
 
     private ArrayList<String> recibirPropuestas(String nick) {
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
+        this.webServices = ClienteWS.getPort();
         List<String> aux = this.webServices.listarPropuestas();
         ArrayList<String> aux2 = new ArrayList<>();
         if (nick == null) {
@@ -542,8 +537,7 @@ public class PropuestaServlet extends HttpServlet {
     }
 
     private ArrayList<String> propuestasPubliYenFina() {
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
+        this.webServices = ClienteWS.getPort();
         List<String> aux = this.webServices.listarPropuestas();
         ArrayList<String> aux2 = new ArrayList<>();
 
@@ -560,8 +554,7 @@ public class PropuestaServlet extends HttpServlet {
     }
 
     private ArrayList<String> propuestasFinanciadas() {
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
+        this.webServices = ClienteWS.getPort();
         List<String> aux = this.webServices.listarPropuestas();
         ArrayList<String> aux2 = new ArrayList<>();
 
@@ -578,8 +571,7 @@ public class PropuestaServlet extends HttpServlet {
     }
 
     private ArrayList<String> propuestasComentables(String nickCol) {
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
+        this.webServices = ClienteWS.getPort();
         List<String> aux = this.webServices.obtenerPropuestasColaboradas(nickCol);
         ArrayList<String> aux2 = new ArrayList<>();
 
@@ -597,8 +589,7 @@ public class PropuestaServlet extends HttpServlet {
     }
 
     private ArrayList<String> propuestasComentadas(String nickCol) {
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
+        this.webServices = ClienteWS.getPort();
         List<String> aux = this.webServices.obtenerPropuestasColaboradas(nickCol);
         ArrayList<String> aux2 = new ArrayList<>();
 
@@ -616,8 +607,7 @@ public class PropuestaServlet extends HttpServlet {
     }
 
     private String obtenerColaboracionJSON(Long id) {
-        ControllerWS_Service service = new ControllerWS_Service();
-        this.webServices = service.getControllerWSPort();
+        this.webServices = ClienteWS.getPort();
         DTColaboracion colab = this.webServices.obtenerDTColaboracion(id);
         if (colab == null) {
             return "{}";
