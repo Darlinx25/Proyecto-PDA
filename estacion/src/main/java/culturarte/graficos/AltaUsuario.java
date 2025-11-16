@@ -546,7 +546,7 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
             LocalDate fechaNac = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             DTUsuario user = null;
             if (this.radioColaborador.isSelected()) {
-                user = new DTColaborador(nick, nombre, apellido, password.toString(), passwordConfirm.toString(), email, fechaNac.toString(), this.rutaImagenUsuario);
+                user = new DTColaborador(nick, nombre, apellido, Arrays.toString(password), Arrays.toString(passwordConfirm), email, fechaNac.toString(), this.rutaImagenUsuario);
             } else if (this.radioProponente.isSelected()) {
                 String ciudad = this.campoCiudad.getText();
                 String calle = this.campoCiudad.getText();
@@ -555,7 +555,7 @@ public class AltaUsuario extends javax.swing.JInternalFrame {
                 String biografia = this.areaBiografia.getText();
                 String sitioWeb = this.campoSitioWeb.getText();
 
-                user = new DTProponente(direccion, biografia, sitioWeb, nick, nombre, apellido, password.toString(), passwordConfirm.toString(), email, fechaNac.toString(), this.rutaImagenUsuario);
+                user = new DTProponente(direccion, biografia, sitioWeb, nick, nombre, apellido, Arrays.toString(password), Arrays.toString(passwordConfirm), email, fechaNac.toString(), this.rutaImagenUsuario);
             }
 
             try {
