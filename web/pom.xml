@@ -86,7 +86,7 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <wsdlUrls>
-                                <wsdlUrl>http://localhost:9128/ControllerWS?wsdl</wsdlUrl>
+                                <wsdlUrl>http://192.168.1.36:9128/ControllerWS?wsdl</wsdlUrl>
                             </wsdlUrls>
                             <packageName>webservices</packageName>
                             <sourceDestDir>${project.build.directory}/generated-sources/wsimport</sourceDestDir>
