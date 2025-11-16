@@ -103,19 +103,15 @@ public class IndexServlet extends HttpServlet {
     
     private boolean existeImg(String IDimg) {
 
-        Path ruta = Paths.get(
-                System.getProperty("user.home"),
-                "imgProyePDA",
-                IDimg
-        );
+        Path ruta = Paths.get("/resources/images", IDimg);
 
         return Files.exists(ruta);
 
     }
-   
-    private void guardarImagen(byte[] bytesImagen,String nombreArchivo) {
-        Path pathImagen = Paths.get(System.getProperty("user.home"),"imgProyePDA", nombreArchivo);
-        if(bytesImagen == null){
+
+    private void guardarImagen(byte[] bytesImagen, String nombreArchivo) {
+        Path pathImagen = Paths.get("/resources/images", nombreArchivo);
+        if (bytesImagen == null) {
             return;
         }
         try {

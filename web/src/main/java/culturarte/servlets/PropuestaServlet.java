@@ -46,15 +46,15 @@ public class PropuestaServlet extends HttpServlet {
 
     //private IController controller = IControllerFactory.getInstance().getIController();
     private ControllerWS webServices;
-    
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods.">
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         ControllerWS_Service service = new ControllerWS_Service();
         this.webServices = service.getControllerWSPort();
-        
+
         this.webServices.registrarAcceso(Tracking.generarDTRegistroAcceso(request));
         sincImg();
         response.setContentType("text/html;charset=UTF-8");
@@ -75,27 +75,27 @@ public class PropuestaServlet extends HttpServlet {
                 } else if (esMovil && "colaborador".equals(rol)) {
 
                     request.getRequestDispatcher("/WEB-INF/jsp/indexMovil.jsp").forward(request, response);
-                }else{
-                if (puedeCrearPropuesta(request.getSession())) {
-                    List<String> categorias = this.webServices.obtenerCategorias();
-                    request.setAttribute("categorias", categorias);
-                    request.getRequestDispatcher("/WEB-INF/jsp/crearPropuesta.jsp").forward(request, response);
                 } else {
-                    response.sendError(HttpServletResponse.SC_FORBIDDEN);
-                }
+                    if (puedeCrearPropuesta(request.getSession())) {
+                        List<String> categorias = this.webServices.obtenerCategorias();
+                        request.setAttribute("categorias", categorias);
+                        request.getRequestDispatcher("/WEB-INF/jsp/crearPropuesta.jsp").forward(request, response);
+                    } else {
+                        response.sendError(HttpServletResponse.SC_FORBIDDEN);
+                    }
                 }
                 break;
             case "/obtener-propuesta":
-                
+
                 String titulo = request.getParameter("titulo");
                 if (titulo == null || titulo.isEmpty()) {
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'titulo'");
                     return;
                 }
                 DTPropuesta prop = webServices.obtenerDTPropuesta(titulo);
-                
+
                 if (prop == null) {
-                    
+
                     response.sendError(HttpServletResponse.SC_NOT_FOUND, "Propuesta no encontrada");
                     return;
                 }
@@ -136,7 +136,7 @@ public class PropuestaServlet extends HttpServlet {
                 List<String> propuestasComentables = propuestasComentables(nick3);
                 List<String> propuestasComentadas = propuestasComentadas(nick3);
                 List<Object> respuesta = new ArrayList<>();
-  
+
                 respuesta.add(propuestas);
                 respuesta.add(propuestasFav);
                 respuesta.add(propuestasColab);
@@ -166,8 +166,8 @@ public class PropuestaServlet extends HttpServlet {
                 } else if (esMovil && "colaborador".equals(rol)) {
 
                     request.getRequestDispatcher("/WEB-INF/jsp/indexMovil.jsp").forward(request, response);
-                }else{
-                request.getRequestDispatcher("/WEB-INF/jsp/extenderFinanciacion.jsp").forward(request, response);
+                } else {
+                    request.getRequestDispatcher("/WEB-INF/jsp/extenderFinanciacion.jsp").forward(request, response);
                 }
                 break;
             case "/propuestas-por-estado-usu":
@@ -185,7 +185,7 @@ public class PropuestaServlet extends HttpServlet {
 
                 java.time.LocalDate hoy = java.time.LocalDate.now();
                 List<DTPropuesta> propuestasExt = new ArrayList<>();
-                
+
                 for (String tituloExt : titulosExt) {
                     DTPropuesta propuestaExt = webServices.obtenerDTPropuesta(tituloExt);
                     java.time.LocalDate tiempo = java.time.LocalDate.parse(propuestaExt.getFechaPublicacion());
@@ -222,12 +222,12 @@ public class PropuestaServlet extends HttpServlet {
                 } else if (esMovil && "colaborador".equals(rol)) {
 
                     request.getRequestDispatcher("/WEB-INF/jsp/indexMovil.jsp").forward(request, response);
-                }else{
-                
-                String nick2 = session.getAttribute("username").toString();
-                List<String> aux2 = recibirPropuestas(nick2);
-                request.setAttribute("propuestas", aux2);
-                request.getRequestDispatcher("/WEB-INF/jsp/marcarPropuestaFavorita.jsp").forward(request, response);
+                } else {
+
+                    String nick2 = session.getAttribute("username").toString();
+                    List<String> aux2 = recibirPropuestas(nick2);
+                    request.setAttribute("propuestas", aux2);
+                    request.getRequestDispatcher("/WEB-INF/jsp/marcarPropuestaFavorita.jsp").forward(request, response);
                 }
                 break;
             case "/obtener-colaboracion":
@@ -242,7 +242,7 @@ public class PropuestaServlet extends HttpServlet {
                     response.sendError(HttpServletResponse.SC_NOT_FOUND, "Colaboracion no encontrada");
                     return;
                 }
-                
+
                 response.setContentType("application/json;charset=UTF-8");
                 try (PrintWriter out = response.getWriter()) {
                     out.print(obtenerColaboracionJSON(idColab));
@@ -262,12 +262,12 @@ public class PropuestaServlet extends HttpServlet {
                 } else if (esMovil && "colaborador".equals(rol)) {
 
                     request.getRequestDispatcher("/WEB-INF/jsp/indexMovil.jsp").forward(request, response);
-                }else{
-                request.getRequestDispatcher("/WEB-INF/jsp/cancelarPropuesta.jsp").forward(request, response);
+                } else {
+                    request.getRequestDispatcher("/WEB-INF/jsp/cancelarPropuesta.jsp").forward(request, response);
                 }
                 break;
             case "/sugerencia":
-                
+
                 session = request.getSession(false);
                 userAgent = request.getHeader("User-Agent").toLowerCase();
                 rol = (String) session.getAttribute("rol");
@@ -281,12 +281,12 @@ public class PropuestaServlet extends HttpServlet {
                 } else if (esMovil && "colaborador".equals(rol)) {
 
                     request.getRequestDispatcher("/WEB-INF/jsp/indexMovil.jsp").forward(request, response);
-                }else{
-                String nickRecom = session.getAttribute("username").toString();
+                } else {
+                    String nickRecom = session.getAttribute("username").toString();
 
-                List<String> propuestasPuntaje = this.webServices.obtenerRecomendaciones(nickRecom);
-                request.setAttribute("propuestas", propuestasPuntaje);
-                request.getRequestDispatcher("WEB-INF/jsp/sugerencia.jsp").forward(request, response);
+                    List<String> propuestasPuntaje = this.webServices.obtenerRecomendaciones(nickRecom);
+                    request.setAttribute("propuestas", propuestasPuntaje);
+                    request.getRequestDispatcher("WEB-INF/jsp/sugerencia.jsp").forward(request, response);
                 }
                 break;
 
@@ -295,7 +295,7 @@ public class PropuestaServlet extends HttpServlet {
                 String nick1 = (String) request.getSession().getAttribute("username");
                 List<String> propuestasColab1 = this.webServices.obtenerPropuestasColaboradas(nick1);
                 List<String> propsParaColab1 = propuestasPubliYenFina();
-                
+
                 if (titulopropMovil == null || titulopropMovil.isEmpty()) {
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Falta el parámetro 'titulo'");
                     return;
@@ -434,7 +434,7 @@ public class PropuestaServlet extends HttpServlet {
         prop.setPrecioEntrada(precioF);
         prop.setTipoPropuesta(categoria);
         prop.setNickProponedor(nickProp);
-        for(TipoRetorno a:tiposRetorno ){
+        for (TipoRetorno a : tiposRetorno) {
             prop.getTiposRetorno().add(a);
         }
         prop.setEstadoActual(est);
@@ -458,7 +458,6 @@ public class PropuestaServlet extends HttpServlet {
     }
 
     // </editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="Funciones auxiliares.">
     /*private LocalDate parsearFecha(String fechaString) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -474,10 +473,9 @@ public class PropuestaServlet extends HttpServlet {
         }
         return fecha;
     }*/
-
     private byte[] partABytes(Part parteArchivo) {
         byte[] bytesArchivo = null;
-        
+
         if (parteArchivo != null && parteArchivo.getSize() > 0) {
             try (InputStream input = parteArchivo.getInputStream()) {
                 bytesArchivo = input.readAllBytes();
@@ -551,12 +549,12 @@ public class PropuestaServlet extends HttpServlet {
 
         for (String prop : aux) {
             DTPropuesta propuestaAux = this.webServices.obtenerDTPropuesta(prop);
-            if(propuestaAux!=null){
+            if (propuestaAux != null) {
                 if (propuestaAux.getEstadoActual().getEstado() == EstadoPropuesta.PUBLICADA || propuestaAux.getEstadoActual().getEstado() == EstadoPropuesta.EN_FINANCIACION) {
-                aux2.add(prop);
+                    aux2.add(prop);
                 }
             }
-            
+
         }
         return aux2;
     }
@@ -569,12 +567,12 @@ public class PropuestaServlet extends HttpServlet {
 
         for (String prop : aux) {
             DTPropuesta propuestaAux = this.webServices.obtenerDTPropuesta(prop);
-            if(propuestaAux!=null){
+            if (propuestaAux != null) {
                 if (propuestaAux.getEstadoActual().getEstado() == EstadoPropuesta.FINANCIADA) {
                     aux2.add(prop);
                 }
             }
-            
+
         }
         return aux2;
     }
@@ -634,37 +632,32 @@ public class PropuestaServlet extends HttpServlet {
             return "{}";
         }
     }
-        
-        private void sincImg(){
-            List<String> list = this.webServices.listarPropuestas();
-            for(String titulo: list){
-                DTPropuesta p = this.webServices.obtenerDTPropuesta(titulo);
-                String img = p.getImagen();
 
-                if (img != null && !img.isEmpty() && !existeImg(img)) {
-                    guardarImagen(this.webServices.obtenerImagen(p.getImagen()),p.getImagen());
-                   
-                } 
+    private void sincImg() {
+        List<String> list = this.webServices.listarPropuestas();
+        for (String titulo : list) {
+            DTPropuesta p = this.webServices.obtenerDTPropuesta(titulo);
+            String img = p.getImagen();
+
+            if (img != null && !img.isEmpty() && !existeImg(img)) {
+                guardarImagen(this.webServices.obtenerImagen(p.getImagen()), p.getImagen());
+
             }
-            
         }
-        
+
+    }
+
     private boolean existeImg(String IDimg) {
 
-        Path ruta = Paths.get(
-                System.getProperty("user.home"),
-                "imgProyePDA",
-                IDimg
-        );
+        Path ruta = Paths.get("/resources/images", IDimg);
 
         return Files.exists(ruta);
 
     }
-    
-    
-        private void guardarImagen(byte[] bytesImagen,String nombreArchivo) {
-        Path pathImagen = Paths.get(System.getProperty("user.home"),"imgProyePDA", nombreArchivo);
-        if(bytesImagen == null){
+
+    private void guardarImagen(byte[] bytesImagen, String nombreArchivo) {
+        Path pathImagen = Paths.get("/resources/images", nombreArchivo);
+        if (bytesImagen == null) {
             return;
         }
         try {
@@ -675,7 +668,6 @@ public class PropuestaServlet extends HttpServlet {
 
         }
     }
-    
 
     // </editor-fold>
 }
