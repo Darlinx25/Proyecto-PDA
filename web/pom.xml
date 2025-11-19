@@ -85,13 +85,15 @@
                         </goals>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <wsdlUrls>
-                                <wsdlUrl>http://192.168.1.36:9128/ControllerWS?wsdl</wsdlUrl>
-                            </wsdlUrls>
+                            <wsdlFiles>
+                                <wsdlFile>ControllerWS.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <wsdlDirectory>${project.basedir}/src/main/wsdl</wsdlDirectory>
+                            <keep>true</keep>
                             <packageName>webservices</packageName>
                             <sourceDestDir>${project.build.directory}/generated-sources/wsimport</sourceDestDir>
-                            <keep>true</keep>
                             <target>3.0</target>
+                            <xnocompile>false</xnocompile>
                         </configuration>
                     </execution>
                 </executions>
