@@ -80,8 +80,9 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <wsdlFiles>
-                                <wsdlFile>${project.basedir}/src/wsdl/localhost_9128/ControllerWS.wsdl</wsdlFile>
+                                <wsdlFile>${project.basedir}/src/main/resources/wsdl/ControllerWS.wsdl</wsdlFile>
                             </wsdlFiles>
+                            <wsdlLocation>classpath:wsdl/ControllerWS.wsdl</wsdlLocation>
                             <packageName>webservices</packageName>
                             <sourceDestDir>${project.build.directory}/generated-sources/wsimport</sourceDestDir>
                             <keep>true</keep>
