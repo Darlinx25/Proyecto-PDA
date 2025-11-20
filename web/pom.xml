@@ -18,12 +18,6 @@
     <dependencies>
 
         <dependency>
-            <groupId>culturarte</groupId>
-            <artifactId>svc</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
             <version>${jakartaee}</version>
@@ -85,9 +79,9 @@
                         </goals>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <wsdlUrls>
-                                <wsdlUrl>http://localhost:9128/ControllerWS?wsdl</wsdlUrl>
-                            </wsdlUrls>
+                            <wsdlFiles>
+                                <wsdlFile>${project.basedir}/src/wsdl/localhost_9128/ControllerWS.wsdl</wsdlFile>
+                            </wsdlFiles>
                             <packageName>webservices</packageName>
                             <sourceDestDir>${project.build.directory}/generated-sources/wsimport</sourceDestDir>
                             <keep>true</keep>

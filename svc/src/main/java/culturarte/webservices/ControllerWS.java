@@ -38,11 +38,9 @@ public class ControllerWS {
     
     @WebMethod(exclude = true)
     public void publicar(){
-        this.endpoint = 
-                Endpoint.publish("http://0.0.0.0:9128/ControllerWS", this);
-        //this.endpoint = Endpoint.publish("../service", this);
-        System.out.println("Servicio publicado en "+this.endpoint.toString());
-        System.out.println("Servicio publicado en "+this.endpoint.getEndpointReference().toString());
+        String url = SvcConfig.get("soap.publish");
+        this.endpoint = Endpoint.publish(url, this);
+        System.out.println("Servicio publicado en " + url);
     }
     
     @WebMethod(exclude = true)

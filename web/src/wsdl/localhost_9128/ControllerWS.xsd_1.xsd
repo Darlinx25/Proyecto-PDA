@@ -1,4 +1,6 @@
-<?xml version='1.0' encoding='UTF-8'?><!-- Published by XML-WS Runtime (https://github.com/eclipse-ee4j/metro-jax-ws). Runtime's version is XML-WS Runtime 4.0.2 git-revision#0264419. --><xs:schema xmlns:tns="http://webservices.culturarte/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://webservices.culturarte/">
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Published by XML-WS Runtime (https://github.com/eclipse-ee4j/metro-jax-ws). Runtime's version is XML-WS Runtime 4.0.2 git-revision#0264419. -->
+<xs:schema xmlns:tns="http://webservices.culturarte/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://webservices.culturarte/">
 
 <xs:element name="BadPasswordException" type="tns:BadPasswordException"/>
 
@@ -15,6 +17,14 @@
 <xs:element name="PropuestaDuplicadaException" type="tns:PropuestaDuplicadaException"/>
 
 <xs:element name="PropuestaYaColaboradaException" type="tns:PropuestaYaColaboradaException"/>
+
+<xs:element name="actualizarEstado" type="tns:actualizarEstado"/>
+
+<xs:element name="actualizarEstadoResponse" type="tns:actualizarEstadoResponse"/>
+
+<xs:element name="actualizarPuntajes" type="tns:actualizarPuntajes"/>
+
+<xs:element name="actualizarPuntajesResponse" type="tns:actualizarPuntajesResponse"/>
 
 <xs:element name="addCategoria" type="tns:addCategoria"/>
 
@@ -44,6 +54,26 @@
 
 <xs:element name="buscarPropuestasTDLResponse" type="tns:buscarPropuestasTDLResponse"/>
 
+<xs:element name="calcularPuntajePropuesta" type="tns:calcularPuntajePropuesta"/>
+
+<xs:element name="calcularPuntajePropuestaResponse" type="tns:calcularPuntajePropuestaResponse"/>
+
+<xs:element name="cambiarEstadoPropuesta" type="tns:cambiarEstadoPropuesta"/>
+
+<xs:element name="cambiarEstadoPropuestaIngresada" type="tns:cambiarEstadoPropuestaIngresada"/>
+
+<xs:element name="cambiarEstadoPropuestaIngresadaResponse" type="tns:cambiarEstadoPropuestaIngresadaResponse"/>
+
+<xs:element name="cambiarEstadoPropuestaResponse" type="tns:cambiarEstadoPropuestaResponse"/>
+
+<xs:element name="comentarioExiste" type="tns:comentarioExiste"/>
+
+<xs:element name="comentarioExisteResponse" type="tns:comentarioExisteResponse"/>
+
+<xs:element name="constanciaEmitida" type="tns:constanciaEmitida"/>
+
+<xs:element name="constanciaEmitidaResponse" type="tns:constanciaEmitidaResponse"/>
+
 <xs:element name="dejarDeSeguirUsuario" type="tns:dejarDeSeguirUsuario"/>
 
 <xs:element name="dejarDeSeguirUsuarioResponse" type="tns:dejarDeSeguirUsuarioResponse"/>
@@ -60,11 +90,17 @@
 
 <xs:element name="dtPago" type="tns:DTPago"/>
 
+<xs:element name="dtPaypal" type="tns:DTPaypal"/>
+
 <xs:element name="dtProponente" type="tns:DTProponente"/>
 
 <xs:element name="dtPropuesta" type="tns:DTPropuesta"/>
 
 <xs:element name="dtRegistroAcceso" type="tns:DTRegistroAcceso"/>
+
+<xs:element name="dtTarjeta" type="tns:DTTarjeta"/>
+
+<xs:element name="dtTransferenciaBancaria" type="tns:DTTransferenciaBancaria"/>
 
 <xs:element name="dtUsuario" type="tns:DTUsuario"/>
 
@@ -72,9 +108,33 @@
 
 <xs:element name="eliminarColaboracionResponse" type="tns:eliminarColaboracionResponse"/>
 
+<xs:element name="extenderFinanciacion" type="tns:extenderFinanciacion"/>
+
+<xs:element name="extenderFinanciacionResponse" type="tns:extenderFinanciacionResponse"/>
+
+<xs:element name="favoritarPropuesta" type="tns:favoritarPropuesta"/>
+
+<xs:element name="favoritarPropuestaResponse" type="tns:favoritarPropuestaResponse"/>
+
+<xs:element name="forzarGeneracionPaypal" type="tns:forzarGeneracionPaypal"/>
+
+<xs:element name="forzarGeneracionPaypalResponse" type="tns:forzarGeneracionPaypalResponse"/>
+
+<xs:element name="forzarGeneracionTarjeta" type="tns:forzarGeneracionTarjeta"/>
+
+<xs:element name="forzarGeneracionTarjetaResponse" type="tns:forzarGeneracionTarjetaResponse"/>
+
+<xs:element name="forzarGeneracionTransferencia" type="tns:forzarGeneracionTransferencia"/>
+
+<xs:element name="forzarGeneracionTransferenciaResponse" type="tns:forzarGeneracionTransferenciaResponse"/>
+
 <xs:element name="guardarImagen" type="tns:guardarImagen"/>
 
 <xs:element name="guardarImagenResponse" type="tns:guardarImagenResponse"/>
+
+<xs:element name="hacerComentario" type="tns:hacerComentario"/>
+
+<xs:element name="hacerComentarioResponse" type="tns:hacerComentarioResponse"/>
 
 <xs:element name="listDTColaboracionUser" type="tns:listDTColaboracionUser"/>
 
@@ -89,6 +149,10 @@
 <xs:element name="listaProponentesDeBajaResponse" type="tns:listaProponentesDeBajaResponse"/>
 
 <xs:element name="listaPropuestasUsu" type="tns:listaPropuestasUsu"/>
+
+<xs:element name="listaPropuestasUsuDeBaja" type="tns:listaPropuestasUsuDeBaja"/>
+
+<xs:element name="listaPropuestasUsuDeBajaResponse" type="tns:listaPropuestasUsuDeBajaResponse"/>
 
 <xs:element name="listaPropuestasUsuResponse" type="tns:listaPropuestasUsuResponse"/>
 
@@ -108,9 +172,29 @@
 
 <xs:element name="listarProponentesResponse" type="tns:listarProponentesResponse"/>
 
+<xs:element name="listarPropuestas" type="tns:listarPropuestas"/>
+
 <xs:element name="listarPropuestasEstado" type="tns:listarPropuestasEstado"/>
 
 <xs:element name="listarPropuestasEstadoResponse" type="tns:listarPropuestasEstadoResponse"/>
+
+<xs:element name="listarPropuestasEstadoUsu" type="tns:listarPropuestasEstadoUsu"/>
+
+<xs:element name="listarPropuestasEstadoUsuResponse" type="tns:listarPropuestasEstadoUsuResponse"/>
+
+<xs:element name="listarPropuestasFavoritas" type="tns:listarPropuestasFavoritas"/>
+
+<xs:element name="listarPropuestasFavoritasResponse" type="tns:listarPropuestasFavoritasResponse"/>
+
+<xs:element name="listarPropuestasProponentes" type="tns:listarPropuestasProponentes"/>
+
+<xs:element name="listarPropuestasProponentesIngresadas" type="tns:listarPropuestasProponentesIngresadas"/>
+
+<xs:element name="listarPropuestasProponentesIngresadasResponse" type="tns:listarPropuestasProponentesIngresadasResponse"/>
+
+<xs:element name="listarPropuestasProponentesResponse" type="tns:listarPropuestasProponentesResponse"/>
+
+<xs:element name="listarPropuestasResponse" type="tns:listarPropuestasResponse"/>
 
 <xs:element name="listarUsuarios" type="tns:listarUsuarios"/>
 
@@ -128,9 +212,17 @@
 
 <xs:element name="mandarMailResponse" type="tns:mandarMailResponse"/>
 
+<xs:element name="modPropuesta" type="tns:modPropuesta"/>
+
+<xs:element name="modPropuestaResponse" type="tns:modPropuestaResponse"/>
+
 <xs:element name="obtenerCategorias" type="tns:obtenerCategorias"/>
 
 <xs:element name="obtenerCategoriasResponse" type="tns:obtenerCategoriasResponse"/>
+
+<xs:element name="obtenerColaboradoresColaboracion" type="tns:obtenerColaboradoresColaboracion"/>
+
+<xs:element name="obtenerColaboradoresColaboracionResponse" type="tns:obtenerColaboradoresColaboracionResponse"/>
 
 <xs:element name="obtenerDTColaboracion" type="tns:obtenerDTColaboracion"/>
 
@@ -150,15 +242,31 @@
 
 <xs:element name="obtenerDTPropuesta" type="tns:obtenerDTPropuesta"/>
 
+<xs:element name="obtenerDTPropuestaDeBaja" type="tns:obtenerDTPropuestaDeBaja"/>
+
+<xs:element name="obtenerDTPropuestaDeBajaResponse" type="tns:obtenerDTPropuestaDeBajaResponse"/>
+
 <xs:element name="obtenerDTPropuestaResponse" type="tns:obtenerDTPropuestaResponse"/>
 
 <xs:element name="obtenerDineroRecaudado" type="tns:obtenerDineroRecaudado"/>
 
+<xs:element name="obtenerDineroRecaudadoDeBaja" type="tns:obtenerDineroRecaudadoDeBaja"/>
+
+<xs:element name="obtenerDineroRecaudadoDeBajaResponse" type="tns:obtenerDineroRecaudadoDeBajaResponse"/>
+
 <xs:element name="obtenerDineroRecaudadoResponse" type="tns:obtenerDineroRecaudadoResponse"/>
+
+<xs:element name="obtenerImagen" type="tns:obtenerImagen"/>
+
+<xs:element name="obtenerImagenResponse" type="tns:obtenerImagenResponse"/>
 
 <xs:element name="obtenerPropuestasColaboradas" type="tns:obtenerPropuestasColaboradas"/>
 
 <xs:element name="obtenerPropuestasColaboradasResponse" type="tns:obtenerPropuestasColaboradasResponse"/>
+
+<xs:element name="obtenerRecomendaciones" type="tns:obtenerRecomendaciones"/>
+
+<xs:element name="obtenerRecomendacionesResponse" type="tns:obtenerRecomendacionesResponse"/>
 
 <xs:element name="obtenerTipoUser" type="tns:obtenerTipoUser"/>
 
@@ -171,6 +279,10 @@
 <xs:element name="pagarColaboracion" type="tns:pagarColaboracion"/>
 
 <xs:element name="pagarColaboracionResponse" type="tns:pagarColaboracionResponse"/>
+
+<xs:element name="propuestaYaFavorita" type="tns:propuestaYaFavorita"/>
+
+<xs:element name="propuestaYaFavoritaResponse" type="tns:propuestaYaFavoritaResponse"/>
 
 <xs:element name="realizarColaboracion" type="tns:realizarColaboracion"/>
 
@@ -194,6 +306,19 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="listarPropuestasEstadoUsu">
+<xs:sequence>
+<xs:element name="estado" type="xs:int"/>
+<xs:element name="nick" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listarPropuestasEstadoUsuResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="dejarDeSeguirUsuario">
 <xs:sequence>
 <xs:element name="nickSegui" type="xs:string" minOccurs="0"/>
@@ -207,24 +332,57 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="listDTRegistroAcceso">
+<xs:complexType name="modPropuesta">
+<xs:sequence>
+<xs:element name="prop" type="tns:DTPropuesta" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DTPropuesta">
+<xs:sequence>
+<xs:element name="comentarios" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+<xs:element name="dineroRecaudado" type="xs:float"/>
+<xs:element name="estadoActual" type="tns:estado" minOccurs="0"/>
+<xs:element name="fechaPublicacion" type="xs:string" minOccurs="0"/>
+<xs:element name="fechaRealizara" type="xs:string" minOccurs="0"/>
+<xs:element name="imagen" type="xs:string" minOccurs="0"/>
+<xs:element name="lugarRealizara" type="xs:string" minOccurs="0"/>
+<xs:element name="montoAReunir" type="xs:float"/>
+<xs:element name="nickProponedor" type="xs:string" minOccurs="0"/>
+<xs:element name="nicksColabs" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="plazoFinanciacion" type="xs:string" minOccurs="0"/>
+<xs:element name="precioEntrada" type="xs:float"/>
+<xs:element name="tipoPropuesta" type="xs:string" minOccurs="0"/>
+<xs:element name="tiposRetorno" type="tns:tipoRetorno" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="titulo" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="estado">
+<xs:sequence>
+<xs:element name="estado" type="tns:estadoPropuesta" minOccurs="0"/>
+<xs:element name="fechaEstado" type="tns:localDateTime" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="localDateTime" final="extension restriction">
 <xs:sequence/>
 </xs:complexType>
 
-<xs:complexType name="listDTRegistroAccesoResponse">
+<xs:complexType name="modPropuestaResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="cambiarEstadoPropuesta">
 <xs:sequence>
-<xs:element name="return" type="tns:DTRegistroAcceso" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="tituloProp" type="xs:string" minOccurs="0"/>
+<xs:element name="estProp" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="DTRegistroAcceso">
-<xs:sequence>
-<xs:element name="browser" type="xs:string" minOccurs="0"/>
-<xs:element name="id" type="xs:long"/>
-<xs:element name="ip" type="xs:string" minOccurs="0"/>
-<xs:element name="os" type="xs:string" minOccurs="0"/>
-<xs:element name="url" type="xs:string" minOccurs="0"/>
-</xs:sequence>
+<xs:complexType name="cambiarEstadoPropuestaResponse">
+<xs:sequence/>
 </xs:complexType>
 
 <xs:complexType name="addUsuario">
@@ -237,17 +395,13 @@
 <xs:sequence>
 <xs:element name="apellido" type="xs:string" minOccurs="0"/>
 <xs:element name="email" type="xs:string" minOccurs="0"/>
-<xs:element name="fechaNacimiento" type="tns:localDate" minOccurs="0"/>
+<xs:element name="fechaNacimiento" type="xs:string" minOccurs="0"/>
 <xs:element name="imagen" type="xs:string" minOccurs="0"/>
 <xs:element name="nickname" type="xs:string" minOccurs="0"/>
 <xs:element name="nombre" type="xs:string" minOccurs="0"/>
-<xs:element name="password" type="xs:unsignedShort" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-<xs:element name="passwordConfirm" type="xs:unsignedShort" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+<xs:element name="passwordConfirm" type="xs:string" minOccurs="0"/>
 </xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="localDate" final="extension restriction">
-<xs:sequence/>
 </xs:complexType>
 
 <xs:complexType name="addUsuarioResponse">
@@ -272,6 +426,26 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="actualizarEstado">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="actualizarEstadoResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="listaPropuestasUsuDeBaja">
+<xs:sequence>
+<xs:element name="nick" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listaPropuestasUsuDeBajaResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="listDTColaboracionUser">
 <xs:sequence>
 <xs:element name="nickname" type="xs:string" minOccurs="0"/>
@@ -288,30 +462,49 @@
 <xs:sequence>
 <xs:element name="colaborador" type="xs:string" minOccurs="0"/>
 <xs:element name="constanciaEmitida" type="xs:boolean"/>
-<xs:element name="fechaHora" type="tns:localDateTime" minOccurs="0"/>
+<xs:element name="fechaHora" type="xs:string" minOccurs="0"/>
 <xs:element name="id" type="xs:long" minOccurs="0"/>
 <xs:element name="monto" type="xs:float"/>
 <xs:element name="pagada" type="xs:boolean"/>
-<xs:element name="pago" type="tns:pago" minOccurs="0"/>
+<xs:element name="pago" type="tns:DTPago" minOccurs="0"/>
 <xs:element name="propuestaColaborada" type="xs:string" minOccurs="0"/>
 <xs:element name="tipoRetorno" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="localDateTime" final="extension restriction">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="pago">
+<xs:complexType name="DTPago">
 <xs:sequence>
-<xs:element name="fechaPago" type="tns:localDateTime" minOccurs="0"/>
-<xs:element name="formaPago" type="tns:formaPago" minOccurs="0"/>
+<xs:element name="fechaPago" type="xs:string" minOccurs="0"/>
+<xs:element name="formaPago" type="tns:DTFormaPago" minOccurs="0"/>
 <xs:element name="metodoPago" type="xs:string" minOccurs="0"/>
+<xs:element name="montoPago" type="xs:float"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="formaPago" abstract="true">
+<xs:complexType name="DTFormaPago" abstract="true">
 <xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="listarPropuestasProponentesIngresadas">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="listarPropuestasProponentesIngresadasResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="obtenerColaboradoresColaboracion">
+<xs:sequence>
+<xs:element name="tituloProp" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="obtenerColaboradoresColaboracionResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
 </xs:complexType>
 
 <xs:complexType name="listarUsuarios">
@@ -357,43 +550,32 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="buscarPropuestasTDL">
-<xs:sequence>
-<xs:element name="patron" type="xs:string" minOccurs="0"/>
-</xs:sequence>
+<xs:complexType name="localDate" final="extension restriction">
+<xs:sequence/>
 </xs:complexType>
 
-<xs:complexType name="buscarPropuestasTDLResponse">
+<xs:complexType name="propuestaYaFavorita">
 <xs:sequence>
-<xs:element name="return" type="tns:DTPropuesta" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="DTPropuesta">
-<xs:sequence>
-<xs:element name="comentarios" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
-<xs:element name="dineroRecaudado" type="xs:float"/>
-<xs:element name="estadoActual" type="tns:estado" minOccurs="0"/>
-<xs:element name="fechaPublicacion" type="tns:localDate" minOccurs="0"/>
-<xs:element name="fechaRealizara" type="tns:localDate" minOccurs="0"/>
-<xs:element name="imagen" type="xs:string" minOccurs="0"/>
-<xs:element name="lugarRealizara" type="xs:string" minOccurs="0"/>
-<xs:element name="montoAReunir" type="xs:float"/>
-<xs:element name="nickProponedor" type="xs:string" minOccurs="0"/>
-<xs:element name="nicksColabs" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-<xs:element name="plazoFinanciacion" type="tns:localDate" minOccurs="0"/>
-<xs:element name="precioEntrada" type="xs:float"/>
-<xs:element name="tipoPropuesta" type="xs:string" minOccurs="0"/>
-<xs:element name="tiposRetorno" type="tns:tipoRetorno" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
 <xs:element name="titulo" type="xs:string" minOccurs="0"/>
+<xs:element name="nick" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="estado">
+<xs:complexType name="propuestaYaFavoritaResponse">
 <xs:sequence>
-<xs:element name="estado" type="tns:estadoPropuesta" minOccurs="0"/>
-<xs:element name="fechaEstado" type="tns:localDateTime" minOccurs="0"/>
+<xs:element name="return" type="xs:boolean" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="obtenerImagen">
+<xs:sequence>
+<xs:element name="IDimagen" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="obtenerImagenResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:base64Binary" nillable="true" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -431,20 +613,28 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="DTRegistroAcceso">
+<xs:sequence>
+<xs:element name="browser" type="xs:string" minOccurs="0"/>
+<xs:element name="id" type="xs:long"/>
+<xs:element name="ip" type="xs:string" minOccurs="0"/>
+<xs:element name="os" type="xs:string" minOccurs="0"/>
+<xs:element name="url" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="registrarAccesoResponse">
 <xs:sequence/>
 </xs:complexType>
 
-<xs:complexType name="listarUsuariosSeguir">
+<xs:complexType name="extenderFinanciacion">
 <xs:sequence>
-<xs:element name="nickname" type="xs:string" minOccurs="0"/>
+<xs:element name="tituloProp" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="listarUsuariosSeguirResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
+<xs:complexType name="extenderFinanciacionResponse">
+<xs:sequence/>
 </xs:complexType>
 
 <xs:complexType name="addCategoria">
@@ -461,28 +651,6 @@
 <xs:complexType name="CategoriaDuplicadaException">
 <xs:sequence>
 <xs:element name="message" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="listarPropuestasEstado">
-<xs:sequence>
-<xs:element name="estado" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="listarPropuestasEstadoResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="obtenerUsuariosPorRanking">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="obtenerUsuariosPorRankingResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -508,22 +676,6 @@
 <xs:sequence/>
 </xs:complexType>
 
-<xs:complexType name="addPropuesta">
-<xs:sequence>
-<xs:element name="prop" type="tns:DTPropuesta" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="addPropuestaResponse">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="PropuestaDuplicadaException">
-<xs:sequence>
-<xs:element name="message" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="obtenerTipoUser">
 <xs:sequence>
 <xs:element name="nickname" type="xs:string" minOccurs="0"/>
@@ -533,16 +685,6 @@
 <xs:complexType name="obtenerTipoUserResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="listaProponentesDeBaja">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="listaProponentesDeBajaResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -592,18 +734,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="obtenerDTPropuesta">
-<xs:sequence>
-<xs:element name="titulo" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="obtenerDTPropuestaResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:DTPropuesta" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="obtenerPropuestasColaboradas">
 <xs:sequence>
 <xs:element name="nick" type="xs:string" minOccurs="0"/>
@@ -611,18 +741,6 @@
 </xs:complexType>
 
 <xs:complexType name="obtenerPropuestasColaboradasResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="listaPropuestasUsu">
-<xs:sequence>
-<xs:element name="nickname" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="listaPropuestasUsuResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
@@ -640,22 +758,39 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="realizarColaboracion">
+<xs:complexType name="obtenerDTPropuestaDeBaja">
 <xs:sequence>
-<xs:element name="nickColab" type="xs:string" minOccurs="0"/>
-<xs:element name="tituloProp" type="xs:string" minOccurs="0"/>
-<xs:element name="montoColab" type="xs:float"/>
-<xs:element name="tipoRetorno" type="xs:string" minOccurs="0"/>
+<xs:element name="titulo" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="realizarColaboracionResponse">
+<xs:complexType name="obtenerDTPropuestaDeBajaResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:DTPropuesta" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="favoritarPropuesta">
+<xs:sequence>
+<xs:element name="nick" type="xs:string" minOccurs="0"/>
+<xs:element name="titulo" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="favoritarPropuestaResponse">
 <xs:sequence/>
 </xs:complexType>
 
-<xs:complexType name="PropuestaYaColaboradaException">
+<xs:complexType name="comentarioExiste">
 <xs:sequence>
-<xs:element name="message" type="xs:string" minOccurs="0"/>
+<xs:element name="titulo" type="xs:string" minOccurs="0"/>
+<xs:element name="nombreColaborador" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="comentarioExisteResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -679,10 +814,32 @@
 </xs:complexContent>
 </xs:complexType>
 
+<xs:complexType name="obtenerDineroRecaudadoDeBaja">
+<xs:sequence>
+<xs:element name="tituloProp" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="obtenerDineroRecaudadoDeBajaResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listarPropuestasProponentes">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="listarPropuestasProponentesResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="autenticarUsuario">
 <xs:sequence>
 <xs:element name="nickname" type="xs:string" minOccurs="0"/>
-<xs:element name="password" type="xs:unsignedShort" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -692,34 +849,11 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="listarColaboraciones">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="listarColaboracionesResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="pagarColaboracion">
 <xs:sequence>
 <xs:element name="dtPago" type="tns:DTPago" minOccurs="0"/>
 <xs:element name="idColab" type="xs:long" minOccurs="0"/>
 </xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="DTPago">
-<xs:sequence>
-<xs:element name="fechaPago" type="tns:localDateTime" minOccurs="0"/>
-<xs:element name="formaPago" type="tns:DTFormaPago" minOccurs="0"/>
-<xs:element name="metodoPago" type="xs:string" minOccurs="0"/>
-<xs:element name="montoPago" type="xs:float"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="DTFormaPago" abstract="true">
-<xs:sequence/>
 </xs:complexType>
 
 <xs:complexType name="pagarColaboracionResponse">
@@ -736,18 +870,6 @@
 <xs:complexType name="seguirUsuarioResponse">
 <xs:sequence>
 <xs:element name="return" type="tns:resultadoSeguirUsuario" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="ObtenerSeguidores">
-<xs:sequence>
-<xs:element name="nickname" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="ObtenerSeguidoresResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -781,6 +903,305 @@
 
 <xs:complexType name="eliminarColaboracionResponse">
 <xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="constanciaEmitida">
+<xs:sequence>
+<xs:element name="id" type="xs:long" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="constanciaEmitidaResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="listDTRegistroAcceso">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="listDTRegistroAccesoResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:DTRegistroAcceso" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listarPropuestas">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="listarPropuestasResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="forzarGeneracionPaypal">
+<xs:sequence>
+<xs:element name="arg0" type="tns:DTPaypal" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DTPaypal">
+<xs:complexContent>
+<xs:extension base="tns:DTFormaPago">
+<xs:sequence>
+<xs:element name="cuentaPaypal" type="xs:string" minOccurs="0"/>
+<xs:element name="titularPaypal" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="forzarGeneracionPaypalResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="hacerComentario">
+<xs:sequence>
+<xs:element name="comentario" type="xs:string" minOccurs="0"/>
+<xs:element name="nombreColaborador" type="xs:string" minOccurs="0"/>
+<xs:element name="tituloProp" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="hacerComentarioResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="actualizarPuntajes">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="actualizarPuntajesResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="forzarGeneracionTransferencia">
+<xs:sequence>
+<xs:element name="arg0" type="tns:DTTransferenciaBancaria" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DTTransferenciaBancaria">
+<xs:complexContent>
+<xs:extension base="tns:DTFormaPago">
+<xs:sequence>
+<xs:element name="cuentaBanco" type="xs:string" minOccurs="0"/>
+<xs:element name="nombreBanco" type="xs:string" minOccurs="0"/>
+<xs:element name="titularBanco" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="forzarGeneracionTransferenciaResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="buscarPropuestasTDL">
+<xs:sequence>
+<xs:element name="patron" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="buscarPropuestasTDLResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:DTPropuesta" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="forzarGeneracionTarjeta">
+<xs:sequence>
+<xs:element name="arg0" type="tns:DTTarjeta" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DTTarjeta">
+<xs:complexContent>
+<xs:extension base="tns:DTFormaPago">
+<xs:sequence>
+<xs:element name="cvc" type="xs:string" minOccurs="0"/>
+<xs:element name="nroTarjeta" type="xs:string" minOccurs="0"/>
+<xs:element name="tipoTarjeta" type="xs:string" minOccurs="0"/>
+<xs:element name="titularTarjeta" type="xs:string" minOccurs="0"/>
+<xs:element name="vencTarjeta" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="forzarGeneracionTarjetaResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="listarPropuestasFavoritas">
+<xs:sequence>
+<xs:element name="nick" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listarPropuestasFavoritasResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listarUsuariosSeguir">
+<xs:sequence>
+<xs:element name="nickname" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listarUsuariosSeguirResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listarPropuestasEstado">
+<xs:sequence>
+<xs:element name="estado" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listarPropuestasEstadoResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="obtenerUsuariosPorRanking">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="obtenerUsuariosPorRankingResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addPropuesta">
+<xs:sequence>
+<xs:element name="prop" type="tns:DTPropuesta" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addPropuestaResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="PropuestaDuplicadaException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listaProponentesDeBaja">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="listaProponentesDeBajaResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="obtenerDTPropuesta">
+<xs:sequence>
+<xs:element name="titulo" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="obtenerDTPropuestaResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:DTPropuesta" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listaPropuestasUsu">
+<xs:sequence>
+<xs:element name="nickname" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listaPropuestasUsuResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="realizarColaboracion">
+<xs:sequence>
+<xs:element name="nickColab" type="xs:string" minOccurs="0"/>
+<xs:element name="tituloProp" type="xs:string" minOccurs="0"/>
+<xs:element name="montoColab" type="xs:float"/>
+<xs:element name="tipoRetorno" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="realizarColaboracionResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="PropuestaYaColaboradaException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="calcularPuntajePropuesta">
+<xs:sequence>
+<xs:element name="titulo" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="calcularPuntajePropuestaResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="cambiarEstadoPropuestaIngresada">
+<xs:sequence>
+<xs:element name="tituloProp" type="xs:string" minOccurs="0"/>
+<xs:element name="estProp" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="cambiarEstadoPropuestaIngresadaResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="listarColaboraciones">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="listarColaboracionesResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ObtenerSeguidores">
+<xs:sequence>
+<xs:element name="nickname" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ObtenerSeguidoresResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="obtenerRecomendaciones">
+<xs:sequence>
+<xs:element name="nick" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="obtenerRecomendacionesResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
 </xs:complexType>
 
 <xs:simpleType name="resultadoSeguirUsuario">
